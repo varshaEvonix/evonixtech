@@ -1,0 +1,35 @@
+<%- include ../stuhead.ejs %>
+
+<%- include ../stud_left.ejs %>
+<section id="main-content">
+          <section class="wrapper">
+          <br>
+<div class="row">
+<div class="col-sm-9">
+
+           <form action="/education_edit_submit" method="POST" role="form">
+ 
+ <h2>Education details</h2><br>
+
+    <div class="form-group">
+     <% _.each(answer, function (answer) { %>
+      <input type="text" class="form-control" id="student_education_institute" name="student_education_institute" placeholder="Enter your education institute" value="<%= answer.student_education_institute %>">
+    </div>
+    <div class="form-group">
+      
+      <input type="text" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Currently studying" value="<%= answer.student_education_fieldofstudy %>">
+    </div>
+   
+    <% }) %>
+    <br>
+    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+    <button type="submit" class="btn btn-default text-center">Submit</button> 
+    <a href="../education_view/education_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a> 
+  </form>
+  
+  </div>
+   <%- include ../stud_right.ejs %>
+ </section>
+  </section> 
+                
+                  <%- include ../stufoot.ejs %>

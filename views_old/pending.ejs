@@ -1,0 +1,701 @@
+<?php include('admin_head.php') ?>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
+<style>
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
+}
+.float-right{
+  float: right;
+}
+.fa{
+ font-size: .8em;
+  line-height: 22px !important;
+}
+dropdown{
+   display: inline-block;
+   margin: 20px 50px; 
+}
+dropdown label, dropdown ul li{
+  display: block;
+  width: 200px;
+  background: #ECF0F1;
+  padding: 15px 20px;
+}
+dropdown label:hover, dropdown ul li:hover{
+  background: #1ABC9C;
+  color: white;
+  cursor: pointer;
+}
+dropdown label{
+  color: #1ABC9C;
+  border-left: 4px solid #1ABC9C;
+  border-radius: 0 5px 0 0; 
+  position: relative;
+  z-index: 2;
+}
+dropdown input{
+  display: none;
+}
+dropdown input ~ ul{
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  top: -20px;
+  z-index: 1;
+}
+dropdown input:checked + label{
+  background: #1ABC9C;
+  color: white;
+}
+
+dropdown input:checked ~ ul{
+  visibility: visible;
+  opacity: 1;
+  top: 0;
+}
+$colors: #E74C3C, #0072B5, #2C3E50;
+
+@for $i from 1 through length($colors) {
+  dropdown ul li:nth-child(#{$i}) {
+    border-left: 4px solid nth($colors, $i);
+    .fa{
+      color: nth($colors, $i);
+    }
+    &:hover {
+        background: nth($colors, $i);
+        color: white;
+      .fa{
+        color: white; 
+      }
+    }
+  }
+}
+.indicate{
+  margin-top:-82px !important;
+  margin-left: 0px !important;
+  color:#000;
+}
+.animate{
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -ms-transition: all .3s;
+  transition: all .3s;  
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden; /* Chrome and Safari */
+  -moz-backface-visibility:hidden; /* Firefox */
+  -ms-backface-visibility:hidden; /* Internet Explorer */
+}
+#circler {
+  margin: 20px;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.inner h6{
+  color:#000;
+  font-size: 14px;
+}
+.pn{
+  height:191px;
+}
+.white-header{
+  color:#000 !important;
+}
+</style>
+  <link href="index_files/assetbox/css/bootstrap.css" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES-->
+    <link href="index_files/assetbox/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="index_files/assetbox/css/custom.css" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+ <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><a href="profile.html"><img src="index_files/stdash/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                  <h5 class="centered">Super Admin</h5>
+                    
+                  <li class="mt">
+                      <a  href="admin_dashboard">
+                          <i class="fa fa-tachometer" aria-hidden="true"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
+
+                   <li class="sub-menu">
+                      <a  href="javascript:;" >
+                          <i class="fa fa-desktop"></i>
+                          <span>Homepage Elements</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="about_admin">About us</a></li>
+                          <li><a  href="terms">Terms & conditions</a></li>
+                          <li><a  href="faq">FAQ</a></li>
+                      </ul>
+                  </li>
+
+                   <li class="sub-menu">
+                      <a class="active" href="javascript:;" >
+                          <i class="fa fa-desktop"></i>
+                          <span>Student Management</span>
+                      </a>
+                     <ul class="sub">
+                          <li><a  href="allstudents">All students</a></li>
+                          <li><a  href="activestu">Active students</a></li>
+                          <li><a  href="pending">Pending students</a></li>
+                          <li><a  href="inactive">Inactive students</a></li>
+                      </ul>
+                  </li>
+
+                
+
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
+
+
+  <section id="main-content">
+          <section class="wrapper">
+
+                 
+                    <div class="row">
+                    <h1 class="phead" style="float:left;padding-left:30px">Pending Profiles</h1>
+                   
+
+
+</div>
+
+<div class="row">
+ </div>
+              <br>
+               
+               
+            <div id="page-inner">
+                <div class="row pad-top">
+
+                <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus01" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus02" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus03" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus03").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+</div>
+<div class="row pad-top">
+
+                <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus04" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus04").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus05" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus05").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus06" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus06").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+</div>
+<div class="row pad-top">
+
+                <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus07" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus07").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus08" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus08").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus09" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus09").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+</div>
+<div class="row pad-top">
+
+                <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus10" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus10").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus11" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus11").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus12" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus12").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+</div>
+<div class="row pad-top">
+
+                <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus13" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus13").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus14" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        <div class="col-md-4 col-sm-4 mb">
+                          <div class="white-panel pn donut-chart">
+                            <div class="white-header">
+                    <h4 >Sandra Rayman</h4>
+                            </div>
+              <div class="row">
+                <div class="col-md-5">
+                <canvas id="serverstatus15" height="120" width="120"></canvas>
+                <p class="text-center indicate">70%</p>
+                </div>
+                 <div class="col-md-7 text-left inner">
+               <h6><strong>Status: </strong>Pending</h6>
+               <h6><strong>Last Updated On:</strong>23 July 2016</h6>
+               <h6><strong>Amount:</strong>$8000</h6>
+               <h6><strong>Raised:</strong>$5541</h6>
+                </div>
+                </div>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus15").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                          </div><! --/grey-panel -->
+                        </div>
+                        </div>
+          </section>
+      </section>
+
+
+      <!-- BOOTSTRAP SCRIPTS -->
+
+
+    <script src="index_files/assetbox/js/bootstrap.min.js"></script>
+
+
+      <!-- CUSTOM SCRIPTS -->
+    <script src="index_files/assetbox/js/custom.js"></script>
+     
+    <script type="text/javascript">
+    $(function(){
+        $("#bluecircle").percircle();
+    });
+</script>
+                  <?php include('stufoot.php') ?>

@@ -1,0 +1,66 @@
+<%- include ../stuhead.ejs %>
+
+ <%- include ../stud_left.ejs %>
+
+<section id="main-content">
+          <section class="wrapper">
+          <div class="row">
+          <div class="col-md-9">
+          <h2>Loan details</h2>
+          <br>
+
+           <form action="/loan_edit_submit" method="POST" role="form">
+ 
+    <div class="form-group">
+     <% _.each(answer, function (answer) { %>
+      <input type="text" class="form-control" id="loan_purpose_name" name="loan_purpose_name" placeholder="Enter your loan purpose" value="<%= answer.loan_purpose_name %>">
+    </div>
+    <div class="form-group">
+      
+      <input type="text" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan amount" value="<%= answer.loan_amount %>">
+    </div>
+    <div class="form-group ">
+      
+      <input type="text" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your bank name" value="<%= answer.loan_bankname %>">
+    </div>
+    <div class="form-group ">
+   
+      <input type="text" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= answer.loan_accountno %>">
+    </div>
+     <div class="form-group ">
+   
+      <input type="text" class="form-control" id="remittance_account_bank_name" name="remittance_account_bank_name" placeholder="Enter your remittance bank name" value="<%= answer.remittance_account_bank_name %>">
+    </div>
+
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="remittance_account_bankaccount_no" name="remittance_account_bankaccount_no" placeholder="Enter your remittance bank account number" value="<%= answer.remittance_account_bankaccount_no %>">
+    </div>
+
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="remittance_account_ifsc" name="remittance_account_ifsc" placeholder="Enter your remittance bank IFSC code" value="<%= answer.remittance_account_ifsc %>">
+    </div>
+
+    <div class="form-group">
+   
+      <textarea rows="6" class="form-control" id="loan_details_note" name="loan_details_note" placeholder="Enter your loan details note" ><%= answer.loan_details_note %>
+      </textarea>
+    </div>
+   
+   
+   <% }) %>
+    <br>
+    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+    <button type="submit" class="btn btn-default text-center">Submit</button>
+     <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+   </form></div>
+   <%- include ../stud_right.ejs %>
+</section>
+
+  </section>  
+                
+                  <%- include ../stufoot.ejs %>
+
+
+

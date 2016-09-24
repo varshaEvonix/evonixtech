@@ -1,0 +1,61 @@
+<%- include ../stuhead.ejs %>
+
+ 
+ <%- include ../stud_left.ejs %>
+      <style>
+      h2 span:after{
+      content:'';
+      width:100%;
+      height:3px;
+      background:#333;
+      display:block;
+      }
+       .afterline{
+       display:inline-block;
+       }
+      </style>
+<section id="main-content">
+          <section class="wrapper">
+          <div class="row">
+          <div class="col-md-9">
+
+          <h1>PERSONAL DETAILS<span class="pull-right"> <a href="/personal_edit"><button class="btn btn-success">Edit</button></a> </span></h1>
+          <br>
+          <div class="row">
+          <div class="col-md-5">
+          <img src="../index_files/feature2.jpg" width="300" height="187">
+          </div>
+          <div class="col-md-7">
+ <% _.each(answer, function (answer) { %>
+   <h2><%= answer.student_firstname %> <%= answer.student_lastname %></h2>
+  
+   <h4><%= answer.student_contactno %></h4>
+    
+   <h4><%= answer.student_email %></h4>
+   <h4><%= answer.student_birthdate %></h4>
+    
+   </div>
+</div>
+   <br>
+   <div class="row">
+  <div class="col-md-12">
+  <h2 class="afterline"><span>Your address</span></h2>
+   <h4><span class="small">Your address: </span><%= answer.student_address %></h4>
+   <h4><span class="small">Your city: </span><%= answer.student_city %></h4>
+   <h4><span class="small">Your state: </span><%= answer.student_state %></h4>
+   <h4><span class="small">Your country: </span><%= answer.student_country %></h4><br>
+   <h2 class="afterline"><span>About you</span></h2>
+   <h4><span class="small">About yourself: </span><%= answer.student_about_me %></h4>
+   <h4><span class="small">Your ambition: </span><%= answer.student_ambition %></h4>
+
+  
+   </div>
+   </div>
+   <% }) %>
+   </div>
+    <%- include ../stud_right.ejs %>
+   </div>
+ </section>
+  </div>
+               
+                  <%- include ../stufoot.ejs %>

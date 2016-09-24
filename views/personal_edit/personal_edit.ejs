@@ -1,0 +1,77 @@
+<%- include ../stuhead.ejs %>
+
+ <%- include ../stud_left.ejs %>
+<section id="main-content">
+          <section class="wrapper">
+          <div class="row">
+          <div class="col-md-9">
+          <h2>Personal details</h2>
+          <br>
+
+           <form action="/personal_edit_submit" method="POST" role="form">
+ 
+    <div class="form-group">
+     <% _.each(answer, function (answer) { %>
+      <input type="text" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= answer.student_firstname %>">
+    </div>
+    <div class="form-group">
+      
+      <input type="text" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= answer.student_lastname %>">
+    </div>
+    <div class="form-group ">
+      
+      <input type="text" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= answer.student_contactno %>">
+    </div>
+    <div class="form-group ">
+   
+      <input type="text" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= answer.student_email %>">
+    </div>
+     <div class="form-group ">
+   
+      <input type="text" class="form-control" id="student_address" name="student_address" placeholder="Enter your address" value="<%= answer.student_address %>">
+    </div>
+
+    <div class="form-group">
+   
+      <input type="email" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= answer.student_city %>">
+    </div>
+
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= answer.student_state %>">
+    </div>
+
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= answer.student_country %>">
+    </div>
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= answer.student_birthdate %>">
+    </div>
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_about_me" name="student_about_me" placeholder="So, what about you" value="<%= answer.student_about_me %>">
+    </div>
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_ambition" name="student_ambition" placeholder="What is your ambition" value="<%= answer.student_ambition %>">
+    </div>
+    <div class="form-group">
+   
+      <input type="text" class="form-control" id="student_profile_pic_path" name="student_profile_pic_path" placeholder="Profile picture" value="<%= answer.student_profile_pic_path %>">
+    </div>
+    <% }) %>
+    <br>
+    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+    <button type="submit" class="btn btn-default text-center">Submit</button>
+    <a href="../personal_view/personal_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+   </form>
+    
+    </div>
+      <%- include ../stud_right.ejs %>
+    </div>
+ </section>
+  </section> 
+                
+                  <%- include ../stufoot.ejs %>

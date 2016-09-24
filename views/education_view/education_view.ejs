@@ -1,0 +1,51 @@
+<%- include ../stuhead.ejs %>
+
+<%- include ../stud_left.ejs %>
+<style>
+.white{
+  background-color:#fff;
+  padding:5px 30px;
+}
+.white h3{
+  margin:5px;
+}
+</style>
+      
+<section id="main-content">
+          <section class="wrapper">
+          <div class="row">
+          <div class="col-md-9">
+          <h2>Education details<span class="pull-right"> <a href="/education_edit"><button class="btn btn-success">Edit</button></a> </span></h2>
+          <br>
+ <% _.each(answer, function (answer) { %>
+ <div class="row">
+ <div class="col-md-6">
+ <div class="white">
+ <h3> <span class="small">Education Institute: </span><br><%= answer.student_education_institute %></h3><br>
+ </div>
+
+ </div>
+ 
+ <div class="col-md-6">
+ <div class="white">
+ <h3> <span class="small">currently studying: </span><br><%= answer.student_education_fieldofstudy %></h3><br>
+ </div>
+ </div>
+   </div>
+
+   
+   
+   <br>
+   
+   <% }) %>
+   </div>
+   <%- include ../stud_right.ejs %>
+
+   </div>
+ </section>
+  </div>
+                
+                  <%- include ../stufoot.ejs %>
+
+
+ 

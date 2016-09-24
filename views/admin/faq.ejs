@@ -1,0 +1,275 @@
+<%- include ../admin/admin_head.ejs %>
+<%- include ../admin/sidebar.ejs %>
+
+<section id="main-content">
+    <section class="wrapper">
+
+        <div class="row">
+            <div class="col-lg-9 main-chart">
+                <h1 class="phead">Frequently Asked Questions
+                    <!--                    <a href="/editfaq" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit</a>-->
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add</a>
+                </h1>
+                <br>
+                <%  
+                _.each(category, function (category) { 
+                %>
+ <h3 class="panel-title"><%= category %></h3>
+                <div class="panel panel-default">
+                   
+                    <%  
+                    _.each(faq, function (faq) {
+                    if(faq.category==category){
+                    %>
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a><span class="pull-right"><a style="display: block;" href="/admin/editfaq/<%= faq.id %>" title="Edit" class="pull-right">Edit<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+                    </div>
+                    <div id="collapse<%= faq.id %>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <%= faq.description %>
+                        </div>
+                    </div>
+                    <%
+                    }
+                    })
+                    %>
+                </div>
+
+                <%
+                })
+                %>
+            </div>
+
+            <div class="col-lg-3 ds">
+                <!--COMPLETED ACTIONS DONUTS CHART-->
+                <h3>NOTIFICATIONS</h3>
+
+                <!-- First Action -->
+                <div class="desc">
+                    <div class="thumb">
+                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                    <div class="details">
+                        <p><muted>2 Minutes Ago</muted><br/>
+                        <a href="#">James Brown</a> subscribed to your newsletter.<br/>
+                        </p>
+                    </div>
+                </div>
+                <!-- Second Action -->
+                <div class="desc">
+                    <div class="thumb">
+                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                    <div class="details">
+                        <p><muted>3 Hours Ago</muted><br/>
+                        <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
+                        </p>
+                    </div>
+                </div>
+                <!-- Third Action -->
+                <div class="desc">
+                    <div class="thumb">
+                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                    <div class="details">
+                        <p><muted>7 Hours Ago</muted><br/>
+                        <a href="#">Brandon Page</a> purchased a year subscription.<br/>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fourth Action -->
+                <div class="desc">
+                    <div class="thumb">
+                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                    <div class="details">
+                        <p><muted>11 Hours Ago</muted><br/>
+                        <a href="#">Mark Twain</a> commented your post.<br/>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fifth Action -->
+                <div class="desc">
+                    <div class="thumb">
+                        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                    <div class="details">
+                        <p><muted>18 Hours Ago</muted><br/>
+                        <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- USERS ONLINE SECTION -->
+                <h3>DONORS</h3>
+                <!-- First Member -->
+                <div class="desc">
+                    <div class="thumb">
+                        <img class="img-circle" src="../../index_files/stdash/img/ui-divya.jpg" width="35px" height="35px" align="">
+                    </div>
+                    <div class="details">
+                        <p><a href="#">DIVYA MANIAN</a><br/>
+                        <muted>Available</muted>
+                        </p>
+                    </div>
+                </div>
+                <!-- Second Member -->
+                <div class="desc">
+                    <div class="thumb">
+                        <img class="img-circle" src="../../index_files/stdash/img/ui-sherman.jpg" width="35px" height="35px" align="">
+                    </div>
+                    <div class="details">
+                        <p><a href="#">DJ SHERMAN</a><br/>
+                        <muted>I am Busy</muted>
+                        </p>
+                    </div>
+                </div>
+                <!-- Third Member -->
+                <div class="desc">
+                    <div class="thumb">
+                        <img class="img-circle" src="../../index_files/stdash/img/ui-danro.jpg" width="35px" height="35px" align="">
+                    </div>
+                    <div class="details">
+                        <p><a href="#">DAN ROGERS</a><br/>
+                        <muted>Available</muted>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fourth Member -->
+                <div class="desc">
+                    <div class="thumb">
+                        <img class="img-circle" src="../../index_files/stdash/img/ui-zac.jpg" width="35px" height="35px" align="">
+                    </div>
+                    <div class="details">
+                        <p><a href="#">Zac Sniders</a><br/>
+                        <muted>Available</muted>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fifth Member -->
+                <div class="desc">
+                    <div class="thumb">
+                        <img class="img-circle" src="../../index_files/stdash/img/ui-sam.jpg" width="35px" height="35px" align="">
+                    </div>
+                    <div class="details">
+                        <p><a href="#">Marcel Newman</a><br/>
+                        <muted>Available</muted>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CALENDAR-->
+                <div id="calendar" class="mb">
+                    <div class="panel green-panel no-margin">
+                        <div class="panel-body">
+                            <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
+                                <div class="arrow"></div>
+                                <h3 class="popover-title" style="disadding: none;"></h3>
+                                <div id="date-popover-content" class="popover-content"></div>
+                            </div>
+                            <div id="my-calendar"></div>
+                        </div>
+                    </div>
+                </div><!-- / calendar -->
+
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #00A290;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add FAQ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" ng-submit="submitForm()" role="form" name="faqform" novalidate>
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">Category</label>
+                                <div class="col-sm-10">
+                                    <input type="text" ng-model="admin.category" class="form-control" id="category"  autocomplete="off" name="category" required/>
+                                    <span ng-show="submitted && faqform.category.$error.required"  class="help-block has-error ng-hide">Category is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Question</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="admin.question"  name="question" required/>
+                                    <span ng-show="submitted && faqform.question.$error.required"  class="help-block has-error ng-hide">Question is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Answer</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" ng-model="admin.description" name="description" cols="60" rows="5" required></textarea>
+                                    <span ng-show="submitted && faqform.description.$error.required"  class="help-block has-error ng-hide">Description is required.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" ng-click="submitted = true" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</section>
+
+<%- include ../admin/stufoot.ejs %>
+<!--<script src="../../index_files/stdash/js/typeahead.min.js"></script>-->
+<script src="../../index_files/stdash/js/typeahead.js"></script>
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $('#category').typeahead({
+            onSelect: function (item) {
+                console.log(item)
+                $('#category').val(item.text);
+                $scope.admin.category = item.text;
+            },
+            ajax: {
+                url: "/get_category",
+                timeout: 500,
+                displayField: 'category',
+                triggerLength: 1,
+                method: "get",
+                loadingClass: "loading-circle",
+                preDispatch: function (query) {
+                    return {
+                        search: query
+                    }
+                },
+                preProcess: function (data) {
+                    console.log(data.category);
+                    return data.category;
+                }
+            }
+        });
+        $scope.admin = {};
+        $scope.submitForm = function () {
+            if ($scope.faqform.$valid) {
+                $http({
+                    method: 'POST',
+//                    dataType: 'json',
+                    url: '/addfaq',
+                    data: $scope.admin, //forms user object
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function (data) {
+                    window.location = '/faq';
+                });
+
+            }
+        };
+    });
+
+</script>
+
