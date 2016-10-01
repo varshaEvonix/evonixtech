@@ -3,7 +3,7 @@ module.exports.routes = {
     '/': {
         view: 'homepage'
     },
-    '/studentlogin': 'UserController.myLogin',
+//    '/studentlogin': 'UserController.myLogin',
     '/user': 'Student_detailsController.stulogin',
     '/personal': 'PersonalController.insertpersonal',
     '/education': 'EducationController.inserteducation',
@@ -43,9 +43,15 @@ module.exports.routes = {
     '/admin/allstudents/:id': 'Admin_dashController.get_student',
     '/admin/activestudent/:id': 'Admin_dashController.activestudent',
     '/admin/inactivestudent/:id': 'Admin_dashController.inactivestudent',
+    '/upload_file': 'Admin_dashController.upload_file',
     '/add_notes': 'Admin_dashController.add_notes',
     '/stumuch/faq': 'FrontendController.fetch_faq',
     'post /updateaboutus': 'Static_pageController.updateaboutus',
     'post /updateterms': 'Static_pageController.updateterms',
     'post /updatefaq': 'Static_pageController.updatefaq',
+    '/admin/login': 'AuthController.login',
+    '/admin/logout': 'AuthController.logout',
+    '/admin/process': 'AuthController.process',
+    '/admin/studlockedprofile/:id': 'Admin_dashController.studlockedprofile',
+    '/admin/update_student_profile': 'Admin_dashController.update_student_profile',
 };

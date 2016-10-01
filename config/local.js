@@ -1,4 +1,8 @@
 /**
+ * 
+ * 
+Username : root
+Password : Evonix@287
  * Local environment settings
  *
  * Use this file to specify configuration settings for use while developing
@@ -61,7 +65,7 @@ module.exports = {
    ***************************************************************************/
 
   port: process.env.PORT || 1337,
-
+//port: 80,
   /***************************************************************************
    * The runtime "environment" of your Sails app is either typically         *
    * 'development' or 'production'.                                          *

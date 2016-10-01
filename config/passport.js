@@ -1,51 +1,56 @@
-
-module.exports.routes = {
-    '/': {
-        view: 'homepage'
-    },
-    '/studentlogin': 'UserController.myLogin',
-    '/user': 'Student_detailsController.stulogin',
-    '/personal': 'PersonalController.insertpersonal',
-    '/education': 'EducationController.inserteducation',
-    '/loan': 'LoanController.insertloan',
-//    '/editaboutus': 'About_adminController.edit_about_us',
-//    '/abterms': 'AbtermsController.get_terms_and_cond',
-//    '/editabterms': 'AbtermsController.edit_terms_and_cond',
-//    '/faq': 'FaqController.get_faq',
-//    '/editfaq/:id': 'FaqController.editfaq',
-//    '/allstudents/:id': 'Admin_dashController.get_student',
-    '/viewdetails/:id': 'Admin_dashController.viewdetails',
-    '/change_status': 'Admin_dashController.change_status',
-//    '/getstudents': 'Admin_dashController.getstudents',
-    '/viewprofile': 'ProfileController.mypro',
-    '/personal_edit': 'Personal_editController.editpersonal',
-    '/personal_edit_submit': 'Personal_editController.editpersonalsubmit',
-    '/education_edit': 'Education_editController.editeducation',
-    '/education_edit_submit': 'Education_editController.editeducationsubmit',
-    '/loan_edit': 'Loan_editController.editloan',
-    '/loan_edit_submit': 'Loan_editController.editloansubmit',
-    '/admin_dash': 'Admin_dashController.admin_dash',
-//    'post /updateaboutus': 'About_adminController.updateaboutus',
-//    'post /updateterms': 'AbtermsController.updateterms',
-//    'post /updatefaq': 'FaqController.updatefaq',
-//   -------------------- varsha-------------------------------------------------------
-    '/admin/aboutus': 'Static_pageController.get_about_us',
-    '/admin/editaboutus': 'Static_pageController.edit_about_us',
-    '/admin/abterms': 'Static_pageController.get_terms_and_cond',
-    '/admin/editabterms': 'Static_pageController.edit_terms_and_cond',
-    '/admin/faq': 'Static_pageController.get_faq',
-    '/admin/editfaq/:id': 'Static_pageController.editfaq',
-    '/admin/privacypolicy': 'Static_pageController.privacypolicy',
-    '/admin/editprivacypolicy': 'Static_pageController.editprivacypolicy',
-    '/updateprivacypolicy': 'Static_pageController.updateprivacypolicy',
-    '/addfaq': 'Static_pageController.addfaq',
-    '/get_category': 'Static_pageController.get_category',
-    '/admin/allstudents/:id': 'Admin_dashController.get_student',
-    '/admin/activestudent/:id': 'Admin_dashController.activestudent',
-    '/admin/inactivestudent/:id': 'Admin_dashController.inactivestudent',
-    '/add_notes': 'Admin_dashController.add_notes',
-    '/stumuch/faq': 'FrontendController.fetch_faq',
-    'post /updateaboutus': 'Static_pageController.updateaboutus',
-    'post /updateterms': 'Static_pageController.updateterms',
-    'post /updatefaq': 'Static_pageController.updatefaq',
+//var passport = require('passport'),
+//        LocalStrategy = require('passport-local').Strategy,
+//        bcrypt = require('bcrypt');
+//
+//passport.serializeUser(function (user, done) {
+//    done(null, user.id);
+//});
+//
+//passport.deserializeUser(function (id, done) {
+//    User.findOne({id: id}, function (err, user) {
+//        done(err, user);
+//    });
+//});
+//
+//passport.use(new LocalStrategy({
+//    usernameField: 'email',
+//    passwordField: 'password'
+//},
+//function (email, password, done) {
+//
+//    User.findOne({email: email}, function (err, user) {
+//        if (err) {
+//            return done(err);
+//        }
+//        if (!user) {
+//            return done(null, false, {message: 'Incorrect email.'});
+//        }
+//
+//        bcrypt.compare(password, user.password, function (err, res) {
+//            if (!res)
+//                return done(null, false, {
+//                    message: 'Invalid Password'
+//                });
+//            var returnUser = {
+//                email: user.email,
+//                createdAt: user.createdAt,
+//                id: user.id
+//            };
+//            return done(null, returnUser, {
+//                message: 'Logged In Successfully'
+//            });
+//        });
+//    });
+//}
+//));
+var passport = require('passport'),
+        LocalStrategy = require('passport-local').Strategy;
+module.exports = {
+    express: {
+        customMiddleware: function (app) {
+            console.log('Express midleware for passport');
+            app.use(passport.initialize());
+            app.use(passport.session());
+        }
+    }
 };
