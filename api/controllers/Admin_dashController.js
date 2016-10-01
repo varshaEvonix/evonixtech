@@ -10,7 +10,6 @@ module.exports = {
         res.view();
     },
     'admin_dash': function (req, res) {
-
         return res.view('./admin/admin_dash');
 
     },
@@ -63,14 +62,23 @@ module.exports = {
 
         Student_details.query(q, function (err, results) {
             var query = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=' + req.param('id');
+
             Student_details.query(query, function (err, doner_result) {
-
-                res.view('./admin/studprofile', {
-                    layout: false,
-                    data: results,
-                    doner_result: doner_result,
+                var loan_id = '';
+                results.forEach(function (result, index) {
+                    loan_id = result.loan_id;
                 });
+                var comments_query = 'SELECT * FROM admin_loan_comments  where admin_loan_comments.loan_id=' + loan_id;
+                Admin_loan_comments.query(comments_query, function (err, comments) {
 
+                    res.view('./admin/studprofile', {
+                        layout: false,
+                        data: results,
+                        doner_result: doner_result,
+                        comments: comments,
+                    });
+
+                });
             });
         });
     },
@@ -172,31 +180,50 @@ module.exports = {
         });
 
     },
+    upload_file: function (req, res) {
+
+        if (req.method === 'POST') {
+            var file = req.file('file');
+            var filename = req.file('file')._files[0].stream.filename;
+            var newfilename = Date.now() + filename;
+            req.file('formdata').upload({dirname: '../public/index_files/notes_attachment/', saveAs: newfilename}, function (err, files) {
+                return res.ok(newfilename);
+            });
+        }
+    },
     add_notes: function (req, res) {
 
         if (req.method === 'POST') {
-            console.log('We have entered the uploading process ');
-req.param('note');
-//            var newFilename = req.file('formdata')._files[0].stream.filename;
-//            console.log('newFilename');
-//            console.log(newFilename);
-            req.file('formdata').upload({dirname: '../public/index_files/notes_attachment/'}, function (err, files) {
-                console.log(err);
-//                var file_name = '';
-//                files.forEach(function (files, index) {
-//                    file_name = files.filename;
-//                });
-//                console.log('here');
-//                console.log(file_name);
-//                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('note').loan_id + "', '" + req.param('note').note + "', '" + req.param('note').note_type + "', '" + file_name + "', '1')";
-//                Admin_loan_comments.query(insert_query, function (err, record)
-//                {
-//                    console.log(record);
-//                    return res.redirect('/viewdetails/1');
-//                });
 
+            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + req.param('filename') + "', '1')";
+            Admin_loan_comments.query(insert_query, function (err, record)
+            {
+                return res.redirect('/viewdetails/' + req.param('student_id'));
             });
+
         }
+    },
+    studlockedprofile: function (req, res) {
+        var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.student_id=' + req.param('id');
+        Student_changed_val.query(q, function (err, results) {
+            console.log('results');
+            console.log(results);
+            return   res.view('./admin/studlockedprofile', {
+                layout: false,
+                student_records: results
+            });
+        });
+    },
+    update_student_profile: function (req, res) {
+        var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
+        var q = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
+        Student_login_credentials.query(q, function (err, results) {
+            var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "' WHERE `student_changed_val`.`student_id` =" + req.param('student_id');
+            Student_login_credentials.query(query, function (err, query_results) {
+                var path = '/viewdetails/' + req.param('student_id');
+                return res.ok({path: path});
+            });
+        });
     },
 };
 

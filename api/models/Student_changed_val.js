@@ -7,10 +7,10 @@
 
 module.exports = {
     attributes: {
-        name: {type: 'string'},
-        username: {type: 'string'},
-        email: {type: 'email'},
-        about_us: {type: 'string'},
-        video_link: {type: 'string'},
+        admin_firstname: {type: 'string'},
+        admin_lastname: {type: 'string'},
+        admin_contactno: {type: 'integer'},
+        admin_email: {type: 'string'},
+        admin_password: {type: 'string'},
     }
 };
