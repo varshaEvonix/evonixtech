@@ -1,0 +1,480 @@
+<%- include ../admin/admin_head.ejs %>
+<%- include ../admin/sidebar.ejs %>
+<style>
+    .progress-bar {
+        position: relative;
+        height: 100px;
+        width: 100px;
+    }
+
+    .progress-bar div {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+    }
+
+    .progress-bar div span {
+        position: absolute;
+        font-family: Arial;
+        font-size: 25px;
+        line-height: 75px;
+        height: 75px;
+        width: 75px;
+        left: 12.5px;
+        top: 12.5px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    .progress-bar .background { background-color: #b3cef6; }
+
+    .progress-bar .rotate {
+        clip: rect(0 50px 100px 0);
+        background-color: #4b86db;
+    }
+
+    .progress-bar .left {
+        clip: rect(0 50px 100px 0);
+        opacity: 1;
+        background-color: #b3cef6;
+    }
+
+    .progress-bar .right {
+        clip: rect(0 50px 100px 0);
+        transform: rotate(180deg);
+        opacity: 0;
+        background-color: #4b86db;
+    }
+    .grn{
+        color:#009900;
+    }
+    p.indicate{
+        top:42%;
+        position:absolute;
+        left:26%;
+    }
+
+    @keyframes 
+    toggle {  0% {
+                  opacity: 0;
+              }
+              100% {
+                  opacity: 1;
+              }
+    }
+    .info{
+        font-size:15px;
+    }
+    .small{
+        color:#777;
+    }
+    .front-info{
+        font-size:15px;
+    }
+    .money_info{
+        padding-top:44px;
+    }
+    .bot{
+        padding-bottom:115px;
+    }
+</style>
+<% _.each(data, function (data) { %>
+<section id="main-content">
+    <div class="wrapper">
+
+        <div >
+            <div class="row">
+                <div class="col-md-5">
+                    <br>
+                    <% 
+                    if( data.student_profile_pic_path !=' '){
+                    %>
+                    <img src="../index_files/feature2.jpg" width="440" height="275">
+                    <%
+                    }else{
+                    %>
+                    <img src="../index_files/feature2.jpg" width="440" height="275">
+                    <% 
+                    }
+                    %>
+
+                </div>
+                <div class="col-md-7">
+                    <h2><%= data.student_firstname %> <%= data.student_lastname %><span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong>
+                                <% if (data.profile_lock == '0'){ %>
+                                <span class="grn"><%=  'Active' %>  </span>
+                                <% 
+                                }else{
+                                %>
+                                <span class="grn"><%=  'De-Active' %>  </span>
+                                <%
+                                }
+                                %>
+                            </p>
+                            <% if (data.profile_lock == '0'){ %>
+                            <button type="button" class="btn btn-success btn-sm">Activate</button>
+                            <% 
+                            }else{
+                            %>
+                            <button type="button" class="btn btn-danger btn-sm">Deactivate</button>
+                            <%
+                            }
+                            %>
+                            <!--<button type="button" class="btn btn-success btn-sm">Send mail</button>-->
+                        </span></h2>
+                    <p class="front-info"><%= data.student_email %></p>
+                    <p class="front-info">Contact: <%= data.student_contactno %></p>
+                    <!--<h4> <%= data.student_city %>,</h4>-->
+                    <!--                    <h3><%= data.student_ambition %></h3>
+                                        <p>Me – <%= data.student_about_me %></p><br>-->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4><strong>Goal :</strong></h4><h2>$<%= data.loan_amount %></h2>
+                        </div>
+                        <div class="col-sm-4">
+                            <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
+                            <% 
+                            var percentage= 0;
+                            var goal=data.loan_amount;
+                            var tot = 0;
+                            _.each(doner_result, function (doner_result) {
+                            var temp = doner_result.funded_amount;
+                            tot = tot + temp;
+                            })
+                            var percentage = (tot / goal) * 100;
+
+                            %>
+                            <p class="indicate"><strong>
+
+                                    <%= percentage.toFixed(0) %>%</strong></p>
+                            <input type="hidden" name="percentage" id="percentage_amount" value="<%= percentage %>">
+                        </div>
+                        <div class="col-sm-4 pull-right">
+                            <% 
+                            var  total= 0;
+                            _.each(doner_result, function (doner_result) { 
+                            var temp=doner_result.funded_amount;
+                            total = total + temp;
+                            })
+                            %>
+                            <h4><strong>Raised :</strong></h4><h2>$<%= total %></h2>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" ><a href="javascript:void(0);" data-toggle="modal" data-target="#internalNotes" class="btn btn-primary"> Add Notes</a></div>
+                        <!--<div class="col-md-6"><a href="javascript:void(0);" data-toggle="modal" data-target="#externalNotes" class="btn btn-primary">Add External Notes</a></div>-->
+                    </div>
+                </div>
+                <br>
+
+            </div>
+        </div><br>
+        <div class="row">
+
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Personal Detail</a></li>
+                <li ><a data-toggle="tab" href="#menu1">Education Details</a></li>
+                <li><a data-toggle="tab" href="#menu2">Loan Details</a></li>
+                <li><a data-toggle="tab" href="#menu3">Admin External Notes</a></li>
+                <li><a data-toggle="tab" href="#menu4">Admin Internal Notes</a></li>
+                <li><a data-toggle="tab" href="#menu5">Donors details</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <div class="col-md-12 white_bg">
+                        <h3>Personal details</h3><br>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">First name: <br>
+                                </span><%= data.student_firstname %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Last name: <br>
+                                </span><%= data.student_lastname %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Contact number: <br>
+                                </span><%= data.student_contactno %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Email: <br>
+                                </span><%= data.student_email %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Permanent address: <br>
+                                </span><%= data.student_address %></h4>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">City: <br>
+                                </span><%= data.student_city %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">State: <br>
+                                </span><%= data.student_state %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Country: <br>
+                                </span><%= data.student_country %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info"> <span class="small">Birth date: <br>
+                                </span><%= data.student_birthdate %></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="info"> <span class="small">About me: <br>
+                                </span><%= data.student_about_me %></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="info"> <span class="small">My ambition: <br>
+                                </span><%= data.student_ambition %></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="menu1" class="tab-pane fade in active">
+                    <div class="col-md-12 white_bg">
+                        <h3>Education Details</h3><br>
+                        <div class="col-md-4">
+                            <p class="info">  <span class="small">Education Institute: <br>
+                                </span><%= data.student_education_institute %></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="info">  <span class="small">currently studying: <br>
+                                </span><%= data.student_education_fieldofstudy %></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="menu2" class="tab-pane">
+                    <div class="col-md-12 white_bg">
+                        <h3>Loan Details</h3><br>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Loan purpose: <br>
+                                </span><%= data.loan_purpose_name %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info"> <span class="small">Loan amount: <br>
+                                </span><%= data.loan_amount %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Loan bank name: <br>
+                                </span><%= data.loan_bankname %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Loan account number: <br>
+                                </span><%= data.loan_accountno %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Remittance account bank name: <br>
+                                </span><%= data.remittance_account_bank_name %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Remittance account bank account number: <br>
+                                </span><%= data.remittance_account_bankaccount_no %></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="info">  <span class="small">Remittance account bank IFSC code: <br>
+                                </span><%= data.remittance_account_ifsc %></p>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="info">  <span class="small">Loan details note: <br></span><%= data.loan_details_note %></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="menu3" class="tab-pane ">
+                    <div class="col-md-12 white_bg">
+                        <h3>Admin External Notes</h3>
+                        <p>Some content.</p>
+                    </div>
+                </div>
+                <div id="menu4" class="tab-pane ">
+                    <div class="col-md-12 white_bg">
+                        <h3>Admin Internal Notes</h3>
+                        <p>Some content.</p>
+                    </div>
+                </div>
+                <div id="menu5" class="tab-pane ">
+                    <div class="col-md-12 white_bg">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Donors Name</th>
+                                <th>Donors Email</th>
+                                <th>Donors Amount</th>
+                            </tr>
+                            <% _.each(doner_result, function (doner_result) { %>
+                            <tr>
+                                <td><p><%= doner_result.donors_name %></p></td>
+                                <td><p><%= doner_result.donor_email %></p></td>
+                                <td><p>$ <%= doner_result.funded_amount %></p></td>
+                            </tr>
+                            <% }) %>
+                        </table>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<div class="modal fade" id="internalNotes" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #00A290;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Notes</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" ng-submit="submitForm()" enctype="multipart/form-data" role="form" name="NotesForm" novalidate>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">Note Type</label>
+                        <div class="col-sm-5">
+                            <label>
+                                <input type="radio" ng-model="admin.note_type"  id="note_type"  autocomplete="off" name="note_type[]" value="1" required/>&nbsp;&nbsp;
+                                Internal
+                            </label>
+                            <!--<input type="radio" ng-model="admin.note_type" class="form-control" id="note_type"  autocomplete="off" name="note_type[]" value="2" required/>-->
+                            <!--                            <select name="note_type" ng-model="admin.note_type" class="form-control" required>
+                                                            <option value="1">Internal Notes</option>
+                                                            <option value="2">External Notes</option>
+                                                        </select> -->
+                            <span ng-show="submitted && NotesForm.note_type.$error.required"  class="help-block has-error ng-hide">Note type is required.</span>
+                        </div>
+                        <div class="col-sm-5">
+                            <label>
+                                <!--<input type="radio" ng-model="admin.note_type" class="form-control" id="note_type"  autocomplete="off" name="note_type[]" value="1" required/>-->
+                                <input type="radio" ng-model="admin.note_type"  id="note_type"  autocomplete="off" name="note_type[]" value="2" required/>&nbsp;&nbsp;
+                                External
+                            </label>
+
+                            <span ng-show="submitted && NotesForm.note_type.$error.required"  class="help-block has-error ng-hide">Note type is required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Note</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" ng-model="admin.note" name="note" cols="60" rows="5" required></textarea>
+                            <span ng-show="submitted && NotesForm.note.$error.required"  class="help-block has-error ng-hide">Note is required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Upload Attachment</label>
+                        <div class="col-sm-10">
+                            <input type="file" ng-files="getTheFiles($files)" ng-model="admin.attachment" id="attachment"  name="attachment"/>
+                            <!--<span ng-show="submitted && NotesForm.attachment.$error.required"  class="help-block has-error ng-hide">Attachment is required.</span>-->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="hidden" name="loan_id" id="loan_id"  value="<%= data.loan_id %>"/>
+                            <button type="submit" ng-click="uploadFiles()" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<% }) %>
+<!-- BOOTSTRAP SCRIPTS -->
+<%- include ../admin/stufoot.ejs %>
+<script type="text/javascript">
+    $(function () {
+        $("#bluecircle").percircle();
+    });
+    $(document).ready(function () {
+        $(".progress-bar").loading();
+    });</script>
+
+<script>
+    var doughnutData = [
+        {
+            value: Number($('#percentage_amount').val()),
+            color: "#68dff0"
+        },
+        {
+            value: 30,
+            color: "#fdfdfd"
+        }
+    ];
+    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+</script>
+<script>
+    angular.module('postApp', [])
+            .directive('ngFiles', ['$parse', function ($parse) {
+
+                    function fn_link(scope, element, attrs) {
+                        var onChange = $parse(attrs.ngFiles);
+                        element.on('change', function (event) {
+                            onChange(scope, {$files: event.target.files});
+                        });
+                    }
+                    ;
+                    return {
+                        link: fn_link
+                    }
+                }])
+            .controller('postController', function ($scope, $http) {
+
+                var formdata = new FormData();
+                $scope.getTheFiles = function ($files) {
+                    angular.forEach($files, function (value, key) {
+                        formdata.append(key, value);
+                    });
+                };
+
+                // NOW UPLOAD THE FILES.
+                $scope.admin = {};
+                $scope.admin.loan_id = $("#loan_id").val();
+                $scope.submitForm = function () {
+                    $upload.upload({
+                        url: 'upload/item-image',
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                        data: {note: $scope.admin},
+                        file: formdata,
+                        fileName: $scope.uploadFile.name
+                    }).success(function (data) {
+                        console.log(data);
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+//                    console.log($scope.admin);
+//                    console.log(formdata);
+//                    $scope.admin
+//                    var request = {
+//                        method: 'POST',
+//                        url: '/add_notes',
+//                        data: {formdata: formdata, note: $scope.admin},
+//                        headers: {
+//                            'Content-Type': 'multipart/form-data'
+//                        }
+//                    };
+//
+//                    // SEND THE FILES.
+//                    $http(request)
+//                            .success(function (d) {
+//                                alert(d);
+//                            })
+//                            .error(function () {
+//                            });
+                }
+            });
+</script>
+
+
+
