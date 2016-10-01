@@ -1,47 +1,5 @@
 <%- include ../admin/admin_head.ejs %>
 <%- include ../admin/sidebar.ejs %>
-<!--<link rel="stylesheet" type="text/css" href="../../index_files/stdash/css/jquery.dataTables.css">
-<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="../../index_files/stdash/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" >
-    $(document).ready(function () {
-        var dataTable = $('#employee-grid').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                url: "/getstudents", // json datasource
-                type: "post", // method  , by default get
-                error: function () {  // error handling
-                    $(".employee-grid-error").html("");
-                    $("#employee-grid").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
-                    $("#employee-grid_processing").css("display", "none");
-
-                }
-            }
-        });
-    });
-</script>
-<style>
-    div.container {
-        margin: 0 auto;
-        max-width:760px;
-    }
-    div.header {
-        margin: 100px auto;
-        line-height:30px;
-        max-width:760px;
-    }
-    body {
-        background: #f7f7f7;
-        color: #333;
-        font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Verdana,Arial,Helvetica,sans-serif;
-    }
-</style>-->
-
-
-
-
-
 
 <section id="main-content">
     <section class="wrapper">
@@ -51,20 +9,7 @@
                 <h1 class="phead">Student Listing</h1><br>
                 <div class="col-sm-12">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <!--                        <div class="container">
-                                                    <table id="employee-grid"  cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>student_id</th>
-                                                                <th>student_firstname</th>
-                                                                <th>student_lastname</th>
-                                                                <th>student_contactno</th>
-                                                                <th>student_email</th>
-                                                                <th>student_country</th>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>-->
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -105,11 +50,6 @@
                                     </td>
                                 </tr>
                                 <% }) %>
-                                <!--                                <tr>
-                                                                    <td>
-                                                                        No Record Found
-                                                                    </td>
-                                                                </tr>-->
 
                             </tbody>
                         </table>
@@ -129,15 +69,7 @@
                     </div>
                 </div>
 
-
-            </div><!-- /col-lg-9 END SECTION MIDDLE -->
-
-
-            <!-- **********************************************************************************************************************************************************
-            RIGHT SIDEBAR CONTENT
-            *********************************************************************************************************************************************************** -->                  
-
-
+            </div>
         </div>
     </section>
 </section>
