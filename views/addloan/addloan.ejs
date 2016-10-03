@@ -1,12 +1,7 @@
 <%- include ../stuhead.ejs %>
 
  <%- include ../stud_left.ejs %>
- 
-<style>
-div.tooltip-inner {
-    max-width: 350px;
-}
-</style>
+
 
 <style type="text/css">
 .form-control.fileip {
@@ -48,7 +43,6 @@ input[type=file]:before {
 }
 </style>
 
-<% _.each(answer, function (answer) { %>
 <section id="main-content" ng-app="postApp" ng-controller="postController">
           <section class="wrapper">
           <div class="row">
@@ -56,9 +50,9 @@ input[type=file]:before {
 
 
          
-          <h2>Loan details&nbsp;&nbsp; <span class="small">Current balance last verified date: 22/09/2016</span></h2>
+          <h2>Loan details</h2>
           <br>
-       <form class="form" method="POST" ng-submit="submitForm()" ng-controller="formCtrl as formCtrl" enctype="multipart/form-data" name="loanform" novalidate>
+       <form class="form" ng-submit="submitForm()" enctype="multipart/form-data" name="loanform" novalidate>
 <div class="row">
            
    
@@ -78,8 +72,8 @@ input[type=file]:before {
 
 <div class="col-md-6">
 <div id="fafsa" style="display:none">
-<label for="fafsa">Select loan name:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-<select name="fafsa_values" id="fafsa_value" class="dropdown form-group" ng-model="student.fafsa_values" value="<%= answer.fafsa_values %>" required>
+<label for="fafsa">Select loan name: </label><br>
+<select name="fafsa_values" id="fafsa_value" class="dropdown form-group" ng-model="student.fafsa_values" value="" required>
 <option value="" selected="selected" disabled>Select loan name</option>
 <option value="1">CornerStone</option>
 <option value="2">FedLoan Servicing (PHEAA)</option>
@@ -101,7 +95,7 @@ input[type=file]:before {
 <div id="bankloan"  style="display:none;">
  <div class="form-group">
       <label for="loan_bankname">Enter your bank name: </label>
-      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your education institute" value="<%= answer.loan_bankname %>" required>
+      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your education institute" value="" required>
        <p ng-show="submitted && loanform.loan_bankname.$error.required"  class="help-block has-error ng-hide">Bank name is required.</p>
     </div>
 </div>
@@ -111,56 +105,55 @@ input[type=file]:before {
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-      <label for="loan_accountno">Enter your loan account number:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" ng-model="student.loan_accountno" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= answer.loan_accountno %>" required>
+      <label for="loan_accountno">Enter your loan account number: </label>
+      <input type="text" ng-model="student.loan_accountno" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="" required>
        <p ng-show="submitted && loanform.loan_accountno.$error.required"  class="help-block has-error ng-hide">Loan account number is required.</p>
     </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
-      <label for="loan_amount">Enter your loan current balance: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" ng-model="student.loan_amount" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= answer.loan_amount %>" required>
+      <label for="loan_amount">Enter your current loan amount: </label>
+      <input type="text" ng-model="student.loan_amount" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="" required>
        <p ng-show="submitted && loanform.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount is required.</p>
     </div>
   
     </div>
     </div>
     <br>
-    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
-     <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
-   </form>
 <br>
    <div class="row">
    <div class="col-md-12">
-   <h2>Loan details</h2>
+   <h4>Loan details</h4>
    </div>
    <br><br><br>
    </div>
 <div class="row">
 <div class="col-md-12">
 
-  <form id="user_doc" enctype="multipart/form-data" action="/user_docs/<%= answer.student_id %>/<%= answer.loan_id %>" method="POST" name="user_doc">
+  
       <div class="input_fields_wrap form-horizontal">
         <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
         <div class="form-group">
-            <input class="form-control fileip" type="text" name="document_name" placeholder="Enter the name of the file">
-            <input type="file" name="document_path" class="filebtn">
+            <input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name" placeholder="Enter the name of the file" required>
+             <p ng-show="submitted && loanform.document_name.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
+            <input type="file" ng-model="student.document_path onchange="angular.element(this).scope().uploadFile(this.files)" name="document_path" class="filebtn" required>
+             <p ng-show="submitted && loanform.document_path.$error.required"  class="help-block has-error ng-hide">Document is required.</p>
             
       
       
   </div> 
    </div>
   <br><br>
-             <button type="submit" class="btn btn-default text-center">Submit</button>
+              <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
      <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
-       
+       </div></div>
   </form>  
 
    </div>
    <br><br><br>
 </div>
   </div>
-    <% }) %>
+   
   
    <%- include ../stud_right.ejs %>
 </section>
@@ -230,12 +223,22 @@ $('#bankloan').show();
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
 
-    <% _.each(answer, function (answer) { %>
-  $scope.student.fafsa_values='<%= answer.fafsa_values %>';
-  $scope.student.loan_bankname='<%= answer.loan_bankname %>';
-  $scope.student.loan_accountno='<%= answer.loan_accountno %>';
-  $scope.student.loan_amount='<%= answer.loan_amount %>';
-
+     $scope.uploadFile = function (files) {
+                    $('#submit-notes').hide();
+                            $('.loading').show();
+                            var fd = new FormData();
+                            fd.append("file", files[0]);
+                            console.log(fd);
+                            $http.post('/upload_documents', fd, {
+                            withCredentials: true,
+                                    headers: {'Content-Type': undefined},
+                                    transformRequest: angular.identity
+                            }).success(function (data) {
+                    $scope.student.filename = data;
+                            $('#submit-notes').show();
+                            $('.loading').hide();
+                    });
+                    };
 
     
         $scope.submitForm = function () {
@@ -243,7 +246,7 @@ $('#bankloan').show();
                 $http({
                     method: 'POST',
 //                    dataType: 'json',
-                    url: '/loan_edit_submit/<%= answer.loan_id %>',
+                    url: '/addloan_submit',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (data) {
@@ -253,7 +256,6 @@ $('#bankloan').show();
 
             }
             
-<% }) %>
         };
     });
 
@@ -271,7 +273,7 @@ $(document).ready(function() {
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
             // $(wrapper).append('<div><input type="text"  class="form-control" name="mytext[]"/><input type="file"><a href="#" class="remove_field">Remove</a></div>'); //add input box
-            $(wrapper).append('<div class="form-group"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name" placeholder="Enter the name of the file"><input type="file" ng-model="student.document_path" name="document_path" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div>'); //add input box
+            $(wrapper).append('<div class="form-group"> <input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name" placeholder="Enter the name of the file"> <input type="file" ng-model="student.document_path onchange="angular.element(this).scope().uploadFile(this.files)" name="document_path" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div>'); //add input box
         }
     });
     
@@ -280,9 +282,3 @@ $(document).ready(function() {
     })
 });
 </script>
- <script>
-                                                $(document).ready(function () {
-                                                    $('[data-toggle="tooltip"]').tooltip();
-                                                });
-</script>
-

@@ -1,77 +1,217 @@
-<%- include ../stuhead.ejs %>
-
- <%- include ../stud_left.ejs %>
-<section id="main-content">
-          <section class="wrapper">
-          <div class="row">
-          <div class="col-md-9">
-          <h2>Personal details</h2>
-          <br>
-
-           <form action="/personal_edit_submit" method="POST" role="form">
+  <%- include ../stuhead.ejs %>
  
-    <div class="form-group">
-     <% _.each(answer, function (answer) { %>
-      <input type="text" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= answer.student_firstname %>">
+   <%- include ../stud_left.ejs %>
+
+   <style>
+div.tooltip-inner {
+    max-width: 350px;
+}
+</style>
+   
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+
+
+  <section id="main-content" ng-app="postApp" ng-controller="postController">
+            <section class="wrapper">
+            <div class="row">
+            <div class="col-md-9"> <% _.each(answer, function (answer) { %>
+            <h2>Personal details</h2>
+            <br>
+            <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= answer.student_id %>" method="POST" name="userPhoto" novalidate>
+            
+            <div class="col-md-12" style="margin-bottom:20px">
+
+            <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:300px">
+            <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a>
+            <div class="profile_image " style="width:100%;height:280px;background-image:url(../index_files/uploads/<%= answer.student_profile_pic_path %>);">
+             
+            
+              </div>
+              <div class="fileUpload btn btn-default">
+<span class="fa fa-pencil pencil_icon"></span>
+ <input type="file" name="userPhoto" id ="userPhoto" class="upload" />
+</div>
+             <div class="fileUpload btn btn-default pull-right">
+<span class="fa fa-check pencil_icon"></span>
+  <input type="submit" value="submit" class="upload"/>
+</div>
+            
+              </div>
+              
+             
+   </div>
+  </form>
+            <br>
+             <!--form action="/personal_edit_submit" method="POST" role="form"-->
+             <form class="form" ng-submit="submitForm()" name="personalform" novalidate>
+
+             <div class="col-md-12">
+      <div class="form-group">
+        
+      </div>
+  </div> 
+       <div class="col-md-6">
+      <div class="form-group">
+
+        <label for="student_firstname">Your firstname: </label>
+        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= answer.student_firstname %>" required>
+        <p ng-show="submitted && personalform.student_firstname.$error.required"  class="help-block has-error ng-hide">Firstname is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+        <label for="student_lastname">Your lastname: </label>
+        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= answer.student_lastname %>" required>
+        <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group ">
+         <label for="student_contactno">Your contact number: </label>
+        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= answer.student_contactno %>" required>
+         <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
+  </div>
+      </div>
+  <div class="col-md-6">
+      <div class="form-group ">
+     <label for="student_email">Your email: </label>
+        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= answer.student_email %>" required>
+         <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+       <div class="form-group ">
+     <label for="student_address">Your address: </label>
+        <input type="text" ng-model="student.student_address" class="form-control" id="student_address" name="student_address" placeholder="Enter your address" value="<%= answer.student_address %>" required>
+         <p ng-show="submitted && personalform.student_address.$error.required"  class="help-block has-error ng-hide">Address is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+     <label for="student_city">Your city: </label>
+        <input type="text" ng-model="student.student_city" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= answer.student_city %>" required>
+         <p ng-show="submitted && personalform.student_city.$error.required"  class="help-block has-error ng-hide">City is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+     <label for="student_state">Your state: </label>
+        <input type="text" ng-model="student.student_state" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= answer.student_state %>" required>
+         <p ng-show="submitted && personalform.student_state.$error.required"  class="help-block has-error ng-hide">State is required.</p>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="form-group">
+     <label for="student_country">Your country: </label>
+        <input type="text" ng-model="student.student_country" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= answer.student_country %>" required>
+         <p ng-show="submitted && personalform.student_country.$error.required"  class="help-block has-error ng-hide">Country is required.</p>
+      </div></div>
+
+       <div class="col-md-6">
+      <div class="form-group">
+     <label for="zip_code">Enter Zip Code: </label>
+     <div class="input-group">
+        <input type="text" ng-model="student.zip_code" class="form-control" id="zip_code" name="zip_code" placeholder="Enter Zip Code" value="<%= answer.zip_code %>" required>
+                     </div> </div>
+         <p ng-show="submitted && personalform.zip_code.$error.required"  class="help-block has-error ng-hide">Zip Code is required.</p>
+      </div>
+       <div class="col-md-6">
+      <div class="form-group">
+     <label for="student_birthdate">Your birthdate: <a href="#" data-toggle="tooltip" title=" We cross check validity of all information submitted including your birth 
+date. On your special day, we feature you on the site so that funders can find you more easily.  "> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+     <!-- <p class="tip"><em>Tip:We cross check validity of all information submitted including your birth 
+date. On your special day, we feature you on the site so that funders can find you more easily.<em></p> -->
+     <div class='input-group date' id='datetimepicker1'>
+        <input type="text" data-format="yyyy/mm/dd" ng-model="student.student_birthdate" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= answer.student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+
+                     </div> </div>
+         <p ng-show="submitted && personalform.student_birthdate.$error.required"  class="help-block has-error ng-hide">Birthdate is required.</p>
+      </div>
+       <div class="col-md-12">
+      <div class="form-group">
+      <label for="student_about_me">About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+      <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required><%= answer.student_about_me %> </textarea>
+       <p ng-show="submitted && personalform.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
+       
+      </div></div>
+       <div class="col-md-12">
+      <div class="form-group">
+     <label for="student_ambition">Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+     <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required><%= answer.student_ambition %> </textarea>
+      <p ng-show="submitted && personalform.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
+       
     </div>
-    <div class="form-group">
+      </div>
       
-      <input type="text" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= answer.student_lastname %>">
-    </div>
-    <div class="form-group ">
+      <% }) %>
+      <br>
+      <input type="hidden" name="_csrf" value="<% _csrf%>" />
+     <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
+      <a href="../personal_view/personal_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+     </form>
       
-      <input type="text" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= answer.student_contactno %>">
-    </div>
-    <div class="form-group ">
-   
-      <input type="text" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= answer.student_email %>">
-    </div>
-     <div class="form-group ">
-   
-      <input type="text" class="form-control" id="student_address" name="student_address" placeholder="Enter your address" value="<%= answer.student_address %>">
-    </div>
+      </div>      <%- include ../stud_right.ejs %>
+      </div>
+   </section>
+    </section> 
+                  
+                    <%- include ../stufoot.ejs %>
 
-    <div class="form-group">
-   
-      <input type="email" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= answer.student_city %>">
-    </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
 
-    <div class="form-group">
-   
-      <input type="text" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= answer.student_state %>">
-    </div>
+   <script>
+      var postApp = angular.module('postApp', []);
+      postApp.controller('postController', function ($scope, $http) {
+      $scope.student={};
 
-    <div class="form-group">
+      <% _.each(answer, function (answer) { %>
+    $scope.student.student_firstname='<%= answer.student_firstname %>';
+    $scope.student.student_lastname='<%= answer.student_lastname %>';
+    $scope.student.student_contactno='<%= answer.student_contactno %>';
+    $scope.student.student_email='<%= answer.student_email %>';
+    $scope.student.student_address='<%= answer.student_address %>';
+    $scope.student.student_city='<%= answer.student_city %>';
+    $scope.student.student_state='<%= answer.student_state %>';
+    $scope.student.student_country='<%= answer.student_country %>';
+    $scope.student.student_birthdate='<%= answer.student_birthdate %>';
+    $scope.student.zip_code='<%= answer.zip_code %>';
+    $scope.student.student_about_me='<%= answer.student_about_me %>';
+    $scope.student.student_ambition='<%= answer.student_ambition %>';
+
+
+      <% }) %>
+          $scope.submitForm = function () {
+            $scope.student.student_birthdate=$('#student_birthdate').val();
+              if ($scope.personalform.$valid) {
+                  $http({
+                      method: 'POST',
+  //                    dataType: 'json',
+                      url: '/personal_edit_submit',
+                      data: $scope.student, //forms user object
+                      headers: {'Content-Type': 'application/json'}
+                  }).success(function (data) {
+                      console.log(data);
+                      window.location = '/viewprofile/1';
+                  });
+
+              }
+
+          };
+      });
+
+  </script>
+  <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker1').datetimepicker({
+                   format: 'YYYY-MM-lDD'
+             });
+              });
+          </script>
+          <script>
+                                                $(document).ready(function () {
+                                                    $('[data-toggle="tooltip"]').tooltip();
+                                                });
+</script>
+
    
-      <input type="text" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= answer.student_country %>">
-    </div>
-    <div class="form-group">
-   
-      <input type="text" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= answer.student_birthdate %>">
-    </div>
-    <div class="form-group">
-   
-      <input type="text" class="form-control" id="student_about_me" name="student_about_me" placeholder="So, what about you" value="<%= answer.student_about_me %>">
-    </div>
-    <div class="form-group">
-   
-      <input type="text" class="form-control" id="student_ambition" name="student_ambition" placeholder="What is your ambition" value="<%= answer.student_ambition %>">
-    </div>
-    <div class="form-group">
-   
-      <input type="text" class="form-control" id="student_profile_pic_path" name="student_profile_pic_path" placeholder="Profile picture" value="<%= answer.student_profile_pic_path %>">
-    </div>
-    <% }) %>
-    <br>
-    <input type="hidden" name="_csrf" value="<% _csrf%>" />
-    <button type="submit" class="btn btn-default text-center">Submit</button>
-    <a href="../personal_view/personal_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
-   </form>
-    
-    </div>
-      <%- include ../stud_right.ejs %>
-    </div>
- </section>
-  </section> 
-                
-                  <%- include ../stufoot.ejs %>

@@ -53,27 +53,25 @@
 <div class="row">
                <div>
   
-  
+                            <form action="/search_student" method="POST">
                             <div class="input-group col-md-10">
-                                <input type="text" class="  search-query form-control" placeholder="Find a student" />
+                                <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name"/ style="height:42px">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-dark btn-theme-colored" type="button" style="line-height:2.05 !important;">
-                                        <span class=" glyphicon glyphicon-search"></span>
+                                    <button id="search" class="btn btn-dark btn-theme-colored" type="submit" style="line-height:2.05">
+                                        <span>Search</span>
                                     </button>
                                 </span>
                             </div><br>
-
   
-  <p ><b><input type="checkbox" checked> Birthday Today</b></p>
+  
+  <p><b><input type="checkbox" name="bday_check" id="bday_check" value="1"> Birthday Today</b></p>
   
       
-
                         </div>
-                </div>
+                </div></form>
             </div>
         </section>
-</center>
-<section style="padding-top:60px;padding-bottom:50px">
+        <section style="padding-top:60px;padding-bottom:50px">
     <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -94,6 +92,7 @@
         </div>
     </div>
 </section>
+</center>
         <section>
             <div class="container">
                 <div class="section-title">
@@ -108,182 +107,62 @@
                 <div class="section-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="owl-carousel-3col owl-carousel owl-theme owl-loaded" data-dots="true">
+                            <div class="owl-carousel-3col owl-carousel owl-theme owl-loaded" >
 
 
 
+<%if (birthday.length > 0) { %>
+ <%_.each(birthday, function (birthday) { %>
 
+  
 
                                 <div class="item">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/3_004.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                                <!--div class="project-meta mb-10 font-12">
-                                                    <span class="mr-10"><i class="fa fa-tags"></i> <a rel="tag" href="#">Food</a></span>
-                                                    <span class="mr-10"><i class="fa fa-tags"></i> <a rel="tag" href="#">Education</a></span>
-                                                    <span class="mr-10"><i class="fa fa-tags"></i> <a rel="tag" href="#">Home</a></span>
-                                                </div-->
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
+                                     
+              <div class="causes maxwidth500 mb-sm-50">
+                <div class="thumb">
+                  <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= birthday.student_profile_pic_path %>" width="250" height="230">
+                  <div class="donate-piechart piechart-absolute">
+                
+
+                    <img src="../../index_files/cake.png" style="width:28%;float:right">
+                  </div>
+                </div>
+                 <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
+                                    <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= birthday.student_id %>"> <%= birthday.student_firstname %> <%= birthday.student_lastname %></a></h3>
+                                    
+                                    <p class="desc mb-10 abt1"><%= birthday.student_about_me %>...</p>
+                                    <div class="progress-item mt-0">
+                                        
+                                    </div>
+                    <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
+                                        <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
+                                       <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
                                     </ul>
+                     <div class="progress-item mt-0">
+                                        <div class="progress mb-10">
+                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
                                             </div>
                                         </div>
                                     </div>
+                  <div class="text-center">    <div class="text-center">   <a class="btn btn-dark btn-theme-colored btn-sm text-uppercase mt-10" href="#">Donate Now</a></div></div>
+                  </div>
+                </div>
+              
+
                                 </div>
-                                <div class="item grey">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/feature1.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                                
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item grey">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/feature2.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                               
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                               <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item grey">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                                
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                               <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item grey">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/feature6.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                                
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item grey">
-                                    <div style="width: 370px; margin-right: 15px;" class="owl-item cloned">
-                                        <div class="item mb-10">
-                                            <div class="image-box-thum">
-                                                <img class="img-fullwidth" alt="" src="index_files/feature1.jpg" width="250" height="230">
-                                            </div>
-                                            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                                <h3 class="title mt-0 mb-5"><a href="#">Help Carol pay her loans</a></h3>
-                                                
-                                                <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                                <div class="progress-item mt-0">
-                                                    <div class="progress mb-10">
-                                                        <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                               <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               
+                                
+                                <% }) %>
+                                <% } else { %>
+   <p>No birthdays today</p>
+      <% } %>
+
+
+                            
                             </div>
                         </div>
-                        <div class="owl-controls">
-                            <div class="owl-nav">
-                                <div style="display: none;" class="owl-prev"><i class="fa fa-angle-left"></i>
-                                </div>
-                                <div style="display: none;" class="owl-next"><i class="fa fa-angle-right"></i>
-                                </div>
-                            </div>
-                            <div class="owl-dots" style="">
-                                <div class="owl-dot"><span></span>
-                                </div>
-                                <div class="owl-dot active"><span></span>
-                                </div>
-                            </div>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -358,16 +237,26 @@
             </div>
             <div class="section-content">
                 <div class="row">
+
+                <% _.each(answer, function (answer) { %>
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div  class="owl-item cloned">
                             <div class="item mb-10">
                                 <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
+                                    <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= answer.student_profile_pic_path %>" width="250" height="230">
+                                   
+    
+      <div class="donate-piechart piechart-absolute">
+                    <%if (today == answer.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:28%;float:right"><% } %>
+                  </div>
+                  
+
+
                                 </div>
                                 <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
+                                    <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= answer.student_id %> "><%= answer.student_firstname %> <%= answer.student_lastname %></a></h3>
                                     
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
+                                    <p class="desc mb-10"><%= answer.student_about_me %></p>
                                     <div class="progress-item mt-0">
                                         <div class="progress mb-10">
                                             <div data-percent="85" class="progress-bar"><span class="percent">0</span>
@@ -375,224 +264,25 @@
                                         </div>
                                     </div>
                                     <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
+                                        <li class="current-fund"><strong>$<%= answer.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$1250</strong>collected</li>
-                                      <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
+                                      <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-<li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                      <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                       <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div  class="owl-item cloned">
-                            <div class="item mb-10">
-                                <div class="image-box-thum">
-                                    <img class="img-fullwidth" alt="" src="index_files/feature3.jpg" width="250" height="230">
-                                </div>
-                                <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="#">Support manisha in completing her education</a></h3>
-                                    
-                                    <p class="desc mb-10">Lorem ipsum dolor sit ametcon secte adipisicing elit Sintume likumta.</p>
-                                    <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$7000</strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                        <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                      <% }) %>
                     <div class="col-md-12">
                         <div class="text-center">
-                            <a class="btn btn-default btn-lg" href="#">Show More Projects</a>
+                            <a class="btn btn-default btn-lg" href="/allprofile">Show More Projects</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+ 
     <!-- Divider: testimonials -->
 
     <!-- Section: blog -->
@@ -606,5 +296,6 @@
     <!-- Footer -->
     
     <%- include footer.ejs %>
-   
 
+    
+  

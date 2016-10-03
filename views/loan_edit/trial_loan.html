@@ -1,0 +1,122 @@
+<%- include ../stuhead.ejs %>
+
+ <%- include ../stud_left.ejs %>
+
+<section id="main-content" ng-app="postApp" ng-controller="postController">
+          <section class="wrapper">
+          <div class="row">
+          <div class="col-md-9">
+          <h2>Loan details</h2>
+          <br>
+
+           <!--form action="/loan_edit_submit" method="POST" role="form"-->
+            <form class="form" ng-submit="submitForm()" name="loanform" novalidate>
+ 
+
+
+    <div class="form-group">
+     <% _.each(answer, function (answer) { %>
+     <label for="loan_purpose_name">Enter your loan purpose: </label>
+      <input type="text" ng-model="student.loan_purpose_name" class="form-control" id="loan_purpose_name" name="loan_purpose_name" placeholder="Enter your loan purpose" value="<%= answer.loan_purpose_name %>" required>
+       <p ng-show="submitted && loanform.loan_purpose_name.$error.required"  class="help-block has-error ng-hide">Loan purpose is required.</p>
+    </div>
+    <div class="form-group">
+      <label for="loan_amount">Enter your loan amount: </label>
+      <input type="text" ng-model="student.loan_amount" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan amount" value="<%= answer.loan_amount %>" required>
+       <p ng-show="submitted && loanform.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount is required.</p>
+    </div>
+    <div class="form-group ">
+       <label for="loan_bankname">Enter your bank name: </label>
+      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your bank name" value="<%= answer.loan_bankname %>" required>
+       <p ng-show="submitted && loanform.loan_bankname.$error.required"  class="help-block has-error ng-hide">Loan bank name is required.</p>
+    </div>
+    <div class="form-group ">
+    <label for="loan_accountno">Enter your loan account number: </label>
+      <input type="text" ng-model="student.loan_accountno" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= answer.loan_accountno %>" required>
+       <p ng-show="submitted && loanform.loan_accountno.$error.required"  class="help-block has-error ng-hide">Account number is required.</p>
+    </div>
+     <div class="form-group ">
+   <label for="remittance_account_bank_name">Enter your remittance bank name: </label>
+      <input type="text" ng-model="student.remittance_account_bank_name" class="form-control" id="remittance_account_bank_name" name="remittance_account_bank_name" placeholder="Enter your remittance bank name" value="<%= answer.remittance_account_bank_name %>" required>
+       <p ng-show="submitted && loanform.remittance_account_bank_name.$error.required"  class="help-block has-error ng-hide">Remittance bank name is required.</p>
+    </div>
+
+    <div class="form-group">
+   <label for="remittance_account_bankaccount_no">Enter your remittance bank account number: </label>
+      <input type="text" ng-model="student.remittance_account_bankaccount_no" class="form-control" id="remittance_account_bankaccount_no" name="remittance_account_bankaccount_no" placeholder="Enter your remittance bank account number" value="<%= answer.remittance_account_bankaccount_no %>" required>
+       <p ng-show="submitted && loanform.remittance_account_bankaccount_no.$error.required"  class="help-block has-error ng-hide">Remittance bank account number is required.</p>
+    </div>
+
+    <div class="form-group">
+    <label for="remittance_account_ifsc">Enter your remittance bank IFSC code: </label>
+      <input type="text" ng-model="student.remittance_account_ifsc" class="form-control" id="remittance_account_ifsc" name="remittance_account_ifsc" placeholder="Enter your remittance bank IFSC code" value="<%= answer.remittance_account_ifsc %>" required>
+       <p ng-show="submitted && loanform.remittance_account_ifsc.$error.required"  class="help-block has-error ng-hide">Remittance bank IFSC code is required.</p>
+    </div>
+
+    <div class="form-group">
+   <label for="loan_details_note">Enter your loan details note: </label>
+      <textarea rows="6" ng-model="student.loan_details_note" class="form-control" id="loan_details_note" name="loan_details_note" placeholder="Enter your loan details note" required><%= answer.loan_details_note %>
+      </textarea>
+       <p ng-show="submitted && loanform.loan_details_note.$error.required"  class="help-block has-error ng-hide">Loan details note is required.</p>
+    </div>
+   
+   
+  
+    <br>
+    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
+     <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+   </form></div> <% }) %>
+   <%- include ../stud_right.ejs %>
+</section>
+
+  </section>  
+                
+                  <%- include ../stufoot.ejs %>
+
+ <script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+
+     $scope.student={};
+
+    <% _.each(answer, function (answer) { %>
+  $scope.student.loan_purpose_name='<%= answer.loan_purpose_name %>';
+  $scope.student.loan_amount='<%= answer.loan_amount %>';
+  $scope.student.loan_bankname='<%= answer.loan_bankname %>';
+  $scope.student.loan_accountno='<%= answer.loan_accountno %>';
+$scope.student.remittance_account_bank_name='<%= answer.remittance_account_bank_name %>';
+$scope.student.remittance_account_bankaccount_no='<%= answer.remittance_account_bankaccount_no %>';
+$scope.student.remittance_account_ifsc='<%= answer.remittance_account_ifsc %>';
+$scope.student.loan_details_note='<%= answer.loan_details_note %>';
+
+
+
+    
+
+        $scope.submitForm = function () {
+            if ($scope.loanform.$valid) {
+                $http({
+                    method: 'POST',
+//                    dataType: 'json',
+                    url: '/loan_edit_submit/<%= answer.loan_id %>',
+                    data: $scope.student, //forms user object
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function (data) {
+                    console.log(data);
+                    window.location = '/viewprofile/<%= answer.student_id %>';
+                });
+
+            }
+            <% }) %>
+
+        };
+    });
+
+</script>
+
+
+ stumuchsecurity_007
+ ssh -i "stumuch.pem" ubuntu@ec2-52-40-243-127.us-west-2.compute.amazonaws.com
+
+

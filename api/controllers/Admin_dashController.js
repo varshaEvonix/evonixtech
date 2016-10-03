@@ -10,7 +10,9 @@ module.exports = {
         res.view();
     },
     'admin_dash': function (req, res) {
-        return res.view('./admin/admin_dash');
+        return res.view('./admin/admin_dash', {
+            layout: false,
+        });
 
     },
             get_student: function (req, res) {

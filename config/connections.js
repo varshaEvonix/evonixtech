@@ -41,6 +41,8 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
  // server datatbase
+ 
+
   mysqlServer: {
     adapter: 'sails-mysql',
      host: 'localhost',
@@ -49,7 +51,12 @@ module.exports.connections = {
      database: 'stumuch_db' //optional
 //     database: 'sailsmysql' //optional
    },
- // local datatbase
+   
+  
+
+//  local datatbase
+
+
 //   mysqlServer: {
 //    adapter: 'sails-mysql',
 //     host: 'localhost',

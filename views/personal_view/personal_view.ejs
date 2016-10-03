@@ -33,7 +33,11 @@
     
    <h4><%= answer.student_email %></h4>
    <h4><%= answer.student_birthdate %></h4>
-    
+    <form enctype="multipart/form-data" action="/image_upload" method="POST" novalidate>
+    <input type="file" id="student_profile_pic_path" name="student_profile_pic_path">
+ <br>
+ <input type="submit" value="submit"/>
+</form>
    </div>
 </div>
    <br>
@@ -51,10 +55,11 @@
   
    </div>
    </div>
-   <% }) %>
+  
    </div>
     <%- include ../stud_right.ejs %>
    </div>
+    <% }) %>
  </section>
   </div>
                

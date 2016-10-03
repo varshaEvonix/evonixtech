@@ -1,236 +1,236 @@
 <?php include('admin_head.php') ?>
-<style>
-    .progress-bar {
-        position: relative;
-        height: 100px;
-        width: 100px;
-    }
+  <style>
+  .progress-bar {
+  position: relative;
+  height: 100px;
+  width: 100px;
+}
 
-    .progress-bar div {
-        position: absolute;
-        height: 100px;
-        width: 100px;
-        border-radius: 50%;
-    }
+.progress-bar div {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
 
-    .progress-bar div span {
-        position: absolute;
-        font-family: Arial;
-        font-size: 25px;
-        line-height: 75px;
-        height: 75px;
-        width: 75px;
-        left: 12.5px;
-        top: 12.5px;
-        text-align: center;
-        border-radius: 50%;
-        background-color: white;
-    }
+.progress-bar div span {
+  position: absolute;
+  font-family: Arial;
+  font-size: 25px;
+  line-height: 75px;
+  height: 75px;
+  width: 75px;
+  left: 12.5px;
+  top: 12.5px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: white;
+}
 
-    .progress-bar .background { background-color: #b3cef6; }
+.progress-bar .background { background-color: #b3cef6; }
 
-    .progress-bar .rotate {
-        clip: rect(0 50px 100px 0);
-        background-color: #4b86db;
-    }
+.progress-bar .rotate {
+  clip: rect(0 50px 100px 0);
+  background-color: #4b86db;
+}
 
-    .progress-bar .left {
-        clip: rect(0 50px 100px 0);
-        opacity: 1;
-        background-color: #b3cef6;
-    }
+.progress-bar .left {
+  clip: rect(0 50px 100px 0);
+  opacity: 1;
+  background-color: #b3cef6;
+}
 
-    .progress-bar .right {
-        clip: rect(0 50px 100px 0);
-        transform: rotate(180deg);
-        opacity: 0;
-        background-color: #4b86db;
-    }
-    .grn{
-        color:#009900;
-    }
-    p.indicate{
-        top:42%;
-        position:absolute;
-        left:26%;
-    }
+.progress-bar .right {
+  clip: rect(0 50px 100px 0);
+  transform: rotate(180deg);
+  opacity: 0;
+  background-color: #4b86db;
+}
+.grn{
+  color:#009900;
+}
+p.indicate{
+  top:42%;
+  position:absolute;
+  left:26%;
+}
 
-    @keyframes 
-    toggle {  0% {
-                  opacity: 0;
-              }
-              100% {
-                  opacity: 1;
-              }
-    }
-</style>
-<aside>
-    <div id="sidebar"  class="nav-collapse ">
-        <!-- sidebar menu start-->
-        <ul class="sidebar-menu" id="nav-accordion">
+@keyframes 
+toggle {  0% {
+ opacity: 0;
+}
+ 100% {
+ opacity: 1;
+}
+}
+  </style>
+ <aside>
+          <div id="sidebar"  class="nav-collapse ">
+              <!-- sidebar menu start-->
+              <ul class="sidebar-menu" id="nav-accordion">
+              
+                  <p class="centered"><a href="profile.html"><img src="index_files/stdash/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                  <h5 class="centered">Super Admin</h5>
+                    
+                  <li class="mt">
+                      <a  href="admin_dashboard">
+                          <i class="fa fa-tachometer" aria-hidden="true"></i>
+                          <span>Dashboard</span>
+                      </a>
+                  </li>
 
-            <p class="centered"><a href="profile.html"><img src="index_files/stdash/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-            <h5 class="centered">Super Admin</h5>
+                   <li class="sub-menu">
+                      <a  href="javascript:;" >
+                          <i class="fa fa-desktop"></i>
+                          <span>Homepage Elements</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="about_admin">About us</a></li>
+                          <li><a  href="terms">Terms & conditions</a></li>
+                          <li><a  href="faq">FAQ</a></li>
+                      </ul>
+                  </li>
 
-            <li class="mt">
-                <a  href="admin_dashboard">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+                   <li class="sub-menu">
+                      <a class="active" href="javascript:;" >
+                          <i class="fa fa-desktop"></i>
+                          <span>Student Management</span>
+                      </a>
+                     <ul class="sub">
+                          <li><a  href="allstudents">All students</a></li>
+                          <li><a  href="activestu">Active students</a></li>
+                          <li><a  href="pending">Pending students</a></li>
+                          <li><a  href="inactive">Inactive students</a></li>
+                      </ul>
+                  </li>
 
-            <li class="sub-menu">
-                <a  href="javascript:;" >
-                    <i class="fa fa-desktop"></i>
-                    <span>Homepage Elements</span>
-                </a>
-                <ul class="sub">
-                    <li><a  href="about_admin">About us</a></li>
-                    <li><a  href="terms">Terms & conditions</a></li>
-                    <li><a  href="faq">FAQ</a></li>
-                </ul>
-            </li>
+                
 
-            <li class="sub-menu">
-                <a class="active" href="javascript:;" >
-                    <i class="fa fa-desktop"></i>
-                    <span>Student Management</span>
-                </a>
-                <ul class="sub">
-                    <li><a  href="allstudents">All students</a></li>
-                    <li><a  href="activestu">Active students</a></li>
-                    <li><a  href="pending">Pending students</a></li>
-                    <li><a  href="inactive">Inactive students</a></li>
-                </ul>
-            </li>
+              </ul>
+              <!-- sidebar menu end-->
+          </div>
+      </aside>
 
 
+  <section id="main-content">
+          <div class="wrapper">
 
-        </ul>
-        <!-- sidebar menu end-->
-    </div>
-</aside>
-
-
-<section id="main-content">
-    <div class="wrapper">
-
-        <div >
-            <div class="row">
-                <div class="col-md-5">
+              <div >
+                 <div class="row">
+                  <div class="col-md-5">
                     <br>
                     <img src="index_files/feature2.jpg" width="440" height="275">
-                </div>
-                <div class="col-md-7">
-                    <h2>Sandra Rayman<span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong><span class="grn"> Active </span></p><button type="button" class="btn btn-danger btn-sm">Deactivate</button>
-                            <button type="button" class="btn btn-success btn-sm">Send mail</button></span></h2>
+                      </div>
+                      <div class="col-md-7">
+                                        <h2>Sandra Rayman<span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong><span class="grn"> Active </span></p><button type="button" class="btn btn-danger btn-sm">Deactivate</button>
+              <button type="button" class="btn btn-success btn-sm">Send mail</button></span></h2>
                     <h4>Florida</h4>
                     <h3>Help Sandra in completing her post graduation</h3>
                     <p>Me – whose parents still walk hand-in-hand when they take a walk? Me – the best husband in the world – she no longer loves me? I haven’t done anything drastically wrong!</p><br>
                     <div class="row">
-                        <div class="col-sm-4">
+                      <div class="col-sm-4">
+                    
+                    <h4><strong>Goal :</strong></h4><h2>$10000</h2>
+                   
+                    </div>
+                     <div class="col-sm-4">
+               
+               <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
+                <p class="indicate"><strong>70%</strong></p>
 
-                            <h4><strong>Goal :</strong></h4><h2>$10000</h2>
+               
 
-                        </div>
-                        <div class="col-sm-4">
+                   
+                 </div>
+                 <div class="col-sm-4 pull-right">
+                 
+               
+              <h4><strong>Raised :</strong></h4><h2>$4000</h2>
 
-                            <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
-                            <p class="indicate"><strong>70%</strong></p>
+               
 
-
-
-
-                        </div>
-                        <div class="col-sm-4 pull-right">
-
-
-                            <h4><strong>Raised :</strong></h4><h2>$4000</h2>
-
-
-
-
-                        </div>
+                   
+                 </div>
 
                     </div>
-                </div>
-                <br>
+                    </div>
+                   <br>
 
-            </div>
-        </div><br>
-        <div class="row">
+                      </div>
+                   </div><br>
+                   <div class="row">
+                
 
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">In Detail</a></li>
+  <li><a data-toggle="tab" href="#menu1">Education Details</a></li>
+  <li><a data-toggle="tab" href="#menu2">Loan Details</a></li>
+  <li><a data-toggle="tab" href="#menu3">Admin External Notes</a></li>
+  <li><a data-toggle="tab" href="#menu4">Admin Internal Notes</a></li>
+  <li><a data-toggle="tab" href="#menu5">Donors details</a></li>
+</ul>
 
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">In Detail</a></li>
-                <li><a data-toggle="tab" href="#menu1">Education Details</a></li>
-                <li><a data-toggle="tab" href="#menu2">Loan Details</a></li>
-                <li><a data-toggle="tab" href="#menu3">Admin External Notes</a></li>
-                <li><a data-toggle="tab" href="#menu4">Admin Internal Notes</a></li>
-                <li><a data-toggle="tab" href="#menu5">Donors details</a></li>
-            </ul>
+<div class="tab-content" style="margin-left:15px;margin-right:15px">
 
-            <div class="tab-content" style="margin-left:15px;margin-right:15px">
+  <div id="home" class="tab-pane fade in active">
 
-                <div id="home" class="tab-pane fade in active">
+    <h3>In Detail</h3>
+    <p>Some content.</p>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <h3>Education Details</h3>
+    <p>Some content in menu 1.</p>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+    <h3>Loan Details</h3>
+    <p>Some content in menu 2.</p>
+  </div>
+   <div id="menu3" class="tab-pane fade in active">
+    <h3>Admin External Notes</h3>
+    <p>Some content.</p>
+  </div>
+   <div id="menu4" class="tab-pane fade in active">
+    <h3>Admin Internal Notes</h3>
+    <p>Some content.</p>
+  </div>
+     <div id="menu5" class="tab-pane fade in active">
+    <h3>Donors</h3>
+    <p>Some content.</p>
+  </div>
+</div>
+                   </div>
 
-                    <h3>In Detail</h3>
-                    <p>Some content.</p>
-                </div>
-                <div id="menu1" class="tab-pane fade">
-                    <h3>Education Details</h3>
-                    <p>Some content in menu 1.</p>
-                </div>
-                <div id="menu2" class="tab-pane fade">
-                    <h3>Loan Details</h3>
-                    <p>Some content in menu 2.</p>
-                </div>
-                <div id="menu3" class="tab-pane fade in active">
-                    <h3>Admin External Notes</h3>
-                    <p>Some content.</p>
-                </div>
-                <div id="menu4" class="tab-pane fade in active">
-                    <h3>Admin Internal Notes</h3>
-                    <p>Some content.</p>
-                </div>
-                <div id="menu5" class="tab-pane fade in active">
-                    <h3>Donors</h3>
-                    <p>Some content.</p>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</section>
-
-
-<!-- BOOTSTRAP SCRIPTS -->
+                         
+          </div>
+      </section>
 
 
+      <!-- BOOTSTRAP SCRIPTS -->
 
 
-<script type="text/javascript">
-    $(function () {
+   
+     
+    <script type="text/javascript">
+    $(function(){
         $("#bluecircle").percircle();
     });
-    $(document).ready(function () {
-        $(".progress-bar").loading();
+    $(document).ready(function(){
+      $(".progress-bar").loading();
 
     });
 </script>
-<script>
-    var doughnutData = [
-        {
-            value: 70,
-            color: "#68dff0"
-        },
-        {
-            value: 30,
-            color: "#fdfdfd"
-        }
-    ];
-    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
-</script>
-<?php include('stufoot.php') ?>
+                <script>
+                  var doughnutData = [
+                      {
+                        value: 70,
+                        color:"#68dff0"
+                      },
+                      {
+                        value : 30,
+                        color : "#fdfdfd"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+                </script>
+                  <?php include('stufoot.php') ?>
 

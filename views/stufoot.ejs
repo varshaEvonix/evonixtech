@@ -12,14 +12,20 @@
    
     <!-- js placed at the end of the document so the pages load faster -->
     
-    <script src="../../index_files/stdash/js/jquery-1.8.3.min.js"></script>
-    <script src="../../index_files/stdash/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    
+ 
+
+ 
+ 
+
     <script class="include" type="text/javascript" src="../../index_files/stdash/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="../../index_files/stdash/js/jquery.scrollTo.min.js"></script>
     <script src="../../index_files/stdash/js/jquery.nicescroll.js" type="text/javascript"></script>
     <script src="../../index_files/stdash/js/jquery.sparkline.js"></script>
 
-<script src="../../index_files/assetbox/js/bootstrap.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
       <!-- CUSTOM SCRIPTS -->
@@ -32,9 +38,10 @@
 
     <!--script for this page-->
     <script src="assets/js/sparkline-chart.js"></script>    
-	<script src="assets/js/zabuto_calendar.js"></script>	
+	  
+
 	
-	<script type="text/javascript">
+	<!--script type="text/javascript">
         $(document).ready(function () {
         var unique_id = $.gritter.add({
             // (string | mandatory) the heading of the notification
@@ -53,7 +60,7 @@
 
         return false;
         });
-	</script>
+	</script-->
 	
 	<script type="application/javascript">
         $(document).ready(function () {
@@ -62,23 +69,7 @@
             $("#date-popover").click(function (e) {
                 $(this).hide();
             });
-        
-            $("#my-calendar").zabuto_calendar({
-                action: function () {
-                    return myDateFunction(this.id, false);
-                },
-                action_nav: function () {
-                    return myNavFunction(this.id);
-                },
-                ajax: {
-                    url: "show_data.php?action=1",
-                    modal: true
-                },
-                legend: [
-                    {type: "text", label: "Special event", badge: "00"},
-                    {type: "block", label: "Regular event", }
-                ]
-            });
+     
         });
         
         

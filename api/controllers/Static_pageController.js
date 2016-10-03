@@ -44,6 +44,7 @@ module.exports = {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
             console.log(recordset);
             return res.view('./admin/abterms', {
+                layout: false,
                 abterms: recordset
             });
 
@@ -55,6 +56,7 @@ module.exports = {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
 
             return res.view('./admin/editabterms', {
+                layout: false,
                 abterms: recordset
             });
         });

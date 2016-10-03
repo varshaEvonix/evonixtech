@@ -3,8 +3,8 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="../personal_view/personal_view"><img src="../../index_files/stdash/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                  <h5 class="centered">Sandra Rayman</h5>
+                  <p class="centered"><img src="../index_files/uploads/<%= answer.student_profile_pic_path %>" class="dp_left"</p>
+                  <h5 class="centered"><%= answer.student_firstname %> <%= answer.student_lastname %></h5>
                     
                   <li class="mt">
                       <a class="active" href="../studash/studash">
@@ -13,7 +13,7 @@
                       </a>
                   </li>
 
-                  <li class="sub-menu">
+                  <!--li class="sub-menu">
                       <a href="../personal_view/personal_view" >
                           <i class="fa fa-user" aria-hidden="true"></i>
                           Personal Details
@@ -34,7 +34,7 @@
                           <span>Loan Details</span>
                       </a>
                      
-                  </li>
+                  </li-->
                   <!--li class="sub-menu">
                       <a href="donors" >
                           <i class="fa fa-users" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
                     
                   </li-->
                     <li class="sub-menu">
-                      <a href="/viewprofile" >
+                      <a href="/viewprofile/1" >
                           <i class="fa fa-key" aria-hidden="true"></i>
                           <span>My profile</span>
                       </a>
@@ -62,3 +62,4 @@
               <!-- sidebar menu end-->
           </div>
       </aside>
+ 

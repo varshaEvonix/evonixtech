@@ -33,6 +33,9 @@
 <link href="../../index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
 <!-- CSS | Responsive media queries -->
 <link href="../../index_files/responsive.css" rel="stylesheet" type="text/css">
+<script  src="../../index_files/stdash/js/angular.min.js"></script>
+
+<link href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'>
 <style>
 
 
@@ -73,12 +76,14 @@
     padding: 10px 10px 10px 5px;
     -webkit-appearance: none;
     display: block;
-    background: #fafafa;
+    background: #fff;
     color: #636363;
     width: 100%;
     border: none;
     border-radius: 0;
-    border-bottom: 1px solid #757575;
+    border: 1px solid #f4f4f4;
+    border-left: 0px;
+
   }
 
   .social-btns
@@ -136,15 +141,13 @@
   .highlight {
     position: absolute;
     height: 60%; 
-    width: 100px; 
-    top: 25%; 
+    width: 100%; 
+    top: 0%; 
     left: 0;
     pointer-events: none;
     opacity: 0.5;
   }
 
-
-  active 
 
   input:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
@@ -243,9 +246,89 @@
     right: 0;
     min-height: 70px;
   }
+  label {
+  position:absolute;
+  transform:translateY(6px);
+  left:50px;
+  color:#333;
+  transition:all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size:15px;
+  
+}
+
+label.active {
+  transform:translateY(-20px);
+  left:2px;
+  font-size:14px;
+  .req {
+    opacity:0;
+  }
+}
+
+label.highlight {
+  color:#000;
+}
+
+input, textarea {
+  font-size:22px;
+  display:block;
+  width:100%;
+  height:100%;
+  padding:5px 10px;
+  background:#fff;
+  background-image:none;
+  border-left:0px;
+  color:#000;
+  border-radius:0;
+  transition:border-color .25s ease, box-shadow .25s ease;
+  &:focus {
+    outline:0;
+    border-color:$main;
+  }
+}
+
+textarea {
+  border:2px solid $gray-light;
+  resize: vertical;
+}
+
+.field-wrap {
+  position:relative;
+  margin-bottom:35px;
+  color:#fff !important;
+}
+
+.top-row {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+</style>
+
+<style type="text/css">
+  .help-block {
+    display: block;
+    margin-top: -3px;
+    margin-bottom: 0px;
+    color: #737373;
+    position: absolute !important;
+    font-size: 12px;
+    left: 0;
+  }
+  form input[type="text"]:focus {
+    border-color: rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none; 
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+  }
 </style>
 </head>
-
+<body  ng-app="postApp" ng-controller="postController">
 <header id="header" class="header">
   <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
     <div class="header-nav-wrapper">
@@ -282,37 +365,93 @@
 
   <!-- You only need this form and the form-register.css -->
 
-  <form action="/user" method="POST" role="form">
- 
-    <div class="form-group col-md-6">
-      <label for="student_firstname">First name:</label>
-      <input type="text" class="form-control" id="student_firstname" name="student_firstname">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_lastname">Last name:</label>
-      <input type="text" class="form-control" id="student_lastname" name="student_lastname">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_contactno">Contact number:</label>
-      <input type="text" class="form-control" id="student_contactno" name="student_contactno">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_email">Email:</label>
-      <input type="email" class="form-control" id="student_email" name="student_email">
-    </div>
+  <!--form action="/user" method="POST" role="form"-->
+   <form class="form" ng-submit="submitForm()" name="registerform" novalidate>
+ <div id="signup">   
+          <h2>CREATE ACCOUNT</h2><br>
+          
+
+          <div class="form-group">
+  
+
+
+          <div class="top-row row">
+          <div class="col-md-6">
+            <div class="field-wrap form-group input-group" >
+              
+              <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+ <label>
+                First name<span class="req">*</span>
+              </label>
+
+              <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
+              <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
+              <span class="error has-error" ng-show="registerform.student_firstname.$error.pattern">Name should be in proper format!</span>
+                          </div></div>
+        <div class="col-md-6">
+            <div class="field-wrap form-group input-group" >
+            <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+              <label>
+               Last name<span class="req">*</span>
+              </label>
+               <input  type="text" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
+              <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
+            </div></div>
+          
+<div class="col-md-6">
+          <div class="field-wrap form-group input-group" >
+          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
+            <label>
+              Contact number<span class="req">*</span>
+            </label>
+             <input  type="text" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
+              <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
+               <span class="error has-error" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
+          </div></div>
+<div class="col-md-6">
+ <div class="field-wrap form-group input-group" >
+ <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
+            <label>
+              Email<span class="req">*</span>
+            </label>
+             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required>
+              <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
+              <span class="error has-error" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!
+  </span>
+          </div></div>
+          
+         <div class="col-md-6">
+          <div class="field-wrap form-group input-group" >
+          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input  type="password" ng-model="student.student_password" id="student_password" name="student_password"  required>
+              <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
+<span ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</span>
+
+          </div></div>
+          <div class="col-md-6">
+          <div class="field-wrap form-group input-group" >
+          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+            <label>
+            Confirm password<span class="req">*</span>
+            </label>
+            <input  type="password" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
+             <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
+<span ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</span>
+          </div></div></div>
+         
+          <button type="submit" ng-click="submitted = true" class="button button-block"/>SUBMIT</button><br>
+          
+          </form>
+
+        
+        
+        
+        
+      </div>
     
-    <div class="form-group col-md-6">
-      <label for="student_password">Password:</label>
-      <input type="password" class="form-control" id="student_password" name="student_password">
-    </div>
-    
-    <div class="form-group col-md-6">
-      
-    </div>
-    <input type="hidden" name="_csrf" value="<% _csrf%>" />
-    <button type="submit" class="btn btn-default text-center">Submit</button>
-    
-  </form>
 
 </div>
 <footer id="footer" class="footer bg-black-222">
@@ -380,7 +519,164 @@
 
 <script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
 <script src='../../index_files/flowup/js/main.js'></script>
+ <script>
+
+    $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
+  
+  var $this = $(this),
+      label = $this.prev('label');
+
+      if (e.type === 'keyup') {
+            if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.addClass('active highlight');
+        }
+    } else if (e.type === 'blur') {
+        if( $this.val() === '' ) {
+            label.removeClass('active highlight'); 
+            } else {
+            label.removeClass('highlight');   
+            }   
+    } else if (e.type === 'focus') {
+      
+      if( $this.val() === '' ) {
+            label.removeClass('highlight'); 
+            } 
+      else if( $this.val() !== '' ) {
+            label.addClass('highlight');
+            }
+    }
+
+
+// if( $this.val() === '' ) {
+//             label.removeClass('active highlight'); 
+//             } else {
+//             label.removeClass('highlight');   
+//             }   
+
+
+//      if($("input").click(function(){
+//       label.addClass("active highlight");
+//        })
+//       else {
+//             label.removeClass('highlight');   
+//             }   
+
+  $(document).ready(function(){
+          $("input:focus").click(function(){
+              label.addClass("active highlight");
+          });
+      });
+  });
+
+$('.tab a').on('click', function (e) {
+  
+  e.preventDefault();
+  
+  $(this).parent().addClass('active');
+  $(this).parent().siblings().removeClass('active');
+  
+  target = $(this).attr('href');
+
+  $('.tab-content > div').not(target).hide();
+  
+  $(target).fadeIn(600);
+  
+});
+    </script>
+
+    <script type="text/javascript">
+      
+    </script>
+
+
+    <script>
+        
+   $('.counter').counterUp({
+            delay: 100,
+            time: 2000
+        });
+    </script>
+
+  
 
 </body>
 
 </html>
+   <script>
+    var postApp = angular.module('postApp', []);
+     postApp.directive('validPasswordC', function () {
+        return {
+            require: 'ngModel',
+            scope: {
+                reference: '=validPasswordC'
+
+            },
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$parsers.unshift(function (viewValue, $scope) {
+
+                    var noMatch = viewValue != scope.reference
+                    ctrl.$setValidity('noMatch', !noMatch);
+                    return (noMatch) ? noMatch : scope.reference;
+                });
+                scope.$watch("reference", function (value) {
+
+                    ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+                });
+            }
+        }
+    });
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.submitForm = function () {
+            if ($scope.registerform.$valid) {
+              console.log('if');
+                $http({
+                    method: 'POST',
+//                    dataType: 'json',
+                    url: '/user',
+                    data: $scope.student, //forms user object
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function (data) {
+                    console.log(data);
+                    window.location = '../studentlogin/studentlogin';
+                });
+
+            }else{
+              console.log('asdasd');
+            }
+
+        };
+    });
+
+</script>
+
+<!-- <div class="form-group col-md-6">
+      <label for="student_firstname">First name:</label>
+      <input type="text" class="form-control" id="student_firstname" name="student_firstname">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="student_lastname">Last name:</label>
+      <input type="text" class="form-control" id="student_lastname" name="student_lastname">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="student_contactno">Contact number:</label>
+      <input type="text" class="form-control" id="student_contactno" name="student_contactno">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="student_email">Email:</label>
+      <input type="email" class="form-control" id="student_email" name="student_email">
+    </div>
+    
+    <div class="form-group col-md-6">
+      <label for="student_password">Password:</label>
+      <input type="password" class="form-control" id="student_password" name="student_password">
+    </div>
+    
+    <div class="form-group col-md-6">
+      
+    </div>
+    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+    <button type="submit" class="btn btn-default text-center">Submit</button>
+    
+  </form> -->
