@@ -29,7 +29,7 @@ module.exports = {
                 var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id LIMIT ' + start_from + ', ' + per_page + '';
 
                 Student_details.query(q, function (err, results) {
-                    console.log(results);
+                   
                     var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
 
                         das_rows = the_rows[0].erow;
@@ -141,7 +141,7 @@ module.exports = {
         var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where student_details.profile_lock="1" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
-            console.log(results);
+           
             var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
 
                 das_rows = the_rows[0].erow;
@@ -207,8 +207,7 @@ module.exports = {
     },
     studlockedprofile: function (req, res) {
         var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
-        console.log('q');
-        console.log(q);
+      
         Student_changed_val.query(q, function (err, results) {
        
             return   res.view('./admin/studlockedprofile', {

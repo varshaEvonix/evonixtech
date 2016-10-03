@@ -40,7 +40,7 @@ module.exports = {
 
             Table_loan_document.query('SELECT * from table_loan_document where loan_id='+req.param('loan_id') , function(err, recordset1) {         	
         	
-          console.log(recordset1);
+        
         	return res.view('./loan_edit/loan_edit', {
 
 
@@ -60,11 +60,10 @@ module.exports = {
        if(req.method=="POST")
 		{
 
-			console.log('r u t');
+		
      var document_path = req.param('filename');
      var document_name = req.param('document_name');
-     console.log('doc_name');
-     console.log(document_name);
+ 
 			var loan_type = req.param("loan_type");
 			var fafsa_values = req.param("fafsa_values");
 			var loan_bankname = req.param("loan_bankname");
@@ -82,15 +81,13 @@ module.exports = {
 				
 			  update_doc = "UPDATE `table_loan_document` SET `document_name` = '"+document_name+"',`document_path` = '"+document_path+"' WHERE `loan_id`="+req.param('loan_id');
 			
-      console.log(update);
+    
 			Loan_details.query(update,function(err,record)
 			{
 
 		      Table_loan_document.query(update_doc,function(err,record2)
         { 
-          console.log('record');
-          console.log(record);
-          console.log(record2);
+     
 
         });
             });
@@ -100,8 +97,6 @@ module.exports = {
      //console.log(file_name);
           
 			
-		}else {
-			console.log('Else part');
 		}
 
         },
@@ -111,7 +106,7 @@ module.exports = {
   	
        if(req.method=="POST")
 		{
-			console.log('r u t');
+			
       var document_path = req.param('filename');
      var document_name = req.param('document_name');
 			var loan_type = req.param("loan_type");
@@ -130,23 +125,20 @@ module.exports = {
 				}
 				
 			insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+document_path+"', '2', '1');";
-			
-      console.log(insert);
+
 			Loan_details.query(insert,function(err,record)
 			{
 
 		      Table_loan_document.query(insert_doc,function(err,record2)
         { 
          
-          console.log('record');
-          console.log(record);
+      
 
         });
         });    
        
         return res.ok();
-    // var file_name = files.filename;
-     //console.log(file_name);
+
           
 			
 		}else {
@@ -158,21 +150,18 @@ module.exports = {
 
 
      'uploaddocs': function(req, res) {
-      console.log('are you there');
-      console.log(req.method);
+    
          if(req.method=="POST")
     {
       
       	var doc_name = req.param('document_name');
         var newFilename = req.file('document_path')._files[0].stream.filename;
       req.file('document_path').upload({dirname:'../public/index_files/uploads/documents/',saveAs: newFilename}, function onUploadComplete(err, files) {
-        console.log(files);
+    
         var file_name='';
         files.forEach(function(files, index){
    file_name=files.filename;
-   console.log('here');
-   console.log(req.param('student_id'));
-   console.log(file_name);
+  
 
    
   
@@ -181,15 +170,12 @@ var insert = "INSERT INTO `table_loan_document` (`document_name`, `document_path
           Table_loan_document.query(insert,function(err,record)
         {
          
-          console.log('record');
-          console.log(record);
-          console.log('record');
+    
         });
             });
        
         return res.redirect('/viewprofile/'+req.param('student_id'));
-    // var file_name = files.filename;
-     //console.log(file_name);
+
             
      });
     }
@@ -205,8 +191,7 @@ var insert = "INSERT INTO `table_loan_document` (`document_name`, `document_path
             var filename = req.file('file')._files[0].stream.filename;
             var newfilename = Date.now() + filename;
             req.file('formdata').upload({dirname: '../public/index_files/uploads/', saveAs: newfilename}, function (err, files) {
-               console.log('newfilename');
-               console.log(newfilename);
+        
                 return res.ok(newfilename);
             });
         }

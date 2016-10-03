@@ -42,7 +42,7 @@ module.exports = {
     },
     'get_terms_and_cond': function (req, res) {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-            console.log(recordset);
+        
             return res.view('./admin/abterms', {
                 layout: false,
                 abterms: recordset
@@ -71,7 +71,7 @@ module.exports = {
             {
                 if (err)
                 {
-                    console.log(err);
+                
                 }
                 else
                 {
@@ -87,10 +87,7 @@ module.exports = {
                 cats.forEach(function (cats, index) {
                     category.push(cats.category);
                 });
-                console.log('recordset');
-                console.log(recordset);
-                console.log('category');
-                console.log(category);
+      
                 return res.view('./admin/faq', {
                     layout: false,
                     faq: recordset,
@@ -132,7 +129,7 @@ module.exports = {
             {
                 if (err)
                 {
-                    console.log(err);
+                  
                 }
                 else
                 {
@@ -150,7 +147,7 @@ module.exports = {
             {
                 if (err)
                 {
-                    console.log(err);
+                   
                 }
                 else
                 {
@@ -196,7 +193,7 @@ module.exports = {
             {
                 if (err)
                 {
-                    console.log(err);
+                  
                 }
                 else
                 {
