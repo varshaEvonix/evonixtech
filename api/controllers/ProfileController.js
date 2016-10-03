@@ -14,16 +14,26 @@
 
          'mypro': function(req, res) {
 
-             Student_details.query('SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id  where student_details.student_id='+req.param('id'), function(err, recordset) {         	
+             Student_details.query('SELECT * from student_details left join education on education.student_id=student_details.student_id where student_details.student_id='+req.param('id'), function(err, recordset) {         	
             	
                 Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
             	
+                    Loan_details.query('SELECT * from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= '+req.param('id')+' AND loan_details.isActive = 0', function(err, loan_l) { 
+
+                        Loan_details.query('SELECT * from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= '+req.param('id')+' AND loan_details.isActive = 1', function(err, loan_act) { 
+                            console.log(loan_act);
+                             console.log('loan_act');
               return res.view('./studprofile/studprofile', {
 
           answer: recordset,
-          pics: photorecord
+          pics: photorecord,
+          loan_list: loan_l,
+          loan_activated: loan_act,
   
         });
+               });
+
+                        });
 
         });
 

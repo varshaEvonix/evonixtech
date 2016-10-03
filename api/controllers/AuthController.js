@@ -32,7 +32,7 @@ module.exports = {
         });
     },
     logout: function (req, res) {
-        req.logout();
+        //req.logout();
         res.redirect('admin/login');
     }
 

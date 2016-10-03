@@ -206,10 +206,11 @@ module.exports = {
         }
     },
     studlockedprofile: function (req, res) {
-        var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.student_id=' + req.param('id');
+        var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
+        console.log('q');
+        console.log(q);
         Student_changed_val.query(q, function (err, results) {
-            console.log('results');
-            console.log(results);
+       
             return   res.view('./admin/studlockedprofile', {
                 layout: false,
                 student_records: results
