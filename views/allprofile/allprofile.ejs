@@ -236,8 +236,8 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
     <div class="container" style="margin-top: 92px; background-color: rgba(255, 255, 255, 0.9);">
   
     <form action="/search_student" method="POST">
-                           <br><br> <div class="input-group col-md-10">
-                                <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name">
+                           <br><br> <div class="input-group col-md-10"> 
+                                <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name" value="<%= student_find %>">
                                  <span class="input-group-btn">
                                     <button id="search" class="btn btn-dark btn-theme-colored" type="submit" style="line-height:2.05">
                                         <span>Search</span>
@@ -245,9 +245,11 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                                 </span>
                             </div><br>
 
-  
-  <p ><b><input type="checkbox" unchecked> Birthday Today</b></p>
-      
+  <%if (bday_check == '1') { %>
+  <p><b><input type="checkbox" checked> Birthday Today</b></p>
+      <% } else {%>
+  <p><b><input type="checkbox" unchecked> Birthday Today</b></p>
+  <% } %>    
 
                         </div>
 </div>
@@ -289,7 +291,7 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                     <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                         <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$1250</strong>collected</li>
-                                      <li>  <input type="image" src="index_files/donatemain.png" alt="Submit" width="104" height="34"></li>
+                                     <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
                                     </ul>
                      <div class="progress-item mt-0">
                                         <div class="progress mb-10">

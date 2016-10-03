@@ -1,7 +1,7 @@
 <%- include ../stuhead.ejs %>
 
  <%- include ../stud_left.ejs %>
- 
+
 <style>
 div.tooltip-inner {
     max-width: 350px;
@@ -57,30 +57,40 @@ input[type=file]:before {
 
          
           <h2>Loan details&nbsp;&nbsp; <span class="small">Current balance last verified date: 22/09/2016</span></h2>
-          <br>
-       <form class="form" method="POST" ng-submit="submitForm()" ng-controller="formCtrl as formCtrl" enctype="multipart/form-data" name="loanform" novalidate>
+          <br>  
+       <form class="form" method="POST" ng-submit="submitForm()" enctype="multipart/form-data" name="loanform" novalidate>
 <div class="row">
            
-   
+  
     <div class="col-md-6">
      <label for="loan_purpose_name">Select the type of loan: </label><br>
          
 <!-- <select name="one" onchange="if(this.value=='fafsa'){this.form['fafsa'].style.visibility='visible'}else if(this.value=='bankloan'){this.form['bankloan'].style.visibility='visible'}else {this.form['other','bankloan'].style.visibility='hidden'};"> -->
-<select name="loan_type" id="loan_type" ng-model="student.loan_type" class="dropdown form-group" required>
-<option value="" selected="selected">Select loan type</option><br>
-<option value="fafsa">FAFSA</option>
+<%if (answer.loan_bankname == '') { %>
+<select name="loan_type" id="loan_type" value="FAFSA" class="dropdown form-group" required>
+<option value="fafsa" selected="selected">FAFSA</option>
 <option value="bankloan">Bank loan</option>
 </select>
+ <% } else { %>
+ <select name="loan_type" id="loan_type" class="dropdown form-group" value="Bank loan" required>
+
+<option value="fafsa">FAFSA</option>
+<option value="bankloan" selected="selected">Bank loan</option>
+</select>
+<% } %>
+
 <p ng-show="submitted && loanform.loan_type.$error.required"  class="help-block has-error ng-hide">Loan type is requireds.</p>
 </div>
 
 
 
 <div class="col-md-6">
-<div id="fafsa" style="display:none">
+<%if (answer.loan_bankname == '') { %>
+<div id="fafsa">
+
 <label for="fafsa">Select loan name:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
 <select name="fafsa_values" id="fafsa_value" class="dropdown form-group" ng-model="student.fafsa_values" value="<%= answer.fafsa_values %>" required>
-<option value="" selected="selected" disabled>Select loan name</option>
+<option value="<%= answer.loan_fafsa_id %>" selected="selected" disabled><%= answer.fafsa_values %></option>
 <option value="1">CornerStone</option>
 <option value="2">FedLoan Servicing (PHEAA)</option>
 <option value="3">Granite State – GSMR</option>
@@ -97,14 +107,15 @@ input[type=file]:before {
 <p ng-show="submitted && loanform.fafsa_values.$error.required"  class="help-block has-error ng-hide">Loan type is requireds.</p>
 </div>
 
-
-<div id="bankloan"  style="display:none;">
+<% } else { %>
+<div id="bankloan">
  <div class="form-group">
       <label for="loan_bankname">Enter your bank name: </label>
       <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your education institute" value="<%= answer.loan_bankname %>" required>
        <p ng-show="submitted && loanform.loan_bankname.$error.required"  class="help-block has-error ng-hide">Bank name is required.</p>
     </div>
 </div>
+<% } %>
 </div>
 </div>
 <br>
@@ -124,34 +135,67 @@ input[type=file]:before {
     </div>
   
     </div>
+   
     </div>
     <br>
-    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
-     <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
-   </form>
-<br>
+   
+    <div class="row">
+    <div class="col-md-12">
+    
+
+    <table class="table">
+    <thead>
+     
+      <tr>
+        <th>Document name</th>
+        <th>Document file</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% _.each(loan_docs, function (loan_docs,index) { %>
+    <tr>
+        <td><%= loan_docs.document_name %></td>
+        <td><%= loan_docs.document_path %></td>
+        <td><a href="/remove_doc/<%= answer.student_id %>/<%= loan_docs.loan_id %>/<%= loan_docs.loan_document_id %>"><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><i class="fa fa-download" aria-hidden="true"></i></a></td>
+      </tr>
+       <% }) %>
+    </tbody>
+  </table>
+
+   
+    </div>
+    </div>
+    <br>
+    <% }) %>
+   
+<br> 
    <div class="row">
    <div class="col-md-12">
-   <h2>Loan details</h2>
+   <h2>Loan Documents</h2>
    </div>
    <br><br><br>
    </div>
 <div class="row">
 <div class="col-md-12">
 
-  <form id="user_doc" enctype="multipart/form-data" action="/user_docs/<%= answer.student_id %>/<%= answer.loan_id %>" method="POST" name="user_doc">
+  
       <div class="input_fields_wrap form-horizontal">
         <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
         <div class="form-group">
-            <input class="form-control fileip" type="text" name="document_name" placeholder="Enter the name of the file">
-            <input type="file" name="document_path" class="filebtn">
+        
+            <input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
+             <p ng-show="submitted && loanform.document_name.$error.required" class="help-block has-error ng-hide" >Document name is required.</p>
+             <input type="file" ng-model="student.file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/ class="filebtn" value=""> 
             
-      
+             <p ng-show="submitted && loanform.file.$error.required"  class="help-block has-error ng-hide">Document is required.</p>
+            
+       
       
   </div> 
    </div>
   <br><br>
-             <button type="submit" class="btn btn-default text-center">Submit</button>
+            <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
      <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
        
   </form>  
@@ -160,7 +204,7 @@ input[type=file]:before {
    <br><br><br>
 </div>
   </div>
-    <% }) %>
+   
   
    <%- include ../stud_right.ejs %>
 </section>
@@ -170,44 +214,6 @@ input[type=file]:before {
                   <%- include ../stufoot.ejs %>
                 
 
-
- <!-- <script>
-    var postApp = angular.module('postApp', []);
-    postApp.controller('postController', function ($scope, $http) {
-
-     $scope.student={};
-
-    <% _.each(answer, function (answer) { %>
- 
-  $scope.student.loan_amount='<%= answer.loan_amount %>';
-  $scope.student.loan_bankname='<%= answer.loan_bankname %>';
-  $scope.student.loan_accountno='<%= answer.loan_accountno %>';
-  $scope.student.loan_amount='<%= answer.loan_amount %>';
-<% }) %>
-
-    $scope.student.loan_amount=$('#fafsa_value').val();
-    $scope.student.loan_type=$('#loan_type').val();
-    // loan_type
-
-        $scope.submitForm = function () {
-            if ($scope.loanform.$valid) {
-                $http({
-                    method: 'POST',
-//                    dataType: 'json',
-                    url: '/loan_edit_submit/<%= answer.loan_id %>',
-                    data: $scope.student, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    console.log(data);
-                    window.location = '/viewprofile/<%= answer.student_id %>';
-                });
-
-            }
-            
-        };
-    });
-
-</script> -->
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -230,20 +236,49 @@ $('#bankloan').show();
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
 
+     $scope.uploadFile = function (files) {
+                    $('#submit-notes').hide();
+                            $('.loading').show();
+                            var fd = new FormData();
+                            fd.append("file", files[0]);
+                            console.log(fd);
+                            $http.post('/upload_file', fd, {
+                            withCredentials: true,
+                                    headers: {'Content-Type': undefined},
+                                    transformRequest: angular.identity
+                            }).success(function (data) {
+                    $scope.student.filename = data;
+                            $('#submit-notes').show();
+                            $('.loading').hide();
+                    });
+                    };
+
     <% _.each(answer, function (answer) { %>
+   
   $scope.student.fafsa_values='<%= answer.fafsa_values %>';
   $scope.student.loan_bankname='<%= answer.loan_bankname %>';
   $scope.student.loan_accountno='<%= answer.loan_accountno %>';
   $scope.student.loan_amount='<%= answer.loan_amount %>';
+  $scope.student.document_name='<%= answer.document_name %>';
+  $scope.student.file='<%= answer.file %>';
+<% }) %>
+   
+    <% _.each(loan_docs, function (loan_docs,index) { %>
 
+var temprary='<%= loan_docs.document_name %>';
+var temp = [];
+        temp.push(temprary);
+        $scope.student.document_name.push(temp);
+        $scope.student.document_path='<%= loan_docs.document_path %>';
 
-    
+      <% }) %>
+    <% _.each(answer, function (answer) { %>
         $scope.submitForm = function () {
             if ($scope.loanform.$valid) {
                 $http({
                     method: 'POST',
 //                    dataType: 'json',
-                    url: '/loan_edit_submit/<%= answer.loan_id %>',
+                    url: '/loan_edit_submit/<%= answer.student_id %>/<%= answer.loan_id %>',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (data) {
@@ -253,10 +288,10 @@ $('#bankloan').show();
 
             }
             
-<% }) %>
+
         };
     });
-
+<% }) %>
 </script>
  
 <script>

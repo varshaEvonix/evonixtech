@@ -123,9 +123,11 @@
   <br><br><br><br><br>
   <div class="container">
     <!-- Start main-content --> 
-     <% _.each(humans, function (humans) { %>
+   
     <div class="panel panel-default" >
-    <div class="panel-heading" id="bigname1"><h2><%= humans.student_firstname %> <%= humans.student_lastname %></h2>
+    <div class="panel-heading" id="bigname1">
+  <% _.each(humans, function (humans) { %>
+    <h2><%= humans.student_firstname %> <%= humans.student_lastname %></h2>
     </div>
     <div class="panel-body">
     <div class="col-sm-12">
@@ -222,7 +224,7 @@
           </li>
           <% }) %>
           <hr>
-          
+          <% }) %>
           </ul>
   </div>
   </div>
@@ -235,7 +237,7 @@
         </div>
   </div>
   </div></div>
-  </div><% }) %>
+  </div>
   <div class="row">
   <div class="col-sm-12">
 
