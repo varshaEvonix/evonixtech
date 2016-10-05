@@ -11,10 +11,10 @@ module.exports = {
   },
 
   'insertpersonal':function(req,res){
-  
+  	console.log('entered');
 		if(req.method=="POST")
 		{
-		
+			console.log("Post");
 			var name = req.param("name");
 			var age = req.param("age1");
 			var city =req.param("city");
@@ -26,26 +26,30 @@ module.exports = {
 			var insert ="";
 			try {
 				insert = " INSERT INTO `personal` (`name`, `age`, `city`, `about`, `address`, `email`, `occupation`, `createdAt`, `updatedAt`) VALUES ('"+name+"', '"+age+"', '"+city+"', '"+about+"', '"+address+"','"+email+"','"+occupation+"', NULL, NULL);";
-				
+				console.log("entering try block");
 				throw "thrown message";
-			
+				console.log("this message is never seen");
 			}
 			catch (e) {
-			
+				console.log("entering catch block");
+				console.log(e);
+				console.log("leaving catch block");
 			}
-		
+			console.log(insert);
 			Personal.query(insert,function(err,record)
 			{
 				if(err)
 				{
-				
+					console.log(err);
 				}
 				else
 				{
-				
+					console.log(record);
 					res.redirect('../personal_view/personal_view');
 				}
 			});
+		}else {
+			console.log('Else part');
 		}
 	},
 

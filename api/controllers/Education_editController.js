@@ -36,19 +36,23 @@ module.exports = {
 			var update ="";
 			try {
 				update = "UPDATE `education` SET `student_education_institute`='"+student_education_institute+"',`student_education_fieldofstudy`='"+student_education_fieldofstudy+"' WHERE `student_id`=1";
-				
+				console.log("entering try block");
 				throw "thrown message";
-				
+				console.log("this message is never seen");
 			}
 			catch (e) {
-			
+				console.log("entering catch block");
+				console.log(e);
+				console.log("leaving catch block");
 			}
-		
+			console.log(update);
 			Education.query(update,function(err,record)
 			{
 				return res.ok();
 				
 			});
+		}else {
+			console.log('Else part');
 		}
 
         }

@@ -41,16 +41,16 @@ module.exports = {
 	'stulogin':function(req,res){
 		if(req.method=="POST")
 		{
-			
+			console.log("Post");
 			var student_firstname = req.param("student_firstname");
 			var student_lastname = req.param("student_lastname");
 			var student_contactno =req.param("student_contactno");
 			var student_email =req.param("student_email");
 			var student_password =req.param("student_password");
-			
+			console.log(student_firstname);
 			var insert ="";
 			insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('"+student_firstname+"', '"+student_lastname+"', '"+student_contactno+"', '"+student_email+"')";
-			
+			console.log(insert);
 			Student_details.query(insert,function(err,record)
 			{
 				
@@ -68,7 +68,7 @@ module.exports = {
 		}
 
 		else {
-		
+			console.log('Else part');
 		}
 	},
 
@@ -79,7 +79,9 @@ module.exports = {
 		var bday_check= req.param('bday_check');
 		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
 		var bdate=arr[0];
-		
+		console.log(stu_name);
+		console.log(bday_check);
+		console.log(bdate);
 		
 
 		var stu_search='';
@@ -88,7 +90,8 @@ module.exports = {
 			stu_search ="SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id WHERE  student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%'" ;
 			Student_details.query(stu_search,function(err,recordset){
         // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
-        	
+        	console.log('recordset');
+        	console.log(recordset);
         	return res.view('./allprofile/allprofile', {
 
         		humans: recordset,
@@ -104,7 +107,8 @@ module.exports = {
 			stu_search_bday ="SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id WHERE student_details.student_birthdate='"+bdate+"' AND (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%')" ;
 			Student_details.query(stu_search_bday,function(err,recordset){
         // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
-        
+        	console.log('recordset');
+        	console.log(recordset);
         	return res.view('./bday_profile/bday_profile', {
 
         		humans: recordset,
@@ -184,9 +188,10 @@ module.exports = {
 		var bdate=arr[0];
 		Student_details.query('SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1', function(err, recordset) {
 
-				
-			Student_details.query("SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id WHERE student_details.student_birthdate='"+bdate+"'", function(err, record) {
-				
+				console.log(recordset);
+				console.log('recordset');
+			Student_details.query("SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1 AND student_details.student_birthdate='"+bdate+"'", function(err, record) {
+				console.log(record);
 				return res.view('./homepage', {
 
 					answer: recordset,
@@ -205,14 +210,16 @@ module.exports = {
 
 
 	'allprofiles': function(req, res) {
+		var stu_name = '';
 		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
 		var bdate=arr[0];
 		Student_details.query('SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1', function(err, recordset) {         	
-			
+			console.log(recordset);
 			return res.view('./allprofile/allprofile', {
 
 				humans: recordset,
-				today: bdate
+				today: bdate,
+				student_find:stu_name,
 
 			});
 
@@ -224,17 +231,21 @@ module.exports = {
 
 
 	'singleprofile': function(req, res) {
-		Student_details.query('SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id where student_details.student_id='+req.param('id'), function(err, recordset) {     
-			Student_details.query('SELECT * from student_details  left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id where student_details.student_id='+req.param('id'), function(err, donor_l) {    
+		var percent = "25";
+		var donated = "3000";
+		Student_details.query('SELECT * from student_details left join education on education.student_id = student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, recordset) {     
+			Student_details.query('SELECT * from student_details  left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, donor_l) {    
 				Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
 					
-				
+					console.log(recordset);
 
 					return res.view('./myprofile/myprofile', {
 
 						humans: recordset,
 						donor_l: donor_l,
-						pics: photorecord
+						pics: photorecord,
+						percent: percent,
+						donated: donated
 						
 
 

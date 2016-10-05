@@ -29,7 +29,7 @@ module.exports = {
                 var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id LIMIT ' + start_from + ', ' + per_page + '';
 
                 Student_details.query(q, function (err, results) {
-                   
+
                     var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
 
                         das_rows = the_rows[0].erow;
@@ -141,7 +141,7 @@ module.exports = {
         var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where student_details.profile_lock="1" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
-           
+
             var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
 
                 das_rows = the_rows[0].erow;
@@ -207,9 +207,9 @@ module.exports = {
     },
     studlockedprofile: function (req, res) {
         var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
-      
+
         Student_changed_val.query(q, function (err, results) {
-       
+
             return   res.view('./admin/studlockedprofile', {
                 layout: false,
                 student_records: results
@@ -217,7 +217,66 @@ module.exports = {
         });
     },
     update_student_profile: function (req, res) {
+//        console.log('here');
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
+        var approved_values = req.param('approved_values');
+        if (approved_values == 'undefined' && approved_values.length > 0) {
+            approved_values.forEach(function (values, index) {
+                var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0' WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
+                Student_changed_val.query(query, function (err, results) {
+
+                });
+            });
+        } else {
+            var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
+            Student_details.query(fetch_student, function (err, student_details) {
+//                var temp = JSON.stringify(student_details);
+//                var student_details = JSON.parse(temp)[0];
+//                var helper = require('sendgrid').mail;
+//                var from_email = new helper.Email('support@evonixtech.com');
+//                var to_email = new helper.Email(student_details.student_email);
+//                var subject = 'Stumuch Notification';
+//                var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
+//                var content = new helper.Content('text/plain', mail_content);
+//                var mail = new helper.Mail(from_email, subject, to_email, content);
+//
+//                var sg = require('sendgrid')("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");
+//                var request = sg.emptyRequest({
+//                    method: 'POST',
+//                    path: '/v3/mail/send',
+//                    body: mail.toJSON(),
+//                });
+//
+//                sg.API(request, function (error, response) {
+//            console.log('here');
+//            console.log(response.statusCode);
+//            console.log(response.body);
+//            console.log(response.headers);
+//                });
+            });
+
+
+        }
+        var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
+        Student_changed_val.query(q, function (err, record) {
+            if (record.length == 0) {
+                var update_query = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
+                Student_login_credentials.query(update_query, function (err, results) {
+                    if (admin_approve == '0') {
+                        var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
+                    }
+                    Student_login_credentials.query(update_query, function (err, results) {
+
+                    });
+
+                });
+            }
+            var path = '/admin/studlockedprofile/' + req.param('student_id');
+            return res.ok({path: path});
+        });
+
+
+
         var q = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
         Student_login_credentials.query(q, function (err, results) {
             var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "' WHERE `student_changed_val`.`student_id` =" + req.param('student_id');
@@ -225,6 +284,27 @@ module.exports = {
                 var path = '/viewdetails/' + req.param('student_id');
                 return res.ok({path: path});
             });
+        });
+    },
+    'send_mail': function (req, res) {
+        var helper = require('sendgrid').mail;
+        var from_email = new helper.Email('support@evonixtech.com');
+        var to_email = new helper.Email('varsha@evonix.co');
+        var subject = 'Hello World from the SendGrid Node.js Library!';
+        var content = new helper.Content('text/plain', 'Hello, Email!');
+        var mail = new helper.Mail(from_email, subject, to_email, content);
+
+        var sg = require('sendgrid')("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");
+        var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON(),
+        });
+
+        sg.API(request, function (error, response) {
+            console.log(response.statusCode);
+            console.log(response.body);
+            console.log(response.headers);
         });
     },
 };

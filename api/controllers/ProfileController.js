@@ -21,7 +21,8 @@
                     Loan_details.query('SELECT * from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= '+req.param('id')+' AND loan_details.isActive = 0', function(err, loan_l) { 
 
                         Loan_details.query('SELECT * from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= '+req.param('id')+' AND loan_details.isActive = 1', function(err, loan_act) { 
-                         
+                            console.log(loan_act);
+                             console.log('loan_act');
               return res.view('./studprofile/studprofile', {
 
           answer: recordset,
@@ -40,14 +41,37 @@
            
         },
 
+         'stu_dashboard': function(req, res) {
+
+
+             Student_details.query('SELECT * from student_details where student_details.student_id=1', function(err, recordset) {  
+              
+                  Donors_funding_details.query('SELECT * from donors_funding_details left join loan_details on loan_details.loan_id = student_details.student_id where student_details.student_id=1', function(err, donor_l) {
+             console.log()
+              return res.view('./studash/studash', {
+
+          answer: recordset,
+           donor_l: donor_l,
+          
+        });
+
+            });
+               });
+
+        
+        },
+
+
+
 
          upload: function  (req, res) {
     if(req.method === 'POST')
       
     var userpic = req.param('userPhoto');
-
+    console.log('We have entered the uploading process ');
+console.log(userpic);
 var newFilename = req.file('userPhoto')._files[0].stream.filename;
-
+console.log(newFilename);
     req.file('userPhoto').upload({dirname:'../public/index_files/uploads/',saveAs: newFilename},function(err,files){
     
       maxBytes: 10000000;
@@ -58,25 +82,28 @@ var newFilename = req.file('userPhoto')._files[0].stream.filename;
     files.forEach(function(files, index){
    file_name=files.filename;
      });
- 
+    console.log('here');
+    console.log(file_name);
     var update = "UPDATE `student_details` SET `student_profile_pic_path`='"+file_name+"' where student_details.student_id="+req.param('id');
 
     Student_details.query(update,function(err,record)
         {
-    
+          console.log(record);
           return res.ok();
         });
-
+    // var file_name = files.filename;
+     //console.log(file_name);
             return res.redirect('/viewprofile/'+req.param('id'));
      });
    },
 
 
      'uploadVideo': function(req, res) {
-
+      console.log('are you there');
+      console.log(req.method);
          if(req.method=="POST")
       {
-  
+        console.log("this is it");
         var video_link = req.param("video_link");
         var temp=[];
        var image1 = req.file('image1');
@@ -95,7 +122,7 @@ var newFilename = req.file('userPhoto')._files[0].stream.filename;
        var image3 = req.file('image')._files[0].stream.filename; 
        temp.push(image3);
       }
-     
+      console.log(temp);
       /*  var image4 = req.file('image4');
       var image4_f = req.file('image4')._files[0].stream.filename;
         var image5 = req.file('image5');

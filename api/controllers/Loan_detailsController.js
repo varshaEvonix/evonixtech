@@ -16,10 +16,10 @@ module.exports = {
   },
 
   'insertloan':function(req,res){
-  
+  	console.log('entered');
 		if(req.method=="POST")
 		{
-			
+			console.log("Post");
 			var bank = req.param("bank");
 			var branch = req.param("branch");
 			var ifsc =req.param("ifsc");
@@ -33,26 +33,30 @@ module.exports = {
 			var insert ="";
 			try {
 				insert = " INSERT INTO `loan` (`bank`, `branch`, `ifsc`, `account_no`, `account_name`, `loan_name`, `loan_type`,`loan_id`, `createdAt`, `updatedAt`) VALUES ('"+bank+"', '"+branch+"', '"+ifsc+"', '"+account_no+"', '"+account_name+"','"+loan_name+"','"+loan_type+"','"+loan_id+"', NULL, NULL);";
-				
+				console.log("entering try block");
 				throw "thrown message";
-				
+				console.log("this message is never seen");
 			}
 			catch (e) {
-			
+				console.log("entering catch block");
+				console.log(e);
+				console.log("leaving catch block");
 			}
-		
+			console.log(insert);
 			Loan.query(insert,function(err,record)
 			{
 				if(err)
 				{
-					
+					console.log(err);
 				}
 				else
 				{
-					
+					console.log(record);
 					res.redirect('../studash/studash');
 				}
 			});
+		}else {
+			console.log('Else part');
 		}
 	},
 
