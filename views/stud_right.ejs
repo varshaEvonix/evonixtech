@@ -62,18 +62,19 @@
 						<h3>DONORS</h3>
            
                       <!-- First Member -->
-                       <% _.each(answer, function (answer) { %>
+                    
                       <div class="desc">
                       	<div class="thumb">
                       		<img class="img-circle" src="../../index_files/stdash/img/ui-divya.jpg" width="35px" height="35px" align="">
                       	</div>
-                      	<div class="details">
-                      		<p><a href="#"><%= answer.donors_name %></a><br/>
-                      		   <muted>Donated: <%= answer.funded_amount %>$</muted>
+                      	<div class="details"> <% _.each(donor_l, function (donor_l) { %>
+                      		<p><a href="#"><%= donor_l.donors_name %></a><br/>
+                      		   <muted>Donated: <%= donor_l.funded_amount %>$</muted>
+                             <% }) %>
                       		</p>
                       	</div>
                       </div>
-                      <% }) %> 
+                    
 
                         <!-- CALENDAR-->
                         <div id="calendar" class="mb">

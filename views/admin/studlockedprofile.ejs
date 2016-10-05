@@ -15,9 +15,13 @@
         <div class="row">
             <div class="col-md-6 pink">
                 <h3 class="text-center">Previous Record</h3>
-                <%  _.each(student_records, function (records) { %>
+                <%  _.each(student_records, function (records) {     %>
+                <!--                <% var temp = records.student_master_field_name %>-->
+
                 <div class="row">
-                    <div class="col-md-6"><p><%= records.student_master_field_name %> : </p></div>
+                    <div class="col-md-6"><h4>
+                            <strong> <%= records.student_master_field_name.replace('_', ' ') %> : </strong>
+                        </h4></div>
                     <div class="col-md-6"><h4><%= records.student_prev_value %></h4></div>
                 </div>
                 <%
@@ -28,7 +32,7 @@
                 <h3 class="text-center">Changed Record</h3>
                 <%  _.each(student_records, function (records) { %>
                 <div class="row">
-                    <div class="col-md-6"><p><input type="checkbox" name="student_record[]" value="<%= records.student_changed_value_id %>"> <%= records.student_master_field_name %> : </p></div>
+                    <div class="col-md-6"><p><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"> </p></div>
                     <div class="col-md-6"><h4><%= records.student_changed_value %></h4></div>
                 </div>
                 <%
@@ -38,7 +42,7 @@
         </div> 
         <br>
         <form>
-            <div class="row">  
+            <div id="admin-message" class="row">  
                 <div class=" col-md-5 ">
                     <label>Add Comment :</label>
                     <textarea name="admin_note" id="admin_note" class="form-control" cols="60" rows="2"></textarea>
@@ -67,31 +71,52 @@
 <script>
 
     $('.update_student_status').click(function () {
-        var status = $(this).attr('data-value') == '1' ? 'Disapprove' : 'Approve';
-        var color = $(this).attr('data-value') == '1' ? '#DD6B55' : '#4cae4c';
-        var profile_status = $(this).attr('data-value');
-        var student_id = $('#student_id').val();
-        var admin_note = $('#admin_note').val();
-        swal({title: "Are you sure?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: color,
-            confirmButtonText: "Yes, " + status + " it!",
-            closeOnConfirm: false
-        },
-        function () {
-            $.ajax({
-                url: "/admin/update_student_profile",
-                type: "POST",
-                async: true,
-//                dataType: 'json',
-                data: {student_id: student_id, profile_status: profile_status, admin_note: admin_note},
-                success: function (response) {
-                   window.location = response.path;
-                }
-            });
-
+        $('#admin_note_message').remove();
+        $('#admin_record_message').remove();
+        var allvalues = [];
+        $('input[name="student_record[]"]:checked').each(function () {
+            allvalues.push(this.value);
         });
+        if (($(this).attr('data-value') == '0') || ($(this).attr('data-value') == '1' && $('#admin_note').val() != '')) {
+            if (($(this).attr('data-value') == '1') || ($(this).attr('data-value') == '0' && allvalues.length > 0)) {
+                var status = $(this).attr('data-value') == '1' ? 'Disapprove' : 'Approve';
+                var color = $(this).attr('data-value') == '1' ? '#DD6B55' : '#4cae4c';
+                var profile_status = $(this).attr('data-value');
+                var student_id = $('#student_id').val();
+                var admin_note = $('#admin_note').val();
+                swal({title: "Are you sure?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: color,
+                    confirmButtonText: "Yes, " + status + " it!",
+                    closeOnConfirm: false
+                },
+                function () {
+                    $.ajax({
+                        url: "/admin/update_student_profile",
+                        type: "POST",
+                        async: true,
+//                dataType: 'json',
+                        data: {student_id: student_id, profile_status: profile_status, admin_note: admin_note, approved_values: allvalues},
+                        success: function (response) {
+                            window.location = response.path;
+                        }
+                    });
+
+                });
+            } else {
+                $('#admin-message').before('<span id="admin_record_message" class="has-error">Please select at least one record</span>');
+            }
+        } else {
+            $('#admin_note').after('<span id="admin_note_message" class="has-error">Admin note is required</span>');
+        }
+    });
+
+    $('#admin_note').keyup(function () {
+        $('#admin_note_message').remove();
+    });
+    $('input[name="student_record[]"]').change(function () {
+        $('#admin_record_message').remove();
     });
 </script>
 

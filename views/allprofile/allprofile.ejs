@@ -195,16 +195,14 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                             <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
                                 
 
-                                <li style="" class="active"><a href="../allprofile">Profiles</a>
+                                <li style="" class="active"><a href="/allprofile">Profiles</a>
 
                                 </li>
-                                <li style="" ><a href="../myprofile/myprofile">My Profile</a>
-
-                                </li>
+                                
                                 <li style=""><a href="../stulogin/stulogin">Create account</a>
 
                                 </li>
-                                <li style=""><a href="#">Login </a>
+                                <li style=""><a href="/student/login">Login </a>
 
                                 </li>
 
@@ -245,11 +243,8 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                                 </span>
                             </div><br>
 
-  <%if (bday_check == '1') { %>
-  <p><b><input type="checkbox" checked> Birthday Today</b></p>
-      <% } else {%>
   <p><b><input type="checkbox" unchecked> Birthday Today</b></p>
-  <% } %>    
+      
 
                         </div>
 </div>
@@ -284,7 +279,7 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                  <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
                                     <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= humans.student_id %>"> <%= humans.student_firstname %> <%= humans.student_lastname %></a></h3>
                                     
-                                    <p class="desc mb-10 abt1"><%= humans.student_about_me %>...</p>
+                                    <p class="desc mb-10 abt1" id="about_stu"><%= humans.student_about_me %>...</p>
                                     <div class="progress-item mt-0">
                                         
                                     </div>
@@ -299,7 +294,7 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
                                             </div>
                                         </div>
                                     </div>
-                  <div class="text-center">    <div class="text-center">   <a class="btn btn-dark btn-theme-colored btn-sm text-uppercase mt-10" href="#">Donate Now</a></div></div>
+                 
                   </div>
                 </div>
               </div>
@@ -386,3 +381,10 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
 </div>
 <!-- Modal: Bootstrap Parent Modal Ends -->
 
+ <script>
+    $(document).ready(function(){
+   $("#about_stu").text(function(index, currentText) {
+    return currentText.substr(0, 60);
+});
+});
+    </script>

@@ -1,5 +1,5 @@
   <%- include ../stuhead.ejs %>
- 
+ <% _.each(answer, function (answer) { %>
    <%- include ../stud_left.ejs %>
 
    <style>
@@ -14,17 +14,18 @@ div.tooltip-inner {
   <section id="main-content" ng-app="postApp" ng-controller="postController">
             <section class="wrapper">
             <div class="row">
-            <div class="col-md-9"> <% _.each(answer, function (answer) { %>
+            <div class="col-md-9"> 
             <h2>Personal details</h2>
             <br>
             <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= answer.student_id %>" method="POST" name="userPhoto" novalidate>
             
             <div class="col-md-12" style="margin-bottom:20px">
 
-            <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:300px">
-            <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a>
-            <div class="profile_image " style="width:100%;height:280px;background-image:url(../index_files/uploads/<%= answer.student_profile_pic_path %>);">
-             
+            <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:350px">
+            
+            <div class="profile_image" style="">
+            <img src="../index_files/uploads/<%= answer.student_profile_pic_path %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
+             <!-- <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a> -->
             
               </div>
               <div class="fileUpload btn btn-default">

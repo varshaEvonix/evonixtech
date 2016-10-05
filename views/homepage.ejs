@@ -57,7 +57,7 @@
                             <div class="input-group col-md-10">
                                 <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name"/ style="height:42px">
                                 <span class="input-group-btn">
-                                    <button id="search" class="btn btn-dark btn-theme-colored" type="submit" style="line-height:2.05">
+                                    <button id="search" class="btn btn-dark btn-theme-colored submitbtn" type="submit" style="line-height:2.05">
                                         <span>Search</span>
                                     </button>
                                 </span>
@@ -85,8 +85,7 @@
                         </div>
 </div>
 
-                        <div class="col-md-2">
-            </div>
+                        
 
             </div>
         </div>
@@ -98,9 +97,9 @@
                 <div class="section-title">
                     <div class="row">
                         <div class="col-md-6">
-                           
+                           <%if (birthday.length = 0) { %>
                             <h2 class="mt-0 text-uppercase font-28">Today's <span class="text-theme-colored font-weight-400">Birthdays</span> </h2>
-                            
+                            <% } %>
                         </div>
                     </div>
                 </div>
@@ -130,7 +129,7 @@
                  <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
                                     <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= birthday.student_id %>"> <%= birthday.student_firstname %> <%= birthday.student_lastname %></a></h3>
                                     
-                                    <p class="desc mb-10 abt1"><%= birthday.student_about_me %>...</p>
+                                    <p class="desc mb-10 abt1" maxlength="10"><%= birthday.student_about_me %>...</p>
                                     <div class="progress-item mt-0">
                                         
                                     </div>
@@ -155,7 +154,7 @@
                                 
                                 <% }) %>
                                 <% } else { %>
-   <p>No birthdays today</p>
+  
       <% } %>
 
 
@@ -165,7 +164,7 @@
                       
                     </div>
                 </div>
-            </div>
+            </dqiv>
     </div>
     </div>
     </section>
@@ -245,9 +244,10 @@
                                 <div class="image-box-thum">
                                     <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= answer.student_profile_pic_path %>" width="250" height="230">
                                    
-    
+     
       <div class="donate-piechart piechart-absolute">
-                    <%if (today == answer.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:28%;float:right"><% } %>
+                    <%if (today == answer.student_birthdate) { %> 
+                   <img src="../../index_files/cake.png" style="width:28%;float:right"><% } %>
                   </div>
                   
 
@@ -256,7 +256,7 @@
                                 <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
                                     <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= answer.student_id %> "><%= answer.student_firstname %> <%= answer.student_lastname %></a></h3>
                                     
-                                    <p class="desc mb-10"><%= answer.student_about_me %></p>
+                                    <p class="desc mb-10" id="about_stu"><%= answer.student_about_me %></p>
                                     <div class="progress-item mt-0">
                                         <div class="progress mb-10">
                                             <div data-percent="85" class="progress-bar"><span class="percent">0</span>
@@ -282,6 +282,7 @@
             </div>
         </div>
     </section>
+
  
     <!-- Divider: testimonials -->
 
@@ -298,4 +299,10 @@
     <%- include footer.ejs %>
 
     
-  
+      <script>
+    $(document).ready(function(){
+   $("#about_stu").text(function(index, currentText) {
+    return currentText.substr(0, 60);
+});
+});
+    </script>

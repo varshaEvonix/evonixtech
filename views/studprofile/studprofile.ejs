@@ -82,8 +82,9 @@
 </style>
 <%  console.log('answer') %>
 <%  console.log(answer) %>
-<% _.each(answer, function (answer) { %>
 <%- include ../stud_left.ejs %>
+<% _.each(answer, function (answer) { %>
+
 
 <section id="main-content">
   <div class="wrapper">
@@ -95,8 +96,7 @@
         <img src="../index_files/uploads/<%= answer.student_profile_pic_path %>" width="440" height="275">
       </div>
       <div class="col-md-7">
-        <h2><%= answer.student_firstname %> <%= answer.student_lastname %><span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong><span class="grn"> Active </span></p><button type="button" class="btn btn-danger btn-sm">Deactivate</button> 
-          <button type="button" class="btn btn-success btn-sm">Send mail</button></span></h2>
+        <h2><%= answer.student_firstname %> <%= answer.student_lastname %><span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong><span class="grn"> Active </span></p></h2>
           <p class="front-info"><%= answer.student_email %></p>
           <p class="front-info">Contact: <%= answer.student_contactno %></p>
           <div class="row money_info">
@@ -333,7 +333,7 @@
      <div class="col-md-5">
 <% _.each(answer, function (answer) { %>
       <div class="embed-responsive embed-responsive-16by9">
-      <iframe width="560" height="315" src="<%= answer.student_video_path %>" frameborder="0" allowfullscreen> 
+      <iframe width="560" height="315" src="<%= answer.video_link %>" frameborder="0" allowfullscreen> 
        </iframe>
      </div> <% }) %>
    </div>
