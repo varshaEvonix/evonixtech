@@ -29,6 +29,7 @@ module.exports = {
             } else {
                 res.status(500).send({error: 'Usename is wrong'});
             }
+   
         });
     },
     logout: function (req, res) {

@@ -35,17 +35,17 @@ module.exports = {
 
 
 	'editloan': function(req, res) {
-  	
-         Loan_details.query('SELECT * from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where student_id='+req.param('student_id')+' AND loan_details.loan_id ='+req.param('loan_id')+' AND loan_details.isActive = 1' , function(err, recordset) { 
+
+         Loan_details.query('SELECT ld.loan_id, sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_profile_pic_path, ld.loan_amount, IFNULL(mst_fafsa.fafsa_values,"-") fafsa_values, IFNULL(ld.loan_fafsa_id, "-") loan_fafsa_id, IFNULL(ld.loan_bankname, "-") loan_bankname, IFNULL(ld.loan_accountno, "-") loan_accountno from student_details sd left join loan_details ld on sd.student_id = ld.student_id left join mst_fafsa on mst_fafsa.id=ld.loan_fafsa_id where sd.student_id='+req.param('student_id')+' AND ld.loan_id ='+req.param('loan_id')+' AND ld.isActive = 1' , function(err, recordset) { 
 
             Table_loan_document.query('SELECT * from table_loan_document where loan_id='+req.param('loan_id') , function(err, recordset1) {         	
         	
-          console.log(recordset1);
+         // console.log(recordset1);
         	return res.view('./loan_edit/loan_edit', {
 
 
 
-      answer: recordset,
+      student_info: recordset,
       loan_docs: recordset1
 
     });

@@ -8,6 +8,7 @@
 module.exports = {
 	'stulogin': function(req, res){
   	res.view();
-  }
+  },
+
 };
 

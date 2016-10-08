@@ -26,7 +26,7 @@ module.exports = {
 
                 var per_page = 10;
                 var start_from = (page - 1) * per_page;
-                var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id LIMIT ' + start_from + ', ' + per_page + '';
+                var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id LIMIT ' + start_from + ', ' + per_page + '';
 
                 Student_details.query(q, function (err, results) {
 
@@ -60,7 +60,7 @@ module.exports = {
             },
     viewdetails: function (req, res) {
 
-        var q = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id  where student_details.student_id=' + req.param('id');
+        var q = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id  where student_details.student_id=' + req.param('id');
 
         Student_details.query(q, function (err, results) {
             var query = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=' + req.param('id');
@@ -95,7 +95,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where student_details.profile_lock="0" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_activate="1" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
             var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
@@ -138,7 +138,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where student_details.profile_lock="1" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_activate="0" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
 
@@ -173,9 +173,8 @@ module.exports = {
     },
     change_status: function (req, res) {
 
-        var q = "UPDATE `stumuch_db`.`student_details` SET `profile_lock` = '" + req.param('stu_status') + "' WHERE `student_details`.`student_id` =" + req.param('student_id');
-
-        Student_details.query(q, function (err, doner_result) {
+        var q = "UPDATE `student_login_credentials` SET `student_active` = '" + req.param('stu_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
+        Student_login_credentials.query(q, function (err, doner_result) {
 
             res.ok();
 
@@ -206,7 +205,7 @@ module.exports = {
         }
     },
     studlockedprofile: function (req, res) {
-        var q = 'SELECT * FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
+        var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
 
         Student_changed_val.query(q, function (err, results) {
 
@@ -217,7 +216,8 @@ module.exports = {
         });
     },
     update_student_profile: function (req, res) {
-//        console.log('here');
+
+        var student_details = '';
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
         var approved_values = req.param('approved_values');
         if (approved_values == 'undefined' && approved_values.length > 0) {
@@ -227,35 +227,6 @@ module.exports = {
 
                 });
             });
-        } else {
-            var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
-            Student_details.query(fetch_student, function (err, student_details) {
-//                var temp = JSON.stringify(student_details);
-//                var student_details = JSON.parse(temp)[0];
-//                var helper = require('sendgrid').mail;
-//                var from_email = new helper.Email('support@evonixtech.com');
-//                var to_email = new helper.Email(student_details.student_email);
-//                var subject = 'Stumuch Notification';
-//                var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
-//                var content = new helper.Content('text/plain', mail_content);
-//                var mail = new helper.Mail(from_email, subject, to_email, content);
-//
-//                var sg = require('sendgrid')("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");
-//                var request = sg.emptyRequest({
-//                    method: 'POST',
-//                    path: '/v3/mail/send',
-//                    body: mail.toJSON(),
-//                });
-//
-//                sg.API(request, function (error, response) {
-//            console.log('here');
-//            console.log(response.statusCode);
-//            console.log(response.body);
-//            console.log(response.headers);
-//                });
-            });
-
-
         }
         var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
         Student_changed_val.query(q, function (err, record) {
@@ -271,8 +242,8 @@ module.exports = {
 
                 });
             }
-            var path = '/admin/studlockedprofile/' + req.param('student_id');
-            return res.ok({path: path});
+
+
         });
 
 
@@ -281,8 +252,45 @@ module.exports = {
         Student_login_credentials.query(q, function (err, results) {
             var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "' WHERE `student_changed_val`.`student_id` =" + req.param('student_id');
             Student_login_credentials.query(query, function (err, query_results) {
-                var path = '/viewdetails/' + req.param('student_id');
-                return res.ok({path: path});
+//                var path = '/admin/studlockedprofile/' + req.param('student_id');
+                if (admin_approve == 0) {
+                    var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
+                    Student_details.query(fetch_student, function (err, studentdetails) {
+                        var temp = JSON.stringify(studentdetails);
+                        var student_details = JSON.parse(temp)[0];
+
+                        var helper = require('sendgrid').mail;
+                        var from_email = new helper.Email('support@evonixtech.com');
+                        var to_email = new helper.Email(student_details.student_email);
+                        var subject = 'Stumuch Notification';
+                        var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
+//                        console.log('mail_content');
+//                        console.log(mail_content);
+                        var content = new helper.Content('text/plain', mail_content);
+                        var mail = new helper.Mail(from_email, subject, to_email, content);
+
+                        var sg = require('sendgrid')("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");
+                        var request = sg.emptyRequest({
+                            method: 'POST',
+                            path: '/v3/mail/send',
+                            body: mail.toJSON(),
+                        });
+
+                        sg.API(request, function (error, response) {
+//                        console.log(response.statusCode);
+//                        console.log(response.body);
+//                        console.log(response.headers);
+                        });
+
+                    });
+
+//                var path = '/admin/studlockedprofile/1';
+                    var path = '1';
+                    return res.ok({path: path});
+                } else {
+                    var path = '/admin/studlockedprofile/' + req.param('student_id');
+                    return res.ok({path: path});
+                }
             });
         });
     },
@@ -302,9 +310,9 @@ module.exports = {
         });
 
         sg.API(request, function (error, response) {
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
+//            console.log(response.statusCode);
+//            console.log(response.body);
+//            console.log(response.headers);
         });
     },
 };
