@@ -95,10 +95,10 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_activate="1" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="1" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
-            var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
+            var all_rows = Student_details.query('SELECT count(*) as erow from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="1"', function (err, the_rows) {
 
                 das_rows = the_rows[0].erow;
 
@@ -138,11 +138,11 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_activate="0" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="0" LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
 
-            var all_rows = Student_details.query('SELECT count(*) as erow from student_details ', function (err, the_rows) {
+            var all_rows = Student_details.query('SELECT count(*) as erow from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="0" ', function (err, the_rows) {
 
                 das_rows = the_rows[0].erow;
 
