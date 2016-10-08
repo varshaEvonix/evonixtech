@@ -83,6 +83,11 @@
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+.white_bg{
+  background-color:#fff;
+
+}
 </style>
 <link href="../../index_files/lightbox.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -145,6 +150,13 @@
         background-color: #eee;
         /*background:rgba(6, 6, 6, 0.27);*/
       }
+      .adminpost{
+        font-size: 12px;
+    color: #696b86;
+      }
+.note_line_height{
+  line-height: 1.0em;
+}
     </style>
     <body class="">
 
@@ -196,10 +208,10 @@
 <br><br><br><br><br>
 <div class="container">
   <!-- Start main-content --> 
+<% if (student_info != '') {%>
 
 
-
-  <% _.each(humans, function (humans) { %>
+  <% _.each(student_info, function (student_info) { %>
 
 
   <div class="panel-body">
@@ -207,16 +219,17 @@
       <div class="col-sm-6 left-panel"><br>
         <div class="main-content">
           <!-- Section: home -->
-          <img src="../index_files/uploads/<%= humans.student_profile_pic_path %>" style="width:510px; height:326.9px">
-          <h2><%= humans.student_firstname %> <%= humans.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:105px; height:28px">
+          <img src="../index_files/uploads/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
+          <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:105px; height:28px">
             <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:105px; height:28px"></span></h2>
+            <p><%= student_info.student_city%>, <%= student_info.student_state  %></p>
 
 
             <hr>
 
             <h2>My Video</h2>
             <div class="embed-responsive embed-responsive-16by9">
-             <iframe  src="<%= humans.video_link %>" frameborder="0" allowfullscreen></iframe>
+             <iframe  src="<%= student_info.video_link %>" frameborder="0" allowfullscreen></iframe>
            </div><br>
 
 
@@ -236,15 +249,21 @@
             <div class="panel-body">
               <div class="col-md-4">
                 <p>Collected</p>
-                <h1 style="margin:none !important">$6000</h1>
+                <h1 style="margin:none !important">$<%= student_info.total_funded %></h1>
               </div>
               <div class="col-md-4">
               <canvas id="serverstatus01" height="120" width="120"></canvas>
-                <p class="text-center indicate">50%</p>
+                <%if (student_info.loan_amount == "0") { %>
+                    <p class="text-center indicate">0%</p>
+                    <input type="hidden" id="loan_percent" value="0">
+                <% } else {%>
+                  <p class="text-center indicate"><%= (student_info.total_funded/student_info.loan_amount)*100 %>%</p>
+                  <input type="hidden" id="loan_percent" value="<%= (student_info.total_funded/student_info.loan_amount)*100 %>">
+                <% } %>
               </div>
               <div class="col-md-4">
                 <p>Goal</p>
-                <h1 style="margin:none !important">$<%= humans.loan_amount %></h1>
+                <h1 style="margin:none !important">$<%= student_info.loan_amount %></h1>
               </div>
               <br></div>
              
@@ -257,55 +276,48 @@
                   <ul class="tab_info">
                   
   <li class="info_list"><a  class="tablinks active" onclick="openCity(event, 'Story')">My Story</a></li>
+  <li class="info_list"><a  class="tablinks" onclick="openCity(event, 'Ambition')">My Ambition</a></li>
   <li class="info_list"><a  class="tablinks" onclick="openCity(event, 'Education')">Education Details</a></li>
-  <li class="info_list"><a  class="tablinks" onclick="openCity(event, 'Loan')">Loan details</a></li>
-   <li class="info_list"><a  class="tablinks" onclick="openCity(event, 'Ambition')">My Ambition</a></li>
+   
   <li class="info_list"><a class="tablinks" onclick="openCity(event, 'Admin')">Admin notes</a></li>
  
 </ul>
 
 <div id="Education" class="tabcontent">
   <p> College/Institute:</p>
-   <p class="Ans"><%= humans.student_education_institute %></p>
+   <p class="Ans"><%= student_info.student_education_institute %></p>
 
   
   <p>Currently Studying:</p>
-   <p class="Ans"><%= humans.student_education_fieldofstudy %></p>
+   <p class="Ans"><%= student_info.student_education_fieldofstudy %></p>
 </div>
 
 
-<div id="Loan" class="tabcontent">
-<p>Loan amount:</p>
-  <p class="Ans">$<%= humans.loan_amount %></p>
-  <p>Loan Bank Name:</p>
-   <p class="Ans"><%= humans.loan_bankname %></p>
-   <p>Loan Account Number:</p>
-   <p class="Ans"><%= humans.loan_accountno %></p>
- 
 
-</div>
 
 <div id="Admin" class="tabcontent">
-<p>Admin:</p>
-  <p class="Ans"><%= humans.student_education_institute %></p>
-Admin external notes</p>
+ <p>Admin notes:</p>
+  <% _.each(loan_comments, function (comments) { %>
+  <p class="Ans note_line_height"><%= comments.note %><br/><span class="adminpost">Posted On: <%= comments.last_updated %></span></p>
+
   
+  <% }) %>
 
 </div>
 
 <div id="Story" class="tabstory tabcontent">
  <p> My Story:</p>
   <p class="Ans">
- <%= humans.student_about_me %></p>
+ <%= student_info.student_about_me %></p>
 
 </div>
 
 
 
 <div id="Ambition" class="tabcontent">
-  <p class="Ans"><%= humans.student_education_institute %></p>
-<%= humans.student_ambition %></p>
   <p>My Ambition</p>
+  <p class="Ans"><%= student_info.student_ambition %></p>
+  
   
 </div>
 
@@ -318,13 +330,15 @@ Admin external notes</p>
            
 <% }) %> 
 <br>
- <div class="panel panel-success" style="max-height:800px;overflow:scroll">
+ <div class="panel panel-success" style="">
               <div class="panel-heading panel-success">Recent donations</div>
               <div class="panel-body">
                 <ul>
                  <% _.each(donor_l, function (donor_l) { %>
                  <li>
-                  <strong><p><%= donor_l.donors_name %> donated $<%= donor_l.funded_amount %></p></strong>
+                  <p style="font-size:18px;">$<%= donor_l.funded_amount %><br/><%= donor_l.donors_name %><span class="pull-right adminpost"><%= donor_l.funding_date %></span></p>
+                  <%= donor_l.donors_comment %> 
+
                 </li> <hr>
                 <% }) %>
                
@@ -337,7 +351,13 @@ Admin external notes</p>
         </div>
       </div>
     </div>
+  </div><% } else { %>
+  <div class="row">
+  <div class="col-md-12 white_bg"><br><Br>
+  <h2 style="text-align:center">PROFILE NOT FOUND</h2><br><Br>
   </div>
+  </div>
+  <% } %>
   <div class="row">
     <div class="col-sm-12">
 
@@ -450,13 +470,16 @@ Admin external notes</p>
 
         </script>
         <script>
+                  var completePer = parseInt($("#loan_percent").val());
+                  var remainingPer = parseInt(100 - completePer);
+                  
                   var doughnutData = [
                       {
-                        value:50,
+                        value: parseInt(completePer),
                         color:"#68dff0"
                       },
                       {
-                        value : 50,
+                        value : parseInt(remainingPer),
                         color : "#fdfdfd"
                       }
                     ];

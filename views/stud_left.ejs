@@ -2,12 +2,14 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-              <% _.each(answer, function (answer) { %>
-                  <p class="centered"><img src="../index_files/uploads/<%= answer.student_profile_pic_path %>" class="dp_left"</p>
-                  <h5 class="centered"><%= answer.student_firstname %> <%= answer.student_lastname %></h5>
+             <% console.log(sails.getBaseurl()) %>
+
+              <center>
+                  <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_profile_pic_path %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
+                  <h5 class="centered"><%= student_info.student_firstname %> <%= student_info.student_lastname %></h5>
                    
                   <li class="mt">
-                      <a class="active" href="/studash/<%= answer.student_id %>">
+                      <a class="active" href="/studash/<%= student_info.student_id %>">
                           <i class="fa fa-tachometer" aria-hidden="true"></i>
                           <span>Dashboard</span>
                       </a>
@@ -50,11 +52,10 @@
                     
                   </li-->
                     <li class="sub-menu">
-                      <a href="/viewprofile/<%= answer.student_id %>" >
+                      <a href="/viewprofile/<%= student_info.student_id %>" >
                           <i class="fa fa-key" aria-hidden="true"></i>
                           <span>My profile</span>
-                      </a>  <% }) %>
-                    
+                      </a>                      
                   </li>
                  
 

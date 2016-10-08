@@ -1,263 +1,217 @@
-  <%- include ../admin_head.ejs %>
-
-  <style>
-    .progress-bar {
-      position: relative;
-      height: 100px;
-      width: 100px;
-    }
-
-    .progress-bar div {
-      position: absolute;
-      height: 100px;
-      width: 100px;
-      border-radius: 50%;
-    }
-
-    .progress-bar div span {
-      position: absolute;
-      font-family: Arial;
-      font-size: 25px;
-      line-height: 75px;
-      height: 75px;
-      width: 75px;
-      left: 12.5px;
-      top: 12.5px;
-      text-align: center;
-      border-radius: 50%;
-      background-color: white;
-    }
-
-    .progress-bar .background { background-color: #b3cef6; }
-
-    .progress-bar .rotate {
-      clip: rect(0 50px 100px 0);
-      background-color: #4b86db;
-    }
-
-    .progress-bar .left {
-      clip: rect(0 50px 100px 0);
-      opacity: 1;
-      background-color: #b3cef6;
-    }
-
-    .progress-bar .right {
-      clip: rect(0 50px 100px 0);
-      transform: rotate(180deg);
-      opacity: 0;
-      background-color: #4b86db;
-    }
-    .grn{
-      color:#009900;
-    }
-    p.indicate{
-      top:42%;
-      position:absolute;
-      left:26%;
-    }
-
-    @keyframes 
-    toggle {  0% {
-     opacity: 0;
-   }
-   100% {
-     opacity: 1;
-   }
- }
- .info{
-  font-size:22px;
-}
-.small{
-  color:#777;
-}
-.front-info{
-  font-size:15px;
-}
-.money_info{
-  padding-top:44px;
-}
-.bot{
-  padding-bottom:115px;
-}
-</style>
-<%  console.log('answer') %>
-<%  console.log(answer) %>
+<%- include ../stuhead.ejs %>
+  <% _.each(student_info, function (student_info) { %>
 <%- include ../stud_left.ejs %>
-<% _.each(answer, function (answer) { %>
+ 
+    <style>
+    .image_pro{
+    width:100%; 
+    margin-top:15px
+}
+    </style>
+  <section id="main-content">
+          <section class="wrapper">
+
+            
 
 
-<section id="main-content">
-  <div class="wrapper">
-
-    <div >
-     <div class="row">
-      <div class="col-md-5">
-        <br>
-        <img src="../index_files/uploads/<%= answer.student_profile_pic_path %>" width="440" height="275">
-      </div>
+                  <div class="col-md-9 main-chart">
+                  <div class="row white_bg" >
       <div class="col-md-7">
-        <h2><%= answer.student_firstname %> <%= answer.student_lastname %><span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong><span class="grn"> Active </span></p></h2>
-          <p class="front-info"><%= answer.student_email %></p>
-          <p class="front-info">Contact: <%= answer.student_contactno %></p>
-          <div class="row money_info">
-            <div class="col-sm-4">
-<% _.each(loan_activated, function (loan_activated) { %>
-              <h4><strong>Goal :</strong></h4><h2>$<%= loan_activated.loan_amount %></h2>
-<% }) %>
-            </div>
-            <div class="col-sm-4">
+        
+        <img src="../index_files/uploads/<%= student_info.student_profile_pic_path %>" class="image_pro" />
 
-             <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
-             <p class="indicate"><strong>70%</strong></p>
+      </div>
+      <div class="col-md-5">
+          <% if (student_info.profile_lock == '1') { %>
+        <div class="alert alert-danger" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Locked by Admin </span></div>
+        <% } else { %>
+        <div class="alert alert-success" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Profile is Active</span></div>
+        <% } %>
 
-
-
-
-           </div>
-           <div class="col-sm-4 pull-right">
-
-
-            <h4><strong>Raised :</strong></h4><h2>$4000</h2>
-
-
-
-
+        <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %></h2>
+        <p class="front-info">Email: <%= student_info.student_email %></p>
+        <p class="front-info">Contact: <%= student_info.student_contactno %></p>
+        <div class="row money_info">
+          <div class="col-sm-3">
+            
+            <h4>Raised</h4><h3>$<%= student_info.total_funded %></h3>
+            
           </div>
+          <div class="col-sm-6" style="text-align:center;">
+
+           <!-- <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
+           <p class="indicate" style="margin-top: -75px;"><strong>70%</strong></p>
+ -->
+
+              <canvas id="serverstatus14" height="120" width="120"></canvas>
+                <%if (student_info.loan_amount == "0") { %>
+                    <p class="text-center indicate">0%</p>
+                    <input type="hidden" id="loan_percent" value="0">
+                <% } else {%>
+                  <p class="text-center indicate" style="margin-top:-75px;"><%= (student_info.total_funded/student_info.loan_amount)*100 %>%</p>
+                  <input type="hidden" id="loan_percent" value="<%= (student_info.total_funded/student_info.loan_amount)*100 %>">
+                <% } %>
+              
+
+
+         </div>
+         <div class="col-sm-3">
+
+          
+            <h4>Goal</h4><h3>$<%= student_info.loan_amount %></h3>
+            
 
         </div>
-      </div>
-      <br>
 
+      </div>
     </div>
+    <br>
+
+  </div>
   
-    <div class="modal fade col-md-6 center" id="myModal" role="dialog">
+  <div class="modal fade col-md-6 center" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
-  </div><br><div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add new loan</h4>
-      </div>
-      <div class="modal-body">
-        <p>Do you want to add new loan? If you do this, your current loan will be deactivated and new loan will be activated.</p>
-      </div>
-      <div class="modal-footer">
-         <a href="/addloan/<%= answer.student_id %>"><button type="button" class="btn btn-default">Yes</button></a>
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-      </div>
+
+    </div><br>
+    <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Add new loan</h4>
     </div>
+    <div class="modal-body">
+      <p>Do you want to add new loan? If you do this, your current loan will be deactivated and new loan will be activated.</p>
+    </div>
+    <div class="modal-footer">
+     <a href="/addloan/<%= student_info.student_id %>"><button type="button" class="btn btn-default">Yes</button></a>
+     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+   </div>
+ </div>
 </div>
-</div>
-
-  <div class="row">
 
 
-    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home">Personal details</a></li>
-      <li><a data-toggle="tab" href="#menu1">Education Details</a></li>
-      <li><a data-toggle="tab" href="#menu2">Loan Details</a></li>
-      <li><a data-toggle="tab" href="#menu3">Media</a></li>
-
-    </ul>
-
-    <div class="tab-content">
+<div class="row">
 
 
-      <div id="home" class="tab-pane fade in active"><div class="col-md-12 white_bg">
-        <h3><u>Personal details</u> &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"> <a href="/personal_edit/<%= answer.student_id%>" class="edit_op"><i class="fa fa-pencil-square-o edit_op" aria-hidden="true"></i>Edit</a></span></h3><br>
-        <div class="row">
-          <div class="col-md-4">
-           <p class="info"> <span class="small">First Name: <br>
-           </span><%= answer.student_firstname %></p>
-         </div>
-         <div class="col-md-4">
-           <p class="info"> <span class="small">Last Name: <br>
-           </span><%= answer.student_lastname %></p>
-         </div>
-         <div class="col-md-4">
-           <p class="info"> <span class="small">Contact Number: <br>
-           </span><%= answer.student_contactno %></p>
-         </div>
-       </div><br>
-       <div class="row">
-        <div class="col-md-4">
-         <p class="info"> <span class="small">Email: <br>
-         </span><%= answer.student_email %></p>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home" class="profile_tabs">Personal details</a></li>
+    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education Details</a></li>
+    <li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>
+    <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
+
+  </ul>
+
+  <div class="tab-content">
+
+
+    <div id="home" class="tab-pane fade in active"><div class="col-md-12 white_bg">
+      <div class="row pull-right"> <a href="/personal_edit/<%= student_info.student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
+      <div class="row">
+        <div class="col-md-3">
+         <p class="info"> <span class="small">First Name: <br>
+         </span><%= student_info.student_firstname %></p>
        </div>
-       <div class="col-md-4">
-         <p class="info"> <span class="small">Permanent Address: <br>
-         </span><%= answer.student_address %></h4>
+       <div class="col-md-3">
+         <p class="info"> <span class="small">Last Name: <br>
+         </span><%= student_info.student_lastname %></p>
        </div>
-       <div class="col-md-4">
-         <p class="info"> <span class="small">City: <br>
-         </span><%= answer.student_city %></p>
-       </div>
-     </div><br>
-     <div class="row">
-       <div class="col-md-4">
-         <p class="info"> <span class="small">State: <br>
-         </span><%= answer.student_state %></p>
-       </div>
-       <div class="col-md-4">
-         <p class="info"> <span class="small">Country: <br>
-         </span><%= answer.student_country %></p>
-       </div>
-       <div class="col-md-4">
-         <p class="info"> <span class="small">Birth Date: <br>
-         </span><%= answer.student_birthdate %></p>
-       </div>
-     </div><br>
-     <div class="row">
-       <div class="col-md-12">
-         <p class="info"> <span class="small">Zip Code: <br>
-         </span><%= answer.zip_code %></p>
-       </div>
-     </div><br>
-     <div class="row">
-       <div class="col-md-12">
-         <p class="info"> <span class="small">About Me: <br>
-         </span><%= answer.student_about_me %></p>
-       </div>
+       <div class="col-md-3">
+       <p class="info"> <span class="small">Birth Date: <br>
+       </span><%= student_info.student_birthdate %></p>
      </div>
-     <div class="row"><br>
-       <div class="col-md-12 bot">
-         <p class="info"> <span class="small">My Ambition: <br>
-         </span><%= answer.student_ambition %></p>
+
+     </div><br>
+     <div class="row">
+      <div class="col-md-3">
+         <p class="info"> <span class="small">Contact Number: <br>
+         </span><%= student_info.student_contactno %></p>
        </div>
+      <div class="col-md-3">
+       <p class="info"> <span class="small">Email: <br>
+       </span><%= student_info.student_email %></p>
+     </div>
+     <div class="col-md-6">
+       <p class="info"> <span class="small">Permanent Address: <br>
+       </span><%= student_info.student_address %></h4>
+     </div>
+     
+   </div><br>
+   <div class="row">
+     <div class="col-md-3">
+       <p class="info"> <span class="small">City: <br>
+       </span><%= student_info.student_city %></p>
+     </div>
+     <div class="col-md-3">
+       <p class="info"> <span class="small">State: <br>
+       </span><%= student_info.student_state %></p>
+     </div>
+     <div class="col-md-3">
+       <p class="info"> <span class="small">Country: <br>
+       </span><%= student_info.student_country %></p>
+     </div>
+     <div class="col-md-3">
+       <p class="info"> <span class="small">Zip Code: <br>
+       </span><%= student_info.zip_code %></p>
+     </div>
+   </div><br>
+   <div class="row">
+     
+   </div><br>
+   <div class="row">
+     <div class="col-md-12">
+       <p class="info"> <span class="small">About Me: <br>
+       </span><%= student_info.student_about_me %></p>
+     </div>
+   </div>
+   <div class="row"><br>
+     <div class="col-md-12 bot">
+       <p class="info"> <span class="small">My Ambition: <br>
+       </span><%= student_info.student_ambition %></p>
      </div>
    </div>
  </div>
- <div id="menu1" class="tab-pane fade"><div class="col-md-12 white_bg">
-  <h3><u>Education Details</u> &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"> <a href="/education_edit/<%= answer.student_id%>" class="edit_op"><i class="fa fa-pencil-square-o edit_op" aria-hidden="true"></i>Edit</a></span></h3><br>
+</div>
+<div id="menu1" class="tab-pane fade"><div class="col-md-12 white_bg" style="min-height:300px;">
+  <div class="row pull-right"> <a href="/education_edit/<%= student_info.student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
+
   <div class="row">
     <div class="col-md-4">
       <p class="info">  <span class="small">Education Institute: <br>
-      </span><%= answer.student_education_institute %></p>
+      </span><%= student_info.student_education_institute %></p>
     </div>
     <div class="col-md-4 bot">
      <p class="info">  <span class="small">Currently Studying: <br>
-     </span><%= answer.student_education_fieldofstudy  %></p>
+     </span><%= student_info.student_education_fieldofstudy  %></p>
    </div>
  </div> 
 </div>
 </div>
-<% }) %>
-<% _.each(loan_activated, function (loan_activated) { %>
+
 <div id="menu2" class="tab-pane fade">
   <div class="col-md-12 white_bg">
-    <h3><u>Loan Details</u> &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"> Active loan <a href="/loan_edit/<%= loan_activated.student_id %>/<%= loan_activated.loan_id %>" class="edit_op"><i class="fa fa-pencil-square-o edit_op" aria-hidden="true"></i>Edit</a><span class="pull-right"><button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></span></span></h3><br>
-   
+    <div style="font-size:22px;" class="row edit_op">Current Loan
+
+    <div class="row pull-right"> <a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
+    <br>
+    <br>
+    </div>
     <div class="row">
-     
+
+    <div class="col-md-3">
+     <p class="info">  <span class="small">Loan Amount: <br>
+     </span>$<%= student_info.loan_amount %></p>
+    
+   </div>
+
       <div class="col-md-6">
-        <%if (loan_activated.loan_bankname == '') { %>
+        <%if (student_info.loan_bankname == '') { %>
         <div class="col-md-6">
          <p class="info">  <span class="small">Type of Loan: <br>
          </span>FAFSA</p>
        </div>
        <div class="col-md-6">
          <p class="info">  <span class="small">Name of Loan: <br>
-         </span><%= loan_activated.fafsa_values %></p>
+         </span><%= student_info.fafsa_values %></p>
        </div>
        <% } else { %>
        <div class="col-md-6">
@@ -266,105 +220,109 @@
       </div>
       <div class="col-md-6">
         <p class="info"> <span class="small">Bank Name: <br>
-        </span><%= loan_activated.loan_bankname %></p>
+        </span><%= student_info.loan_bankname %></p>
       </div>
       <% } %>
     </div>
     
     <div class="col-md-3">
       <p class="info">  <span class="small">Loan Account Number: <br>
-      </span><%= loan_activated.loan_accountno %></p>
+      </span><%= student_info.loan_accountno %></p>
     </div>
-
-    <div class="col-md-3">
-     <p class="info">  <span class="small">Loan Amount: <br>
-     </span><%= loan_activated.loan_amount %></p>
-       <% }) %>
-   </div>
 
    <br><br><br><br><br>
  </div>
+ <div>
 
-
- <h3>Previous loans</h3><br>
- <table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Type of Loan</th>
-      <th>Name of Loan</th>
-       <th>Name of Bank</th>
-      <th>Account Number</th>
-      <th>Loan Current Balance</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-   <% _.each(loan_list, function (loan_list) { %>
-   <tr>
-    <%if (loan_list.loan_bankname == '') { %>
-    <td>FAFSA</td>
-    <% } else {%>
-   <td>Bank loan</td>
-   
+   <h3>Previous loans</h3><br>
+   <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Type of Loan</th>
+        <th>Name of Loan</th>
+        <th>Name of Bank</th>
+        <th>Account Number</th>
+        <th>Loan Current Balance</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+     <% _.each(loan_list, function (loan_list) { %>
+     <tr>
+      <%if (loan_list.loan_bankname == '') { %>
+      <td>FAFSA</td>
+      <% } else {%>
+      <td>Bank loan</td>
+      
       <% } %>
 
-    <td><%= loan_list.fafsa_values %></td>
-    <td><%= loan_list.loan_bankname %></td>
-    <td><%= loan_list.loan_accountno %></td>
-    <td><%= loan_list.loan_amount %></td>
+      <td><%= loan_list.fafsa_values %></td>
+      <td><%= loan_list.loan_bankname %></td>
+      <td><%= loan_list.loan_accountno %></td>
+      <td><%= loan_list.loan_amount %></td>
 
 
-    <td>Deactivated</td>
-  </tr>
-  <% }) %>
-</tbody>
+      <td>Deactivated</td>
+    </tr>
+    <% }) %>
+  </tbody>
 </table>
 </div>
 </div>
+</div>
 <div id="menu3" class="tab-pane fade"><div class="col-md-12 white_bg">
-  <h3><u>Media</u> &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"><a href="/media_edit/<%= answer.student_id%>" class="edit_op"><i class="fa fa-pencil-square-o edit_op" aria-hidden="true"></i>Edit</a></span></h3><br>
+  <h3><u>Media</u> &nbsp;&nbsp;&nbsp;&nbsp;<span class="small"><a href="/media_edit/<%= student_info.student_id%>" class="edit_op"><i class="fa fa-pencil-square-o edit_op" aria-hidden="true"></i>Edit</a></span></h3><br>
 
   <div class="row">
     <div class="col-md-2">
-      <h3><em>Your Video<em></h3>
+      <h3><em>Your Video</em></h3>
     </div></div>
     <div class="row">
 
      <div class="col-md-5">
-<% _.each(answer, function (answer) { %>
+     
       <div class="embed-responsive embed-responsive-16by9">
-      <iframe width="560" height="315" src="<%= answer.video_link %>" frameborder="0" allowfullscreen> 
-       </iframe>
-     </div> <% }) %>
-   </div>
- </div>
- <br>   
- <div class="row">
-  <div class="col-md-2">
-    <h3><em>Your Images<em></h3>
-  </div></div>
-  <div class="row">
-    <% _.each(pics, function (pics) { %>
-    <div class="col-md-4" >
-      <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
+        <iframe width="560" height="315" src="<%= student_info.video_link %>" frameborder="0" allowfullscreen> 
+        </iframe>
+      </div>
     </div>
-    <% }) %>
-
   </div>
-</div></div>
+  <br>   
+  <div class="row">
+    <div class="col-md-2">
+      <h3><em>Your Images</em></h3>
+    </div>
+  </div>
+    <div class="row">
+      <% _.each(pics, function (pics) { %>
+      <div class="col-md-4" >
+        <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
+      </div>
 
-</div>
+      <% }) %>
 
+    </div>
+  </div></div>
 
-</div>
-</section>
+                 
+                  </div>
 
-  
+                                
+                
+             
+              </div>
+              </div>
+              <div class="col-md-3">
+            <%- include ../stud_right.ejs %>
+            </div>    
+          </section>  
 
-<!-- BOOTSTRAP SCRIPTS -->
+          
+      </section>
 
-
-
+        <% }) %>         
+                  <%- include ../stufoot.ejs %>
+<script src="../../index_files/lightbox.js"></script>
 
 <script type="text/javascript">
   $(function(){
@@ -376,7 +334,25 @@
   });
 
 </script>
+
 <script>
+  var completePer = parseInt($("#loan_percent").val());
+  var remainingPer = parseInt(100 - completePer);
+  
+  var doughnutData = [
+      {
+        value: parseInt(completePer),
+        color:"#68dff0"
+      },
+      {
+        value : parseInt(remainingPer),
+        color : "#fdfdfd"
+      }
+    ];
+    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+</script>
+
+<!-- <script>
   var doughnutData = [
   {
     value: 70,
@@ -388,7 +364,10 @@
   }
   ];
   var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+</script> -->
+<script>
+  lightbox.option({
+    'resizeDuration': 200,
+    'wrapAround': true
+  })
 </script>
-
-<%- include ../stufoot.ejs %>
-

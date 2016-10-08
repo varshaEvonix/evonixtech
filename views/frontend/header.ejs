@@ -36,7 +36,7 @@
         <!-- CSS | Responsive media queries -->
         <link href="../index_files/responsive.css" rel="stylesheet" type="text/css">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-
+        <script  src="../../index_files/stdash/js/angular.min.js"></script>
         <link rel="stylesheet" href="../index_files/faq/css/reset.css"> <!-- CSS reset -->
         <link rel="stylesheet" href="../index_files/faq/css/style.css"> <!-- Resource style -->
 
@@ -78,7 +78,7 @@
             input {
                 font-size: 18px;
                 padding: 10px 10px 10px 5px;
-                -webkit-appearance: none;
+                /*-webkit-appearance: none;*/
                 display: block;
                 background: #fafafa;
                 color: #636363;
@@ -272,35 +272,31 @@
 
         </style>
     </head>
-    <body>
+    <body ng-app="postApp" ng-controller="postController">
         <header id="header" class="header">
             <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
                 <div class="header-nav-wrapper">
                     <div class="container">
                         <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
                             <a href="home"><img src="./../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-                            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+                            <ul style="max-height: 400px;" class="menuzord-menu menuzord-right menuzord-indented scrollable">
 
 
-                                <li style="" ><a href="allprofile">Profiles</a>
-
-                                </li>
-                                <li style="" ><a href="myprofile">My Profile</a>
+                                <li style="" ><a href="/allprofile">Profiles</a>
 
                                 </li>
-                                <li style=""><a href="stulogin">Create account</a>
+                                <!--li style="" ><a href="myprofile/myprofile">My Profile</a>
+
+                                </li-->
+                                <li style=""><a href="stulogin/stulogin">Create account</a>
 
                                 </li>
-                                <li style=""><a href="#">Login </a>
+                                <li style=""><a href="/student/login">Login</a>
 
                                 </li>
 
                             </ul>
-                            </li>
 
-
-
-                            </ul>
                         </nav>
                     </div>
                 </div>

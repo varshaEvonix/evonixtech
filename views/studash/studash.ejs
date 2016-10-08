@@ -1,8 +1,8 @@
 <%- include ../stuhead.ejs %>
- 
+  <% _.each(answer, function (answer) { %>
 <%- include ../stud_left.ejs %>
  
-     
+    
   <section id="main-content">
           <section class="wrapper">
 
@@ -16,22 +16,23 @@
                   <span><i class="fa fa-bullseye" aria-hidden="true"></i></span>
                   <h4 style="font-size:16px">GOAL SET</h4>
 
-                  <h3>12000</h3>
+                  <h3> $<%= answer.loan_amount %></h3>
                         </div>
-                  <p>Your goal set is $12000</p>
+                  <p>Your goal set is $<%= answer.loan_amount %></p>
                       </div>
                       <div class="col-md-3 col-sm-3 box0">
                         <div class="box1">
                   <span><i class="fa fa-money" aria-hidden="true"></i></span>
                   <h4 style="font-size:16px">AMOUNT RAISED</h4>
-                  <h3>$4000</h3>
+                  <h3>$<%= answer.total_funded %></h3>
                         </div>
-                  <p>You have collected $4000 till now</p>
+                  <p>You have collected $<%= answer.total_funded %> till now</p>
                       </div>
                       <div class="col-md-3 col-sm-3 box0">
                         <div class="box1">
                   <span><i class="fa fa-group" aria-hidden="true"></i></span>
                   <h4 style="font-size:16px">TOTAL DONORS</h4>
+                 
                   <h3>50</h3>
                         </div>
                   <p>50 donors in total</p>
@@ -59,7 +60,8 @@
                   </div>
                                 
                  <%- include ../stud_right.ejs %> <!-- /col-lg-3 -->
-                
+                <% }) %>
+
               </div>
           </section>
       </section>

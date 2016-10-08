@@ -49,18 +49,18 @@
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-<style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}
-  body{
+  <![endif]-->
+  <style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}
+    body{
       background: #eee;
-  }
+    }
   </style>
 
- <style type="text/css">
-#nbc-searchbox{background:url(http://3.bp.blogspot.com/-DqQKomzx0pw/Ue7BlSCh3zI/AAAAAAAAAiA/U3c87KbsBQc/s1600/noxdo_blogspot_com_Search-icon6.png) no-repeat scroll center center transparent;width:307px;height:50px;disaply:block;}
-form#nbc-searchform{display: block;padding: 10px 12px;margin:0;}
-form#nbc-searchform #s{padding: 6px;margin:0;width: 235px;font-size:14px;vertical-align: top;border:none;background:transparent;}
-form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-align: top;border:none;background:transparent;}
+  <style type="text/css">
+    #nbc-searchbox{background:url(http://3.bp.blogspot.com/-DqQKomzx0pw/Ue7BlSCh3zI/AAAAAAAAAiA/U3c87KbsBQc/s1600/noxdo_blogspot_com_Search-icon6.png) no-repeat scroll center center transparent;width:307px;height:50px;disaply:block;}
+    form#nbc-searchform{display: block;padding: 10px 12px;margin:0;}
+    form#nbc-searchform #s{padding: 6px;margin:0;width: 235px;font-size:14px;vertical-align: top;border:none;background:transparent;}
+    form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-align: top;border:none;background:transparent;}
 /*.progress-bar {
   background-color: #1a1a1a;
   height: 25px;
@@ -178,213 +178,216 @@ form#nbc-searchform #sbutton{margin:0;padding:0;height:30px;width:30px;vertical-
 </head>
 <body class="">
 
-<div id="wrapper" class="clearfix">
-  <!-- preloader -->
-  
-   <div id="wrapper" class="clearfix">
-        <!-- preloader -->
-        
+  <div id="wrapper" class="clearfix">
+    <!-- preloader -->
 
-        <!-- Header -->
-        <header id="header" class="header">
-            <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
-                <div class="header-nav-wrapper">
-                    <div class="container">
-                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
-                           <a href="../"><img src="../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-                            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
-                                
-
-                                <li style="" class="active"><a href="/allprofile">Profiles</a>
-
-                                </li>
-                                
-                                <li style=""><a href="../stulogin/stulogin">Create account</a>
-
-                                </li>
-                                <li style=""><a href="/student/login">Login </a>
-
-                                </li>
-
-                            </ul>
-                            </li>
+    <div id="wrapper" class="clearfix">
+      <!-- preloader -->
 
 
-                       
-                            </ul>
-                        </nav>
-
-        </header>
-
-        <!-- Start main-content -->
-
-
-  
-
-        
-       
-       
-
-  <!-- Start main-content -->
-
-     
-<section>
-<div class="jumbotron" id="jumbo1">
-
-    <div class="container" style="margin-top: 92px; background-color: rgba(255, 255, 255, 0.9);">
-  
-    <form action="/search_student" method="POST">
-                           <br><br> <div class="input-group col-md-10"> 
-                                <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name" value="<%= student_find %>">
-                                 <span class="input-group-btn">
-                                    <button id="search" class="btn btn-dark btn-theme-colored" type="submit" style="line-height:2.05">
-                                        <span>Search</span>
-                                    </button>
-                                </span>
-                            </div><br>
-
-  <p><b><input type="checkbox" unchecked> Birthday Today</b></p>
-      
-
-                        </div>
-</div>
-                         
- 
-</div>
-
-</section>
-
- <section>
-      <div class="container">
-        <div class="section-title">
-          <div class="row">
-            <div class="col-md-6">
-            
-              <h2 class="mt-0 text-uppercase font-28">All <span class="text-theme-colored font-weight-400"> Profiles</span> <span class="font-30 text-theme-colored"></span></h2>
-                         
-            </div>
-          </div>
-        </div>
-        <div class="section-content">
-          <div class="row">
-           <% _.each(humans, function (humans) { %>
-          <div class="col-sm-4 col-md-4 col-lg-4">
-              <div class="causes maxwidth500 mb-sm-50">
-                <div class="thumb">
-                  <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= humans.student_profile_pic_path %>" width="250" height="230">
-                  <div class="donate-piechart piechart-absolute">
-                    <%if (today == humans.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:28%;float:right"><% } %>
-                  </div>
-                </div>
-                 <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
-                                    <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= humans.student_id %>"> <%= humans.student_firstname %> <%= humans.student_lastname %></a></h3>
-                                    
-                                    <p class="desc mb-10 abt1" id="about_stu"><%= humans.student_about_me %>...</p>
-                                    <div class="progress-item mt-0">
-                                        
-                                    </div>
-                    <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
-                                        <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
-                                        <li class="target-fund"><strong>$1250</strong>collected</li>
-                                     <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
-                                    </ul>
-                     <div class="progress-item mt-0">
-                                        <div class="progress mb-10">
-                                            <div data-percent="85" class="progress-bar"><span class="percent">0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                 
-                  </div>
-                </div>
-              </div>
-             
-             <% }) %>
-             </div>
-                  
+      <!-- Header -->
+      <header id="header" class="header">
+        <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
+          <div class="header-nav-wrapper">
             <div class="container">
-  <center>          
-  <ul class="pagination">
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-  </ul>
-  </center>
-</div>
+              <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
+               <a href="../"><img src="../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
+               <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+
+
+                <li style="" class="active"><a href="/allprofile">Profiles</a>
+
+                </li>
+
+                <li style=""><a href="../stulogin/stulogin">Create account</a>
+
+                </li>
+                <li style=""><a href="/student/login">Login </a>
+
+                </li>
+
+              </ul>
+            </li>
+
+
+
+          </ul>
+        </nav>
+
+      </header>
+
+      <!-- Start main-content -->
+
+
+
+
+
+
+
+
+      <!-- Start main-content -->
+
+
+      <section>
+        <div class="jumbotron" id="jumbo1">
+
+          <div class="container" style="margin-top: 92px; background-color: rgba(255, 255, 255, 0.9);">
+
+            <form action="/search_student" method="POST">
+             <br><br> <div class="input-group col-md-10"> 
+             <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name" value="<%= student_find %>">
+             <span class="input-group-btn">
+              <button id="search" class="btn btn-dark btn-theme-colored" type="submit" style="line-height:1.8">
+                <span>Search</span>
+              </button>
+            </span>
+          </div><br>
+
+          <p><b><input name="bday_check" id="bday_check" value="1" type="checkbox" <%= bday_check=='1'? 'checked' : 'unchecked' %> > Birthday Today</b></p>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <div class="row">
+          <div class="col-md-6">
+
+            <h2 class="mt-0 text-uppercase font-28">All <span class="text-theme-colored font-weight-400"> Profiles</span> <span class="font-30 text-theme-colored"></span></h2>
+
           </div>
         </div>
       </div>
-    </section>
-    <!-- Section: Features -->
-    
-    
-  <!-- end main-content -->
-  
-  <!-- Footer -->
-  
-  <a style="display: block;" class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+      <div class="section-content">
+        <div class="row">
+         <% _.each(humans, function (humans) { %>
+         <div class="col-sm-4 col-md-4 col-lg-4">
+          <div class="causes maxwidth500 mb-sm-50">
+            <div class="thumb">
+              <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= humans.student_profile_pic_path %>" width="250" height="230">
+              <div class="donate-piechart piechart-absolute">
+                <%if (today == humans.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:21%;float:right"><% } %>
+              </div>
+            </div>
+            <div class="image-box-details bg-lighter p-15 pt-20 pb-sm-20">
+              <h3 class="title mt-0 mb-5"><a href="/single_profile/<%= humans.student_id %>"> <%= humans.student_firstname %> <%= humans.student_lastname %></a></h3>
+
+              <p class="desc mb-10 about_stu"><%= humans.student_about_me %>...</p>
+              <div class="progress-item mt-0">
+                <div class="progress mb-10">
+                  <%if (humans.loan_amount == "0") { %>
+                  <div data-percent="0" class="progress-bar"><span class="percent">0</span>
+                  </div>
+                  <% }  else {%>
+                  <div data-percent="<%= (humans.total_funded/humans.loan_amount)*100 %>" class="progress-bar"><span class="percent"><%= (humans.total_funded/humans.loan_amount)*100 %></span>
+                  </div>
+                  <% } %>
+
+
+                </div>
+              </div>
+              <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
+                <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
+                <li class="target-fund"><strong>$<%= humans.total_funded %></strong>collected</li>
+                <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <% }) %>
+      </div>
+
+      <!-- <div class="container">
+        <center>          
+          <ul class="pagination">
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+          </ul>
+        </center>
+      </div>
+ -->    </div>
+  </div>
+</div>
+</section>
+<!-- Section: Features -->
+
+
+<!-- end main-content -->
+
+<!-- Footer -->
+
+<a style="display: block;" class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 </div>
 <!-- end wrapper -->
 
 <!-- Footer Scripts -->
- <!-- Footer -->
-      <%- include ../footer.ejs %>
+<!-- Footer -->
+<%- include ../footer.ejs %>
 <!-- JS | Custom script for all pages -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <script src="../../index_files/jquery-ui.js"></script>
-    <script src="../../index_files/bootstrap.js"></script>
-    <!-- JS | jquery plugin collection for this theme -->
-    <script src="../../index_files/jquery-plugin-collection.js"></script>
+<script src="../../index_files/jquery-ui.js"></script>
+<script src="../../index_files/bootstrap.js"></script>
+<!-- JS | jquery plugin collection for this theme -->
+<script src="../../index_files/jquery-plugin-collection.js"></script>
 <script src="../../index_files/custom.js"></script>
 
 <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  
       (Load Extensions only on Local File Systems ! 
-       The following part can be removed on Server for On Demand Loading) -->
+      The following part can be removed on Server for On Demand Loading) -->
 
 
-<script>
+      <script>
 
-    $(document).ready(function() {
-     
-      $("#owl-demo").owlCarousel({
-     
+        $(document).ready(function() {
+
+          $("#owl-demo").owlCarousel({
+
           autoPlay: 3000, //Set AutoPlay to 3 seconds
-     
+
           items : 4,
           itemsDesktop : [1199,3],
           itemsDesktopSmall : [979,3]
-     
-      });
-     
-    });
 
-</script>
+        });
+
+        });
+
+      </script>
 
 
 
-<!-- Color Switcher Starts | Only for demo purpose and not included in main file -->
+      <!-- Color Switcher Starts | Only for demo purpose and not included in main file -->
 
-<!-- switcher html -->
+      <!-- switcher html -->
 
-<!-- Color Switcher Ends-->
-<!-- Modal: Bootstrap Parent Modal Starts -->
-<div class="modal fade" id="BSParentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
+      <!-- Color Switcher Ends-->
+      <!-- Modal: Bootstrap Parent Modal Starts -->
+      <div class="modal fade" id="BSParentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-<!-- Modal: Bootstrap Parent Modal Ends -->
+      <!-- Modal: Bootstrap Parent Modal Ends -->
 
- <script>
-    $(document).ready(function(){
-   $("#about_stu").text(function(index, currentText) {
-    return currentText.substr(0, 60);
-});
-});
-    </script>
+      <script>
+        $(document).ready(function(){
+         $(".about_stu").text(function(index, currentText) {
+          return currentText.substr(0, 52);
+        });
+       });
+     </script>

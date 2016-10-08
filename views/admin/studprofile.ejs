@@ -103,25 +103,26 @@
                 </div>
                 <div class="col-md-7">
                     <h2><%= data.student_firstname %> <%= data.student_lastname %><span class="small pull-right"> <p style="font-size:20px"><strong>Status :</strong>
-                                <% if (data.profile_lock == '0'){ %>
-                                <span class="grn"><%=  'Active' %>  </span>
+                                <% if (data.student_active == '0'){ %>
+                                <span class="grn"><%=  'De-Active' %>  </span>
                                 <% 
                                 }else{
                                 %>
-                                <span class="grn"><%=  'De-Active' %>  </span>
+                                <span class="grn"><%=  'Active' %>  </span>
                                 <%
                                 }
                                 %>
                             </p>
-                            <% if (data.profile_lock == '0'){ %>
-                            <button type="button" class="btn btn-success btn-sm">Activate</button>
+<!--                            <% if (data.student_active == '0'){ %>
+                           
+                             <button type="button" class="btn btn-danger btn-sm">Deactivate</button>
                             <% 
                             }else{
                             %>
-                            <button type="button" class="btn btn-danger btn-sm">Deactivate</button>
+                            <button type="button" class="btn btn-success btn-sm">Activate</button>
                             <%
                             }
-                            %>
+                            %>-->
                             <!--<button type="button" class="btn btn-success btn-sm">Send mail</button>-->
                         </span></h2>
                     <p class="front-info"><%= data.student_email %></p>

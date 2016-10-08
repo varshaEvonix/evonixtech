@@ -37,11 +37,11 @@
                                         }
                                         %></td>
 
-                                    <% if (corndog.profile_lock == '0'){%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-success btn-sm change_status"> Active</a></td>
+                                    <% if (corndog.student_active == 0){%>
+                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-danger btn-sm change_status"> De-Active</a></td>
                                     <%
                                     }else{%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-danger btn-sm change_status">De-Active</a></td>
+                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-success btn-sm change_status">Active</a></td>
                                     <%
                                     }
                                     %>
@@ -57,14 +57,14 @@
                     </div>
                     <div class="text-right">
                         <ul class="pager pagination">
-                            <li class="previous"><a href="/allstudents/<%= the_prev %>">&larr; Previous</a></li>
+                            <li class="previous"><a href="/admin/allstudents/<%= the_prev %>">&larr; Previous</a></li>
                             <li>
                                 <% for(var i=1; i<=tot; i++) { %>
                                 <a href="/allstudents/<%= i %>"><%= i %></a>
                                 <% } %>
                             </li>
 
-                            <li class="next"><a href="/allstudents/<%= the_next %>">Next &rarr;</a></li>
+                            <li class="next"><a href="/admin/allstudents/<%= the_next %>">Next &rarr;</a></li>
                         </ul>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
 <script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 <script>
     $('.change_status').click(function () {
-        var status = $(this).attr('data-value') == '0' ? 'Activate' : 'De-activate';
+        var status = $(this).attr('data-value') == '0' ? 'De-activate' : 'Activate';
         var stu_status = $(this).attr('data-value');
         var student_id = $(this).attr('data');
         swal({title: "Are you sure?",

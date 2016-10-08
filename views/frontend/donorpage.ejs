@@ -1,310 +1,278 @@
 <%- include ../frontend/header.ejs %>
 
-<div class="main-content" style="padding-top:100px">
-    <section class="cd-faq">
-        <ul class="cd-faq-categories">
-            <% _.each(category, function (category, index) { 
-            %>
-            <li><a class="<%= (index==0) ? 'selected':'' %>" href="#<%= category %>"><%= category %></a></li>
-            <%
-            })
-            %>
-            <!--            <li><a href="#mobile">Mobile</a></li>
-                        <li><a href="#account">Account</a></li>
-                        <li><a href="#payments">Payments</a></li>
-                        <li><a href="#privacy">Privacy</a></li>
-                        <li><a href="#delivery">Delivery</a></li>-->
-        </ul>
+<style>
+    .outerbox {
+        background-color: #fff;
+        min-height: 200px;
+        box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+        padding: 20px;
+        border-radius: 4px;
+        margin: 40px 0px;
+    }
+    .panel-body {
+        padding: 0px;
+    }
+    #donationamt {
+        background: #fff none repeat scroll 0 0 !important;
+        border: medium none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #donationamt, #donationamt #amtinput .input-group-addon, 
+    #donationamt #amtinput .input-group-addon, 
+    #donationamt #amtinput .input-group-addon,
+    #donationamt #amtinput input
+    {
+        border-radius: 0px;
+        border: none;
+        background-color: #e6fffc;
+        color: #00a290;
+        font-size: 90px;
+    }
+    #donationamt #amtinput input {
+        text-align: right;
+        height: 120px;
+    }
+    #donationamt #amtinput input:focus {
+        box-shadow: none;
+    }
+    .col-md-offset-1 {
+        margin-left: 8.33333333%;
+    }
+    .left-box .panel-body {
+        padding: 20px;
+    }
+    .left-box .panel-body h2 {
+        font-size: 36px;
+        margin: 10px 0px;
+    }
+    .left-box .panel-body h2 span {
+        font-size: 26px;
+        color: #777;
+    }
+    .panel-heading {
+        background-color: #00a290 !important;
+        color: #fff !important;
+        border-color: #00a290 !important;
+    }
+    .panel.panel-default {
+        border-color: #00a290 !important;
+    }
+    .left-box.about p {
+        font-size: 14px;
+    }
+    .left-box.about hr {
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }
+    .left-box.about .panel-heading {
+        color: #fff !important;
+    }
+    .left-box.about .panel-heading p {
+        font-size: 12px;
+    }
+    .left-box.about .panel-heading h3 {
+        color: #fff !important;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
 
-        <div class="cd-faq-items">
-             <%  
-                _.each(category, function (category) { 
-                %>
-            <ul id="<%= category %>" class="cd-faq-group">
-                <li class="cd-faq-title"><h2><%= category %></h2></li>
-                  <%  
-                    _.each(faq, function (faq) {
-                    if(faq.category==category){
-                    %>
-                <li>
-                    <a class="cd-faq-trigger" href="#<%= faq.id %>"><%= faq.name %></a>
-                    <div class="cd-faq-content">
-                        <p> <%= faq.description %></p>
-                    </div> 
-                </li>
-                   <%
-                    }
-                    })
-                    %>
+    #donerinfoform, #donerinfoform input {
+        border-radius: 4px;
+        border: 1px solid #eee;
+        background-color: #fff;
+        color: #00a290;
+        font-size: 90px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    #donerinfoform {
+        border: none;
+        box-shadow: none;
+    }
+    #donerinfoform label {
+        position: initial;
+        padding-top: 20px;
+    }
+    #donerinfoform .form-group {
+        display: block;
+    }
+    .checklbl {
+        display: inline-block !importants;
+    }    
+    #donerinfoform input {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+        padding: 10px;
+    }
+    .form-group {
+        height: 75px;
+    }
+    label {
+        position: initial !important;
+        display: block;
+    }
+    .formbottom {
+        padding: 15px;
+    }
+    .checkbox input[type="checkbox"] {
+        width: 20px !important;
+    }
+    .inputgp {
+        /*        height: 100px !important;*/
+    }
+    #donerinfofields {
+        padding: 15px;
+    }
+    #donerinfofields .halfwf {
+        width: 48%;
+        display: inline-block;
+    }
+</style> 
 
-<!--                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I sign up?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi cupiditate et laudantium esse adipisci consequatur modi possimus accusantium vero atque excepturi nobis in doloremque repudiandae soluta non minus dolore voluptatem enim reiciendis officia voluptates, fuga ullam? Voluptas reiciendis cumque molestiae unde numquam similique quas doloremque non, perferendis doloribus necessitatibus itaque dolorem quam officia atque perspiciatis dolore laudantium dolor voluptatem eligendi? Aliquam nulla unde voluptatum molestiae, eos fugit ullam, consequuntur, saepe voluptas quaerat deleniti. Repellendus magni sint temporibus, accusantium rem commodi?</p>
-                    </div> 
-                </li>
+<div  class="main-content" style="padding-top:80px;padding-bottom:15px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 outerbox">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="panel panel-default left-box">
+                            <div class="panel-heading"><%= student_details.student_firstname +' ' + student_details.student_lastname %></div>
+                            <div class="panel-body">
+                                <img src='../../index_files/uploads/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
+                                <h2>$ <%= funded_amount %> <span>of $ <%= student_details.loan_amount %></span></h2>
+                                <div class="progress-item mt-0">
+                                    <div class="progress mb-10">
+                                        <div data-percent="85" class="progress-bar appeared" style="width: 85%;"><span class="percent">0</span>
+                                            <span class="percent">85%</span></div>
+                                    </div>
+                                </div>
+                                <p>Raised by <%= donor_count %> people </p>
+                            </div>
+                        </div>
+                        <p><strong>About the Student</strong></p>
+                        <div class="panel panel-default left-box about">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                        <img src='../../index_files/stdash/img/ui-sam.jpg' class="img-responsive" style="width: 100%;">
+                                    </div>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                        <h3><strong><i class="fa fa-envelope-o"></i><%= student_details.student_firstname +' ' + student_details.student_lastname %></strong></h3>
 
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Can I remove a post?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div> 
-                </li>
+                                        <!--<p class="small">448 Facebook Friends</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p><strong><%= student_details.student_ambition %></strong></p>
+                                <!--<p>David Gutowski</p>-->
+                                <hr>
+                                <p><%= student_details.student_about_me %>.</p>
+                            </div>
 
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do reviews work?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+                        </div>
                     </div>
-                </li>-->
-            </ul>
-                
-                  <%
-            })
-            %>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Enter your donation amount</div>
+                            <div class="panel-body">
+                                <form role="form" id="donationamt" method="POST" action="/paymentpage" name="donorsForm" novalidate>
+                                    <div class="form-group input-group"  id="amtinput">
+                                        <span class="input-group-addon">$</span>
+                                        <input class="form-control" name="funding_amount" ng-model="donor.funding_amount" type="text" required>
+                                        <p ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
+                                        <span class="input-group-addon">.00</span>
+                                    </div>
+                                    <div  id="donerinfofields">
+                                        <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                            <label>Email address:</label>
+                                            <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
+                                            <p ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
+                                            <small class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</small>
+                                        </div>
+                                        <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                            <label for="email">Your Name:</label>
+                                            <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
+                                            <p ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
+                                        </div>
+                                        <div class="inputgp">
+                                            <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
+                                            <label class="checklbl"> Hide name and comment from everyone but the organizer.</label>
+                                        </div>
 
-<!--            <ul id="mobile" class="cd-faq-group">
-                <li class="cd-faq-title"><h2>Mobile</h2></li>
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How does syncing work?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
-                    </div>  cd-faq-content 
-                </li>
+                                        <div class="">
+                                            <label for="comment">Comment:</label>
+                                            <textarea class="form-control" name="comment" ng-model="comment" rows="5" id="comment"></textarea>
+                                        </div>
+                                        <div class="inputgp">
+                                            <input type="hidden" name="loan_id" value="<%= student_details.loan_id %>">
+                                            <button type="submit" ng-click="submitted = true" class="btn btn-success">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
 
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I upload files from my phone or tablet?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempore, placeat quisquam rerum! Eligendi fugit dolorum tenetur modi fuga nisi rerum, autem officiis quaerat quos. Magni quia, quo quibusdam odio. Error magni aperiam amet architecto adipisci aspernatur! Officia, quaerat magni architecto nostrum magnam fuga nihil, ipsum laboriosam similique voluptatibus facilis nobis? Eius non asperiores, nesciunt suscipit veniam blanditiis veritatis provident possimus iusto voluptas, eveniet architecto quidem quos molestias, aperiam eum reprehenderit dolores ad deserunt eos amet. Vero molestiae commodi unde dolor dicta maxime alias, velit, nesciunt cum dolorem, ipsam soluta sint suscipit maiores mollitia assumenda ducimus aperiam neque enim! Quas culpa dolorum ipsam? Ipsum voluptatibus numquam natus? Eligendi explicabo eos, perferendis voluptatibus hic sed ipsam rerum maiores officia! Beatae, molestias!</p>
-                    </div>  cd-faq-content 
-                </li>
+                                <div class="formbottom">
+                                    <hr>
+                                    <p>By continuing, you agree with the Stumuch terms and privacy policy. </p>
+                                    <!--<br><a href="#" >Go back</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I link to a file or folder?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-            </ul> 
-
-            <ul id="account" class="cd-faq-group">
-                <li class="cd-faq-title"><h2>Account</h2></li>
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I change my password?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis earum autem consectetur labore eius tenetur esse, in temporibus sequi cum voluptatem vitae repellat nostrum odio perspiciatis dolores recusandae necessitatibus, unde, deserunt voluptas possimus veniam magni soluta deleniti! Architecto, quidem, totam. Fugit minus odit unde ea cupiditate ab aperiam sed dolore facere nihil laboriosam dolorum repellat deleniti aliquam fugiat laudantium delectus sint iure odio, necessitatibus rem quisquam! Ipsum praesentium quam nisi sint, impedit sapiente facilis laudantium mollitia quae fugiat similique. Dolor maiores aliquid incidunt commodi doloremque rem! Quaerat, debitis voluptatem vero qui enim, sunt reiciendis tempore inventore maxime quasi fugiat accusamus beatae modi voluptates iste officia esse soluta tempora labore quisquam fuga, cum. Sint nemo iste nulla accusamus quam qui quos, vero, minus id. Eius mollitia consequatur fugit nam consequuntur nesciunt illo id quis reprehenderit obcaecati voluptates corrupti, minus! Possimus, perspiciatis!</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I delete my account?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo tempore soluta, minus magnam non blanditiis dolore, in nam voluptas nobis minima deserunt deleniti id animi amet, suscipit consequuntur corporis nihil laborum facere temporibus. Qui inventore, doloribus facilis, provident soluta voluptas excepturi perspiciatis fugiat odit vero! Optio assumenda animi at! Assumenda doloremque nemo est sequi eaque, ipsum id, labore rem nisi, amet similique vel autem dolore totam facilis deserunt. Mollitia non ut libero unde accusamus praesentium sint maiores, illo, nemo aliquid?</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I change my account settings?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">I forgot my password. How do I reset it?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum at aspernatur iure facere ab a corporis mollitia molestiae quod omnis minima, est labore quidem nobis accusantium ad totam sunt doloremque laudantium impedit similique iste quasi cum! Libero fugit at praesentium vero. Maiores non consequuntur rerum, nemo a qui repellat quibusdam architecto voluptatem? Sequi, possimus, cupiditate autem soluta ipsa rerum officiis cum libero delectus explicabo facilis, odit ullam aperiam reprehenderit! Vero ad non harum veritatis tempore beatae possimus, ex odio quo.</p>
-                    </div>  cd-faq-content 
-                </li>
-            </ul> 
-
-            <ul id="payments" class="cd-faq-group">
-                <li class="cd-faq-title"><h2>Payments</h2></li>
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Can I have an invoice for my subscription?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Why did my credit card or PayPal payment fail?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur accusantium dolorem vel, ad, nostrum natus eos, nemo placeat quos nisi architecto rem dolorum amet consectetur molestiae reprehenderit cum harum commodi beatae necessitatibus. Mollitia a nostrum enim earum minima doloribus illum autem, provident vero et, aspernatur quae sunt illo dolorem. Corporis blanditiis, unde, neque, adipisci debitis quas ullam accusantium repudiandae eum nostrum quis! Velit esse harum qui, modi ratione debitis alias laboriosam minus eaque, quod, itaque labore illo totam aut quia fuga nemo. Perferendis ipsa laborum atque assumenda tempore aspernatur a eos harum non id commodi excepturi quaerat ullam, explicabo, incidunt ipsam, accusantium quo magni ut! Ratione, magnam. Delectus nesciunt impedit praesentium sed, aliquam architecto dolores quae, distinctio consectetur obcaecati esse, consequuntur vel sit quis blanditiis possimus dolorum. Eaque architecto doloremque aliquid quae cumque, vitae perferendis enim, iure fugiat, soluta aut!</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Why does my bank statement show multiple charges for one upgrade?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-            </ul> 
-
-            <ul id="privacy" class="cd-faq-group">
-                <li class="cd-faq-title"><h2>Privacy</h2></li>
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Can I specify my own private key?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">My files are missing! How do I get them back?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How can I access my account data?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus magni vero deserunt enim et quia in aliquam, rem tempore voluptas illo nisi veritatis quas quod placeat ipsa! Error qui harum accusamus incidunt at libero ipsum, suscipit dolorum esse explicabo in eius voluptates quidem voluptatem inventore amet eaque deserunt veniam dignissimos excepturi? Dolore, quo amet nostrum autem nemo. Sit nam assumenda, corporis ea sunt distinctio nostrum doloribus alias, beatae nesciunt dolore saepe consequuntur minima eveniet porro dolor officiis maiores ab obcaecati officia enim aliquam. Itaque fuga molestiae hic accusantium atque corporis quia id sequi enim vero? Hic aperiam sint facilis aliquam quia, accusamus tenetur earum totam enim est, error. Iusto, reiciendis necessitatibus molestias. Voluptatibus eos explicabo repellat nesciunt nam vero minima.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How can I control if other search engines can link to my profile?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-            </ul> 
-
-            <ul id="delivery" class="cd-faq-group">
-                <li class="cd-faq-title"><h2>Delivery</h2></li>
-                <li>
-                    <a class="cd-faq-trigger" href="#0">What should I do if my order hasn't been delivered yet?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How can I find your international delivery information?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">Who takes care of shipping?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do returns or refunds work?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How do I use shipping profiles?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How does your UK Next Day Delivery service work?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">How does your Next Day Delivery service work?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">When will my order arrive?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-
-                <li>
-                    <a class="cd-faq-trigger" href="#0">When will my order ship?</a>
-                    <div class="cd-faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                    </div>  cd-faq-content 
-                </li>
-            </ul> -->
-        </div> <!-- cd-faq-items -->
-        <a href="#0" class="cd-close-panel">Close</a>
-    </section> <!-- cd-faq -->
-    <!-- Resource jQuery -->
-
+    </div>
 </div>
-
-<footer id="footer" class="footer bg-black-222">
-    <div class="container pt-70 pb-30">
-        <div class="row border-bottom-black">
-
-            <div class="col-sm-6 col-md-6">
-                <div class="widget dark mb-20">
-                    <h5 class="widget-title line-bottom">Quick Contact</h5>
-                    <ul class="list-border font-13">
-                        <li><a href="#">+(012) 345 6789</a>
-                        </li>
-                        <li><a href="#">Stumuch@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="widget dark">
-
-                    <ul class="social-icons icon-dark icon-circled icon-sm mt-10">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-
-                        <li><a href="#"><i class="fa fa-youtube"></i></a>
-                        </li>
-
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="widget dark mb-20">
-                    <h5 class="widget-title line-bottom">Links</h5>
-                    <ul class="list-border font-13">
-                        <li><a href="#">About Us</a>
-                        </li>
-                        <li><a href="faq1">FAQ</a>
-                        </li>
-                        <li><a href="#">Terms & Conditions</a>
-                        </li>
-                        <li><a href="#">Privacy Policy</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-    <div class="footer-bottom bg-black-333">
-        <div class="container pt-20 pb-20">
-            <div class="row">
-                <div class="col-md-6 sm-text-center">
-                    <p class="font-11 text-black-777 m-0">Copyright ©2016 STUMUCH. All Rights Reserved</p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</footer>
-
 <%- include ../frontend/footer.ejs %>
+<script>
+
+//    $('.anonymous').change(function () {
+//        if ($(this).val() == '2') {
+//            $('#donor-details').show();
+//
+//        } else {
+//            $('#donor-details').hide();
+//
+//        }
+//    });
+</script>
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.donor = {};
+        $('#donationamt').submit(function () {
+            
+            if ($scope.donorsForm.$valid) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+//        $scope.submitForm = function () {
+//            //            alert()
+//            if ($scope.donorsForm.$valid) {
+//                return true;
+////                $http({
+////                    method: 'POST',
+////                    //                    dataType: 'json',
+////                    url: '/paymentpage',
+////                    data: $scope.donor, //forms user object
+////                    headers: {'Content-Type': 'application/json'}
+////                }).success(function (data) {
+////                    window.location = '/admin/faq';
+////                });
+//            }else{
+//                return false;
+//            }
+//        };
+    });
+</script>
+
