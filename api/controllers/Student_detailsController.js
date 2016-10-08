@@ -35,6 +35,7 @@
 
 
 // var BackofficeController = require('./BackofficeController');
+var md5 = require('MD5');
 module.exports = {
 
 	
@@ -46,7 +47,8 @@ module.exports = {
 			var student_lastname = req.param("student_lastname");
 			var student_contactno =req.param("student_contactno");
 			var student_email =req.param("student_email");
-			var student_password =req.param("student_password");
+			var student_password =md5(req.param("student_password"));
+
 			console.log(student_firstname);
 			var insert ="";
 			insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('"+student_firstname+"', '"+student_lastname+"', '"+student_contactno+"', '"+student_email+"')";
