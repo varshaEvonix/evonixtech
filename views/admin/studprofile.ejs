@@ -89,13 +89,13 @@
                 <div class="col-md-5">
                     <br>
                     <% 
-                    if( data.student_profile_pic_path !=' '){
+                    if( data.student_profile_pic_path !='NULL'){
                     %>
                     <img src="../index_files/feature2.jpg" width="440" height="275">
                     <%
                     }else{
                     %>
-                    <img src="../index_files/feature2.jpg" width="440" height="275">
+                    <img src="../../index_files/uploads/<%= data.student_profile_pic_path %>" width="440" height="275">
                     <% 
                     }
                     %>
@@ -113,16 +113,16 @@
                                 }
                                 %>
                             </p>
-<!--                            <% if (data.student_active == '0'){ %>
-                           
-                             <button type="button" class="btn btn-danger btn-sm">Deactivate</button>
-                            <% 
-                            }else{
-                            %>
-                            <button type="button" class="btn btn-success btn-sm">Activate</button>
-                            <%
-                            }
-                            %>-->
+                            <!--                            <% if (data.student_active == '0'){ %>
+                                                       
+                                                         <button type="button" class="btn btn-danger btn-sm">Deactivate</button>
+                                                        <% 
+                                                        }else{
+                                                        %>
+                                                        <button type="button" class="btn btn-success btn-sm">Activate</button>
+                                                        <%
+                                                        }
+                                                        %>-->
                             <!--<button type="button" class="btn btn-success btn-sm">Send mail</button>-->
                         </span></h2>
                     <p class="front-info"><%= data.student_email %></p>
@@ -321,8 +321,8 @@
                     </div>
                 </div>
                 <div id="menu4" class="tab-pane ">
-               <div class="col-md-12 white_bg">
-                   <h3>Internal Notes</h3>
+                    <div class="col-md-12 white_bg">
+                        <h3>Internal Notes</h3>
                         <% _.each(comments, function (comments) {
                         if(comments.note_type==1){
                         %>
@@ -503,7 +503,7 @@
                             data: $scope.admin, //forms user object
                             headers: {'Content-Type': 'application/json'}
                     }).success(function (data) {
-                    window.location = '/viewdetails/1';
+                    window.location = '/viewdetails/' + data.student_id;
                     });
                     }
                     };
