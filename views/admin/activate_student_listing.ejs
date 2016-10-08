@@ -92,11 +92,11 @@
                                         }
                                         %></td>
 
-                                    <% if (corndog.profile_lock == '0'){%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-success btn-sm change_status"> Active</a></td>
+                                  <% if (corndog.student_active == 0){%>
+                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-danger btn-sm change_status"> De-Active</a></td>
                                     <%
                                     }else{%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-danger btn-sm change_status">De-Active</a></td>
+                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-success btn-sm change_status">Active</a></td>
                                     <%
                                     }
                                     %>
@@ -117,14 +117,14 @@
                     </div>
                     <div class="text-right">
                         <ul class="pager pagination">
-                            <li class="previous"><a href="/activestudent/<%= the_prev %>">&larr; Previous</a></li>
+                            <li class="previous"><a href="/admin/activestudent/<%= the_prev %>">&larr; Previous</a></li>
                             <li>
                                 <% for(var i=1; i<=tot; i++) { %>
-                                <a href="/activestudent/<%= i %>"><%= i %></a>
+                                <a href="/admin/activestudent/<%= i %>"><%= i %></a>
                                 <% } %>
                             </li>
 
-                            <li class="next"><a href="/activestudent/<%= the_next %>">Next &rarr;</a></li>
+                            <li class="next"><a href="/admin/activestudent/<%= the_next %>">Next &rarr;</a></li>
                         </ul>
                     </div>
                 </div>
