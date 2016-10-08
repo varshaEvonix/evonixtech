@@ -197,7 +197,7 @@ module.exports = {
         if (req.method === 'POST') {
             var file_name = req.param('filename') == 'undefined' ? ' ' : req.param('filename');
             var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + file_name + "', '1')";
-         
+
             Admin_loan_comments.query(insert_query, function (err, record)
             {
 
@@ -293,6 +293,51 @@ module.exports = {
                     var path = '/admin/studlockedprofile/' + req.param('student_id');
                     return res.ok({path: path});
                 }
+            });
+        });
+    },
+    donors_listing: function (req, res) {
+        var current_page = req.param('id');
+        if (typeof current_page !== 'undefined') {
+            var page = current_page;
+        }
+        else {
+            var page = 1;
+        }
+
+        var per_page = 10;
+        var start_from = (page - 1) * per_page;
+        var q = 'SELECT * FROM donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" order by created_on desc LIMIT ' + start_from + ', ' + per_page + '';
+
+        Donors_funding_details.query(q, function (err, results) {
+
+            var all_rows = Student_details.query('SELECT count(*) as erow from donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" ', function (err, the_rows) {
+
+                das_rows = the_rows[0].erow;
+
+                var total_pages = Math.ceil(das_rows / per_page);
+
+                var the_p = parseInt(current_page) - 1;
+                var the_n = parseInt(current_page) + 1;
+
+                if (current_page == 1) {
+                    var the_p = 1;
+                }
+                if (current_page == total_pages) {
+                    var the_n = total_pages;
+                }
+                console.log('results');
+                console.log(results);
+//                res.view('./admin/donor_listing', {
+//                    layout: false,
+//                    tot: total_pages,
+//                    js: the_rows,
+//                    post: results,
+//                    the_prev: the_p,
+//                    the_next: the_n,
+//                    curr: current_page,
+////                            title: 'This is the hi page title.'
+//                });
             });
         });
     },

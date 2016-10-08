@@ -108,7 +108,7 @@
 
         return res.view('./studash/studash', {
 
-          answer: recordset,
+          student_info: recordset,
           donor_l: donor_l
 
         });
