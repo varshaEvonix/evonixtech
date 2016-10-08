@@ -13,41 +13,19 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Student Name</th>
+                                    <th>Donor Name</th>
                                     <th>Email Id</th>
-                                    <th>Country</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th class="text-right">Actions</th>
+                                    <th>Funded Amount</th>
+                                    <th>Funding_date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% _.each(post, function (corndog) { %>
                                 <tr>
-                                    <td><%= corndog.student_firstname %> <%= corndog.student_lastname %></td>
-                                    <td> <%= corndog.student_email %></td>
-                                    <td> <%= corndog.student_country %></td>
-
-                                    <td>
-                                        <% if(corndog.loan_amount!=null) {%>
-                                        $ <%= corndog.loan_amount %>
-                                        <%
-                                        }else{
-
-                                        }
-                                        %></td>
-
-                                    <% if (corndog.student_active == 0){%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-danger btn-sm change_status"> De-Active</a></td>
-                                    <%
-                                    }else{%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-success btn-sm change_status">Active</a></td>
-                                    <%
-                                    }
-                                    %>
-                                    <td class="text-right">
-                                        <a type="button" href="/viewdetails/<%= corndog.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
-                                    </td>
+                                    <td><%= corndog.donors_name %></td>
+                                    <td> <%= corndog.donor_email %></td>
+                                    <td> <%= corndog.funded_amount %></td>
+                                    <td> <%= corndog.funding_date %></td>
                                 </tr>
                                 <% }) %>
 
