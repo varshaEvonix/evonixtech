@@ -26,7 +26,7 @@ module.exports = {
 
                 var per_page = 10;
                 var start_from = (page - 1) * per_page;
-                var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id LIMIT ' + start_from + ', ' + per_page + '';
+                var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id order by student_details.created_on desc LIMIT ' + start_from + ', ' + per_page + '';
 
                 Student_details.query(q, function (err, results) {
 
@@ -63,7 +63,7 @@ module.exports = {
         var q = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id  where student_details.student_id=' + req.param('id');
 
         Student_details.query(q, function (err, results) {
-            var query = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=' + req.param('id');
+            var query = 'SELECT * FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where loan_details.isActive="1" AND  student_details.student_id=' + req.param('id');
 
             Student_details.query(query, function (err, doner_result) {
                 var loan_id = '';
@@ -195,12 +195,14 @@ module.exports = {
     add_notes: function (req, res) {
 
         if (req.method === 'POST') {
-
-            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + req.param('filename') + "', '1')";
+            var file_name = req.param('filename') == 'undefined' ? ' ' : req.param('filename');
+            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + file_name + "', '1')";
+         
             Admin_loan_comments.query(insert_query, function (err, record)
             {
-                return res.redirect('/viewdetails/' + req.param('student_id'));
+
             });
+            return res.ok({student_id: req.param('student_id')});
 
         }
     },
