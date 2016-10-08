@@ -21,7 +21,7 @@ URL:            http://themeforest.net/user/ThemeMascot
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,300,200,500,700,600,800);*/
 /*
 This file contains the common styles of this theme.
-*//
+*/
 /*------------------------------------------------------------------
 [Table of contents]
 
@@ -111,6 +111,8 @@ This file contains the common styles of this theme.
 :focus {
   outline: none !important;
 }
+
+
 body {
   line-height: 1.7;
   color: #777777;
@@ -3667,9 +3669,9 @@ form .error {
   margin: 0 auto;
 }
 .donate-piechart.piechart-absolute {
-  bottom: -40px;
-  right: 15px;
-  position: absolute;
+  top: 179px;
+    left: 0px;
+    position: absolute;
 }
 .donate-piechart .piechart-block {
   border-radius: 50%;
@@ -4551,6 +4553,10 @@ fieldset[disabled] .btn-default.focus {
   background-color: #e6e6e6;
   border-color: #040404;
 }
+
+.searchbtn{
+  line-height:0.95px;
+}
 .btn-border:active,
 .btn-border.active,
 .open > .dropdown-toggle.btn-border {
@@ -4726,8 +4732,8 @@ fieldset[disabled] .btn-gray.focus {
 }
 /* -------- Btn-Default ---------- */
 .btn {
-  font-size: 13px;
-  padding: 8px 22px;
+  font-size: 16px;
+  padding: 7px 30px;
 }
 /* -------- Btn-xs ---------- */
 .btn-xs {
