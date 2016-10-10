@@ -150,7 +150,9 @@
                                 <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                     <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                     <li class="target-fund"><strong>$<%= birthday.total_funded %></strong>collected</li>
-                                    <li > <button class="btn btn-success"><strong class="white">Donate</strong></button></li>
+                                    <li ><% if(birthday.loan_amount > "0" && birthday.loan_amount > birthday.total_funded) { %>
+                                    <a href="/donorpage/<%= birthday.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a>
+                                    <% } %></li>
                                 </ul>
                         
                        
