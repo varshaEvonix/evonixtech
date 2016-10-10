@@ -42,8 +42,8 @@
 
  			
 
- 			 var update = "INSERT INTO `education` (`student_id`, `student_education_institute`, `student_education_fieldofstudy`, `isEnabled`) VALUES ('1','"+student_education_institute+"','"+student_education_fieldofstudy+"','"+req.param('id')+"') ON DUPLICATE KEY UPDATE `student_education_institute`='"+student_education_institute+"',`student_education_fieldofstudy`='"+student_education_fieldofstudy+"',`isEnabled` = 1";
-
+ 			 var update = "INSERT INTO `education` (`student_id`, `student_education_institute`, `student_education_fieldofstudy`, `isEnabled`) VALUES ('"+req.param('id')+"','"+student_education_institute+"','"+student_education_fieldofstudy+"',1) ON DUPLICATE KEY UPDATE `student_education_institute`='"+student_education_institute+"',`student_education_fieldofstudy`='"+student_education_fieldofstudy+"',`isEnabled` = 1";
+ 			 console.log('update');
  			Education.query(update,function(err,record)
  			{
  				return res.ok();

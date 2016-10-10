@@ -1,9 +1,10 @@
-
+ 
 
 var md5 = require('MD5');
 
 module.exports = {
-    student_login: function (req, res) {
+
+ student_login: function (req, res) {
 
         return res.view('./studentlogin/studentlogin', {layout: false});
     },
@@ -14,25 +15,24 @@ module.exports = {
             if (vals.length > 0) {
                 var temp = JSON.stringify(vals);
                 var student = JSON.parse(temp)[0];
-                if (student.student_active) {
-                    if (md5(req.param('password')) === student.student_password) {
-                        req.session.student_id = student.student_id;
+                console.log(md5(req.param('password')));
+ 
 
-                        var path = '/studash/' + req.session.student_id;
-                        req.session.student_email = student.student_email;
-                        return res.ok({path: path});
-                    } else {
-                        res.status(500).send({error: 'Password is wrong'});
-                    }
+                if (md5(req.param('password')) === student.student_password) {
+                    req.session.student_id = student.student_id;
+
+                        var path = '/studash/'+req.session.student_id;
+                    req.session.student_email = student.student_email;
+                    return res.ok({path:path});
                 } else {
-                    res.status(500).send({error: 'Account does not activated, please verify your email to activate your account'});
+                    res.status(500).send({error: 'Password is wrong'});
                 }
             } else {
                 res.status(500).send({error: 'Usename is wrong'});
             }
         });
     },
-    student_logout: function (req, res) {
+   student_logout: function (req, res) {
         //req.logout();
         res.redirect('./studentlogin/studentlogin');
     }
