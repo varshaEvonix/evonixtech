@@ -26,7 +26,7 @@ module.exports.routes = {
     '/media_edit/:id': 'Personal_editController.editmedia',
     '/loan_edit_submit/:student_id/:loan_id': 'Loan_editController.editloansubmit',
     '/remove_doc/:student_id/:loan_id/:loan_document_id': 'Loan_editController.removedoc',
-    '/addloan_submit/:id': 'Loan_editController.addloansubmit',
+    '/addloan_submit/:student_id/:loan_id': 'Loan_editController.addloansubmit',
     '/search_student': 'Student_detailsController.stu_search',
     '/email': 'EmailController.sendEmail',
     '/student/login': 'Student_authController.student_login',
@@ -74,5 +74,4 @@ module.exports.routes = {
     '/thankyoupage': 'DonorController.thankyoupage',
     '/change_status': 'Admin_dashController.change_status',
     '/admin/donors/:id': 'Admin_dashController.donors_listing',
-    '/admin/generate_excel': 'Admin_dashController.generate_excel',
 };
