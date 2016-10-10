@@ -2,10 +2,10 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-             <% console.log(sails.getBaseurl()) %>
+           
 
               <center>
-                  <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_profile_pic_path %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
+                  <img src=" <% if (student_info.student_profile_pic_path == '') { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
                   <h5 class="centered"><%= student_info.student_firstname %> <%= student_info.student_lastname %></h5>
                    
                   <li class="mt">

@@ -51,7 +51,7 @@ input[type=file]:before {
 }
 </style>
 
-<section id="main-content">
+<section id="main-content" ng-app="postApp" ng-controller="postController">
           <section class="wrapper">
           <div class="row">
           <div class="col-md-9">
@@ -60,28 +60,28 @@ input[type=file]:before {
          
           <h2>Loan details&nbsp;&nbsp; <span class="small">Current balance last verified date: 22/09/2016</span></h2>
           <br>  
-       <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info.student_id %>/<%= student_info.loan_id %>" name="loanform">
+       <form class="form" method="POST" ng-submit="submitForm()" enctype="multipart/form-data" name="loanform" novalidate>
 <div class="row">
            
   
     <div class="col-md-6">
-     <label for="loan_purpose_name">Select the type of loan <span>*</span>: </label><br>
+     <label for="loan_purpose_name">Select the type of loan: </label><br>
          
 <!-- <select name="one" onchange="if(this.value=='fafsa'){this.form['fafsa'].style.visibility='visible'}else if(this.value=='bankloan'){this.form['bankloan'].style.visibility='visible'}else {this.form['other','bankloan'].style.visibility='hidden'};"> -->
 <%if (student_info.loan_bankname == '') { %>
-<select name="loan_type" id="loan_type" value="" class="dropdown form-group" data-validation-error-msg="Please enter loan type"  data-validation="required">
-<option value="" disabled>Select loan type</option>
+<select name="loan_type" id="loan_type" value="" class="dropdown form-group" required>
 <option value="fafsa" selected="selected">FAFSA</option>
 <option value="bankloan">Bank loan</option>
 </select>
  <% } else { %>
- <select name="loan_type" id="loan_type" class="dropdown form-group" value="" data-validation-error-msg="Please enter loan type"  data-validation="required">
-<option value="" disabled></option>
+ <select name="loan_type" id="loan_type" class="dropdown form-group" value="" required>
+
 <option value="fafsa">FAFSA</option>
 <option value="bankloan" selected="selected">Bank loan</option>
 </select>
 <% } %>
 
+<p ng-show="submitted && loanform.loan_type.$error.required"  class="help-block has-error ng-hide">Loan type is requireds.</p>
 </div>
 
 
@@ -89,10 +89,10 @@ input[type=file]:before {
 <div class="col-md-6">
 <div id="fafsa" style="<% if (student_info.loan_bankname != ''){ %>display: none;<% } %>">
 
-<label for="fafsa">Select loan name <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-<select name="fafsa_values" id="fafsa_value" class="dropdown form-group" data-validation-error-msg="Please select loan type" data-validation="required">
+<label for="fafsa">Select loan name:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
+<select name="fafsa_values" id="fafsa_value" class="dropdown form-group" ng-model="student.fafsa_values" required>
 
-<option value="0"  <% if (student_info.loan_fafsa_id == '-'){ %>selected="selected"<% } %> disabled>Select Loan Name</option>
+<option value="0"  <% if (student_info.loan_fafsa_id == '-'){ %>selected="selected"<% } %>>Select Loan Name</option>
 <option value="1" <% if (student_info.loan_fafsa_id == '1'){ %>selected="selected"<% } %>>CornerStone</option>
 <option value="2" <% if (student_info.loan_fafsa_id == '2'){ %>selected="selected"<% } %>>FedLoan Servicing (PHEAA)</option>
 <option value="3" <% if (student_info.loan_fafsa_id == '3'){ %>selected="selected"<% } %>>Granite State – GSMR</option>
@@ -106,14 +106,15 @@ input[type=file]:before {
 <option value="11" <% if (student_info.loan_fafsa_id == '11'){ %>selected="selected"<% } %>>Other</option>
 <option value="12" <% if (student_info.loan_fafsa_id == '12'){ %>selected="selected"<% } %>>I don’t know </option>
 </select>
+<p ng-show="submitted && loanform.fafsa_values.$error.required"  class="help-block has-error ng-hide">Loan type is requireds.</p>
 </div>
 
 
 <div id="bankloan" style="<% if (student_info.loan_bankname == ''){ %>display: none;<% } %>">
  <div class="form-group">
-      <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
-      <input type="text" ng-model="student.loan_bankname" data-validation-error-msg="Please enter your bank name" data-validation="required" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>">
-  
+      <label for="loan_bankname">Enter your bank name: </label>
+      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>" required>
+       <p ng-show="submitted && loanform.loan_bankname.$error.required"  class="help-block has-error ng-hide">Bank name is required.</p>
     </div>
 </div>
 
@@ -123,15 +124,16 @@ input[type=file]:before {
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-      <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" data-validation-error-msg="Please enter your account number" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info.loan_accountno %>">
-      
+      <label for="loan_accountno">Enter your loan account number:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
+      <input type="text" ng-model="student.loan_accountno" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info.loan_accountno %>" required>
+       <p ng-show="submitted && loanform.loan_accountno.$error.required"  class="help-block has-error ng-hide">Loan account number is required.</p>
     </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
-      <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" class="form-control" data-validation-error-msg="Please enter your loan current balance" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info.loan_amount %>">
+      <label for="loan_amount">Enter your loan current balance: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
+      <input type="text" ng-model="student.loan_amount" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info.loan_amount %>" required>
+       <p ng-show="submitted && loanform.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount is required.</p>
     </div>
   
     </div>
@@ -200,9 +202,9 @@ input[type=file]:before {
         <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
         <div class="form-group">
         
-            <input class="form-control fileip" data-validation-error-msg="Please enter the name of your document" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
+            <input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
              
-             <input type="file" data-validation-error-msg="Please upload at least one document" data-validation="required" name="document_path" class="filebtn" value=""> 
+             <input type="file" ng-model="student.file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/ class="filebtn" value=""> 
             
             
        
@@ -210,7 +212,7 @@ input[type=file]:before {
   </div> 
    </div>
   <br><br>
-            <button type="submit" class="btn btn-default text-center">Submit</button>
+            <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
      <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
        
   </form>  
@@ -248,14 +250,7 @@ $('#bankloan').show();
   });
 });
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script>
-  $.validate({
-    lang: 'es'
-  });
-</script>
-
-  <!-- <script>
+  <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
@@ -308,7 +303,7 @@ $('#bankloan').show();
         };
     });
 <% }) %>
-</script> -->
+</script>
  
 <script>
 $(document).ready(function() {
@@ -322,7 +317,7 @@ $(document).ready(function() {
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
             // $(wrapper).append('<div><input type="text"  class="form-control" name="mytext[]"/><input type="file"><a href="#" class="remove_field">Remove</a></div>'); //add input box
-            $(wrapper).append('<div class="form-group"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name" placeholder="Enter the name of the file"><input type="file" name="document_path" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div>'); //add input box
+            $(wrapper).append('<div class="form-group"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name" placeholder="Enter the name of the file"><input type="file" ng-model="student.document_path" name="document_path" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div>'); //add input box
         }
     });
     
