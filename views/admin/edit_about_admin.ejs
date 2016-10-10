@@ -10,45 +10,40 @@
                 <br>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <%  
-                        _.each(varsha, function (varsha) { %>
+
                         <!--<form action="/updateaboutus" class="form-group" method="POST" role="form">-->
                         <form class="form" ng-submit="submitForm()" name="aboutusform" novalidate>
-                        <div class="form-group row">
-                            <label class="col-xs-2 control-label">Enter Title</label>
-                            <div class="col-xs-10">
-                                <input type="text" ng-model="admin.about_us_title" name="about_us_title" id="about_us_title" value="<%= varsha.name %>" class="form-control" required>
-                                <span ng-show="submitted && aboutusform.about_us_title.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Title</label>
+                                <div class="col-xs-10">
+                                    <input type="text" ng-model="admin.about_us_title" name="about_us_title" id="about_us_title" value="" class="form-control" required>
+                                    <span ng-show="submitted && aboutusform.about_us_title.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xs-2 control-label">Enter Description</label>
-                            <div class="col-xs-10">
-                                <!--<textarea class="form-control" ng-model="admin.about_us" rows="5" cols="104" name="about_us"  required><%= varsha.about_us %></textarea>-->
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Description</label>
+                                <div class="col-xs-10">
+                                    <!--<textarea class="form-control" ng-model="admin.about_us" rows="5" cols="104" name="about_us"  required><%= recordset.about_us %></textarea>-->
 
 
-                                <textarea ng-model="admin.about_us" name="about_us" id="about_us"  required><%= varsha.about_us %></textarea>
+                                    <textarea ng-model="admin.about_us" name="about_us" id="about_us"  required><%= recordset.about_us %></textarea>
 
 
-                                <span ng-show="submitted && aboutusform.about_us.$error.required"  class="help-block has-error ng-hide description">Description is required.</span>
+                                    <span ng-show="submitted && aboutusform.about_us.$error.required"  class="help-block has-error ng-hide description">Description is required.</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xs-2 control-label">Enter Video Link</label>
-                            <div class="col-xs-10">
-                                <input type="text" name="video_link" id="video_link" ng-model="admin.video_link" class="form-control" value="<%= varsha.video_link %>" required>
-                                <span ng-show="submitted && aboutusform.video_link.$error.required"  class="help-block has-error ng-hide">Video Link is required.</span>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Video Link</label>
+                                <div class="col-xs-10">
+                                    <input type="text" name="video_link" id="video_link" ng-model="admin.video_link" class="form-control" value="" required>
+                                    <span ng-show="submitted && aboutusform.video_link.$error.required"  class="help-block has-error ng-hide">Video Link is required.</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5 update_about_us" value="Update">
-                        </div>
+                            <div class="form-group row">
+                                <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5 update_about_us" value="Update">
+                            </div>
                         </form>
-                       
-                        <%
-                        }) 
 
-                        %>
                     </div>
                 </div>
 
@@ -211,32 +206,30 @@
         content_css: '//www.tinymce.com/css/codepen.min.css'
     });
 
-        var postApp = angular.module('postApp', []);
-        postApp.controller('postController', function ($scope, $http) {
-            $scope.admin = {};
-                    <% _.each(varsha, function (varsha) { %>
-                            $scope.admin.about_us_title = '<%= varsha.name %>';
-//                            $scope.admin.about_us = '<%= varsha.about_us %>';
-                    $scope.admin.video_link = '<%= varsha.video_link %>';
-                            <% }) %>
-                    $scope.submitForm = function () {
-                        var text = tinymce.activeEditor.getContent({
-                            format: 'text'
-                        });
-                        $scope.admin.about_us= text;
-                        if ($scope.aboutusform.$valid) {
-                            $http({
-                                method: 'POST',
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.admin = {};
+                $scope.admin.about_us_title = '<%= recordset.name %>'
+                $scope.admin.video_link = '<%= recordset.video_link %>'
+                $scope.admin.about_us = '<%= recordset.about_us %>'
+                $scope.submitForm = function () {
+                    var text = tinymce.activeEditor.getContent({
+                        format: 'text'
+                    });
+                    $scope.admin.about_us = text;
+                    if ($scope.aboutusform.$valid) {
+                        $http({
+                            method: 'POST',
 //                    dataType: 'json',
-                                url: '/updateaboutus',
-                                data: $scope.admin, //forms user object
-                                headers: {'Content-Type': 'application/json'}
-                            }).success(function (data) {
-                                window.location = '/admin/aboutus';
-                            });
-                        }
-                    };
-        });
+                            url: '/updateaboutus',
+                            data: $scope.admin, //forms user object
+                            headers: {'Content-Type': 'application/json'}
+                        }).success(function (data) {
+                            window.location = '/admin/aboutus';
+                        });
+                    }
+                };
+    });
 //    });
 
 </script>

@@ -17,20 +17,20 @@ div.tooltip-inner {
             <div class="col-md-9"> 
             <h2>Personal details</h2>
             <br>
-            <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info.student_id %>" method="POST" name="userPhoto" novalidate>
+            <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info.student_id %>" method="POST">
             
             <div class="col-md-12" style="margin-bottom:20px">
 
             <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:350px">
             
             <div class="profile_image" style="">
-            <img src="<% if (student_info.student_profile_pic_path == '') { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
+            <img src="<% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == 'NULL') { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
              <!-- <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a> -->
             
               </div>
               <div class="fileUpload btn btn-default">
 <span class="fa fa-pencil pencil_icon"></span>
- <input type="file" name="userPhoto" id ="userPhoto" class="upload" />
+ <input type="file" name="userPhoto" class="upload" />
 </div>
              <div class="fileUpload btn btn-default pull-right">
 <span class="fa fa-check pencil_icon"></span>
@@ -145,11 +145,12 @@ date. On your special day, we feature you on the site so that funders can find y
     </div>
       </div>
       
-      <% }) %>
+     
       <br>
       <input type="hidden" name="_csrf" value="<% _csrf%>" />
      <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
-      <a href="../personal_view/personal_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+      <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+       <% }) %>
      </form>
       
       </div>      <div class="col-md-3"><%- include ../stud_right.ejs %></div>

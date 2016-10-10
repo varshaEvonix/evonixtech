@@ -9,28 +9,19 @@
                 <h1 class="phead">About us<a class="btn btn-primary pull-right" href="/admin/editaboutus"><i class="fa fa-pencil"></i> Edit</a></h1>
                 <br>
                 <div class="panel panel-default">
-                    <%  
-                    _.each(varsha, function (varsha) { %>
-                    <div class="panel-heading"><%= varsha.name %></div>
-                    <div class="panel-body" id="about_us" ><%= varsha.about_us %></div>
-                    <%
-                    }) 
 
-                    %>
+                    <div class="panel-heading"><%= recordset.name %></div>
+                    <div class="panel-body" id="about_us" ><%= recordset.about_us %></div>
+
                 </div>
                 <hr style="width:30%">
                 <br>
                 <h1 class="phead">Page Video</h1><br>
                 <div class="col-sm-8">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <%  
 
-                        _.each(varsha, function (varsha) { %>
-                        <iframe width="560" height="315" src="<%= varsha.video_link %>" frameborder="0" allowfullscreen></iframe>
-                        <%
-                        }) 
+                        <iframe width="560" height="315" src="<%= recordset.video_link %>" frameborder="0" allowfullscreen></iframe>
 
-                        %>
                     </div>
                 </div>
 <!--                <div class="row mt" >
