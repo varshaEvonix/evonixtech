@@ -50,6 +50,7 @@ module.exports.routes = {
     '/admin/allstudents/:id': 'Admin_dashController.get_student',
     '/admin/activestudent/:id': 'Admin_dashController.activestudent',
     '/admin/inactivestudent/:id': 'Admin_dashController.inactivestudent',
+    '/admin/lockedstudent/:id': 'Admin_dashController.lockedstudent',
     '/upload_file': 'Admin_dashController.upload_file',
             //'/upload_file': 'Admin_dashController.upload_file',
             '/add_notes': 'Admin_dashController.add_notes',
@@ -69,4 +70,7 @@ module.exports.routes = {
     '/subscribe': 'DonorController.subscribe',
     '/thankyoupage': 'DonorController.thankyoupage',
     '/change_status': 'Admin_dashController.change_status',
+    '/admin/donors/:id': 'Admin_dashController.donors_listing',
+    '/admin/generate_excel': 'Admin_dashController.generate_excel',
+    
 };
