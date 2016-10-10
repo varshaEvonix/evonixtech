@@ -35,20 +35,52 @@
 
 
 // var BackofficeController = require('./BackofficeController');
-var md5 = require('MD5');
 module.exports = {
 
+
+'activate_student': function(req, res) {
+		  	
+		         Student_login_credentials.query('UPDATE `student_login_credentials` SET `student_active`= 1 where student_id ='+req.param('id'));         	
+		        	
+		        return	res.redirect('/studentlogin');
+
+		       
+		        
+		    },
+
+
+'send_mail': function (req, res) {
+        var helper = require('sendgrid').mail;
+        var from_email = new helper.Email('support@evonixtech.com');
+        var to_email = new helper.Email('saurabh@evonix.co');
+        var subject = 'Stumuch activation link';
+        var content = new helper.Content('text/plain', 'Hello, this is the link for your account activation.!');
+        var mail = new helper.Mail(from_email, subject, to_email, content);
+
+        var sg = require('sendgrid')("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");
+        var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON(),
+        });
+
+        sg.API(request, function (error, response) {
+//            console.log(response.statusCode);
+//            console.log(response.body);
+//            console.log(response.headers);
+        });
+    },
 	
 	'stulogin':function(req,res){
 		if(req.method=="POST")
 		{
 			console.log("Post");
+
 			var student_firstname = req.param("student_firstname");
 			var student_lastname = req.param("student_lastname");
 			var student_contactno =req.param("student_contactno");
 			var student_email =req.param("student_email");
-			var student_password =md5(req.param("student_password"));
-
+			var student_password =req.param("student_password");
 			console.log(student_firstname);
 			var insert ="";
 			insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('"+student_firstname+"', '"+student_lastname+"', '"+student_contactno+"', '"+student_email+"')";
@@ -57,9 +89,31 @@ module.exports = {
 			{
 				
 				var st_id=record.insertId;
-				var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('"+st_id+"', '"+student_email+"', '"+student_password+"', '1','1')";
+				var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('"+st_id+"', '"+student_email+"',MD5('"+student_password+"'), '0','1')";
+				console.log(credential);
 				Student_login_credentials.query(credential,function(err,credential_record)
 				{
+
+
+					 var helper = require('sendgrid').mail;
+        var from_email = new helper.Email('support@evonixtech.com');
+        var to_email = new helper.Email(student_email);
+        var html ="Hi "+student_firstname+", Thanks for registering on STUMUCH Crowdfunding. Here is your activation link. To Activate your account <a href='"+sails.getBaseurl() +"/activation_link/"+st_id+"'>Click Here</a>"; 
+        var subject = 'Stumuch activation link';
+        var content = new helper.Content('text/html', html);
+        var mail = new helper.Mail(from_email, subject, to_email, content);
+
+        var sg = require('sendgrid')("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");
+        var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON(),
+        });
+
+        sg.API(request, function (error, response) {
+//            
+        });
+
 					return res.ok();
 					res.redirect('../studentlogin/studentlogin');
 					
@@ -215,7 +269,9 @@ module.exports = {
 		
 			Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "'+bdate+'" group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function(err, record) {
 				
+// console.log(recordset);
 // console.log(record);
+// console.log(bdate);
 
 				return res.view('./homepage', {
 
@@ -234,7 +290,7 @@ module.exports = {
 
 
 
-		'allprofiles': function(req, res) {
+	'allprofiles': function(req, res) {
 		var stu_name = '';
 		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
 		var bdate=arr[0];
@@ -257,7 +313,7 @@ module.exports = {
 
 
 	'singleprofile': function(req, res) {
-		Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,  sd.student_ambition,  sd.student_city,  sd.student_state, sd.video_link, sd.student_country, sd.zipcode, sd.student_profile_pic_path, ed.student_education_institute, ed.student_education_fieldofstudy, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and sd.student_id = '+req.param("id")+' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function(err, recordset) {   
+		Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,  sd.student_ambition,  sd.student_city,  sd.student_state, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, ed.student_education_institute, ed.student_education_fieldofstudy, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and sd.student_id = '+req.param("id")+' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function(err, recordset) {   
 
 			Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id='+req.param('id'), function(err, donor_l) {   
 		 
@@ -265,7 +321,7 @@ module.exports = {
 
 			Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id='+req.param("id")+' order by last_updated desc', function(err, loan_comments){
 					
-					//console.log(recordset);
+					console.log(recordset);
 
 					return res.view('./myprofile/myprofile', {
 

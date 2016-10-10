@@ -22,19 +22,27 @@ module.exports = {
             var temp = JSON.stringify(results);
             var student_details = JSON.parse(temp)[0];
             var donor_count = results.length;
-
             return res.view('./frontend/donorpage', {layout: false, student_details: student_details, funded_amount: funded_amount, donor_count: donor_count});
         });
 
     },
     paymentpage: function (req, res) {
+        if (req.method == "POST") {
+            var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + req.param('student_id') + " AND loan_details.isActive=1";
+            Student_details.query(q, function (err, results) {
+                var temp = JSON.stringify(results);
+                var student_details = JSON.parse(temp)[0];
+                var donor_name = 'NULL';
+                var comment = 'NULL';
+                var stripePubKey = 'pk_test_KdIGs1802FcIkWNJZW1zpd47';
 
-        var donor_name = 'NULL';
-        var stripePubKey = 'pk_test_KdIGs1802FcIkWNJZW1zpd47';
-
-        var donor_name = req.param('donor_name');
-        var comment = req.param('comment');
-        return res.view('./frontend/checkout', {layout: false, funding_amount: req.param('funding_amount'), email_id: req.param('email_id'), stripePubKey: stripePubKey, donor_name: donor_name, loan_id: req.param('loan_id'), comment: comment});
+                var donor_name = req.param('donor_name');
+                comment = req.param('comment');
+                return res.view('./frontend/checkout', {layout: false, funding_amount: req.param('funding_amount'), email_id: req.param('email_id'), stripePubKey: stripePubKey, donor_name: donor_name, loan_id: req.param('loan_id'), comment: comment, student_details: student_details});
+            });
+        } else {
+            res.redirect('/');
+        }
 
     },
     checkout: function (req, res) {
@@ -52,6 +60,7 @@ module.exports = {
                 email = req.param('email'),
                 loan_id = req.param('loan_id'),
                 donor_name = req.param('donor_name'),
+                student_id = req.param('student_id'),
                 comment = req.param('comment');
 
         var charge = stripe.charges.create({
@@ -63,8 +72,9 @@ module.exports = {
         function (err, charge) {
             if (err && err.type === 'StripeCardError') {
                 console.log('The card has been declined');
+                res.redirect('donorpage/' + student_id);
             } else {
-                var q = "INSERT INTO `stumuch_db`.`donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900')";
+                var q = "INSERT INTO `stumuch_db`.`donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`,`stripe_token`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900'," + stripeToken + ")";
                 console.log(q);
                 Donors_funding_details.query(q, function (err, results) {
 

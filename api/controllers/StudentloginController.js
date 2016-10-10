@@ -8,7 +8,7 @@
  module.exports = {
 
  	'studentlogin': function(req, res){
- 		res.view();
+ 		res.view('./studentlogin/studentlogin');
  	},
 
 

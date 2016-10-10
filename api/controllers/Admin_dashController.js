@@ -10,8 +10,36 @@ module.exports = {
         res.view();
     },
     'admin_dash': function (req, res) {
-        return res.view('./admin/admin_dash', {
-            layout: false,
+        var student_count = 0;
+        var active_student_count = 0;
+        var inactive_student_count = 0;
+        var locked_student_count = 0;
+        Student_details.query('SELECT count(*) as student_count from student_details ', function (err, the_rows) {
+
+            student_count = the_rows[0].student_count;
+
+            Student_details.query('SELECT count(*) as active_student_count from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_active="1"', function (err, active_student) {
+            
+                active_student_count = active_student[0].active_student_count;
+
+                Student_details.query('SELECT count(*) as inactive_student_count from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_active="0"', function (err, inactive_student) {
+                    
+                    inactive_student_count = inactive_student[0].inactive_student_count;
+
+                    Student_details.query('SELECT count(*) as locked_student_count from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where profile_lock="1"', function (err, locked_student) {
+                   
+                        locked_student_count = locked_student[0].locked_student_count;
+
+                        return res.view('./admin/admin_dash', {
+                            layout: false,
+                            student_count: student_count,
+                            active_student_count: active_student_count,
+                            inactive_student_count: inactive_student_count,
+                            locked_student_count: locked_student_count,
+                        });
+                    });
+                });
+            });
         });
 
     },
@@ -171,6 +199,50 @@ module.exports = {
             });
         });
     },
+    lockedstudent: function (req, res) {
+        var current_page = req.param('id');
+        if (typeof current_page !== 'undefined') {
+            var page = current_page;
+        }
+        else {
+            var page = 1;
+        }
+
+        var per_page = 10;
+        var start_from = (page - 1) * per_page;
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" LIMIT ' + start_from + ', ' + per_page + '';
+
+        Student_details.query(q, function (err, results) {
+
+            var all_rows = Student_details.query('SELECT count(*) as erow from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" ', function (err, the_rows) {
+
+                das_rows = the_rows[0].erow;
+
+                var total_pages = Math.ceil(das_rows / per_page);
+
+                var the_p = parseInt(current_page) - 1;
+                var the_n = parseInt(current_page) + 1;
+
+                if (current_page == 1) {
+                    var the_p = 1;
+                }
+                if (current_page == total_pages) {
+                    var the_n = total_pages;
+                }
+
+                res.view('./admin/locked_student_listing', {
+                    layout: false,
+                    tot: total_pages,
+                    js: the_rows,
+                    post: results,
+                    the_prev: the_p,
+                    the_next: the_n,
+                    curr: current_page,
+//                            title: 'This is the hi page title.'
+                });
+            });
+        });
+    },
     change_status: function (req, res) {
 
         var q = "UPDATE `student_login_credentials` SET `student_active` = '" + req.param('stu_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
@@ -260,15 +332,13 @@ module.exports = {
                     Student_details.query(fetch_student, function (err, studentdetails) {
                         var temp = JSON.stringify(studentdetails);
                         var student_details = JSON.parse(temp)[0];
-
                         var helper = require('sendgrid').mail;
                         var from_email = new helper.Email('support@evonixtech.com');
                         var to_email = new helper.Email(student_details.student_email);
                         var subject = 'Stumuch Notification';
                         var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
-//                        console.log('mail_content');
-//                        console.log(mail_content);
-                        var content = new helper.Content('text/plain', mail_content);
+
+                        var content = new helper.Content('text/html', mail_content);
                         var mail = new helper.Mail(from_email, subject, to_email, content);
 
                         var sg = require('sendgrid')("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");
@@ -279,9 +349,9 @@ module.exports = {
                         });
 
                         sg.API(request, function (error, response) {
-//                        console.log(response.statusCode);
-//                        console.log(response.body);
-//                        console.log(response.headers);
+//            console.log(response.statusCode);
+//            console.log(response.body);
+//            console.log(response.headers);
                         });
 
                     });
@@ -307,7 +377,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT * FROM donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" order by created_on desc LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,DATE_FORMAT(funding_date,"%Y-%m-%d") as funding_date FROM donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" order by donors_funding_details.funding_date desc LIMIT ' + start_from + ', ' + per_page + '';
 
         Donors_funding_details.query(q, function (err, results) {
 
@@ -326,30 +396,30 @@ module.exports = {
                 if (current_page == total_pages) {
                     var the_n = total_pages;
                 }
-                console.log('results');
-                console.log(results);
-//                res.view('./admin/donor_listing', {
-//                    layout: false,
-//                    tot: total_pages,
-//                    js: the_rows,
-//                    post: results,
-//                    the_prev: the_p,
-//                    the_next: the_n,
-//                    curr: current_page,
-////                            title: 'This is the hi page title.'
-//                });
+           
+                res.view('./admin/donor_listing', {
+                    layout: false,
+                    tot: total_pages,
+                    js: the_rows,
+                    post: results,
+                    the_prev: the_p,
+                    the_next: the_n,
+                    curr: current_page,
+//                            title: 'This is the hi page title.'
+                });
             });
         });
     },
     'send_mail': function (req, res) {
         var helper = require('sendgrid').mail;
         var from_email = new helper.Email('support@evonixtech.com');
-        var to_email = new helper.Email('varsha@evonix.co');
-        var subject = 'Hello World from the SendGrid Node.js Library!';
-        var content = new helper.Content('text/plain', 'Hello, Email!');
+        var to_email = new helper.Email(student_details.student_email);
+        var subject = 'Stumuch Notification';
+        var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
+        var content = new helper.Content('text/html', html);
         var mail = new helper.Mail(from_email, subject, to_email, content);
 
-        var sg = require('sendgrid')("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");
+        var sg = require('sendgrid')("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");
         var request = sg.emptyRequest({
             method: 'POST',
             path: '/v3/mail/send',

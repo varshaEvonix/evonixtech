@@ -13,7 +13,7 @@ module.exports = {
         	
         	return res.view('./addloan/addloan', {
 
-      answer: recordset
+      student_info: recordset
 
     });
 
@@ -38,10 +38,10 @@ module.exports = {
 
          Loan_details.query('SELECT ld.loan_id, sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_profile_pic_path, ld.loan_amount, IFNULL(mst_fafsa.fafsa_values,"-") fafsa_values, IFNULL(ld.loan_fafsa_id, "-") loan_fafsa_id, IFNULL(ld.loan_bankname, "-") loan_bankname, IFNULL(ld.loan_accountno, "-") loan_accountno from student_details sd left join loan_details ld on sd.student_id = ld.student_id left join mst_fafsa on mst_fafsa.id=ld.loan_fafsa_id where sd.student_id='+req.param('student_id')+' AND ld.loan_id ='+req.param('loan_id')+' AND ld.isActive = 1' , function(err, recordset) { 
 
-            Table_loan_document.query('SELECT * from table_loan_document where loan_id='+req.param('loan_id') , function(err, recordset1) {         	
-        	
-         // console.log(recordset1);
-        	return res.view('./loan_edit/loan_edit', {
+            Table_loan_document.query('SELECT ld.loan_id, ld.student_id, tld.document_name, tld.document_path, tld.loan_document_id, tld.isPublic from table_loan_document tld left join loan_details ld on ld.loan_id = tld.loan_id where tld.loan_id='+req.param('loan_id')+' AND isPublic = 1'  , function(err, recordset1) {           
+          
+          console.log(recordset1);
+          return res.view('./loan_edit/loan_edit', {
 
 
 
@@ -55,21 +55,29 @@ module.exports = {
         
     },
 
+
 'editloansubmit': function(req, res) {
   	
        if(req.method=="POST")
 		{
 
 			console.log('r u t');
+
      var document_path = req.param('filename');
      var document_name = req.param('document_name');
-     console.log('doc_name');
-     console.log(document_name);
+     
 			var loan_type = req.param("loan_type");
 			var fafsa_values = req.param("fafsa_values");
 			var loan_bankname = req.param("loan_bankname");
 			var loan_accountno =req.param("loan_accountno");
 			var loan_amount =req.param("loan_amount");
+       console.log(document_path);
+      console.log(document_name);
+      console.log(loan_type);
+      console.log(fafsa_values);
+      console.log(loan_bankname);
+      console.log(loan_accountno);
+      console.log(loan_amount);
 			
 			var update ="";
       var update_doc = "";
@@ -82,26 +90,22 @@ module.exports = {
 				
 			  update_doc = "UPDATE `table_loan_document` SET `document_name` = '"+document_name+"',`document_path` = '"+document_path+"' WHERE `loan_id`="+req.param('loan_id');
 			
-      console.log(update);
+     
 			Loan_details.query(update,function(err,record)
 			{
 
 		      Table_loan_document.query(update_doc,function(err,record2)
         { 
-          console.log('record');
-          console.log(record);
-          console.log(record2);
-
-        });
-            });
+          
+       
+            
        
         return res.ok();
     // var file_name = files.filename;
      //console.log(file_name);
-          
+          });
+           });
 			
-		}else {
-			console.log('Else part');
 		}
 
         },
