@@ -2,127 +2,131 @@
 <% _.each(student_info, function (student_info) { %>
 <%- include ../stud_left.ejs %>
 
-<style>
-    div.tooltip-inner {
-        max-width: 350px;
-    }
+  <style>
+div.tooltip-inner {
+    max-width: 350px;
+}
 </style>
-
+   
 <style type="text/css">
 
-    input[type=file]:before {
-        content: '\f0c6    Browse';
-        font-family: 'FontAwesome';
-        width: 99px;
-        height: 32px;
-        background: #00a290;
-        display: block;
-        color: #fff;
-        font-size: 15px;
-        position: absolute;
-        cursor: pointer;
-        margin-top: -5px;
-        border-radius: 4px;
-        padding: 3px 10px;
-        border: 1px solid #008677;
-    }
+input[type=file]:before {
+    content: '\f0c6    Browse';
+    font-family: 'FontAwesome';
+    width: 99px;
+    height: 32px;
+    background: #00a290;
+    display: block;
+    color: #fff;
+    font-size: 15px;
+    position: absolute;
+    cursor: pointer;
+    margin-top: -5px;
+    border-radius: 4px;
+    padding: 3px 10px;
+    border: 1px solid #008677;
+}
 </style>
 
 <section id="main-content">
-    <section class="wrapper" ng-app="postApp" ng-controller="postController">
-        <br>
-        <div class="row">
-            <div class="col-sm-9">
+          <section class="wrapper" ng-app="postApp" ng-controller="postController">
+          <br>
+<div class="row">
+<div class="col-sm-9">
 
-                <!--form action="/education_edit_submit" method="POST" role="form"-->
+           <!--form action="/education_edit_submit" method="POST" role="form"-->
+           
+ 
+ <h2>Media Section</h2><br>
+ <h3>Your Video</h3><br>
 
-
-                <h2>Media Section</h2><br>
-                <h3>Your Video</h3><br>
-
-                <form id="userVideo" enctype="multipart/form-data" action="/upload_video/<%= student_info.student_id %>" method="POST" name="userVideo" novalidate>
-                    <div class="form-group row">
-
-                        <div class="col-xs-10">
-                            <label for="student_firstname">Enter your video link: <a href="#" data-toggle="tooltip" title="Make a statement about your life and ambitions here.  Many funders skip the text and play the video instead. This will be a link to a video hosted on YouTube or Vimeo."> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-                            <input type="text" value="<%= student_info.video_link %>" name="video_link" class="form-control">
-                            <% }) %>
-                            <div class="row">
-                            </div>
-                        </div><br>
-                        <input type="submit" value="submit" class="upload btn btn-default"/>
-                </form> 
-                <div class="col-md-12">
-                    <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
-                    <form id="userImages" enctype="multipart/form-data" action="/upload_images/<%= student_info.student_id %>" method="POST" name="userImages" novalidate>
-                        <div class="row">
-                            <div class="col-md-4"> 
-                                <input class="filebtn" id="uploadImages" name="image1" type="file" multiple><br>
-                            </div>
+   <form id="userVideo" enctype="multipart/form-data" action="/upload_video/<%= student_info.student_id %>" method="POST" name="userVideo" novalidate>
+ <div class="form-group row">
+                               
+                                <div class="col-xs-10">
+                                 <label for="student_firstname">Enter your video link: <a href="#" data-toggle="tooltip" title="Make a statement about your life and ambitions here.  Many funders skip the text and play the video instead. This will be a link to a video hosted on YouTube or Vimeo."> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
+                                    <input type="text" value="<%= student_info.video_link %>" name="video_link" class="form-control">
+                                   <% }) %>
+<div class="row">
+                                
+                            </div><br>
+                            <input type="submit" value="submit" class="upload btn btn-default"/>
+                           </form> 
+                           </div>
+ <div class="col-md-12">
+                         <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
+       <form id="userImages" enctype="multipart/form-data" action="/upload_images/<%= student_info.student_id %>" method="POST" name="userImages" novalidate>
+       <div class="row">
+       <div class="col-md-4"> 
+        <input class="filebtn" id="uploadImages" name="image1" type="file" multiple><br>
+       </div>
+       </div>
+    <div class="row">
+   <% _.each(photos, function (photos) { %>
+ <div class="col-md-4" >
+  <img class="img-responsive" src="../index_files/uploads/<%= photos.photo_path %>"><br>
+ </div>
+ <% }) %>
+  </div>
+  <br>
+  
+ <div class="row">
+ <div class="col-md-2">
+    <input type="submit" value="submit" class="upload btn btn-default"/>
+    </div>
+    </div>
+                            </form>
                         </div>
-                        <div class="row">
-                            <% _.each(photos, function (photos) { %>
-                            <div class="col-md-4" >
-                                <img class="img-responsive" src="../index_files/uploads/<%= photos.photo_path %>"><br>
-                            </div>
-                            <% }) %>
-                        </div>
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input type="submit" value="submit" class="upload btn btn-default"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-                <br></div>
-
-
-
-        </div>.
-        <div class="col-md-3">
-            <%- include ../stud_right.ejs %>
-        </div>
-
-    </section>
-</section> 
-
-<%- include ../stufoot.ejs %>
+   
+   
+    <br></div>
+    
+  
+  
+  </div>.
+   <div class="col-md-3">
+   <%- include ../stud_right.ejs %>
+   </div>
+  
+ </section>
+  </section> 
+                
+                  <%- include ../stufoot.ejs %>
 <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
-        $scope.student = {};
+     $scope.student={};
 
-        < % _.each(student_info, function (student_info) { % >
-                $scope.student.student_education_institute = '<%= student_info.student_education_institute %>';
-        $scope.student.student_education_fieldofstudy = '<%= student_info.student_education_fieldofstudy %>';
+    <% _.each(student_info, function (student_info) { %>
+  $scope.student.student_education_institute='<%= student_info.student_education_institute %>';
+  $scope.student.student_education_fieldofstudy='<%= student_info.student_education_fieldofstudy %>';
 
 
-
+    
         $scope.submitForm = function () {
             if ($scope.educationform.$valid) {
-            $http({
-            method: 'POST',
+                $http({
+                    method: 'POST',
 //                    dataType: 'json',
                     url: '/education_edit_submit/<%= student_info.id %>',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
-            }).success(function (data) {
-                console.log(data);
-                window.location = '/viewprofile/<%= student_info.student_id %>';
-            });
+                }).success(function (data) {
+                    console.log(data);
+                    window.location = '/viewprofile/<%= student_info.student_id %>';
+                });
+
             }
-            < % }) % >
+            <% }) %>
+
         };
     });
 
 </script>
 <script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+                                                $(document).ready(function () {
+                                                    $('[data-toggle="tooltip"]').tooltip();
+                                                });
 </script>
 
+   

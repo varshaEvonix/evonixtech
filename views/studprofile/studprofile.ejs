@@ -1,79 +1,79 @@
 <%- include ../stuhead.ejs %>
-  <% _.each(student_info, function (student_info) { %>
+<% _.each(student_info, function (student_info) { %>
 <%- include ../stud_left.ejs %>
- 
-    <style>
-    .image_pro{
+
+<style>
+  .image_pro{
     width:100%; 
     margin-top:15px
-}
-    </style>
-  <section id="main-content">
-          <section class="wrapper">
+  }
+</style>
+<section id="main-content">
+  <section class="wrapper">
 
-            
+    
 
 
-                  <div class="col-md-9 main-chart">
-                  <div class="row white_bg" >
-      <div class="col-md-7">
-        
-        <img src="../index_files/uploads/<%= student_info.student_profile_pic_path %>" class="image_pro" />
+    <div class="col-md-9 main-chart">
+      <div class="row white_bg" >
+        <div class="col-md-7">
+          
+          <img src="../index_files/uploads/<%= student_info.student_profile_pic_path %>" class="image_pro" />
 
-      </div>
-      <div class="col-md-5">
+        </div>
+        <div class="col-md-5">
           <% if (student_info.profile_lock == '1') { %>
-        <div class="alert alert-danger" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Locked by Admin </span></div>
-        <% } else { %>
-        <div class="alert alert-success" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Profile is Active</span></div>
-        <% } %>
+          <div class="alert alert-danger" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Locked by Admin </span></div>
+          <% } else { %>
+          <div class="alert alert-success" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Profile is Active</span></div>
+          <% } %>
 
-        <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %></h2>
-        <p class="front-info">Email: <%= student_info.student_email %></p>
-        <p class="front-info">Contact: <%= student_info.student_contactno %></p>
-        <div class="row money_info">
-          <div class="col-sm-3">
-            
-            <h4>Raised</h4><h3>$<%= student_info.total_funded %></h3>
-            
-          </div>
-          <div class="col-sm-6" style="text-align:center;">
+          <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %></h2>
+          <p class="front-info">Email: <%= student_info.student_email %></p>
+          <p class="front-info">Contact: <%= student_info.student_contactno %></p>
+          <div class="row money_info">
+            <div class="col-sm-3">
+              
+              <h4>Raised</h4><h3>$<%= student_info.total_funded %></h3>
+              
+            </div>
+            <div class="col-sm-6" style="text-align:center;">
 
            <!-- <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
            <p class="indicate" style="margin-top: -75px;"><strong>70%</strong></p>
- -->
+         -->
 
-              <canvas id="serverstatus14" height="120" width="120"></canvas>
-                <%if (student_info.loan_amount == "0") { %>
-                    <p class="text-center indicate">0%</p>
-                    <input type="hidden" id="loan_percent" value="0">
-                <% } else {%>
-                  <p class="text-center indicate" style="margin-top:-75px;"><%= (student_info.total_funded/student_info.loan_amount)*100 %>%</p>
-                  <input type="hidden" id="loan_percent" value="<%= (student_info.total_funded/student_info.loan_amount)*100 %>">
-                <% } %>
-              
+         <canvas id="serverstatus14" height="120" width="120"></canvas>
+         <%if (student_info.loan_amount == "0") { %>
+         <p class="text-center indicate">0%</p>
+         <input type="hidden" id="loan_percent" value="0">
+         <% } else {%>
+         <p class="text-center indicate" style="margin-top:-75px;"><%= (student_info.total_funded/student_info.loan_amount)*100 %>%</p>
+         <input type="hidden" id="loan_percent" value="<%= (student_info.total_funded/student_info.loan_amount)*100 %>">
+         <% } %>
+         
 
 
-         </div>
-         <div class="col-sm-3">
+       </div>
+       <div class="col-sm-3">
 
-          
-            <h4>Goal</h4><h3>$<%= student_info.loan_amount %></h3>
-            
-
-        </div>
+        
+        <h4>Goal</h4><h3>$<%= student_info.loan_amount %></h3>
+        
 
       </div>
+
     </div>
-    <br>
-
   </div>
-  
-  <div class="modal fade col-md-6 center" id="myModal" role="dialog">
-    <div class="modal-dialog">
+  <br>
 
-    </div><br>
-    <div class="modal-content">
+</div>
+
+<div class="modal fade col-md-6 center" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+  </div><br>
+  <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
       <h4 class="modal-title">Add new loan</h4>
@@ -115,17 +115,17 @@
          </span><%= student_info.student_lastname %></p>
        </div>
        <div class="col-md-3">
-       <p class="info"> <span class="small">Birth Date: <br>
-       </span><%= student_info.student_birthdate %></p>
-     </div>
+         <p class="info"> <span class="small">Birth Date: <br>
+         </span><%= student_info.student_birthdate %></p>
+       </div>
 
      </div><br>
      <div class="row">
       <div class="col-md-3">
-         <p class="info"> <span class="small">Contact Number: <br>
-         </span><%= student_info.student_contactno %></p>
-       </div>
-      <div class="col-md-3">
+       <p class="info"> <span class="small">Contact Number: <br>
+       </span><%= student_info.student_contactno %></p>
+     </div>
+     <div class="col-md-3">
        <p class="info"> <span class="small">Email: <br>
        </span><%= student_info.student_email %></p>
      </div>
@@ -190,20 +190,20 @@
   <div class="col-md-12 white_bg">
     <div style="font-size:22px;" class="row edit_op">Current Loan
 
-    <div class="row pull-right"> <a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
-    <br>
-    <br>
-    </div>
-    <div class="row">
+      <div class="row pull-right"> <a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
+        <br>
+        <br>
+      </div>
+      <div class="row">
 
-    <div class="col-md-3">
-     <p class="info">  <span class="small">Loan Amount: <br>
-     </span>$<%= student_info.loan_amount %></p>
-    
-   </div>
+        <div class="col-md-3">
+         <p class="info">  <span class="small">Loan Amount: <br>
+         </span>$<%= student_info.loan_amount %></p>
+         
+       </div>
 
-      <div class="col-md-6">
+       <div class="col-md-6">
         <%if (student_info.loan_bankname == '') { %>
         <div class="col-md-6">
          <p class="info">  <span class="small">Type of Loan: <br>
@@ -230,9 +230,9 @@
       </span><%= student_info.loan_accountno %></p>
     </div>
 
-   <br><br><br><br><br>
- </div>
- <div>
+    <br><br><br><br><br>
+  </div>
+  <div>
 
    <h3>Previous loans</h3><br>
    <table class="table table-hover">
@@ -280,7 +280,7 @@
     <div class="row">
 
      <div class="col-md-5">
-     
+       
       <div class="embed-responsive embed-responsive-16by9">
         <iframe width="560" height="315" src="<%= student_info.video_link %>" frameborder="0" allowfullscreen> 
         </iframe>
@@ -293,35 +293,35 @@
       <h3><em>Your Images</em></h3>
     </div>
   </div>
-    <div class="row">
-      <% _.each(pics, function (pics) { %>
-      <div class="col-md-4" >
-        <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
-      </div>
-
-      <% }) %>
-
+  <div class="row">
+    <% _.each(pics, function (pics) { %>
+    <div class="col-md-4" >
+      <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
     </div>
-  </div></div>
 
-                 
-                  </div>
+    <% }) %>
 
-                                
-                
-             
-              </div>
-              </div>
-              <div class="col-md-3">
-            <%- include ../stud_right.ejs %>
-            </div>    
-          </section>  
+  </div>
+</div></div>
 
-          
-      </section>
 
-        <% }) %>         
-                  <%- include ../stufoot.ejs %>
+</div>
+
+
+
+
+</div>
+</div>
+<div class="col-md-3">
+  <%- include ../stud_right.ejs %>
+</div>    
+</section>  
+
+
+</section>
+
+<% }) %>         
+<%- include ../stufoot.ejs %>
 <script src="../../index_files/lightbox.js"></script>
 
 <script type="text/javascript">
@@ -340,16 +340,16 @@
   var remainingPer = parseInt(100 - completePer);
   
   var doughnutData = [
-      {
-        value: parseInt(completePer),
-        color:"#68dff0"
-      },
-      {
-        value : parseInt(remainingPer),
-        color : "#fdfdfd"
-      }
-    ];
-    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+  {
+    value: parseInt(completePer),
+    color:"#68dff0"
+  },
+  {
+    value : parseInt(remainingPer),
+    color : "#fdfdfd"
+  }
+  ];
+  var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
 </script>
 
 <!-- <script>

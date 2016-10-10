@@ -14,9 +14,9 @@
                 <%  
                 _.each(category, function (category) { 
                 %>
- <h3 class="panel-title"><%= category %></h3>
+                <h3 class="panel-title"><%= category %></h3>
                 <div class="panel panel-default">
-                   
+
                     <%  
                     _.each(faq, function (faq) {
                     if(faq.category==category){
@@ -228,48 +228,51 @@
 <!--<script src="../../index_files/stdash/js/typeahead.min.js"></script>-->
 <script src="../../index_files/stdash/js/typeahead.js"></script>
 <script>
-    var postApp = angular.module('postApp', []);
-    postApp.controller('postController', function ($scope, $http) {
-        $('#category').typeahead({
-            onSelect: function (item) {
-                console.log(item)
-                $('#category').val(item.text);
-                $scope.admin.category = item.text;
-            },
-            ajax: {
-                url: "/get_category",
-                timeout: 500,
-                displayField: 'category',
-                triggerLength: 1,
-                method: "get",
-                loadingClass: "loading-circle",
-                preDispatch: function (query) {
-                    return {
-                        search: query
-                    }
-                },
-                preProcess: function (data) {
-                    console.log(data.category);
-                    return data.category;
-                }
-            }
-        });
-        $scope.admin = {};
-        $scope.submitForm = function () {
-            if ($scope.faqform.$valid) {
-                $http({
-                    method: 'POST',
+                                        var postApp = angular.module('postApp', []);
+                                        postApp.controller('postController', function ($scope, $http) {
+                                            $('#category').typeahead({
+                                                onSelect: function (item) {
+                                                    console.log(item)
+                                                    $('#category').val(item.text);
+                                                    $scope.admin.category = item.text;
+                                                },
+                                                ajax: {
+                                                    url: "/get_category",
+                                                    timeout: 500,
+                                                    displayField: 'category',
+                                                    triggerLength: 1,
+                                                    method: "get",
+                                                    loadingClass: "loading-circle",
+                                                    preDispatch: function (query) {
+                                                        return {
+                                                            search: query
+                                                        }
+                                                    },
+                                                    preProcess: function (data) {
+                                                        console.log(data.category);
+                                                        return data.category;
+                                                    }
+                                                }
+                                            });
+                                            $scope.admin = {};
+                                            $scope.submitForm = function () {
+                                                if ($scope.faqform.$valid) {
+                                                    $http({
+                                                        method: 'POST',
 //                    dataType: 'json',
-                    url: '/addfaq',
-                    data: $scope.admin, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    window.location = '/faq';
-                });
+                                                        url: '/addfaq',
+                                                        data: $scope.admin, //forms user object
+                                                        headers: {'Content-Type': 'application/json'}
+                                                    }).success(function (data) {
+                                                        window.location = '/admin/faq';
+                                                    });
 
-            }
-        };
-    });
+                                                }
+                                            };
+                                        });
 
 </script>
-
+<script>
+    $('#faq').addClass('active');
+    $('#static-pages').addClass('active');
+</script> 

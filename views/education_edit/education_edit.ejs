@@ -14,14 +14,14 @@
 
 
     <div class="form-group">
-     <% _.each(answer, function (answer) { %>
+     
       <label for="student_education_institute">Enter your education institute: </label>
-      <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" name="student_education_institute" placeholder="Enter your education institute" value="<%= answer.student_education_institute %>" required>
+      <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info.student_education_institute %>" required>
        <p ng-show="submitted && educationform.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
     </div>
     <div class="form-group">
        <label for="student_education_fieldofstudy">Enter your field of study: </label>
-      <input type="text" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= answer.student_education_fieldofstudy %>" required>
+      <input type="text" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info.student_education_fieldofstudy %>" required>
        <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
     </div>
    
@@ -33,9 +33,9 @@
   </form>
   
   </div>
-    <% }) %>
+<div class="col-md-3">
    <%- include ../stud_right.ejs %>
-  
+  </div>
  </section>
   </section> 
                 
@@ -45,9 +45,9 @@
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
 
-    <% _.each(answer, function (answer) { %>
-  $scope.student.student_education_institute='<%= answer.student_education_institute %>';
-  $scope.student.student_education_fieldofstudy='<%= answer.student_education_fieldofstudy %>';
+
+  $scope.student.student_education_institute='<%= student_info.student_education_institute %>';
+  $scope.student.student_education_fieldofstudy='<%= student_info.student_education_fieldofstudy %>';
 
 
     
@@ -56,16 +56,16 @@
                 $http({
                     method: 'POST',
 //                    dataType: 'json',
-                    url: '/education_edit_submit/<%= answer.id %>',
+                    url: '/education_edit_submit/<%= student_info.student_id %>',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (data) {
                     console.log(data);
-                    window.location = '/viewprofile/<%= answer.student_id %>';
+                    window.location = '/viewprofile/<%= student_info.student_id %>';
                 });
 
             }
-            <% }) %>
+    
 
         };
     });

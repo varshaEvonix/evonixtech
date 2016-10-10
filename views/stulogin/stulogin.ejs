@@ -374,7 +374,7 @@ textarea {
 
               <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
               <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-              <span class="error has-error" ng-show="registerform.student_firstname.$error.pattern">Name should be in proper format!</span>
+              <span  class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Name should be in proper format!</span>
                           </div></div>
         <div class="col-md-6">
             <div class="field-wrap form-group input-group" >
@@ -394,7 +394,7 @@ textarea {
             </label>
              <input  type="text" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
               <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
-               <span class="error has-error" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
+               <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
           </div></div>
 <div class="col-md-6">
  <div class="field-wrap form-group input-group" >
@@ -404,7 +404,7 @@ textarea {
             </label>
              <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required>
               <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
-              <span class="error has-error" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!
+              <span class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!
   </span>
           </div></div>
           
@@ -421,7 +421,7 @@ textarea {
           </div></div>
           <div class="col-md-6">
           <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+          <span class="input-group-addon ng-hide" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
             <label>
             Confirm password<span class="req">*</span>
             </label>

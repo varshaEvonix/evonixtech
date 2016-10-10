@@ -46,6 +46,9 @@ input[type=file]:before {
 .remove_field{
   font-size: 22px;
 }
+.pointer{
+  cursor:pointer;
+}
 </style>
 
 <section id="main-content" ng-app="postApp" ng-controller="postController">
@@ -88,6 +91,7 @@ input[type=file]:before {
 
 <label for="fafsa">Select loan name:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
 <select name="fafsa_values" id="fafsa_value" class="dropdown form-group" ng-model="student.fafsa_values" required>
+
 <option value="0"  <% if (student_info.loan_fafsa_id == '-'){ %>selected="selected"<% } %>>Select Loan Name</option>
 <option value="1" <% if (student_info.loan_fafsa_id == '1'){ %>selected="selected"<% } %>>CornerStone</option>
 <option value="2" <% if (student_info.loan_fafsa_id == '2'){ %>selected="selected"<% } %>>FedLoan Servicing (PHEAA)</option>
@@ -109,7 +113,7 @@ input[type=file]:before {
 <div id="bankloan" style="<% if (student_info.loan_bankname == ''){ %>display: none;<% } %>">
  <div class="form-group">
       <label for="loan_bankname">Enter your bank name: </label>
-      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your education institute" value="<%= student_info.loan_bankname %>" required>
+      <input type="text" ng-model="student.loan_bankname" class="form-control" id="loan_bankname" name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>" required>
        <p ng-show="submitted && loanform.loan_bankname.$error.required"  class="help-block has-error ng-hide">Bank name is required.</p>
     </div>
 </div>
@@ -138,7 +142,7 @@ input[type=file]:before {
     <br>
    
     <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
     
 
     <table class="table">
@@ -146,16 +150,32 @@ input[type=file]:before {
      
       <tr>
         <th>Document name</th>
-        <th>Document file</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
     <% _.each(loan_docs, function (loan_docs,index) { %>
+    <div class="modal fade col-md-6 center" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+  </div><br>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Delete document</h4>
+    </div>
+    <div class="modal-body">
+      <p>Do you really want to remove this document? You cannot undo this action.</p>
+    </div>
+    <div class="modal-footer">
+     <a href="/remove_doc/<%= loan_docs.student_id %>/<%= loan_docs.loan_id %>/<%= loan_docs.loan_document_id %>"><button type="button" class="btn btn-default">Yes</button></a>
+     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+   </div>
+ </div>
+</div>
     <tr>
         <td><%= loan_docs.document_name %></td>
-        <td><%= loan_docs.document_path %></td>
-        <td><a href="/remove_doc/<%= student_info.student_id %>/<%= loan_docs.loan_id %>/<%= loan_docs.loan_document_id %>"><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><i class="fa fa-download" aria-hidden="true"></i></a></td>
+        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
       </tr>
        <% }) %>
     </tbody>
@@ -183,10 +203,9 @@ input[type=file]:before {
         <div class="form-group">
         
             <input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
-             <p ng-show="submitted && loanform.document_name.$error.required" class="help-block has-error ng-hide" >Document name is required.</p>
+             
              <input type="file" ng-model="student.file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/ class="filebtn" value=""> 
             
-             <p ng-show="submitted && loanform.file.$error.required"  class="help-block has-error ng-hide">Document is required.</p>
             
        
       
@@ -219,7 +238,6 @@ input[type=file]:before {
 <script type="text/javascript">
   $(document).ready(function(){
   $('#loan_type').change(function(){
-alert($(this).val());
 if($(this).val()=='fafsa'){
 
 $('#fafsa').show();
@@ -264,15 +282,7 @@ $('#bankloan').show();
   $scope.student.file='<%= student_info.file %>';
 <% }) %>
    
-    <% _.each(loan_docs, function (loan_docs,index) { %>
-
-var temprary='<%= loan_docs.document_name %>';
-var temp = [];
-        temp.push(temprary);
-        $scope.student.document_name.push(temp);
-        $scope.student.document_path='<%= loan_docs.document_path %>';
-
-      <% }) %>
+    
     <% _.each(student_info, function (student_info) { %>
         $scope.submitForm = function () {
             if ($scope.loanform.$valid) {

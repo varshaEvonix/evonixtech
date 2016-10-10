@@ -6,44 +6,59 @@
 
         <div class="row">
             <div class="col-lg-12 main-chart">
-                <h1 class="phead">Student Listing</h1><br>
+                <h1 class="phead">Donors Listing</h1><br>
+                <% if(post.length > 0){ %>
+                <button id="generate-excel" class="btn btn-primary pull-right">Generate Excel sheet</button>
+                <% } %>
                 <div class="col-sm-12">
-                    <div class="embed-responsive embed-responsive-16by9">
+                    <!--<div id="dvData" class="embed-responsive embed-responsive-16by9">-->
+                    <div id="dvData">
 
-                        <table class="table table-hover">
+                        <table class="table table-hover table2excel">
                             <thead>
                                 <tr>
-                                    <th>Donor Name</th>
-                                    <th>Email Id</th>
+                                    <th>Funder Name</th>
+                                    <th>Funder Email Id</th>
                                     <th>Funded Amount</th>
+                                    <th>Student Funded (URL)</th>
+                                    <th>Student Email Id</th>
                                     <th>Funding_date</th>
+                                    <th style="display: none">Stripe Transaction Details</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                 <% if(post.length > 0){ %>
                                 <% _.each(post, function (corndog) { %>
                                 <tr>
                                     <td><%= corndog.donors_name %></td>
-                                    <td> <%= corndog.donor_email %></td>
-                                    <td> <%= corndog.funded_amount %></td>
+                                    <td><%= corndog.donor_email %></td>
+                                    <td>$ <%= corndog.funded_amount %></td>
+                                    <td><label> <%= sails.getBaseUrl()+'/single_profile/'+ corndog.student_id %></label></td>
+                                    <td> <%= corndog.student_email %></td>
                                     <td> <%= corndog.funding_date %></td>
+                                    <td style="display: none"> <%= corndog.stripe_token %></td>
                                 </tr>
                                 <% }) %>
-
+                                 <% }else{ %>
+                                 <tr><td>No Record Found</td></tr>
+<% } %>
                             </tbody>
                         </table>
 
                     </div>
                     <div class="text-right">
+                         <% if(post.length > 0){ %>
                         <ul class="pager pagination">
-                            <li class="previous"><a href="/admin/allstudents/<%= the_prev %>">&larr; Previous</a></li>
+                            <li class="previous"><a href="/admin/donors/<%= the_prev %>">&larr; Previous</a></li>
                             <li>
                                 <% for(var i=1; i<=tot; i++) { %>
-                                <a href="/admin/allstudents/<%= i %>"><%= i %></a>
+                                <a href="/admin/donors/<%= i %>"><%= i %></a>
                                 <% } %>
                             </li>
 
-                            <li class="next"><a href="/admin/allstudents/<%= the_next %>">Next &rarr;</a></li>
+                            <li class="next"><a href="/admin/donors/<%= the_next %>">Next &rarr;</a></li>
                         </ul>
+                         <% } %>
                     </div>
                 </div>
 
@@ -52,38 +67,26 @@
     </section>
 </section>
 <%- include ../admin/stufoot.ejs %>
-<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
+<!--<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
 <script src="../../index_files/stdash/js/sweetalert.min.js"></script>
-<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
+<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>-->
+<script src="../../index_files/stdash/js/jquery.table2excel.js"></script>
 <script>
-    $('.change_status').click(function () {
-        var status = $(this).attr('data-value') == '0' ? 'De-activate' : 'Activate';
-        var stu_status = $(this).attr('data-value');
-        var student_id = $(this).attr('data');
-        swal({title: "Are you sure?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, " + status + " it!",
-            closeOnConfirm: false
-        },
-        function () {
-
-            $.ajax({
-                url: "/change_status",
-                type: "POST",
-                async: true,
-                dataType: 'json',
-                data: {student_id: student_id, stu_status: stu_status},
-                //your form data to post goes here
-                success: function (response) {
-                    window.location.reload();
-                }
+    $('#generate-excel').click(function () {
+        $(function () {
+            $(".table2excel").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name",
+                filename: "myFileName",
+                fileext: ".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
             });
-
         });
     });
 </script>
 <script>
-    $('#allstudents').addClass('active');
+    $('#donors-management').addClass('active');
+
 </script>

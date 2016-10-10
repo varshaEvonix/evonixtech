@@ -1,5 +1,5 @@
 <%- include ../stuhead.ejs %>
-<% _.each(answer, function (answer) { %>
+<% _.each(student_info, function (student_info) { %>
 <%- include ../stud_left.ejs %>
 <% }) %>
 
@@ -212,19 +212,19 @@ input[type=file]:before {
     });
   };
 
- <% _.each(answer, function (answer) { %>
+ <% _.each(student_info, function (student_info) { %>
 
   $scope.submitForm = function () {
     if ($scope.loanform.$valid) {
       $http({
         method: 'POST',
 //                    dataType: 'json',
-url: '/addloan_submit/<%= answer.loan_id %>',
+url: '/addloan_submit/<%= student_info.loan_id %>',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
                   }).success(function (data) {
                     console.log(data);
-                    window.location = '/viewprofile/<%= answer.student_id %>';
+                    window.location = '/viewprofile/<%= student_info.student_id %>';
                   });
 
                 }
