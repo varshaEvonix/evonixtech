@@ -2,7 +2,7 @@
 module.exports.routes = {
     //saurabh
     '/': 'Student_detailsController.homepage_view',
-    '/studentlogin': 'UserController.myLogin',
+    '/studentlogin': 'StudentloginController.studentlogin',
     '/user': 'Student_detailsController.stulogin',
     '/personal': 'PersonalController.insertpersonal',
     '/education': 'EducationController.inserteducation',
@@ -18,7 +18,7 @@ module.exports.routes = {
     '/user_docs/:student_id/:loan_id': 'Loan_editController.uploaddocs',
     '/upload_file': 'Loan_editController.uploadfile',
     '/personal_edit/:id': 'Personal_editController.editpersonal',
-    '/personal_edit_submit': 'Personal_editController.editpersonalsubmit',
+    '/personal_edit_submit/:id': 'Personal_editController.editpersonalsubmit',
     '/education_edit/:id': 'Education_editController.editeducation',
     '/education_edit_submit/:id': 'Education_editController.editeducationsubmit',
     '/loan_edit/:student_id/:loan_id': 'Loan_editController.editloan',
@@ -33,6 +33,9 @@ module.exports.routes = {
     '/student/process': 'Student_authController.student_process',
     '/student/logout': 'Student_authController.student_logout',
     '/donatepage': 'DonatepageController.donatepage',
+    // '/sendmail': 'Student_detailsController.send_mail',
+
+    '/activation_link/:id': 'Student_detailsController.activate_student',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/viewdetails/:id': 'Admin_dashController.viewdetails',
@@ -72,5 +75,4 @@ module.exports.routes = {
     '/change_status': 'Admin_dashController.change_status',
     '/admin/donors/:id': 'Admin_dashController.donors_listing',
     '/admin/generate_excel': 'Admin_dashController.generate_excel',
-    
 };
