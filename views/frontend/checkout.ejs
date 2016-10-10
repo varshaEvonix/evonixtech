@@ -48,7 +48,7 @@
             <!--<br>-->
             <div class="col-md-6">
                 <% var data_amount= funding_amount * 100 %>
-                 <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To Transfer Your Fund</h2>
+                <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To Transfer Your Fund</h2>
                 <form action="/subscribe" method="POST">
                     <script
                         src="https://checkout.stripe.com/checkout.js" 
@@ -65,6 +65,8 @@
                     <input type="hidden" name="donor_name" value="<%= donor_name %>">
                     <input type="hidden" name="comment" value="<%= comment %>">
                     <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
+                    <input type="hidden" name="student_firstname" value="<%= student_details.student_firstname %>">
+                    <input type="hidden" name="student_lastname" value="<%= student_details.student_lastname %>">
 
                 </form>
             </div>
