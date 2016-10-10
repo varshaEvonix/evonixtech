@@ -14,7 +14,7 @@ module.exports = {
         var active_student_count = 0;
         var inactive_student_count = 0;
         var locked_student_count = 0;
-        Student_details.query('SELECT count(*) as student_count from student_details ', function (err, the_rows) {
+        Student_details.query('SELECT count(*) as student_count from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id', function (err, the_rows) {
 
             student_count = the_rows[0].student_count;
 

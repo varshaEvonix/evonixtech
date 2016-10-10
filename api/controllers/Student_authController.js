@@ -10,7 +10,7 @@ module.exports = {
     },
     student_process: function (req, res) {
 
-        Student_login_credentials.query("select * from student_login_credentials where student_email ='" + req.param('email') + "'", function (err, vals) {
+        Student_login_credentials.query("select * from student_login_credentials where student_login_credentials.student_active = 1 AND student_email ='" + req.param('email') + "' ", function (err, vals) {
 
             if (vals.length > 0) {
                 var temp = JSON.stringify(vals);

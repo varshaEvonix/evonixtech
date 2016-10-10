@@ -152,7 +152,7 @@ module.exports = {
 					insert = "INSERT INTO `loan_details` (`student_id`, `loan_amount`, `loan_fafsa_id`, `loan_bankname`,`loan_accountno`,`isActive`) VALUES ('"+req.param('id')+"', '"+loan_amount+"','"+fafsa_values+"','','"+loan_accountno+"','1')";
 				}
 				
-			insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '2', '1');";
+			insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '"+req.param('loan_id')+"', '1');";
 			
       
 			Loan_details.query(insert,function(err,record)
@@ -225,8 +225,6 @@ var insert = "INSERT INTO `table_loan_document` (`document_name`, `document_path
             var filename = req.file('file')._files[0].stream.filename;
             var newfilename = Date.now() + filename;
             req.file('formdata').upload({dirname: '../public/index_files/uploads/', saveAs: newfilename}, function (err, files) {
-               console.log('newfilename');
-               console.log(newfilename);
                 return res.ok(newfilename);
             });
         }

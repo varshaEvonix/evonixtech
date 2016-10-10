@@ -14,39 +14,6 @@
 
 
 
-    //  'singleprofile': function(req, res) {
-    //   Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,  sd.student_ambition,  sd.student_city,  sd.student_state, sd.video_link, sd.student_country, sd.zipcode, sd.student_profile_pic_path, ed.student_education_institute, ed.student_education_fieldofstudy, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and sd.student_id = '+req.param("id")+' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function(err, recordset) {   
-
-    //     Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id='+req.param('id'), function(err, donor_l) {   
-
-    //       Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
-
-    //         Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id='+req.param("id")+' order by last_updated desc', function(err, loan_comments){
-
-    //       //console.log(recordset);
-
-    //       return res.view('./myprofile/myprofile', {
-
-    //         student_info: recordset,
-    //         donor_l: donor_l,
-    //         pics: photorecord,
-    //         loan_comments: loan_comments
-
-
-            
-    //       });
-    //     });
-
-    //       });
-
-    //     });
-
-    //   });
-
-    // },
-
-
-
     'mypro': function(req, res) {
 
      Student_details.query('SELECT mf.id, mf.fafsa_values, slc.profile_lock, sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,sd.student_email, sd.student_contactno, IFNULL(sd.student_ambition,"") student_ambition, sd.student_city,  sd.student_state, sd.student_address, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, IFNULL(ed.student_education_institute, "") student_education_institute, IFNULL(ed.student_education_fieldofstudy, "") student_education_fieldofstudy, ld.loan_id, ld.loan_fafsa_id, IFNULL(ld.loan_bankname, "") loan_bankname, IFNULL(ld.loan_accountno, "") loan_accountno, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id left join mst_fafsa mf on mf.id = ld.loan_fafsa_id where slc.student_active = 1 AND sd.student_id = '+req.param("id")+' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function(err, recordset) {         	
@@ -135,34 +102,24 @@
      upload: function  (req, res) {
       if(req.method === 'POST')
 
-        var userpic = req.param('userPhoto');
-      console.log('We have entered the uploading process ');
-      console.log(userpic);
-      var newFilename = req.file('userPhoto')._files[0].stream.filename;
-      console.log(newFilename);
-      req.file('userPhoto').upload({dirname:'../public/index_files/uploads/',saveAs: newFilename},function(err,files){
-
-        maxBytes: 10000000;
-
-       //sails.log.debug('file is :: ', +files);
-     //if (err) return res.serverError(err); 
-     var file_name='';
-     files.forEach(function(files, index){
-       file_name=files.filename;
-     });
-     console.log('here');
-     console.log(file_name);
-     var update = "UPDATE `student_details` SET `student_profile_pic_path`='"+file_name+"' where student_details.student_id="+req.param('id');
-
+        newFilename = req.file('userPhoto')._files[0].stream.filename;
+ 
+    console.log(newFilename);
+    console.log('newFilename');
+      req.file('userPhoto').upload({dirname:'../public/index_files/uploads/documents/',saveAs: newFilename}), function onUploadComplete(err, files) {
+        
+ };
+     
+     var update = "UPDATE `student_details` SET `student_profile_pic_path`='"+newFilename+"' where student_details.student_id="+req.param('id');
+console.log(update);
      Student_details.query(update,function(err,record)
      {
-      console.log(record);
-      return res.ok();
+      
     });
     // var file_name = files.filename;
      //console.log(file_name);
-     return res.redirect('/viewprofile/'+req.param('id'));
-   });
+     return res.redirect('/personal_edit/'+req.param('id'));
+  
     },
 
 

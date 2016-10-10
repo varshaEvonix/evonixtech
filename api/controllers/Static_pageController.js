@@ -9,10 +9,14 @@
 module.exports = {
     'get_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
-
+            recordset = recordset[0];
+            console.log('recordset');
+            console.log(recordset);
+            console.log(recordset.name);
+            console.log(recordset.about_us);
             return res.view('./admin/about_admin', {
                 layout: false,
-                varsha: recordset
+                recordset: recordset
             });
 
 
@@ -20,10 +24,10 @@ module.exports = {
     },
     'edit_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
-
+            recordset = recordset[0];
             return res.view('./admin/edit_about_admin', {
                 layout: false,
-                varsha: recordset
+                recordset: recordset
             });
 
 
@@ -42,7 +46,7 @@ module.exports = {
     },
     'get_terms_and_cond': function (req, res) {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-        
+
             return res.view('./admin/abterms', {
                 layout: false,
                 abterms: recordset
@@ -71,7 +75,7 @@ module.exports = {
             {
                 if (err)
                 {
-                
+
                 }
                 else
                 {
@@ -87,7 +91,7 @@ module.exports = {
                 cats.forEach(function (cats, index) {
                     category.push(cats.category);
                 });
-      
+
                 return res.view('./admin/faq', {
                     layout: false,
                     faq: recordset,
@@ -129,7 +133,7 @@ module.exports = {
             {
                 if (err)
                 {
-                  
+
                 }
                 else
                 {
@@ -147,7 +151,7 @@ module.exports = {
             {
                 if (err)
                 {
-                   
+
                 }
                 else
                 {
@@ -193,7 +197,7 @@ module.exports = {
             {
                 if (err)
                 {
-                  
+
                 }
                 else
                 {
