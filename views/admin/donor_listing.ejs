@@ -23,7 +23,7 @@
                                     <th>Student Funded (URL)</th>
                                     <th>Student Email Id</th>
                                     <th>Funding_date</th>
-                                    <th style="display: none">Stripe Transaction Details</th>
+                                    <!--<th style="display: none">Stripe Transaction Details</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,7 +36,7 @@
                                     <td><label> <%= sails.getBaseUrl()+'/single_profile/'+ corndog.student_id %></label></td>
                                     <td> <%= corndog.student_email %></td>
                                     <td> <%= corndog.funding_date %></td>
-                                    <td style="display: none"> <%= corndog.stripe_token %></td>
+                                    <!--<td style="display: none"> <%= corndog.stripe_token %></td>-->
                                 </tr>
                                 <% }) %>
                                  <% }else{ %>
