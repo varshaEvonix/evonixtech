@@ -8,6 +8,7 @@
     margin-top:15px
   }
 </style>
+<link href="../../index_files/lightbox.css" rel="stylesheet">
 <section id="main-content">
   <section class="wrapper">
 
@@ -16,7 +17,7 @@
 
     <div class="col-md-9 main-chart">
       <div class="row white_bg" >
-      <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == 'NULL') { %>
+      <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
         <div class="col-md-7">
   
           <img src="<% sails.getBaseurl() %>/index_files/blank_dp.jpg" class="image_pro" />
@@ -199,11 +200,12 @@
   <div class="col-md-12 white_bg">
     <div style="font-size:22px;" class="row edit_op">Current Loan
 
-      <div class="row pull-right"> <a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+      <div class="row pull-right"> <% if (student_info.student_id != null || student_info.loan_id != null || student_info.loan_id != '' || student_info.loan_id != '') { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
         <br>
         <br>
       </div>
+      <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '') { %>
       <div class="row">
 
         <div class="col-md-3">
@@ -211,7 +213,7 @@
          </span>$<%= student_info.loan_amount %></p>
          
        </div>
-       <%if (student_info.loan_bankname && student_info.fafsa_values != '') { %>
+      
        <div class="col-md-6">
         <%if (student_info.loan_bankname == '') { %>
         <div class="col-md-6">
@@ -233,8 +235,8 @@
       </div>
       <% } %>
     </div>
-    <div class=""></div>
-    <% } %>
+  
+    
     
     <div class="col-md-3">
       <p class="info">  <span class="small">Loan Account Number: <br>
@@ -243,6 +245,7 @@
 
     <br><br><br><br><br>
   </div>
+  <% } %>
   <div>
 
    <h3>Previous loans</h3><br>
@@ -307,7 +310,8 @@
   <div class="row">
     <% _.each(pics, function (pics) { %>
     <div class="col-md-4" >
-      <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
+    <a href="../index_files/uploads/documents/<%= pics.photo_path %>" data-lightbox="example-set" data-title="My caption">
+      <img class="img-responsive" src="../index_files/uploads/documents/<%= pics.photo_path %>"><br><br>
     </div>
 
     <% }) %>
@@ -333,8 +337,13 @@
 
 <% }) %>         
 <%- include ../stufoot.ejs %>
-<script src="../../index_files/lightbox.js"></script>
-
+ <script>
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    })
+</script>
+                   <script src="../../index_files/lightbox.js"></script>
 <script type="text/javascript">
   $(function(){
     $("#bluecircle").percircle();

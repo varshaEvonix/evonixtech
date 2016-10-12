@@ -332,7 +332,7 @@ textarea {
 
           </li>
           
-          <li style=""  class="active"><a href="../stulogin/stulogin">Create account</a>
+          <li style=""><a href="../stulogin/stulogin">Create account</a>
 
           </li>
           <li style=""><a href="../login/login">Login </a>
@@ -354,92 +354,13 @@ textarea {
   <!-- You only need this form and the form-register.css -->
 
   <!--form action="/user" method="POST" role="form"-->
-   <form class="form" ng-submit="submitForm()" name="registerform" novalidate>
- <div id="signup">   
-          <h2>CREATE ACCOUNT</h2><br>
-          
-
-          <div class="form-group">
   
-
-
-          <div class="top-row row">
-          <div class="col-md-6">
-            <div class="field-wrap form-group input-group" >
-              
-              <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
- <label>
-                First name<span class="req">*</span>
-              </label>
-
-              <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
-              <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-              <span  class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Name should be in proper format!</span>
-                          </div></div>
-        <div class="col-md-6">
-            <div class="field-wrap form-group input-group" >
-            <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
-              <label>
-               Last name<span class="req">*</span>
-              </label>
-               <input  type="text" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
-              <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
-            </div></div>
-          
-<div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
-            <label>
-              Contact number<span class="req">*</span>
-            </label>
-             <input  type="text" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
-              <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
-               <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
-          </div></div>
-<div class="col-md-6">
- <div class="field-wrap form-group input-group" >
- <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
-            <label>
-              Email<span class="req">*</span>
-            </label>
-             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required>
-              <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
-              <span class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!
-  </span>
-          </div></div>
-          
-         <div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-            <label>
-              Password<span class="req">*</span>
-            </label>
-            <input  type="password" ng-model="student.student_password" id="student_password" name="student_password"  required>
-              <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
-<span ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</span>
-
-          </div></div>
-          <div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-            <label>
-            Confirm password<span class="req">*</span>
-            </label>
-            <input  type="password" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
-             <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
-<span ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</span>
-          </div></div></div>
-      
-          <button type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
-       
-          </form>
-
-        
-        
-        
-        
-      </div>
-    
+ <div id="thanks">   
+         
+    <div class="white_bg" style="text-align:center; padding-bottom:150px"><br><br>
+    <h1>Thank you for registering on STUMUCH</h1>
+    <h3>We have sent a link on your email. Please verify and go to the login link. :)</h3>
+    </div>
 
 </div>
 <footer id="footer" class="footer bg-black-222">

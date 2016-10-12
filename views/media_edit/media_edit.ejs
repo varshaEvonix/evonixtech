@@ -27,7 +27,7 @@ input[type=file]:before {
     border: 1px solid #008677;
 }
 </style>
-
+<link href="../../index_files/lightbox.css" rel="stylesheet">
 <section id="main-content">
           <section class="wrapper" ng-app="postApp" ng-controller="postController">
           <br>
@@ -40,22 +40,20 @@ input[type=file]:before {
  <h2>Media Section</h2><br>
  <h3>Your Video</h3><br>
 
-   <form id="userVideo" enctype="multipart/form-data" action="/upload_video/<%= student_info.student_id %>" method="POST" name="userVideo" novalidate>
+   <form id="userVideo" enctype="multipart/form-data" action="/upload_media/<%= student_info.student_id %>" method="POST" name="userVideo" novalidate>
  <div class="form-group row">
                                
                                 <div class="col-xs-10">
                                  <label for="student_firstname">Enter your video link: <a href="#" data-toggle="tooltip" title="Make a statement about your life and ambitions here.  Many funders skip the text and play the video instead. This will be a link to a video hosted on YouTube or Vimeo."> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
                                     <input type="text" value="<%= student_info.video_link %>" name="video_link" class="form-control">
-                                   <% }) %>
+                                  
 <div class="row">
                                 
-                            </div><br>
-                            <input type="submit" value="submit" class="upload btn btn-default"/>
-                           </form> 
+                            </div>
                            </div>
  <div class="col-md-12">
                          <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
-       <form id="userImages" enctype="multipart/form-data" action="/upload_images/<%= student_info.student_id %>" method="POST" name="userImages" novalidate>
+       
        <div class="row">
        <div class="col-md-4"> 
         <input class="filebtn" id="uploadImages" name="image1" type="file" multiple><br>
@@ -64,20 +62,24 @@ input[type=file]:before {
     <div class="row">
    <% _.each(photos, function (photos) { %>
  <div class="col-md-4" >
-  <img class="img-responsive" src="../index_files/uploads/<%= photos.photo_path %>"><br>
+
+ <a href="../index_files/uploads/documents/<%= photos.photo_path %>" data-lightbox="example-set" data-title="My caption">
+  <img class="img-responsive" src="../index_files/uploads/documents/<%= photos.photo_path %>"></a><br>
  </div>
  <% }) %>
   </div>
   <br>
   
  <div class="row">
- <div class="col-md-2">
-    <input type="submit" value="submit" class="upload btn btn-default"/>
+ <div class="col-md-4">
+    <input type="submit" value="submit" class="upload btn btn-default">
+
+     <a href="/viewprofile/<%= student_info.student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
     </div>
     </div>
-                            </form>
+          <% }) %>                 
                         </div>
-   
+     </form>
    
     <br></div>
     
@@ -92,7 +94,14 @@ input[type=file]:before {
   </section> 
                 
                   <%- include ../stufoot.ejs %>
-<script>
+                  <script>
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true
+    })
+</script>
+                   <script src="../../index_files/lightbox.js"></script>
+<!-- <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
@@ -122,7 +131,7 @@ input[type=file]:before {
         };
     });
 
-</script>
+</script> -->
 <script>
                                                 $(document).ready(function () {
                                                     $('[data-toggle="tooltip"]').tooltip();

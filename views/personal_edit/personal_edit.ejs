@@ -24,7 +24,7 @@ div.tooltip-inner {
             <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:350px">
             
             <div class="profile_image" style="">
-            <img src="<% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == 'NULL') { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
+            <img src="<% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
              <!-- <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a> -->
             
               </div>
@@ -51,35 +51,40 @@ div.tooltip-inner {
         
       </div>
   </div> 
+  <div class="row">
        <div class="col-md-6">
       <div class="form-group">
 
         <label for="student_firstname">Your firstname: </label>
-        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= student_info.student_firstname %>" required>
+        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= student_info.student_firstname %>" required ng-pattern="^[a-zA-Z ]+$">
         <p ng-show="submitted && personalform.student_firstname.$error.required"  class="help-block has-error ng-hide">Firstname is required.</p>
       </div>
   </div>
   <div class="col-md-6">
       <div class="form-group">
         <label for="student_lastname">Your lastname: </label>
-        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required>
+        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required ng-pattern="^[a-zA-Z ]+$">
         <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
       </div>
   </div>
+  </div>
+  <div class="row">
   <div class="col-md-6">
       <div class="form-group ">
          <label for="student_contactno">Your contact number: </label>
-        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required>
+        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required ng-pattern="^[0-9]+$">
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
   </div>
       </div>
   <div class="col-md-6">
       <div class="form-group ">
      <label for="student_email">Your email: </label>
-        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required>
+        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required ng-pattern="^[0-9]+$">
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
       </div>
   </div>
+  </div>
+  <div class="row">
   <div class="col-md-6">
        <div class="form-group ">
      <label for="student_address">Your address: </label>
@@ -94,6 +99,8 @@ div.tooltip-inner {
          <p ng-show="submitted && personalform.student_city.$error.required"  class="help-block has-error ng-hide">City is required.</p>
       </div>
   </div>
+  </div>
+  <div class="row">
   <div class="col-md-6">
       <div class="form-group">
      <label for="student_state">Your state: </label>
@@ -107,7 +114,8 @@ div.tooltip-inner {
         <input type="text" ng-model="student.student_country" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= student_info.student_country %>" required>
          <p ng-show="submitted && personalform.student_country.$error.required"  class="help-block has-error ng-hide">Country is required.</p>
       </div></div>
-
+      </div>
+      <div class="row">
        <div class="col-md-6">
       <div class="form-group">
      <label for="zip_code">Enter Zip Code: </label>
@@ -123,12 +131,14 @@ date. On your special day, we feature you on the site so that funders can find y
      <!-- <p class="tip"><em>Tip:We cross check validity of all information submitted including your birth 
 date. On your special day, we feature you on the site so that funders can find you more easily.<em></p> -->
      <div class='input-group date' id='datetimepicker1'>
-        <input type="text" data-format="yyyy/mm/dd" ng-model="student.student_birthdate" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info.student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        <input type="text" data-format="YYYY-MM-DD" ng-model="student.student_birthdate" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info.student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                       </span>
 
                      </div> </div>
          <p ng-show="submitted && personalform.student_birthdate.$error.required"  class="help-block has-error ng-hide">Birthdate is required.</p>
       </div>
+      </div>
+      <div class="row">
        <div class="col-md-12">
       <div class="form-group">
       <label for="student_about_me">About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
@@ -136,6 +146,8 @@ date. On your special day, we feature you on the site so that funders can find y
        <p ng-show="submitted && personalform.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
        
       </div></div>
+      </div>
+      <div class="row">
        <div class="col-md-12">
       <div class="form-group">
      <label for="student_ambition">Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
@@ -143,6 +155,7 @@ date. On your special day, we feature you on the site so that funders can find y
       <p ng-show="submitted && personalform.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
        
     </div>
+      </div>
       </div>
       
      
@@ -206,7 +219,7 @@ date. On your special day, we feature you on the site so that funders can find y
   <script type="text/javascript">
               $(function () {
                   $('#datetimepicker1').datetimepicker({
-                   format: 'YYYY-MM-lDD'
+                   format: 'YYYY-MM-DD'
              });
               });
           </script>

@@ -200,9 +200,9 @@ input[type=file]:before {
         <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
         <div class="form-group">
         
-            <input class="form-control fileip" data-validation-error-msg="Please enter the name of your document" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
+            <input class="form-control fileip" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
              
-             <input type="file" data-validation-error-msg="Please upload at least one document" data-validation="required" name="document_path" class="filebtn" value=""> 
+             <input type="file" name="document_path" class="filebtn" value=""> 
             
             
        
@@ -211,7 +211,7 @@ input[type=file]:before {
    </div>
   <br><br>
             <button type="submit" class="btn btn-default text-center">Submit</button>
-     <a href="../loan_view/loan_view"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+     <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
        
   </form>  
 
