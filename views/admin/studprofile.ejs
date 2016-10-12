@@ -27,7 +27,7 @@
                 <div class="col-md-5">
                     <% if (student_info.profile_lock == '1') { %>
                     <div class="alert alert-danger" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Locked by Admin </span></div>
-                    <div><a href="/admin/studlockedprofile/<%= student_info.student_id %>" class="btn btn-primary">View locked profile</a></div>
+                    <div><a target="_blank" href="/admin/studlockedprofile/<%= student_info.student_id %>" class="btn btn-danger">View locked profile</a></div>
                     <% } else { %>
                     <div class="alert alert-success" style="margin-top:15px;padding:5px;"> <strong>Profile Status :</strong><span class="grn"> Profile is Active</span></div>
                     <% } %>
