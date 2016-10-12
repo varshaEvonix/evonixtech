@@ -5,7 +5,7 @@
            
 
               <center>
-                  <img src=" <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == 'NULL') { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
+                  <img src=" <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
                   <h5 class="centered"><%= student_info.student_firstname %> <%= student_info.student_lastname %></h5>
                    
                   <li class="mt">
