@@ -97,7 +97,7 @@ module.exports = {
                     Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
 
                         Admin_loan_comments.query('SELECT *, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
-console.log(recordset[0]);
+console.log(recordset);
                             return res.view('./admin/studprofile', {
                                 student_info: recordset[0],
                                 pics: photorecord,
