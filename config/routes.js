@@ -1,6 +1,6 @@
 
 module.exports.routes = {
-    //saurabh
+      //saurabh
     '/': 'Student_detailsController.homepage_view',
     '/studentlogin': 'StudentloginController.studentlogin',
     '/user': 'Student_detailsController.stulogin',

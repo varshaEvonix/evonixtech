@@ -318,8 +318,7 @@ module.exports = {
 			Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
 
 			Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id='+req.param("id")+' order by last_updated desc', function(err, loan_comments){
-					
-					console.log(recordset);
+
 
 					return res.view('./myprofile/myprofile', {
 

@@ -55,7 +55,7 @@
 
                     <form action="/search_student" method="POST">
                         <div class="input-group col-md-10">
-                            <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name"/ style="height:42px">
+                            <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name" style="height:42px">
                             <span class="input-group-btn">
                                 <button id="search" class="btn btn-dark btn-theme-colored submitbtn" type="submit" style="line-height:1.65">
                                     <span>Search</span>
@@ -123,7 +123,7 @@
 
                       <div class="causes maxwidth500 mb-sm-50">
                         <div class="thumb">
-                          <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= birthday.student_profile_pic_path %>" width="250" height="230">
+                        <a href="/single_profile/<%= birthday.student_id %>">  <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= birthday.student_profile_pic_path %>" width="250" height="230"></a>
                           <div class="donate-piechart piechart-absolute">
 
 
@@ -150,9 +150,7 @@
                                 <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                     <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                     <li class="target-fund"><strong>$<%= birthday.total_funded %></strong>collected</li>
-                                    <li ><% if(birthday.loan_amount > "0" && birthday.loan_amount > birthday.total_funded) { %>
-                                    <a href="/donorpage/<%= birthday.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a>
-                                    <% } %></li>
+                                    <li > <a href="/donorpage/<%= birthday.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
                                 </ul>
                         
                        
@@ -253,7 +251,7 @@
                     <div  class="owl-item cloned">
                         <div class="item mb-10">
                             <div class="image-box-thum">
-                                <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= student_details.student_profile_pic_path %>" width="250" height="230">
+                             <a href="/single_profile/<%= student_details.student_id %>">   <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= student_details.student_profile_pic_path %>" width="250" height="230"></a>
 
 
                                 <div class="donate-piechart piechart-absolute">
@@ -286,9 +284,7 @@
                                 <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                     <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                     <li class="target-fund"><strong>$<%= student_details.total_funded %></strong>collected</li>
-                                    <li ><% if(student_details.loan_amount > "0" && student_details.loan_amount > student_details.total_funded) { %>
-                                    <a href="/donorpage/<%= student_details.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a>
-                                    <% } %></li>
+                                    <li > <a href="/donorpage/<%= student_details.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
                                 </ul>
                             </div>
                         </div>

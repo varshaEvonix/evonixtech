@@ -79,7 +79,11 @@
                             <tbody>
                                 <% _.each(post, function (corndog) { %>
                                 <tr>
-                                    <td><%= corndog.student_firstname %> <%= corndog.student_lastname %></td>
+                                    <td><% if(corndog.profile_lock==1) { %>
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                        <% }else{ %>
+                                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        <% } %><%= corndog.student_firstname %> <%= corndog.student_lastname %></td>
                                     <td> <%= corndog.student_email %></td>
                                     <td> <%= corndog.student_country %></td>
 
