@@ -13,7 +13,7 @@ module.exports.routes = {
     '/viewprofile/:id': 'ProfileController.mypro',
     '/upload_dp/:id': 'ProfileController.upload',
     '/studash/:id': 'ProfileController.stu_dashboard',
-    '/upload_video/:id': 'ProfileController.uploadVideo',
+    '/upload_media/:id': 'ProfileController.uploadmedia',
     '/upload_images/:id': 'Student_photographsController.uploaddocs',
     '/user_docs/:student_id/:loan_id': 'Loan_editController.uploaddocs',
     '/upload_file': 'Loan_editController.uploadfile',
@@ -26,7 +26,7 @@ module.exports.routes = {
     '/media_edit/:id': 'Personal_editController.editmedia',
     '/loan_edit_submit/:student_id/:loan_id': 'Loan_editController.editloansubmit',
     '/remove_doc/:student_id/:loan_id/:loan_document_id': 'Loan_editController.removedoc',
-    '/addloan_submit/:student_id/:loan_id': 'Loan_editController.addloansubmit',
+    '/addloan_submit/:id': 'Loan_editController.addloansubmit',
     '/search_student': 'Student_detailsController.stu_search',
     '/email': 'EmailController.sendEmail',
     '/student/login': 'Student_authController.student_login',
@@ -36,6 +36,7 @@ module.exports.routes = {
     // '/sendmail': 'Student_detailsController.send_mail',
 
     '/activation_link/:id': 'Student_detailsController.activate_student',
+    '/thankyou': 'ThankyouController.thankyou',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/viewdetails/:id': 'Admin_dashController.viewdetails',
