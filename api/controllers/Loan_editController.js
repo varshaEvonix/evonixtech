@@ -64,16 +64,33 @@ module.exports = {
 
 			console.log('r u t');
       var newFilename= "";
+      var document_name ="";
+      var insert_doc = "";
+      if(req.param('document_path') != '' )
+      {
      
    newFilename = req.file('document_path')._files[0].stream.filename;
  
     console.log(newFilename);
     console.log('newFilename');
       req.file('document_path').upload({dirname:'../public/index_files/uploads/documents/',saveAs: newFilename}), function onUploadComplete(err, files) {
+
+         var file_name='';
+        files.forEach(function(files, index){
+   file_name=files.filename;
+   document_name = req.param('document_name');
+
+   console.log('here');
+   console.log(req.param('student_id'));
+   console.log(file_name);
+    insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+file_name+"', '"+loan_id+"', '1');";
+    console.log('insert_doc');
+ });
         
  };
-
-     var document_name = req.param('document_name');
+  
+}
+     
      
 			var loan_type = req.param("loan_type");
 			var fafsa_values = req.param("fafsa_values");
@@ -89,7 +106,7 @@ module.exports = {
 			
 			var update ="";
       var update_doc = "";
-      var insert_doc = "";
+  
 			 
 				if(loan_type == 'bankloan'){
 					update = "UPDATE `loan_details` SET `loan_fafsa_id`= NULL,`loan_bankname`='"+loan_bankname+"',`loan_accountno`='"+loan_accountno+"',`loan_amount`='"+loan_amount+"' WHERE `loan_id`="+req.param('loan_id');
@@ -98,15 +115,14 @@ module.exports = {
 				}
 				
         
-			  insert_doc ="INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '"+req.param('loan_id')+"', '1')";
-     
+			 
      
 			Loan_details.query(update,function(err,record)
 			{
 
 		      Table_loan_document.query(insert_doc,function(err,record2)
         { 
-          console.log(record2);
+     
        
             
        res.redirect('/viewprofile/'+req.param('student_id'));
@@ -145,27 +161,36 @@ module.exports = {
 			
 			var insert =""; 
       var insert_doc = "";
-			
+     var update = 'UPDATE `loan_details` SET `isActive`= 0 WHERE `student_id` ='+req.param('id')+' AND `isActive` = 1' ;
+			   
+
 				if(loan_type == 'bankloan'){
 					insert = "INSERT INTO `loan_details` (`student_id`, `loan_amount`, `loan_fafsa_id`, `loan_bankname`,`loan_accountno`,`isActive`) VALUES ('"+req.param('id')+"', '"+loan_amount+"',NULL,'"+loan_bankname+"','"+loan_accountno+"','1')";
+            
 				}else{
 					insert = "INSERT INTO `loan_details` (`student_id`, `loan_amount`, `loan_fafsa_id`, `loan_bankname`,`loan_accountno`,`isActive`) VALUES ('"+req.param('id')+"', '"+loan_amount+"','"+fafsa_values+"','','"+loan_accountno+"','1')";
+         
 				}
+
 				
-			insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '"+req.param('loan_id')+"', '1');";
-			
-      
+			Loan_details.query(update,function(err,loan_active)
+       {
 			Loan_details.query(insert,function(err,record)
 			{
-
+        
+           var loan_id = record.insertId;
+           
+         
+      
 		      Table_loan_document.query(insert_doc,function(err,record2)
         { 
-          console.log(record);
+          
+
           res.redirect('/viewprofile/'+req.param('id'));
          
         });
         });    
-        
+         });  
        
     // var file_name = files.filename;
      //console.log(file_name);

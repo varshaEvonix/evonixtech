@@ -42,7 +42,7 @@ module.exports = {
 		  	
 		         Student_login_credentials.query('UPDATE `student_login_credentials` SET `student_active`= 1 where student_id ='+req.param('id'));         	
 		        	
-		        return	res.redirect('/studentlogin');
+		        return	res.redirect('/student/login');
 
 		       
 		        
@@ -83,6 +83,8 @@ module.exports = {
 			var student_password =req.param("student_password");
 			console.log(student_firstname);
 			var insert ="";
+			var email_check = "";
+			email_check = 
 			insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('"+student_firstname+"', '"+student_lastname+"', '"+student_contactno+"', '"+student_email+"')";
 			console.log(insert);
 			Student_details.query(insert,function(err,record)
@@ -318,7 +320,8 @@ module.exports = {
 			Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
 
 			Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id='+req.param("id")+' order by last_updated desc', function(err, loan_comments){
-
+					
+					console.log(recordset);
 
 					return res.view('./myprofile/myprofile', {
 
