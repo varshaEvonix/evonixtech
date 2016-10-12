@@ -56,14 +56,14 @@ div.tooltip-inner {
       <div class="form-group">
 
         <label for="student_firstname">Your firstname: </label>
-        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= student_info.student_firstname %>" required ng-pattern="^[a-zA-Z ]+$">
+        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= student_info.student_firstname %>" required>
         <p ng-show="submitted && personalform.student_firstname.$error.required"  class="help-block has-error ng-hide">Firstname is required.</p>
       </div>
   </div>
   <div class="col-md-6">
       <div class="form-group">
         <label for="student_lastname">Your lastname: </label>
-        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required ng-pattern="^[a-zA-Z ]+$">
+        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required>
         <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
       </div>
   </div>
@@ -72,14 +72,14 @@ div.tooltip-inner {
   <div class="col-md-6">
       <div class="form-group ">
          <label for="student_contactno">Your contact number: </label>
-        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required ng-pattern="^[0-9]+$">
+        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required>
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
   </div>
       </div>
   <div class="col-md-6">
       <div class="form-group ">
      <label for="student_email">Your email: </label>
-        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required ng-pattern="^[0-9]+$">
+        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required>
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
       </div>
   </div>
