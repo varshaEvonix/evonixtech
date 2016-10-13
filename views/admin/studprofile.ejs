@@ -6,9 +6,17 @@
         margin-top:15px
     }
 </style>
+<% if(req.flash('message')){ %>
+<div class="alert alert-success ">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>!</strong> <%- req.flash('message') %>
+</div>
+<%
+}
+%>
 <section id="main-content">
     <section class="wrapper">
-        <div class="col-md-10 main-chart">
+        <div class="col-md-12 main-chart">
             <div class="row white_bg" >
                 <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
                 <div class="col-md-7">
@@ -81,6 +89,7 @@
                     <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
                     <li><a data-toggle="tab" href="#menu4">Admin External Notes</a></li>
                     <li><a data-toggle="tab" href="#menu5">Admin Internal Notes</a></li>
+                    <li><a data-toggle="tab" href="#menu6">Donor's details</a></li>
                 </ul>
                 <div class="tab-content">
 
@@ -357,6 +366,24 @@
                             <% 
                             }
                             }) %>
+                        </div>
+                    </div>
+                    <div id="menu6" class="tab-pane ">
+                        <div class="col-md-12 white_bg">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Donors Name</th>
+                                    <th>Donors Email</th>
+                                    <th>Donors Amount</th>
+                                </tr>
+                                <% _.each(doner_result, function (doner_result) { %>
+                                <tr>
+                                    <td><p><%= doner_result.donors_name %></p></td>
+                                    <td><p><%= doner_result.donor_email %></p></td>
+                                    <td><p>$ <%= doner_result.funded_amount %></p></td>
+                                </tr>
+                                <% }) %>
+                            </table>
                         </div>
                     </div>
                 </div>

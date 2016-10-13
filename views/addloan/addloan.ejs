@@ -116,15 +116,16 @@ input[type=file]:before {
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-      <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" data-validation-error-msg="Please enter your account number" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number">
+      <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="
+glyphicon glyphicon-question-sign"></i></a> </label>
+      <input type="text" data-validation-regexp="^([A-z0-9]+)$" data-validation-error-msg="Please enter your account number properly" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number">
       
     </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
       <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" class="form-control" data-validation-error-msg="Please enter your loan current balance" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number">
+      <input type="text" class="form-control" data-validation-regexp="^([0-9]+)$"  data-validation-error-msg="Please enter your loan current balance properly" data-validation-error-msg="Please enter your loan current balance" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number">
     </div>
   
     </div>

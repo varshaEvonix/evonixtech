@@ -71,25 +71,18 @@ module.exports = {
      
    newFilename = req.file('document_path')._files[0].stream.filename;
  
-    console.log(newFilename);
-    console.log('newFilename');
       req.file('document_path').upload({dirname:'../public/index_files/uploads/documents/',saveAs: newFilename}), function onUploadComplete(err, files) {
 
          var file_name='';
-        files.forEach(function(files, index){
-   file_name=files.filename;
    document_name = req.param('document_name');
 
-   console.log('here');
-   console.log(req.param('student_id'));
-   console.log(file_name);
-    insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+file_name+"', '"+loan_id+"', '1');";
+    insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '"+req.param('loan_id')+"', '1');";
     console.log('insert_doc');
- });
-        
  };
+        
+ }
   
-}
+
      
      
 			var loan_type = req.param("loan_type");

@@ -1,6 +1,6 @@
 
 module.exports.routes = {
-      //saurabh
+     //saurabh
     '/': 'Student_detailsController.homepage_view',
     '/studentlogin': 'StudentloginController.studentlogin',
     '/user': 'Student_detailsController.stulogin',
@@ -75,4 +75,7 @@ module.exports.routes = {
     '/thankyoupage': 'DonorController.thankyoupage',
     '/change_status': 'Admin_dashController.change_status',
     '/admin/donors/:id': 'Admin_dashController.donors_listing',
+    '/admin/registration/:id': 'MailTemplateController.registration',
+    '/admin/editmailtemplate/:id': 'MailTemplateController.editmailtemplate',
+    '/admin/edit_mail_template': 'MailTemplateController.edit_mail_template',
 };

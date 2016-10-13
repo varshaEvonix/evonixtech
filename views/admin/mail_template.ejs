@@ -1,0 +1,26 @@
+<%- include ../admin/admin_head.ejs %>
+<%- include ../admin/sidebar.ejs %>
+<section id="main-content">
+    <section class="wrapper">
+
+        <div class="row">
+            <div class="col-lg-9 main-chart">
+                <h1 class="phead">Mail Template</h1>
+                <br>
+                <% _.each(mail_template, function (mail_template) { %>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><%= mail_template.subject %><span class="pull-right"><a style="display: block;" href="/admin/editmailtemplate/<%= mail_template.id %>" data="<%= mail_template.id %>" title="Edit" class="pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span></div>
+                    <div class="panel-body"><%= mail_template.content %></div>
+                </div>
+                <% }) %>
+            </div>
+            <%- include ../admin/notifications.ejs %>
+        </div>
+    </section>
+</section>
+
+<%- include ../admin/stufoot.ejs %>
+<script>
+    $('#static-pages').addClass('active');
+    $('#aboutus').addClass('active');
+</script>

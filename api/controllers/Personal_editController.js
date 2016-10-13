@@ -25,6 +25,7 @@
 		       if(req.method=="POST")
 				{
 					console.log("this is it");
+					console.log(req.param('student_id'));
 					var student_firstname = req.param("student_firstname");
 					var student_lastname = req.param("student_lastname");
 					var student_contactno =req.param("student_contactno");
@@ -56,6 +57,8 @@
 					console.log(update);
 					Student_details.query(update,function(err,record)
 					{
+
+						console.log(update);
 						return res.ok();
 					});
 				}else {

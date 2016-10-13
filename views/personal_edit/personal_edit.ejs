@@ -30,7 +30,7 @@ div.tooltip-inner {
               </div>
               <div class="fileUpload btn btn-default">
 <span class="fa fa-pencil pencil_icon"></span>
- <input type="file" name="userPhoto" class="upload" />
+ <input data-validation="required" type="file" name="userPhoto" class="upload" data-validation-error-msg="Upload your image first">
 </div>
              <div class="fileUpload btn btn-default pull-right">
 <span class="fa fa-check pencil_icon"></span>
@@ -56,15 +56,17 @@ div.tooltip-inner {
       <div class="form-group">
 
         <label for="student_firstname">Your firstname: </label>
-        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" value="<%= student_info.student_firstname %>" required>
-        <p ng-show="submitted && personalform.student_firstname.$error.required"  class="help-block has-error ng-hide">Firstname is required.</p>
+        <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" ng-pattern="/^[a-zA-Z]+$/" value="<%= student_info.student_firstname %>" required>
+        <p ng-show="submitted && personalform.student_firstname.$error.required" class="help-block has-error ng-hide">Firstname is required.</p>
+         <p ng-show="submitted && personalform.student_firstname.$error.pattern" class="help-block has-error ng-hide">Please enter your name properly</p>
       </div>
   </div>
   <div class="col-md-6">
       <div class="form-group">
         <label for="student_lastname">Your lastname: </label>
-        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required>
+        <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" ng-pattern="/^[a-zA-Z]+$/" placeholder="Enter your last name" value="<%= student_info.student_lastname %>" required>
         <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
+        <p ng-show="submitted && personalform.student_lastname.$error.pattern" class="help-block has-error ng-hide">Please enter your last name properly</p>
       </div>
   </div>
   </div>
@@ -72,15 +74,17 @@ div.tooltip-inner {
   <div class="col-md-6">
       <div class="form-group ">
          <label for="student_contactno">Your contact number: </label>
-        <input type="text" ng-model="student.student_contactno" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required>
+        <input type="text" ng-model="student.student_contactno" ng-pattern="/^[0-9]+$/" class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info.student_contactno %>" required>
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
+          <p ng-show="submitted && personalform.student_contactno.$error.pattern" class="help-block has-error ng-hide">Please enter your contact number properly</p>
   </div>
       </div>
   <div class="col-md-6">
       <div class="form-group ">
      <label for="student_email">Your email: </label>
-        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required>
+        <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email" ng-pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" placeholder="Enter your email about you" value="<%= student_info.student_email %>" required>
          <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
+         <p ng-show="submitted && personalform.student_contactno.$error.pattern" class="help-block has-error ng-hide">Enter your email properly</p>
       </div>
   </div>
   </div>
@@ -95,8 +99,9 @@ div.tooltip-inner {
   <div class="col-md-6">
       <div class="form-group">
      <label for="student_city">Your city: </label>
-        <input type="text" ng-model="student.student_city" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= student_info.student_city %>" required>
+        <input type="text" ng-model="student.student_city" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= student_info.student_city %>" required>
          <p ng-show="submitted && personalform.student_city.$error.required"  class="help-block has-error ng-hide">City is required.</p>
+          <p ng-show="submitted && personalform.student_city.$error.pattern" class="help-block has-error ng-hide">Enter your city name properly</p>
       </div>
   </div>
   </div>
@@ -104,15 +109,17 @@ div.tooltip-inner {
   <div class="col-md-6">
       <div class="form-group">
      <label for="student_state">Your state: </label>
-        <input type="text" ng-model="student.student_state" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= student_info.student_state %>" required>
+        <input type="text" ng-model="student.student_state" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= student_info.student_state %>" required>
          <p ng-show="submitted && personalform.student_state.$error.required"  class="help-block has-error ng-hide">State is required.</p>
+         <p ng-show="submitted && personalform.student_state.$error.pattern" class="help-block has-error ng-hide">Enter your state name properly</p>
       </div>
   </div>
   <div class="col-md-6">
       <div class="form-group">
      <label for="student_country">Your country: </label>
-        <input type="text" ng-model="student.student_country" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= student_info.student_country %>" required>
+        <input type="text" ng-model="student.student_country" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= student_info.student_country %>" required>
          <p ng-show="submitted && personalform.student_country.$error.required"  class="help-block has-error ng-hide">Country is required.</p>
+          <p ng-show="submitted && personalform.student_country.$error.pattern" class="help-block has-error ng-hide">Enter your country name properly</p>
       </div></div>
       </div>
       <div class="row">
@@ -172,8 +179,15 @@ date. On your special day, we feature you on the site so that funders can find y
     </section> 
                   
                     <%- include ../stufoot.ejs %>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+  <script>
+  $.validate({
+    lang: 'es'
+  });
+</script>
+
 
    <script>
       var postApp = angular.module('postApp', []);
@@ -181,20 +195,20 @@ date. On your special day, we feature you on the site so that funders can find y
       $scope.student={};
 
       <% _.each(student_info, function (student_info) { %>
-    $scope.student.student_firstname='<%= student_info.student_firstname %>';
-    $scope.student.student_lastname='<%= student_info.student_lastname %>';
-    $scope.student.student_contactno='<%= student_info.student_contactno %>';
-    $scope.student.student_email='<%= student_info.student_email %>';
-    $scope.student.student_address='<%= student_info.student_address %>';
-    $scope.student.student_city='<%= student_info.student_city %>';
-    $scope.student.student_state='<%= student_info.student_state %>';
-    $scope.student.student_country='<%= student_info.student_country %>';
-    $scope.student.student_birthdate='<%= student_info.student_birthdate %>';
-    $scope.student.zip_code='<%= student_info.zip_code %>';
-    $scope.student.student_about_me='<%= student_info.student_about_me %>';
-    $scope.student.student_ambition='<%= student_info.student_ambition %>';
+    $scope.student.student_firstname="<%= student_info.student_firstname %>";
+    $scope.student.student_lastname="<%= student_info.student_lastname %>";
+    $scope.student.student_contactno="<%= student_info.student_contactno %>";
+    $scope.student.student_email="<%= student_info.student_email %>";
+    $scope.student.student_address="<%= student_info.student_address %>";
+    $scope.student.student_city="<%= student_info.student_city %>";
+    $scope.student.student_state="<%= student_info.student_state %>";
+    $scope.student.student_country="<%= student_info.student_country %>";
+    $scope.student.student_birthdate="<%= student_info.student_birthdate %>";
+    $scope.student.zip_code="<%= student_info.zip_code %>";
+    $scope.student.student_about_me=`<%= student_info.student_about_me %>`;
+    $scope.student.student_ambition=`<%= student_info.student_ambition %>`;
 
-
+  
     
           $scope.submitForm = function () {
             $scope.student.student_birthdate=$('#student_birthdate').val();
@@ -214,7 +228,7 @@ date. On your special day, we feature you on the site so that funders can find y
 
           };
       });
-  <% }) %>
+<% }) %>
   </script>
   <script type="text/javascript">
               $(function () {

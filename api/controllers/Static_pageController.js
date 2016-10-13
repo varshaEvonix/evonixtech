@@ -10,10 +10,7 @@ module.exports = {
     'get_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
             recordset = recordset[0];
-            console.log('recordset');
-            console.log(recordset);
-            console.log(recordset.name);
-            console.log(recordset.about_us);
+
             return res.view('./admin/about_admin', {
                 layout: false,
                 recordset: recordset
@@ -24,10 +21,15 @@ module.exports = {
     },
     'edit_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
+
             recordset = recordset[0];
+            var text = recordset.about_us;
+            var re = '<br/>';
+            var about_us = text.replace(/\n/gi, re);
             return res.view('./admin/edit_about_admin', {
                 layout: false,
-                recordset: recordset
+                recordset: recordset,
+                about_us: about_us
             });
 
 
@@ -38,6 +40,7 @@ module.exports = {
         if (req.method == "POST")
         {
             var selectQuery = "UPDATE about_admin SET video_link = '" + req.param("video_link") + "', about_us ='" + req.param("about_us") + "', name='" + req.param("about_us_title") + "' WHERE `about_admin`.`id` =1;";
+
             About_admin.query(selectQuery, function (err, record)
             {
                 return res.ok(record);
@@ -58,10 +61,14 @@ module.exports = {
     },
     'edit_terms_and_cond': function (req, res) {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
             return res.view('./admin/editabterms', {
                 layout: false,
-                abterms: recordset
+                abterms: recordset,
+                description: description
             });
         });
     },
@@ -70,7 +77,7 @@ module.exports = {
         if (req.method == "POST")
         {
             var selectQuery = "UPDATE abterms SET  description ='" + req.param("description") + "', name='" + req.param("title") + "' WHERE `abterms`.`id` =1;";
-
+            console.log(selectQuery);
             Abterms.query(selectQuery, function (err, record)
             {
                 if (err)
@@ -79,7 +86,7 @@ module.exports = {
                 }
                 else
                 {
-                    res.redirect('/abterms');
+                    res.ok();
                 }
             });
         }
@@ -137,7 +144,7 @@ module.exports = {
                 }
                 else
                 {
-                    res.redirect('/faq');
+                    res.ok();
                 }
             });
         }
@@ -177,10 +184,14 @@ module.exports = {
     editprivacypolicy: function (req, res) {
 
         Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
-
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
             return res.view('./admin/edit_privacypolicy', {
                 layout: false,
-                privacypolicy: recordset
+                privacypolicy: recordset,
+                description: description
             });
 
 
@@ -201,7 +212,7 @@ module.exports = {
                 }
                 else
                 {
-                    res.redirect('/admin/privacypolicy');
+                    res.ok();
                 }
             });
         }

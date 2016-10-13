@@ -189,7 +189,7 @@
       </span><%= student_info.student_education_institute %></p>
     </div>
     <div class="col-md-4 bot">
-     <p class="info">  <span class="small">Currently Studying: <br>
+     <p class="info">  <span class="small">Field of study: <br>
      </span><%= student_info.student_education_fieldofstudy  %></p>
    </div>
  </div> 
@@ -337,23 +337,15 @@
 
 <% }) %>         
 <%- include ../stufoot.ejs %>
+ <script src="../../index_files/lightbox.js"></script>
  <script>
     lightbox.option({
       'resizeDuration': 200,
       'wrapAround': true
     })
 </script>
-                   <script src="../../index_files/lightbox.js"></script>
-<script type="text/javascript">
-  $(function(){
-    $("#bluecircle").percircle();
-  });
-  $(document).ready(function(){
-    $(".progress-bar").loading();
+                  
 
-  });
-
-</script>
 
 <script>
   var completePer = parseInt($("#loan_percent").val());

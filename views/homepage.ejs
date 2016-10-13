@@ -55,7 +55,7 @@
 
                     <form action="/search_student" method="POST">
                         <div class="input-group col-md-10">
-                            <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name" style="height:42px">
+                            <input type="text"  class="search-query form-control" placeholder="Find a student" name="stu_name"/ style="height:42px">
                             <span class="input-group-btn">
                                 <button id="search" class="btn btn-dark btn-theme-colored submitbtn" type="submit" style="line-height:1.65">
                                     <span>Search</span>
@@ -150,10 +150,9 @@
                                 <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                     <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                     <li class="target-fund"><strong>$<%= birthday.total_funded %></strong>collected</li>
-                                    <li > <a href="/donorpage/<%= birthday.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
+                                    <li ><a href="/donorpage/<%= student_info.student_id %>"> <button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
                                 </ul>
-                        
-                       
+                     
                     </div>
                 </div>
 
@@ -284,7 +283,7 @@
                                 <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                     <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                     <li class="target-fund"><strong>$<%= student_details.total_funded %></strong>collected</li>
-                                    <li > <a href="/donorpage/<%= student_details.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
+                                    <li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
                                 </ul>
                             </div>
                         </div>
