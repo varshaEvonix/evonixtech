@@ -8,7 +8,7 @@
 		module.exports = {
 			'editpersonal': function(req, res) {
 		  	
-		         Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, '') student_ambition from student_details where student_details.student_id= '+req.param('id'), function(err, recordset) {         	
+		         Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= '+req.param('id'), function(err, recordset) {         	
 		        	
 		        	return res.view('./personal_edit/personal_edit', {
 
