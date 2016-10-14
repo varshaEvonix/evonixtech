@@ -100,7 +100,7 @@ module.exports = {
 					 var helper = require('sendgrid').mail;
         var from_email = new helper.Email('support@evonixtech.com');
         var to_email = new helper.Email(student_email);
-        var html ="Hi "+student_firstname+", Thanks for registering on STUMUCH Crowdfunding. Here is your activation link. To Activate your account <a href='"+sails.getBaseurl() +"/activation_link/"+st_id+"'>Click Here</a>"; 
+        var html ="Hi "+student_firstname+", Thanks for registering on STUMUCH Crowdfunding. Here is your activation link. To Activate your account <a href='http://52.43.77.58:1337/activation_link/"+st_id+"'>Click Here</a>"; 
         var subject = 'Stumuch activation link';
         var content = new helper.Content('text/html', html);
         var mail = new helper.Mail(from_email, subject, to_email, content);
