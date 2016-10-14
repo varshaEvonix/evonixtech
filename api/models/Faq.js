@@ -11,7 +11,7 @@ module.exports = {
             type: 'string',
             required: true
         },
-        description: {type: 'text',
+        description: {type: 'longtext',
             required: true
         },
         category: {type: 'string',

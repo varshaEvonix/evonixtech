@@ -10,10 +10,13 @@ module.exports = {
     'get_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
             recordset = recordset[0];
-
+            var text = recordset.about_us;
+            var re = '<br/>';
+            var about_us = text.replace(/\n/gi, re);
             return res.view('./admin/about_admin', {
                 layout: false,
-                recordset: recordset
+                recordset: recordset,
+                about_us: about_us
             });
 
 
@@ -49,10 +52,14 @@ module.exports = {
     },
     'get_terms_and_cond': function (req, res) {
         Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
             return res.view('./admin/abterms', {
                 layout: false,
-                abterms: recordset
+                abterms: recordset,
+                description: description
             });
 
 
@@ -123,9 +130,14 @@ module.exports = {
     },
     'editfaq': function (req, res) {
         Faq.query('SELECT * FROM faq where id=' + req.param("id"), function (err, recordset) {
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
             return res.view('./admin/editfaq', {
                 layout: false,
-                faq: recordset
+                faq: recordset,
+                description: description
             });
 
         });
@@ -170,10 +182,14 @@ module.exports = {
     privacypolicy: function (req, res) {
 
         Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
-
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
             return res.view('./admin/privacypolicy', {
                 layout: false,
-                privacypolicy: recordset
+                privacypolicy: recordset,
+                description: description
             });
 
 

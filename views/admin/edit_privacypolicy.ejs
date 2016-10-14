@@ -2,6 +2,7 @@
 
 <%- include ../admin/admin_head.ejs %>
 <%- include ../admin/sidebar.ejs %>
+
 <section id="main-content">
     <section class="wrapper">
 
@@ -79,31 +80,31 @@
         $scope.admin = {};
         $scope.admin.title = '<%= privacypolicy.name %>';
         $scope.admin.description = htmlDecode('<%= description %>');
-                $scope.submitForm = function () {
-                    var text = tinymce.activeEditor.getContent({
-                        format: 'text'
+        $scope.submitForm = function () {
+            var text = tinymce.activeEditor.getContent({
+                format: 'text'
+            });
+            tinymce.activeEditor.on('keyup', function (ed, e) {
+                $('.description').hide();
+            });
+            $scope.admin.description = htmlEncode(text);
+            if (!text.trim()) {
+                $('.description').show();
+            } else {
+                if ($scope.privacypolicyform.$valid) {
+                    $http({
+                        method: 'POST',
+                        url: '/updateprivacypolicy',
+                        data: $scope.admin, //forms user object
+                        headers: {'Content-Type': 'application/json'}
+                    }).success(function (data) {
+                        window.location = '/admin/privacypolicy';
                     });
-                    tinymce.activeEditor.on('keyup', function (ed, e) {
-                        $('.description').hide();
-                    });
-                    $scope.admin.description = htmlEncode(text);
-                    if (!text.trim()) {
-                        $('.description').show();
-                    } else {
-                        if ($scope.privacypolicyform.$valid) {
-                            $http({
-                                method: 'POST',
-                                url: '/updateprivacypolicy',
-                                data: $scope.admin, //forms user object
-                                headers: {'Content-Type': 'application/json'}
-                            }).success(function (data) {
-                                window.location = '/admin/privacypolicy';
-                            });
 
-                        }
-                    }
+                }
+            }
 
-                };
+        };
     });
 
 </script>

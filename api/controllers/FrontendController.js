@@ -23,8 +23,16 @@ module.exports = {
         });
     },
     'termsandconditions': function (req, res) {
-        return res.view('./frontend/termsandconditions', {
-            layout: false,
+        Abterms.query('SELECT * FROM abterms', function (err, recordset) {
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
+            return res.view('./frontend/termsandconditions', {
+                layout: false,
+                recordset: recordset,
+                description: description
+            });
         });
 //        Faq.query('SELECT * from faq', function (err, recordset) {
 //            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
@@ -41,8 +49,16 @@ module.exports = {
 //        });
     },
     'aboutus': function (req, res) {
-        return res.view('./frontend/aboutus', {
-            layout: false,
+        About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
+            recordset = recordset[0];
+            var text = recordset.about_us;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
+            return res.view('./frontend/aboutus', {
+                layout: false,
+                recordset: recordset,
+                description: description
+            });
         });
 //        Faq.query('SELECT * from faq', function (err, recordset) {
 //            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
@@ -59,8 +75,16 @@ module.exports = {
 //        });
     },
     'privacypolicy': function (req, res) {
-        return res.view('./frontend/privacypolicy', {
-            layout: false,
+        Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
+            recordset = recordset[0];
+            var text = recordset.description;
+            var re = '<br/>';
+            var description = text.replace(/\n/gi, re);
+            return res.view('./frontend/privacypolicy', {
+                layout: false,
+                recordset: recordset,
+                description: description
+            });
         });
 //        Faq.query('SELECT * from faq', function (err, recordset) {
 //            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
