@@ -8,6 +8,7 @@
 module.exports = {
     attributes: {
         name: {type: 'string'},
-        description: {type: 'text'},
+        description: {type: 'longtext'},
+        created_date: {type: 'string'},
     }
 };

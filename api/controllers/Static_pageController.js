@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-
+var mysql = require('mysql');
 module.exports = {
     'get_about_us': function (req, res) {
         About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
@@ -39,21 +39,11 @@ module.exports = {
 
         if (req.method == "POST")
         {
- 
-//            var selectQuery = "UPDATE about_admin SET video_link = '" + req.param("video_link") + "', about_us ='" + description + "', name='" + req.param("about_us_title") + "' WHERE `about_admin`.`id` =1;";
-//
-//            console.log('selectQuery')
-//            console.log(selectQuery)
-//            About_admin.query(selectQuery, function (err, record)
-//            {
-//                return res.ok(record);
-//            });
-            About_admin.update({video_link: req.param("video_link")}, {about_us: req.param("about_us")}, {name: req.param("about_us_title")}).exec(function (err, updated) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    return res.ok(updated);
-                }
+            var selectQuery = "UPDATE about_admin SET video_link = " + mysql.escape(req.param("video_link")) + ", about_us =" + mysql.escape(req.param("about_us")) + ", name='" + req.param("about_us_title") + "' WHERE `about_admin`.`id` =1;";
+
+            About_admin.query(selectQuery, function (err, record)
+            {
+                return res.ok(record);
             });
         }
     },
@@ -86,15 +76,16 @@ module.exports = {
 
         if (req.method == "POST")
         {
-            var selectQuery = "UPDATE abterms SET  description ='" + req.param("description") + "', name='" + req.param("title") + "' WHERE `abterms`.`id` =1;";
-console.log(req.param("description"));
-         Abterms.update({description: req.param("description")}, {name: req.param("title")}).exec(function (err, updated) {
-                if (err) {
-                    console.log('if')
-                    console.log(err);
-                } else {
-                    console.log('else')
-                    return res.ok(updated);
+            var updateQuery = "UPDATE abterms SET  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("title")) + " WHERE `abterms`.`id` =1;";
+            Abterms.query(updateQuery, function (err, record)
+            {
+                if (err)
+                {
+
+                }
+                else
+                {
+                    res.ok();
                 }
             });
         }
@@ -142,13 +133,17 @@ console.log(req.param("description"));
     'updatefaq': function (req, res) {
         if (req.method == "POST")
         {
-            var selectQuery = "UPDATE faq SET category='" + req.param("category") + "',  description ='" + req.param("description") + "', name='" + req.param("name") + "' WHERE `faq`.`id` =" + req.param("faq_id");
+            var selectQuery = "UPDATE faq SET category=" + mysql.escape(req.param("category")) + ",  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("name")) + " WHERE `faq`.`id` =" + req.param("faq_id");
 
-            Faq.update({category: req.param("category")}, {description: req.param("description")},{name: req.param("name")}).exec(function (err, updated) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    return res.ok(updated);
+            Faq.query(selectQuery, function (err, record)
+            {
+                if (err)
+                {
+
+                }
+                else
+                {
+                    res.ok();
                 }
             });
         }
@@ -156,7 +151,7 @@ console.log(req.param("description"));
     addfaq: function (req, res) {
         if (req.method == "POST")
         {
-            var selectQuery = "INSERT INTO `stumuch_db`.`faq` (`name`, `description`,  `category`) VALUES ('" + req.param("question") + "', '" + req.param("description") + "','" + req.param("category") + "')";
+            var selectQuery = "INSERT INTO `stumuch_db`.`faq` (`name`, `description`,  `category`) VALUES (" + mysql.escape(req.param("question")) + ", " + mysql.escape(req.param("description")) + "," + mysql.escape(req.param("category")) + ")";
 
             Faq.query(selectQuery, function (err, record)
             {
@@ -206,13 +201,17 @@ console.log(req.param("description"));
 
         if (req.method == "POST")
         {
-            var selectQuery = "UPDATE privacy_policy SET  description ='" + req.param("description") + "', name='" + req.param("title") + "' WHERE `privacy_policy`.`id` =1;";
+            var selectQuery = "UPDATE privacy_policy SET  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("title")) + " WHERE `privacy_policy`.`id` =1;";
 
-             Privacy_policy.update({description: req.param("description")}, {name: req.param("title")}).exec(function (err, updated) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    return res.ok(updated);
+            Privacy_policy.query(selectQuery, function (err, record)
+            {
+                if (err)
+                {
+
+                }
+                else
+                {
+                    res.ok();
                 }
             });
         }
