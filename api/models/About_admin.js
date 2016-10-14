@@ -8,9 +8,7 @@
 module.exports = {
     attributes: {
         name: {type: 'string'},
-        username: {type: 'string'},
-        email: {type: 'email'},
-        about_us: {type: 'text'},
+        about_us: {type: 'longtext'},
         video_link: {type: 'string'},
     }
 };

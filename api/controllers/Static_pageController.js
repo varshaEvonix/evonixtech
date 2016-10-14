@@ -39,11 +39,21 @@ module.exports = {
 
         if (req.method == "POST")
         {
-            var selectQuery = "UPDATE about_admin SET video_link = '" + req.param("video_link") + "', about_us ='" + req.param("about_us") + "', name='" + req.param("about_us_title") + "' WHERE `about_admin`.`id` =1;";
-
-            About_admin.query(selectQuery, function (err, record)
-            {
-                return res.ok(record);
+ 
+//            var selectQuery = "UPDATE about_admin SET video_link = '" + req.param("video_link") + "', about_us ='" + description + "', name='" + req.param("about_us_title") + "' WHERE `about_admin`.`id` =1;";
+//
+//            console.log('selectQuery')
+//            console.log(selectQuery)
+//            About_admin.query(selectQuery, function (err, record)
+//            {
+//                return res.ok(record);
+//            });
+            About_admin.update({video_link: req.param("video_link")}, {about_us: req.param("about_us")}, {name: req.param("about_us_title")}).exec(function (err, updated) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    return res.ok(updated);
+                }
             });
         }
     },
@@ -77,16 +87,14 @@ module.exports = {
         if (req.method == "POST")
         {
             var selectQuery = "UPDATE abterms SET  description ='" + req.param("description") + "', name='" + req.param("title") + "' WHERE `abterms`.`id` =1;";
-            console.log(selectQuery);
-            Abterms.query(selectQuery, function (err, record)
-            {
-                if (err)
-                {
-
-                }
-                else
-                {
-                    res.ok();
+console.log(req.param("description"));
+         Abterms.update({description: req.param("description")}, {name: req.param("title")}).exec(function (err, updated) {
+                if (err) {
+                    console.log('if')
+                    console.log(err);
+                } else {
+                    console.log('else')
+                    return res.ok(updated);
                 }
             });
         }
@@ -136,15 +144,11 @@ module.exports = {
         {
             var selectQuery = "UPDATE faq SET category='" + req.param("category") + "',  description ='" + req.param("description") + "', name='" + req.param("name") + "' WHERE `faq`.`id` =" + req.param("faq_id");
 
-            Faq.query(selectQuery, function (err, record)
-            {
-                if (err)
-                {
-
-                }
-                else
-                {
-                    res.ok();
+            Faq.update({category: req.param("category")}, {description: req.param("description")},{name: req.param("name")}).exec(function (err, updated) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    return res.ok(updated);
                 }
             });
         }
@@ -204,15 +208,11 @@ module.exports = {
         {
             var selectQuery = "UPDATE privacy_policy SET  description ='" + req.param("description") + "', name='" + req.param("title") + "' WHERE `privacy_policy`.`id` =1;";
 
-            Privacy_policy.query(selectQuery, function (err, record)
-            {
-                if (err)
-                {
-
-                }
-                else
-                {
-                    res.ok();
+             Privacy_policy.update({description: req.param("description")}, {name: req.param("title")}).exec(function (err, updated) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    return res.ok(updated);
                 }
             });
         }
