@@ -424,7 +424,7 @@ textarea {
             <input  type="password" ng-minlength="6" ng-model="student.student_password" id="student_password" name="student_password"  required>
               <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
 <span ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</span>
- <span ng-show="submitted && educationform.student_education_institute.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</span>
+ <span ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</span>
 
           </div></div>
           <div class="col-md-6">
