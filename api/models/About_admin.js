@@ -10,7 +10,7 @@ module.exports = {
         name: {type: 'string'},
         username: {type: 'string'},
         email: {type: 'email'},
-        about_us: {type: 'string'},
+        about_us: {type: 'text'},
         video_link: {type: 'string'},
     }
 };
