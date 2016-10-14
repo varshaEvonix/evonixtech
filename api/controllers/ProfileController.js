@@ -115,11 +115,11 @@
 console.log(update);
      Student_details.query(update,function(err,record)
      {
-      
+       res.redirect('/personal_edit/'+req.param('id'));
     });
     // var file_name = files.filename;
      //console.log(file_name);
-     return res.redirect('/personal_edit/'+req.param('id'));
+     
   
     },
 
@@ -151,7 +151,7 @@ console.log(update);
           Student_photographs.query(insert_pics, function(err,record)
           {
 
-             return res.redirect('/media_edit/'+req.param('id'));
+             return res.redirect('/viewprofile/'+req.param('id'));
 
   });
     });

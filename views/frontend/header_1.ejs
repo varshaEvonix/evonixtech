@@ -12,34 +12,29 @@
         <title>Stumuch</title>
 
         <!-- Favicon and Touch Icons -->
-        <link rel="stylesheet" href="../../index_files/assets/form-register.css">
-        <link rel="stylesheet" href="../index_files/bootstrap-social.css">
+        <link rel="stylesheet" href="index_files/assets/form-register.css">
+        <link rel="stylesheet" href="index_files/bootstrap-social.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
         <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-        <link rel="stylesheet" href="../index_files/mdl/material.min.css">
-        <script src="../index_files/mdl/material.min.js"></script>
+        <link rel="stylesheet" href="index_files/mdl/material.min.css">
+        <script src="index_files/mdl/material.min.js"></script>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="../index_files/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="../index_files/jquery-ui.css" rel="stylesheet" type="text/css">
-        <link href="../index_files/animate.css" rel="stylesheet" type="text/css">
-        <link href="../index_files/css-plugin-collections.css" rel="stylesheet">
+        <link href="index_files/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="index_files/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link href="index_files/animate.css" rel="stylesheet" type="text/css">
+        <link href="index_files/css-plugin-collections.css" rel="stylesheet">
         <!-- CSS | menuzord megamenu skins -->
-        <link id="menuzord-menu-skins" href="../index_files/menuzord-boxed.css" rel="stylesheet">
+        <link id="menuzord-menu-skins" href="index_files/menuzord-boxed.css" rel="stylesheet">
         <!-- CSS | Main style file -->
-        <link href="../index_files/style-main.css" rel="stylesheet" type="text/css">
+        <link href="index_files/style-main.css" rel="stylesheet" type="text/css">
         <!-- CSS | Preloader Styles -->
-        <link href="../index_files/preloader.css" rel="stylesheet" type="text/css">
+        <link href="index_files/preloader.css" rel="stylesheet" type="text/css">
         <!-- CSS | Custom Margin Padding Collection -->
-        <link href="../index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+        <link href="index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
         <!-- CSS | Responsive media queries -->
-        <link href="../index_files/responsive.css" rel="stylesheet" type="text/css">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-        <script  src="../../index_files/stdash/js/angular.min.js"></script>
-        <link rel="stylesheet" href="../index_files/faq/css/reset.css"> <!-- CSS reset -->
-        <link rel="stylesheet" href="../index_files/faq/css/style.css"> <!-- Resource style -->
-
+        <link href="index_files/responsive.css" rel="stylesheet" type="text/css">
         <style>
 
 
@@ -60,14 +55,7 @@
 
             h3 { color: #4a89dc; }
 
-            form {
-                width: 50%;
-                margin: 4em auto;
-                padding: 3em 3em 2em 2em;
-                background: #fafafa;
-                border: 1px solid #ebebeb;
-                box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-            }
+
 
             .group { 
                 position: relative; 
@@ -78,7 +66,7 @@
             input {
                 font-size: 18px;
                 padding: 10px 10px 10px 5px;
-                /*-webkit-appearance: none;*/
+                -webkit-appearance: none;
                 display: block;
                 background: #fafafa;
                 color: #636363;
@@ -239,11 +227,7 @@
             .ripples.is-active .ripplesCircle {
                 animation: ripples .4s ease-in;
             }
-
-            .cd-faq-trigger {
-                color: #333;
-            }
-            form h2.text-center:after {
+            h2.text-center:after {
                 content: '';
                 width: 200px;
                 height: 2px;
@@ -268,60 +252,79 @@
                     opacity: 0;
                 }
             }
-            h2.text-center::after {
-                content: '';
-                width: 200px;
-                height: 2px;
-                background-color: #444;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 10px;
-                margin-bottom: 28px;
-                
-            }
-            h2.text-center {
-                font-family: 'Slabo 27px', serif !important;
-                font-weight: 500;
-                line-height: 1.42857143;
-                color: #333333;
-                font-size: 24px !important;
-                
-            }
-            p{
-                font-size: 14px !important;
-                line-height: 22.5px !important;
+
+            footer { text-align: center; }
+
+            footer p {
+                color: #888;
+                font-size: 13px;
+                letter-spacing: .4px;
             }
 
+            footer a {
+                color: #4a89dc;
+                text-decoration: none;
+                transition: all .2s ease;
+            }
+
+            footer a:hover {
+                color: #666;
+                text-decoration: underline;
+            }
+
+            footer img {
+                width: 80px;
+                transition: all .2s ease;
+            }
+
+            footer img:hover { opacity: .83; }
+
+            footer img:focus , footer a:focus { outline: none; }
+
+            .row.vdivide [class*='col-']:not(:last-child):after {
+                background: #e0e0e0;
+                width: 1px;
+                content: "";
+                display:block;
+                position: absolute;
+                top:0;
+                bottom: 0;
+                right: 0;
+                min-height: 70px;
+            }
         </style>
     </head>
-    <body ng-app="postApp" ng-controller="postController">
-        <header id="header" class="header">
-            <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
-                <div class="header-nav-wrapper">
-                    <div class="container">
-                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
-                            <a href="home"><img src="./../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-                            <ul style="max-height: 400px;" class="menuzord-menu menuzord-right menuzord-indented scrollable">
+
+    <header id="header" class="header">
+        <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
+            <div class="header-nav-wrapper">
+                <div class="container">
+                    <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
+                        <a href="#"><img src="./index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
+                        <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+                            <li style="" ><a href="home">Home</a>
+
+                            </li>
+
+                            <li style="" ><a href="allprofile">Profiles</a>
+
+                            </li>
+                            <li style="" ><a href="myprofile">My Profile</a>
+
+                            </li>
+                            <li style=""  class="active"><a href="stulogin">Create account</a>
+
+                            </li>
+                            <li style=""><a href="#">Login </a>
+
+                            </li>
+
+                        </ul>
+                        </li>
 
 
-                                <li style="" ><a href="/allprofile">Profiles</a>
 
-                                </li>
-                                <!--li style="" ><a href="myprofile/myprofile">My Profile</a>
+                        </ul>
+                    </nav>
 
-                                </li-->
-                                <li style=""><a href="stulogin/stulogin">Create account</a>
-
-                                </li>
-                                <li style=""><a href="/student/login">Login</a>
-
-                                </li>
-
-                            </ul>
-
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
+                    </header>

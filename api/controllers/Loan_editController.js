@@ -63,6 +63,7 @@ module.exports = {
 
 
 			console.log('r u t');
+
       var newFilename= "";
       var document_name ="";
       var insert_doc = "";
@@ -70,15 +71,17 @@ module.exports = {
       {
      
    newFilename = req.file('document_path')._files[0].stream.filename;
- 
+ console.log(newFilename);
       req.file('document_path').upload({dirname:'../public/index_files/uploads/documents/',saveAs: newFilename}), function onUploadComplete(err, files) {
-
+};
          var file_name='';
    document_name = req.param('document_name');
+   console.log(document_name);
 
     insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('"+document_name+"', '"+newFilename+"', '"+req.param('loan_id')+"', '1');";
     console.log('insert_doc');
- };
+    console.log(insert_doc);
+ 
         
  }
   

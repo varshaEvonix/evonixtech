@@ -1,9 +1,9 @@
 /**
- * UserController
- *
- * @description :: Server-side logic for managing users
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
+* UserController
+*
+* @description :: Server-side logic for managing users
+* @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
+*/
 // Insert:function(req,res)
 // {
 //     if(req.method=="POST")
@@ -36,16 +36,20 @@
 
 // var BackofficeController = require('./BackofficeController');
 module.exports = {
-    'activate_student': function (req, res) {
-
-        Student_login_credentials.query('UPDATE `student_login_credentials` SET `student_active`= 1 where student_id =' + req.param('id'));
-
-        return	res.redirect('/student/login');
 
 
+'activate_student': function(req, res) {
+		  	
+		         Student_login_credentials.query('UPDATE `student_login_credentials` SET `student_active`= 1 where student_id ='+req.param('id'));         	
+		        	
+		        return	res.redirect('/student/login');
 
-    },
-    'send_mail': function (req, res) {
+		       
+		        
+		    },
+
+
+'send_mail': function (req, res) {
         var helper = require('sendgrid').mail;
         var from_email = new helper.Email('support@evonixtech.com');
         var to_email = new helper.Email('saurabh@evonix.co');
@@ -66,129 +70,140 @@ module.exports = {
 //            console.log(response.headers);
         });
     },
-    'stulogin': function (req, res) {
-        if (req.method == "POST")
-        {
+	
+	'stulogin':function(req,res){
+		if(req.method=="POST")
+		{
+			console.log("Post");
 
-            var student_firstname = req.param("student_firstname");
-            var student_lastname = req.param("student_lastname");
-            var student_contactno = req.param("student_contactno");
-            var student_email = req.param("student_email");
-            var student_password = req.param("student_password");
-          
-            var insert = "";
-            var email_check = "";
-            email_check =
-                    insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('" + student_firstname + "', '" + student_lastname + "', '" + student_contactno + "', '" + student_email + "')";
-      
-            Student_details.query(insert, function (err, record)
-            {
-
-                var st_id = record.insertId;
-                var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('" + st_id + "', '" + student_email + "',MD5('" + student_password + "'), '0','1')";
-             
-                Student_login_credentials.query(credential, function (err, credential_record)
-                {
-
-
-                    var helper = require('sendgrid').mail;
-                    var from_email = new helper.Email('support@evonixtech.com');
-                    var to_email = new helper.Email(student_email);
-                    var html = "Hi " + student_firstname + ", Thanks for registering on STUMUCH Crowdfunding. Here is your activation link. To Activate your account <a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>";
-                    var subject = 'Stumuch activation link';
-                    var content = new helper.Content('text/html', html);
-                    var mail = new helper.Mail(from_email, subject, to_email, content);
-
-                    var sg = require('sendgrid')("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");
-                    var request = sg.emptyRequest({
-                        method: 'POST',
-                        path: '/v3/mail/send',
-                        body: mail.toJSON(),
-                    });
-
-                    sg.API(request, function (error, response) {
-//            
-                    });
-
-                    return res.ok();
-                    res.redirect('../studentlogin/studentlogin');
-
-                });
+			var student_firstname = req.param("student_firstname");
+			var student_lastname = req.param("student_lastname");
+			var student_contactno =req.param("student_contactno");
+			var student_email =req.param("student_email");
+			var student_password =req.param("student_password");
+			console.log(student_firstname);
+			var insert ="";
+			var email_check = "";
+			email_check = 
+			insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('"+student_firstname+"', '"+student_lastname+"', '"+student_contactno+"', '"+student_email+"')";
+			console.log(insert);
+			Student_details.query(insert,function(err,record)
+			{
+				
+				var st_id=record.insertId;
+				var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('"+st_id+"', '"+student_email+"',MD5('"+student_password+"'), '0','1')";
+				console.log(credential);
+				Student_login_credentials.query(credential,function(err,credential_record)
+				{
 
 
-            });
-        }
+					 var helper = require('sendgrid').mail;
+        var from_email = new helper.Email('support@evonixtech.com');
+        var to_email = new helper.Email(student_email);
+        var html ="Hi "+student_firstname+", Thanks for registering on STUMUCH Crowdfunding. Here is your activation link. To Activate your account <a href='"+sails.getBaseurl() +"/activation_link/"+st_id+"'>Click Here</a>"; 
+        var subject = 'Stumuch activation link';
+        var content = new helper.Content('text/html', html);
+        var mail = new helper.Mail(from_email, subject, to_email, content);
 
-        else {
-            
-        }
-    },
-    'stu_search': function (req, res) {
-        console.log(req.param('stu_name'));
-        var stu_name = req.param('stu_name'); //=='undefined'? '' : req.param('stu_name');
-
-        if (stu_name == undefined)
-        {
-            stu_name = '';
-        }
-        var bday_check = req.param('bday_check');
-        var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
-        var bdate = arr[0];
-        //console.log(stu_name);
-        // console.log(bday_check);
-        // console.log(bdate);
-
-
-        var stu_search = '';
-        var bday_search_string = '';
-        var sort_string = '';
-        if (bday_check == '1') {
-            bday_search_string = 'and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "' + bdate + '"';
-            bday_sort_string = ' order by sd.student_lastname';
-        }
-        else {
-            bday_sort_string = ' order by ld.created_on DESC'
-        }
-        stu_search = 'SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and (sd.student_lastname like "%' + stu_name + '%" OR sd.student_firstname like "%' + stu_name + '%" or ed.student_education_institute like "%' + stu_name + '%" or ed.student_education_fieldofstudy like "%' + stu_name + '%")';
-
-        stu_search += bday_search_string;
-
-        stu_search += 'group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount';
-
-        stu_search += bday_sort_string;
-
-        // console.log(stu_search);
-        //stu_search ="SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id = student_details.student_id  WHERE  (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%') AND student_login_credentials.student_active=1" ;
-        Student_details.query(stu_search, function (err, recordset) {
-            // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
-            // console.log('recordset');
-            // console.log(recordset);
-            return res.view('./allprofile/allprofile', {
-                humans: recordset,
-                student_find: stu_name,
-                bday_check: bday_check,
-                today: bdate
-
-            });
+        var sg = require('sendgrid')("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");
+        var request = sg.emptyRequest({
+            method: 'POST',
+            path: '/v3/mail/send',
+            body: mail.toJSON(),
         });
 
-        // else{
-        // 	stu_search_bday = 	
-        // 	stu_search_bday ="SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id WHERE student_details.student_birthdate='"+bdate+"' AND (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%')" ;
-        // 	Student_details.query(stu_search_bday,function(err,recordset){
-        //       // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
-        //       	console.log('recordset');
-        //       	console.log(recordset);
-        //       	return res.view('./bday_profile/bday_profile', {
+        sg.API(request, function (error, response) {
+//            
+        });
 
-        //       		humans: recordset,
-        //       		student_find:stu_name,
-        //       		bday_check: bday_check,
+					return res.ok();
+					res.redirect('../studentlogin/studentlogin');
+					
+				});
+				
+				
+			});
+		}
 
-        //       	});
-        //       });
-        // }
-    },
+		else {
+			console.log('Else part');
+		}
+	},
+
+
+
+	'stu_search': function(req, res) {
+		console.log(req.param('stu_name'));
+		var stu_name= req.param('stu_name'); //=='undefined'? '' : req.param('stu_name');
+
+		if(stu_name == undefined)
+		{
+			stu_name = '';	
+		}
+		var bday_check= req.param('bday_check');
+		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
+		var bdate=arr[0];
+		//console.log(stu_name);
+		// console.log(bday_check);
+		// console.log(bdate);
+		
+
+		var stu_search='';
+		var bday_search_string='';
+		var sort_string='';
+		if(bday_check =='1'){
+			bday_search_string = 'and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "'+bdate+'"';
+			bday_sort_string = ' order by sd.student_lastname';
+		}
+		else{
+			bday_sort_string = ' order by ld.created_on DESC'
+		}
+			stu_search = 'SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and (sd.student_lastname like "%'+stu_name+'%" OR sd.student_firstname like "%'+stu_name+'%" or ed.student_education_institute like "%'+stu_name+'%" or ed.student_education_fieldofstudy like "%'+stu_name+'%")';
+
+			stu_search += bday_search_string;
+
+			stu_search += 'group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount';	
+
+			stu_search += bday_sort_string;
+
+			// console.log(stu_search);
+			//stu_search ="SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id = student_details.student_id  WHERE  (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%') AND student_login_credentials.student_active=1" ;
+			Student_details.query(stu_search,function(err,recordset){
+        // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
+        	// console.log('recordset');
+        	// console.log(recordset);
+        	return res.view('./allprofile/allprofile', {
+
+        		humans: recordset,
+        		student_find: stu_name,
+        		bday_check: bday_check,
+        		today: bdate
+
+        	});
+        });
+	
+		// else{
+		// 	stu_search_bday = 	
+		// 	stu_search_bday ="SELECT * from student_details left join education on education.student_id=student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id WHERE student_details.student_birthdate='"+bdate+"' AND (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%')" ;
+		// 	Student_details.query(stu_search_bday,function(err,recordset){
+  //       // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
+  //       	console.log('recordset');
+  //       	console.log(recordset);
+  //       	return res.view('./bday_profile/bday_profile', {
+
+  //       		humans: recordset,
+  //       		student_find:stu_name,
+  //       		bday_check: bday_check,
+
+  //       	});
+  //       });
+		// }
+	},
+
+
+
+
+
 // $term = mysql_real_escape_string($_REQUEST['term']);    
 
 // $sql = "SELECT * FROM liam WHERE Description LIKE '%".$term."%'";
@@ -202,44 +217,44 @@ module.exports = {
 // echo '<br /> Cut Size: '.$row['CutSize'];  
 // } 
 
-    // 'loginfunc':function(req,res)
-    // {
-    // 	console.log('login block');
-    // 	if(req.method=="post")
-    // 	{
-    // 		var email ="";
-    // 		email = req.param("email");
-    // 		var password1 =req.param("password1");
-    // 		var insert ="";
-    // 		try 
-    // 		{
-    // 			if(email!="")
-    // 			{
-    // 				var selectQuery="SELECT * FROM `user` WHERE `email`='"+email+"' and `password1`='"+password1+"';";
-    // 				console.log(selectQuery);
-    // 				User.query(selectQuery,function(err,record)
-    // 				{
-    // 					if(err)
-    // 					{
-    // 						console.log(err);
-    // 					}
-    // 					else
-    // 					{
-    // 						console.log(record);
-    // 						res.redirect('../admin_dash/admin_dash');
-    // 					}
-    // 				});
-    // 			}
-    // 		}
-    // 		catch (e) {
-    // 			console.log("entering catch block");
-    // 			console.log(e);
-    // 			console.log("leaving catch block");
-    // 		}
-    // 	}else {
-    // 		console.log('Else part');
-    // 	}
-    // },
+	// 'loginfunc':function(req,res)
+	// {
+	// 	console.log('login block');
+	// 	if(req.method=="post")
+	// 	{
+	// 		var email ="";
+	// 		email = req.param("email");
+	// 		var password1 =req.param("password1");
+	// 		var insert ="";
+	// 		try 
+	// 		{
+	// 			if(email!="")
+	// 			{
+	// 				var selectQuery="SELECT * FROM `user` WHERE `email`='"+email+"' and `password1`='"+password1+"';";
+	// 				console.log(selectQuery);
+	// 				User.query(selectQuery,function(err,record)
+	// 				{
+	// 					if(err)
+	// 					{
+	// 						console.log(err);
+	// 					}
+	// 					else
+	// 					{
+	// 						console.log(record);
+	// 						res.redirect('../admin_dash/admin_dash');
+	// 					}
+	// 				});
+	// 			}
+	// 		}
+	// 		catch (e) {
+	// 			console.log("entering catch block");
+	// 			console.log(e);
+	// 			console.log("leaving catch block");
+	// 		}
+	// 	}else {
+	// 		console.log('Else part');
+	// 	}
+	// },
 
 
 
@@ -248,99 +263,110 @@ module.exports = {
 
 
 
-    'homepage_view': function (req, res) {
-        var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
-        var bdate = arr[0];
+	'homepage_view': function(req, res) {
+		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
+		var bdate=arr[0];
 
-        Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by ld.created_on DESC limit 0,11', function (err, recordset) {
-
-            Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "' + bdate + '" group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function (err, record) {
-
+		Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by ld.created_on DESC limit 0,11', function(err, recordset) {
+		
+			Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "'+bdate+'" group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function(err, record) {
+				
 // console.log(record);
 
-                return res.view('./homepage', {
-                    student_details: recordset,
-                    birthday: record,
-                    today: bdate
+				return res.view('./homepage', {
 
-                });
+					student_details: recordset,
+					birthday: record,
+					today: bdate
 
-            });
-        });
+				});
 
-    },
-    'allprofiles': function (req, res) {
-        var stu_name = '';
-        var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
-        var bdate = arr[0];
-        var bday_check = '';
-
-        Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by ld.created_on DESC', function (err, recordset) {
-            //console.log(recordset);
-            return res.view('./allprofile/allprofile', {
-                humans: recordset,
-                today: bdate,
-                student_find: stu_name,
-                bday_check: bday_check
-
-            });
-
-        });
-
-    },
-    'singleprofile': function (req, res) {
-        Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,  sd.student_ambition,  sd.student_city,  sd.student_state, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, ed.student_education_institute, ed.student_education_fieldofstudy, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
-
-            Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
-
-                Student_photographs.query('SELECT * from student_photographs where student_id=' + req.param('id'), function (err, photorecord) {
-
-                    Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
-
-                        console.log(recordset);
-
-                        return res.view('./myprofile/myprofile', {
-                            student_info: recordset,
-                            donor_l: donor_l,
-                            pics: photorecord,
-                            loan_comments: loan_comments
-
-
-
-                        });
-                    });
-
-                });
-
-            });
-
-        });
-
-    },
-    // 'singleprofile': function(req, res) {
-    // 	Student_details.query('SELECT * from student_details left join education on education.student_id = student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, recordset) {   
-
-    // 		Student_details.query('SELECT * from student_details  left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, donor_l) {   
-
-    // 			Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
-
-    // 				//console.log(recordset);
-
-    // 				return res.view('./myprofile/myprofile', {
-
-    // 					student_info: recordset,
-    // 					donor_l: donor_l,
-    // 					pics: photorecord
+			});
+		});
+		
+	},
 
 
 
 
-    // 				});
-    // 			});
 
-    // 		});
+	'allprofiles': function(req, res) {
+		var stu_name = '';
+		var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
+		var bdate=arr[0];
+		var bday_check = '';
 
-    // 	});
+		Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by ld.created_on DESC', function(err, recordset) {         	
+			//console.log(recordset);
+			return res.view('./allprofile/allprofile', {
 
-    // },
+				humans: recordset,
+				today: bdate,
+				student_find:stu_name,
+				bday_check:bday_check
+
+			});
+
+		});
+		
+	},
+
+
+	'singleprofile': function(req, res) {
+		Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,  sd.student_ambition,  sd.student_city,  sd.student_state, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, ed.student_education_institute, ed.student_education_fieldofstudy, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and sd.student_id = '+req.param("id")+' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function(err, recordset) {   
+
+			Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id='+req.param('id'), function(err, donor_l) {   
+		 
+			Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
+
+			Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id='+req.param("id")+' order by last_updated desc', function(err, loan_comments){
+					
+					console.log(recordset);
+
+					return res.view('./myprofile/myprofile', {
+
+						student_info: recordset,
+						donor_l: donor_l,
+						pics: photorecord,
+						loan_comments: loan_comments
+
+
+						
+					});
+				});
+
+			});
+
+		});
+
+		});
+		
+	},
+
+	// 'singleprofile': function(req, res) {
+	// 	Student_details.query('SELECT * from student_details left join education on education.student_id = student_details.student_id left join loan_details on loan_details.student_id=student_details.student_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, recordset) {   
+
+	// 		Student_details.query('SELECT * from student_details  left join loan_details on loan_details.student_id=student_details.student_id left join donors_funding_details on loan_details.loan_id=donors_funding_details.loan_id where loan_details.isActive = 1 AND student_details.student_id='+req.param('id'), function(err, donor_l) {   
+
+	// 			Student_photographs.query('SELECT * from student_photographs where student_id='+req.param('id'), function(err, photorecord){
+					
+	// 				//console.log(recordset);
+
+	// 				return res.view('./myprofile/myprofile', {
+
+	// 					student_info: recordset,
+	// 					donor_l: donor_l,
+	// 					pics: photorecord
+						
+
+
+						
+	// 				});
+	// 			});
+
+	// 		});
+
+	// 	});
+		
+	// },
 };

@@ -1,6 +1,6 @@
 
 module.exports.routes = {
-     //saurabh
+  //saurabh
     '/': 'Student_detailsController.homepage_view',
     '/studentlogin': 'StudentloginController.studentlogin',
     '/user': 'Student_detailsController.stulogin',
@@ -58,7 +58,6 @@ module.exports.routes = {
     '/upload_file': 'Admin_dashController.upload_file',
             //'/upload_file': 'Admin_dashController.upload_file',
             '/add_notes': 'Admin_dashController.add_notes',
-    '/faq': 'FrontendController.fetch_faq',
     'post /updateaboutus': 'Static_pageController.updateaboutus',
     'post /updateterms': 'Static_pageController.updateterms',
     'post /updatefaq': 'Static_pageController.updatefaq',
@@ -78,4 +77,8 @@ module.exports.routes = {
     '/admin/registration/:id': 'MailTemplateController.registration',
     '/admin/editmailtemplate/:id': 'MailTemplateController.editmailtemplate',
     '/admin/edit_mail_template': 'MailTemplateController.edit_mail_template',
+    '/termsandconditions': 'FrontendController.termsandconditions',
+    '/aboutus': 'FrontendController.aboutus',
+    '/faq': 'FrontendController.fetch_faq',
+    '/privacypolicy': 'FrontendController.privacypolicy',
 };

@@ -112,7 +112,7 @@ input[type=file]:before {
 <div id="bankloan" style="<% if (student_info.loan_bankname == ''){ %>display: none;<% } %>">
  <div class="form-group">
       <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
-      <input type="text" ng-model="student.loan_bankname" data-validation-error-msg="Please enter your bank name" data-validation="required" class="form-control" id="loan_bankname" data-validation-regexp="^([A-z0-9 ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>">
+      <input type="text" ng-model="student.loan_bankname" data-validation-error-msg="Please enter your bank name" data-validation="required" class="form-control" id="loan_bankname" data-validation-regexp="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>">
   
     </div>
 </div>
@@ -131,7 +131,7 @@ input[type=file]:before {
 <div class="col-md-6">
 <div class="form-group">
       <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" class="form-control" data-validation-regexp="^([0-9]+)$"  data-validation-error-msg="Please enter your loan current balance properly" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info.loan_amount %>">
+      <input type="text" class="form-control" data-validation-regexp="^([0-9]+)$"  data-validation-error-msg="Please enter your loan current balance properly" data-validation-length="2-6" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info.loan_amount %>">
     </div>
   
     </div>
@@ -153,7 +153,7 @@ input[type=file]:before {
     </thead>
     <tbody>
     <% _.each(loan_docs, function (loan_docs,index) { %>
-    <div class="modal fade col-md-6 center" id="myModal" role="dialog">
+    <div class="modal fade col-md-12 center" id="myModal" role="dialog">
   <div class="modal-dialog">
 
   </div><br>
@@ -173,7 +173,7 @@ input[type=file]:before {
 </div>
     <tr>
         <td><%= loan_docs.document_name %></td>
-        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
+        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/documents/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
       </tr>
        <% }) %>
     </tbody>

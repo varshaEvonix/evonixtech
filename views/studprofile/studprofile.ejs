@@ -16,7 +16,7 @@
 
 
     <div class="col-md-9 main-chart">
-      <div class="row white_bg" >
+      <div class="row white_bg" style="min-height:296px;" >
       <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
         <div class="col-md-7">
   
@@ -47,7 +47,7 @@
               <h4>Raised</h4><h3>$<%= student_info.total_funded %></h3>
               
             </div>
-            <div class="col-sm-6" style="text-align:center;">
+            <div class="col-sm-5" style="text-align:center;">
 
            <!-- <canvas class="text-center" id="serverstatus14" height="120" width="120"></canvas>
            <p class="indicate" style="margin-top: -75px;"><strong>70%</strong></p>
@@ -65,7 +65,7 @@
 
 
        </div>
-       <div class="col-sm-3">
+       <div class="col-sm-4">
 
         
         <h4>Goal</h4><h3>$<%= student_info.loan_amount %></h3>
@@ -79,7 +79,7 @@
 
 </div>
 
-<div class="modal fade col-md-6 center" id="myModal" role="dialog">
+<div class="modal fade col-md-12 center" id="myModal" role="dialog">
   <div class="modal-dialog">
 
   </div><br>
@@ -200,12 +200,12 @@
   <div class="col-md-12 white_bg">
     <div style="font-size:22px;" class="row edit_op">Current Loan
 
-      <div class="row pull-right"> <% if (student_info.student_id != null || student_info.loan_id != null || student_info.loan_id != '' || student_info.loan_id != '') { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
+      <div class="row pull-right"> <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '' || student_info.fafsa_values != null || student_info.loan_bankname != null) { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
         <br>
         <br>
       </div>
-      <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '') { %>
+      <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '' || student_info.fafsa_values != null || student_info.loan_bankname != null) { %>
       <div class="row">
 
         <div class="col-md-3">

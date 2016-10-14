@@ -139,6 +139,11 @@
   }
 
 
+#submit_btn{
+  display: block;
+    margin: auto;
+}
+
   input:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
   }
@@ -374,7 +379,7 @@ textarea {
 
               <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
               <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-              <span  class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Name should be in proper format!</span>
+              <span class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</span>
                           </div></div>
         <div class="col-md-6">
             <div class="field-wrap form-group input-group" >
@@ -382,8 +387,9 @@ textarea {
               <label>
                Last name<span class="req">*</span>
               </label>
-               <input  type="text" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
+               <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
               <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
+                <span class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</span>
             </div></div>
           
 <div class="col-md-6">
@@ -392,9 +398,10 @@ textarea {
             <label>
               Contact number<span class="req">*</span>
             </label>
-             <input  type="text" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
+             <input  type="text" ng-maxlength="15" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
               <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
                <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
+                <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">Mobile number limit exeeds!</span>
           </div></div>
 <div class="col-md-6">
  <div class="field-wrap form-group input-group" >
@@ -402,10 +409,10 @@ textarea {
             <label>
               Email<span class="req">*</span>
             </label>
-             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required>
+             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required>
               <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
-              <span class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!
-  </span>
+                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide">Account with such e-mail alrady exists.</p>
+              <span class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!</span>
           </div></div>
           
          <div class="col-md-6">
@@ -414,9 +421,10 @@ textarea {
             <label>
               Password<span class="req">*</span>
             </label>
-            <input  type="password" ng-model="student.student_password" id="student_password" name="student_password"  required>
+            <input  type="password" ng-minlength="6" ng-model="student.student_password" id="student_password" name="student_password"  required>
               <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
 <span ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</span>
+ <span ng-show="submitted && educationform.student_education_institute.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</span>
 
           </div></div>
           <div class="col-md-6">
@@ -430,7 +438,7 @@ textarea {
 <span ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</span>
           </div></div></div>
       
-          <button type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
+          <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
        
           </form>
 

@@ -86,7 +86,7 @@
                     tinymce.activeEditor.on('keyup', function (ed, e) {
                         $('.description').hide();
                     });
-                    $scope.admin.description = text;
+                    $scope.admin.description = htmlEncode(text);
                     if (!text.trim()) {
                         $('.description').show();
                     } else {
