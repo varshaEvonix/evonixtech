@@ -200,7 +200,7 @@
   <div class="col-md-12 white_bg">
     <div style="font-size:22px;" class="row edit_op">Current Loan
 
-      <div class="row pull-right"> <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '' || student_info.fafsa_values != null || student_info.loan_bankname != null) { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
+      <div class="row pull-right"> <%if (student_info.loan_id != null) { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
         <br>
         <br>
