@@ -148,7 +148,7 @@ module.exports = {
                 insert = "INSERT INTO `loan_details` (`student_id`, `loan_amount`, `loan_fafsa_id`, `loan_bankname`,`loan_accountno`,`isActive`) VALUES ('" + req.param('id') + "', '" + loan_amount + "','" + fafsa_values + "','','" + loan_accountno + "','1')";
 
             }
-
+console.log(insert);
 
             Loan_details.query(update, function (err, loan_active)
             {
