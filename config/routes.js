@@ -39,7 +39,7 @@ module.exports.routes = {
     '/thankyou': 'ThankyouController.thankyou',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
-    '/viewdetails/:id': 'Admin_dashController.viewdetails',
+    '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',
     '/admin/aboutus': 'Static_pageController.get_about_us',
     '/admin/editaboutus': 'Static_pageController.edit_about_us',
     '/admin/abterms': 'Static_pageController.get_terms_and_cond',
@@ -74,7 +74,7 @@ module.exports.routes = {
     '/thankyoupage': 'DonorController.thankyoupage',
     '/change_status': 'Admin_dashController.change_status',
     '/admin/donors/:id': 'Admin_dashController.donors_listing',
-    '/admin/registration/:id': 'MailTemplateController.registration',
+    '/admin/mailtemplate': 'MailTemplateController.mailtemplate',
     '/admin/editmailtemplate/:id': 'MailTemplateController.editmailtemplate',
     '/admin/edit_mail_template': 'MailTemplateController.edit_mail_template',
     '/termsandconditions': 'FrontendController.termsandconditions',
