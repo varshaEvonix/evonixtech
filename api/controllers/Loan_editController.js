@@ -33,7 +33,8 @@ module.exports = {
 
             Table_loan_document.query('SELECT ld.loan_id, ld.student_id, tld.document_name, tld.document_path, tld.loan_document_id, tld.isPublic from table_loan_document tld left join loan_details ld on ld.loan_id = tld.loan_id where tld.loan_id=' + req.param('loan_id') + ' AND isPublic = 1', function (err, recordset1) {
 
-                console.log(recordset1);
+                console.log('recordset1');
+                console.log(recordset);
                 return res.view('./loan_edit/loan_edit', {
                     student_info: recordset,
                     loan_docs: recordset1
@@ -59,12 +60,12 @@ module.exports = {
             {
 
                 newFilename = req.file('document_path')._files[0].stream.filename;
-                console.log(newFilename);
+
                 req.file('document_path').upload({dirname: '../public/index_files/uploads/documents/', saveAs: newFilename}), function onUploadComplete(err, files) {
                 };
                 var file_name = '';
                 document_name = req.param('document_name');
-                console.log(document_name);
+
 
                 insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + req.param('loan_id') + "', '1');";
 
@@ -80,7 +81,7 @@ module.exports = {
             var loan_bankname = req.param("loan_bankname");
             var loan_accountno = req.param("loan_accountno");
             var loan_amount = req.param("loan_amount");
-
+      
 
 
             var update = "";
@@ -118,13 +119,11 @@ module.exports = {
 
         if (req.method == "POST")
         {
-            console.log('r u t');
+
             var newFilename = "";
 
             newFilename = req.file('document_path')._files[0].stream.filename;
 
-            console.log(newFilename);
-            console.log('newFilename');
             req.file('document_path').upload({dirname: '../public/index_files/uploads/documents/', saveAs: newFilename}), function onUploadComplete(err, files) {
 
 
@@ -180,21 +179,18 @@ module.exports = {
 
     },
     'uploaddocs': function (req, res) {
-        console.log('are you there');
-        console.log(req.method);
+
         if (req.method == "POST")
         {
 
             var doc_name = req.param('document_name');
             var newFilename = req.file('document_path')._files[0].stream.filename;
             req.file('document_path').upload({dirname: '../public/index_files/uploads/documents/', saveAs: newFilename}, function onUploadComplete(err, files) {
-                console.log(files);
+
                 var file_name = '';
                 files.forEach(function (files, index) {
                     file_name = files.filename;
-                    console.log('here');
-                    console.log(req.param('student_id'));
-                    console.log(file_name);
+
 
 
 
@@ -203,9 +199,6 @@ module.exports = {
                     Table_loan_document.query(insert, function (err, record)
                     {
 
-                        console.log('record');
-                        console.log(record);
-                        console.log('record');
                     });
                 });
 
