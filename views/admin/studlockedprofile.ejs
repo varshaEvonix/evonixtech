@@ -13,32 +13,8 @@
 <section id="main-content">
     <div class="wrapper">
         <div class="row">
-            <!--            <div class="col-md-6 pink">
-                            <h3 class="text-center">Previous Record</h3>
-                            <%  _.each(student_records, function (records) {     %>
-                                            <% var temp = records.student_master_field_name %>
-            
-                            <div class="row">
-                                <div class="col-md-6"><h4>
-                                        <strong> <%= records.student_master_field_name.replace('_', ' ') %> : </strong>
-                                    </h4></div>
-                                <div class="col-md-6"><h4><%= records.student_prev_value %></h4></div>
-                            </div>
-                            <%
-                            }) 
-                            %>
-                        </div> 
-                        <div class="col-md-6 blue">
-                            <h3 class="text-center">Changed Record</h3>
-                            <%  _.each(student_records, function (records) { %>
-                            <div class="row">
-                                <div class="col-md-6"><p><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"> </p></div>
-                                <div class="col-md-6"><h4><%= records.student_changed_value %></h4></div>
-                            </div>
-                            <%
-                            }) 
-                            %>
-                        </div> -->
+            <%- req.flash('error') %>
+            <%- req.flash('success') %>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -48,15 +24,29 @@
                         <th class="blue"><strong>Changed Record</strong></th>
                         <th><strong>Record Updated Date</strong></th>
                     </tr>
-                <!--<br>-->
+                    <!--<br>-->
                 </thead>
                 <tbody>
                     <%  _.each(student_records, function (records) { %>
                     <tr>
                         <td><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"></td>
                         <td><%= records.student_master_field_name.replace('_', ' ') %></td>
-                        <td class="pink"> <%= records.student_prev_value %> </td>
-                        <td class="blue"> <%= records.student_changed_value %></td>
+                        <td class="pink" style="max-width:200px;">
+                            <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
+                            <img src="../index_files/uploads/documents/<%= records.student_prev_value %>" class="image_pro">
+                            <% }else{ %>
+
+                            <%= records.student_prev_value %> 
+                            <% } %>
+                        </td>
+                        <td class="blue" style="max-width:200px;">
+                            <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
+                            <img src="../index_files/uploads/documents/<%= records.student_changed_value %>" class="image_pro">
+                            <% }else{ %>
+
+                            <%= records.student_changed_value %>
+                            <% } %>
+                        </td>
                         <td> <%= records.student_changed_time %> </td>
                     </tr>
                     <%
@@ -124,11 +114,7 @@
 //                dataType: 'json',
                         data: {student_id: student_id, profile_status: profile_status, admin_note: admin_note, approved_values: allvalues},
                         success: function (response) {
-                            if (response.path == '1') {
-                                location.reload();
-                            } else {
-                                window.location = response.path;
-                            }
+                      window.location.reload();
                         }
                     });
 

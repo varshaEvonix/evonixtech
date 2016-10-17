@@ -10,14 +10,21 @@
                 <br>
                 <div class="panel panel-default">
                     <div class="panel-body">
-
+<!--For Registration template firstname and link is manadatory and should be in "<~: firstname : ~>", "<~: link : ~> " format resp.-->
                         <!--<form action="/updateaboutus" class="form-group" method="POST" role="form">-->
                         <form class="form" ng-submit="submitForm()" name="mailtemplateform" novalidate>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Template name</label>
+                                <div class="col-xs-10">
+                                    <input type="text" ng-model="admin.title" name="title" id="title" value="" class="form-control" required>
+                                    <span ng-show="submitted && mailtemplateform.title.$error.required"  class="help-block has-error ng-hide">Template name is required.</span>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-xs-2 control-label">Enter Subject</label>
                                 <div class="col-xs-10">
                                     <input type="text" ng-model="admin.subject" name="subject" id="subject" value="" class="form-control" required>
-                                    <span ng-show="submitted && mailtemplateform.title.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
+                                    <span ng-show="submitted && mailtemplateform.subject.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -29,7 +36,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <input type="hidden" value="<%= mail_template.content %>" name="example" id="example">
+                               
                                 <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5 update_about_us" value="Update">
                             </div>
                         </form>
@@ -52,6 +59,13 @@
 <script src="../../index_files/stdash/js/tinymce/jquery.tinymce.min.js"></script>
 <script src="../../index_files/stdash/js/tinymce/tinymce.min.js"></script>
 <script>
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
+
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
     tinymce.init({
         selector: 'textarea',
         height: 300,
@@ -68,29 +82,28 @@
     postApp.controller('postController', function ($scope, $http) {
 
         $scope.admin = {};
+        $scope.admin.title = "<%= mail_template.template_name %>";
         $scope.admin.subject = "<%= mail_template.subject %>";
-
         $scope.admin.template_id = "<%= mail_template.id %>";
-        var contents = <%= mail_template.content %>;
-       console.log(contents);
-        $scope.admin.content = JSON.parse(contents);
-        $scope.submitForm = function () {
-            var text = tinymce.activeEditor.getContent({
-                format: 'text'
-            });
-            $scope.admin.content = text;
-            if ($scope.mailtemplateform.$valid) {
-                $http({
-                    method: 'POST',
+        $scope.admin.content = htmlDecode(`<%= content %>`);
+
+                $scope.submitForm = function () {
+                    var text = tinymce.activeEditor.getContent({
+                        format: 'text'
+                    });
+                    $scope.admin.content = text;
+                    if ($scope.mailtemplateform.$valid) {
+                        $http({
+                            method: 'POST',
 //                    dataType: 'json',
-                    url: '/admin/edit_mail_template',
-                    data: $scope.admin, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    window.location = '/admin/registration/1';
-                });
-            }
-        };
+                            url: '/admin/edit_mail_template',
+                            data: $scope.admin, //forms user object
+                            headers: {'Content-Type': 'application/json'}
+                        }).success(function (data) {
+                            window.location = '/admin/mailtemplate';
+                        });
+                    }
+                };
     });
 //    });
 

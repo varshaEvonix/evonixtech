@@ -7,12 +7,15 @@
 
 module.exports = {
     attributes: {
-        title: {
+        template_name: {
+            type: 'string',
+        },
+        subject: {
             type: 'string',
         },
         content: {type: 'text',
         },
-        created_date: {type: 'string',
+        created_date: {type: 'timestamp',
         }
     },
 };

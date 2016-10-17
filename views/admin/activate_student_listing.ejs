@@ -73,6 +73,7 @@
                                     <th>Country</th>
                                     <th>Amount</th>
                                     <th>Status</th>
+                                     <th>Lock Status</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -80,11 +81,7 @@
                                 <% _.each(post, function (corndog) { %>
                                 <tr>
                                     <td>
-                                        <% if(corndog.profile_lock==1) { %>
-                                        <i class="fa fa-lock" aria-hidden="true"></i>
-                                        <% }else{ %>
-                                        <i class="fa fa-unlock" aria-hidden="true"></i>
-                                        <% } %>
+                                     
                                         <%= corndog.student_firstname %> <%= corndog.student_lastname %></td>
                                     <td> <%= corndog.student_email %></td>
                                     <td> <%= corndog.student_country %></td>
@@ -106,8 +103,13 @@
                                     <%
                                     }
                                     %>
+                                       <td>    <% if(corndog.profile_lock==1) { %>
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                        <% }else{ %>
+                                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        <% } %></td>
                                     <td class="text-right">
-                                        <a type="button" href="/viewdetails/<%= corndog.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
+                                        <a type="button" href="/admin/viewdetails/<%= corndog.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
                                     </td>
                                 </tr>
                                 <% }) %>

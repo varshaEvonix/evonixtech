@@ -123,7 +123,7 @@
 
                       <div class="causes maxwidth500 mb-sm-50">
                         <div class="thumb">
-                        <a href="/single_profile/<%= birthday.student_id %>">  <img src=" <% if (birthday.student_profile_pic_path == '' || birthday.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/documents/<%= birthday.student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></a>
+                        <a href="/single_profile/<%= birthday.student_id %>">  <img src=" <% if (birthday.student_profile_pic_path == '' || birthday.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/documents/<%= birthday.student_profile_pic_path %> <% } %>" style="width:360px;height:230px;" class="dp_left thumbnail"></a>
                           <div class="donate-piechart piechart-absolute">
 
 
@@ -250,7 +250,10 @@
                     <div  class="owl-item cloned">
                         <div class="item mb-10">
                             <div class="image-box-thum">
-                             <a href="/single_profile/<%= student_details.student_id %>">   <img class="img-fullwidth" alt="" src="../index_files/uploads/<%= student_details.student_profile_pic_path %>" width="250" height="230"></a>
+                             <a href="/single_profile/<%= student_details.student_id %>"> 
+                                 <img src=" <% if (student_details.student_profile_pic_path == '' || student_details.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/documents/<%= student_details.student_profile_pic_path %> <% } %>" style="width:360px;height:230px;">
+                                
+                             </a>
 
 
                                 <div class="donate-piechart piechart-absolute">

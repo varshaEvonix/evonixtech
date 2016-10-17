@@ -60,12 +60,12 @@ module.exports = {
                 },
         student_about_me:
                 {
-                    type: 'string',
+                    type: 'text',
                     required: true
                 },
         student_ambition:
                 {
-                    type: 'string',
+                    type: 'text',
                     required: true
                 },
         student_profile_pic_path:

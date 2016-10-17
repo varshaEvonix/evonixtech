@@ -301,6 +301,7 @@ module.exports = {
         var student_details = '';
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
         var approved_values = req.param('approved_values');
+        console.log(approved_values)
         if (approved_values == 'undefined' && approved_values.length > 0) {
             approved_values.forEach(function (values, index) {
                 var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0' WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
@@ -312,29 +313,17 @@ module.exports = {
         var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
         Student_changed_val.query(q, function (err, record) {
             if (record.length == 0) {
+
                 var update_query = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
                 Student_login_credentials.query(update_query, function (err, results) {
-                    if (admin_approve == '0') {
-                        var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
-                    }
-                    Student_login_credentials.query(update_query, function (err, results) {
-
-                    });
 
                 });
             }
+            if (admin_approve == '0') {
 
+                var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
+                Notifications.query(insert, function (err, results) {
 
-        });
-
-
-
-        var q = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
-        Student_login_credentials.query(q, function (err, results) {
-            var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "' WHERE `student_changed_val`.`student_id` =" + req.param('student_id');
-            Student_login_credentials.query(query, function (err, query_results) {
-//                var path = '/admin/studlockedprofile/' + req.param('student_id');
-                if (admin_approve == 0) {
                     var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
                     Student_details.query(fetch_student, function (err, studentdetails) {
                         var temp = JSON.stringify(studentdetails);
@@ -343,7 +332,7 @@ module.exports = {
                         var from_email = new helper.Email('support@evonixtech.com');
                         var to_email = new helper.Email(student_details.student_email);
                         var subject = 'Stumuch Notification';
-                        var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
+                        var mail_content = "Hi " + student_details.student_firstname + ' </br></br>' + req.param('admin_note');
 
                         var content = new helper.Content('text/html', mail_content);
                         var mail = new helper.Mail(from_email, subject, to_email, content);
@@ -363,15 +352,18 @@ module.exports = {
 
                     });
 
-//                var path = '/admin/studlockedprofile/1';
-                    var path = '1';
-                    return res.ok({path: path});
-                } else {
-                    var path = '/admin/studlockedprofile/' + req.param('student_id');
-                    return res.ok({path: path});
-                }
-            });
+                });
+                req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are discarde</div>');
+            } else {
+                console.log('else')
+                req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
+            }
+
         });
+        var path = '/admin/studlockedprofile/' + req.param('student_id');
+        res.redirect(path);
+        // return res.ok({path: path});
+
     },
     donors_listing: function (req, res) {
         var current_page = req.param('id');
