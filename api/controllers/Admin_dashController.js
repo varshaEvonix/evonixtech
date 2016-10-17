@@ -302,7 +302,7 @@ module.exports = {
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
         var approved_values = req.param('approved_values');
         console.log(approved_values)
-        if (approved_values == 'undefined' && approved_values.length > 0) {
+        if (approved_values != undefined) {
             approved_values.forEach(function (values, index) {
                 var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0' WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
                 Student_changed_val.query(query, function (err, results) {
@@ -361,8 +361,8 @@ module.exports = {
 
         });
         var path = '/admin/studlockedprofile/' + req.param('student_id');
-        res.redirect(path);
-        // return res.ok({path: path});
+//        res.redirect(path);
+         return res.ok({path: path});
 
     },
     donors_listing: function (req, res) {
