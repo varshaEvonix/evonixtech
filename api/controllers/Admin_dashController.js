@@ -276,7 +276,7 @@ module.exports = {
         if (req.method === 'POST') {
             var file_name = req.param('filename') == 'undefined' ? ' ' : req.param('filename');
             var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + file_name + "', '1')";
-           
+
             Admin_loan_comments.query(insert_query, function (err, record)
             {
                 console.log(insert_query)
@@ -287,13 +287,18 @@ module.exports = {
         }
     },
     studlockedprofile: function (req, res) {
-        var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id')+' order by student_changed_val.student_changed_time desc';
+        var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id') + ' order by student_changed_val.student_changed_time desc';
 
         Student_changed_val.query(q, function (err, results) {
+            var mst_fafsa = 'SELECT * from mst_fafsa';
 
-            return   res.view('./admin/studlockedprofile', {
-                layout: false,
-                student_records: results
+            Mst_fafsa.query(mst_fafsa, function (err, mst_fafsa_result) {
+
+                return   res.view('./admin/studlockedprofile', {
+                    layout: false,
+                    student_records: results,
+                    mst_fafsa:mst_fafsa_result
+                });
             });
         });
     },
@@ -302,9 +307,9 @@ module.exports = {
         var student_details = '';
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
         var approved_values = req.param('approved_values');
-      
+
         if (approved_values != undefined) {
-            
+
             approved_values.forEach(function (values, index) {
                 var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0', admin_changed_time=NOW() WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
                 Student_changed_val.query(query, function (err, results) {
@@ -347,10 +352,10 @@ module.exports = {
                         });
 
                         sg.API(request, function (error, response) {
-            console.log('response.statusCode');
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
+                            console.log('response.statusCode');
+                            console.log(response.statusCode);
+                            console.log(response.body);
+                            console.log(response.headers);
                         });
 
                     });
@@ -364,7 +369,7 @@ module.exports = {
         });
         var path = '/admin/studlockedprofile/' + req.param('student_id');
 //        res.redirect(path);
-         return res.ok({path: path});
+        return res.ok({path: path});
 
     },
     donors_listing: function (req, res) {

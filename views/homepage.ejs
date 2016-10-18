@@ -14,7 +14,7 @@
 <div class="jumbotron" id="jumbo">
     <div class="container">
         <div class="wow fadeInUp" data-delay="0.1s" style="visibility: hidden;">
-            <center><h1 id="shademain" style="color:#000;padding-top:22%;text-shadow: 3px 3px 3px rgb(8, 7, 7)"><strong>HAPPY <br>BEGINNING !</strong></h1></center>
+            <center><h1 style="color:#000;padding-top:22%;text-shadow: 4px 0px 0px rgb(8, 7, 7);font-weight: bolder;letter-spacing: 6px;"><strong>HAPPY <br>BEGINNING !</strong></h1></center>
         </div></div></div>
 <div class="container">
     <!-- Section: Features -->
@@ -149,7 +149,9 @@
                                         <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                             <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                             <li class="target-fund"><strong>$<%= birthday.total_funded %></strong>collected</li>
+                                            <% if (birthday.loan_amount != "0") { %>
                                             <li ><a href="/donorpage/<%= birthday.student_id %>"> <button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
+                                            <% } %>
                                         </ul>
 
                                     </div>
@@ -285,7 +287,9 @@
                                     <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                                         <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$<%= student_details.total_funded %></strong>collected</li>
+                                        <% if (student_details.loan_amount != "0") { %>
                                         <li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>

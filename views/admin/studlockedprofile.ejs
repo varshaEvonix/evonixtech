@@ -27,19 +27,26 @@
                     <!--<br>-->
                 </thead>
                 <tbody>
- 
+
                     <%  _.each(student_records, function (records) { %>
+
                     <tr>
                         <td><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"></td>
                         <td><%= records.student_master_field_name.replace('_', ' ') %></td>
                         <td class="" style="width:360px;color:red;">
-                            <% if (records.student_prev_value == '' || records.student_prev_value ==  undefined){ %>
+                            <% if (records.student_prev_value != ' ' || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
                             <img src="../../index_files/uploads/documents/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
                             <iframe width="560" height="315" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
-                       
+                            <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
+                            <% if(records.student_prev_value != null && records.student_prev_value!=''){ %>
+                             <%= mst_fafsa[records.student_prev_value].fafsa_values %>
+                            <% }else{ %>
+                              <p>No previous record</p>
+                            <% } %>
+                           
                             <% }else{ %>
                             <%= records.student_prev_value %> 
                             <% } %>
@@ -48,17 +55,24 @@
                             <% } %>
                         </td>
                         <td class="" style="width:360px;color:green;">
-                             <% if (records.student_prev_value == '' || records.student_prev_value ==  undefined){ %>
+                            <% if (records.student_prev_value == '' || records.student_prev_value ==  undefined){ %>
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
                             <img src="../../index_files/uploads/documents/<%= records.student_changed_value %>" class="image_pro" style="height:147px;width:230px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
                             <iframe width="350" height="200" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
+                              <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
+                              <% if(records.student_changed_value != null && records.student_changed_value!=''){ %>
+                               <%= mst_fafsa[records.student_changed_value].fafsa_values %>
+                            <% }else{ %>
+                              <p>No record changed</p>
+                            <% } %>
+                            <%= mst_fafsa[records.student_changed_value].fafsa_values %>
                             <% }else{ %>
                             <%= records.student_changed_value %>
                             <% } %>
                             <% }else{ %>
-                            <p>No changed record</p>
+                            <p>No record changed</p>
                             <% } %>
                         </td>
                         <td> <%= records.student_changed_time %> </td>

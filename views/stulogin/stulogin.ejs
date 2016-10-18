@@ -321,6 +321,15 @@ textarea {
     box-shadow: none;
 
   }
+  .has-error {
+    position: absolute !important;
+    font-size: 12px;
+    left: 46px;
+    top: 39px;
+  }
+  .tooltip-inner {
+     width:350px !important;
+}
 </style>
 </head>
 <body  ng-app="postApp" ng-controller="postController">
@@ -359,7 +368,7 @@ textarea {
   <!-- You only need this form and the form-register.css -->
 
   <!--form action="/user" method="POST" role="form"-->
-   <form class="form" ng-submit="submitForm()" name="registerform" novalidate>
+   <form class="form" ng-submit="submitForm()" name="registerform" id="registerform" novalidate>
  <div id="signup">   
           <h2>CREATE ACCOUNT</h2><br>
           
@@ -379,7 +388,7 @@ textarea {
 
               <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
               <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-              <span class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</span>
+              <p class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</p>
                           </div></div>
         <div class="col-md-6">
             <div class="field-wrap form-group input-group" >
@@ -389,7 +398,7 @@ textarea {
               </label>
                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
               <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
-                <span class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</span>
+                <p class="error has-error ng-hide" ng-show="registerform.student_lastname.$error.pattern">Please enter characters only!</p>
             </div></div>
           
 <div class="col-md-6">
@@ -398,10 +407,10 @@ textarea {
             <label>
               Contact number<span class="req">*</span>
             </label>
-             <input  type="text" ng-maxlength="15" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
+             <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
               <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
-               <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">Mobile number should be in proper format!</span>
-                <span class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">Mobile number limit exeeds!</span>
+               <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
+                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
           </div></div>
 <div class="col-md-6">
  <div class="field-wrap form-group input-group" >
@@ -409,11 +418,16 @@ textarea {
             <label>
               Email<span class="req">*</span>
             </label>
-             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required>
+             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required style="border-right: none;">
+             
+             <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
+
+             <span class="clearfix"></span>
               <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
                 <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide">Account with such e-mail alrady exists.</p>
-              <span class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">Email should be in proper format!</span>
-          </div></div>
+              <p class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
+          </div>
+          </div>
           
          <div class="col-md-6">
           <div class="field-wrap form-group input-group" >
@@ -421,10 +435,17 @@ textarea {
             <label>
               Password<span class="req">*</span>
             </label>
-            <input  type="password" ng-minlength="6" ng-model="student.student_password" id="student_password" name="student_password"  required>
+            <input  type="password" ng-minlength="7" ng-model="student.student_password" id="student_password" name="student_password"  required>
+            <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
+1. Make sure that it is at least 6 characters long
+2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
+3. Don't use more than 2 identical consecutive characters
+4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
+
+             <span class="clearfix"></span>
               <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
-<span ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</span>
- <span ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</span>
+<p ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</p>
+ <p ng-show="submitted && educationform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</p>
 
           </div></div>
           <div class="col-md-6">
@@ -435,9 +456,10 @@ textarea {
             </label>
             <input  type="password" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
              <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
-<span ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</span>
-          </div></div></div>
-      
+<p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
+          </div></div></div><br>
+     <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
+       <br>
           <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
        
           </form>
@@ -512,9 +534,15 @@ textarea {
 </div>
 </footer>
 <script src='../../index_files/flowup/js/jquery.min.js'></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
 <script src='../../index_files/flowup/js/main.js'></script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
  <script>
 
     $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
@@ -595,11 +623,13 @@ $('.tab a').on('click', function (e) {
         });
     </script>
 
-  
+
 
 </body>
 
 </html>
+
+
    <script>
     var postApp = angular.module('postApp', []);
      postApp.directive('validPasswordC', function () {
@@ -644,6 +674,39 @@ $('.tab a').on('click', function (e) {
 
         };
     });
+
+</script>
+<script type="text/javascript">
+ $("#student_email").keyup(function(){
+    var inputElem = $('#registerform :input[name="student_email"]'),
+        data = { "emails" : inputElem.val() },
+        eReport = ''; //error report
+
+    $.ajax(
+    {
+        type: "POST",
+        url: '/checkemail',
+        dataType: "json",
+        data: data, 
+        success: function(returnData)
+        {
+            if (returnData!== 'true')
+            {
+              return '<p>This email address is already registered.</p>';
+            }
+            else
+            {
+               return true;
+            }
+        },
+        error: function(xhr, textStatus, errorThrown)
+        {
+            alert('ajax loading error... ... '+url + query);
+            return false;
+        }
+    });
+
+}, '');
 
 </script>
 
