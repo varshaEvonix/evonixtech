@@ -337,7 +337,7 @@ module.exports = {
                         var content = new helper.Content('text/html', mail_content);
                         var mail = new helper.Mail(from_email, subject, to_email, content);
 
-                        var sg = require('sendgrid')("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");
+                        var sg = require('sendgrid')("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");
                         var request = sg.emptyRequest({
                             method: 'POST',
                             path: '/v3/mail/send',
@@ -345,9 +345,10 @@ module.exports = {
                         });
 
                         sg.API(request, function (error, response) {
-//            console.log(response.statusCode);
-//            console.log(response.body);
-//            console.log(response.headers);
+            console.log('response.statusCode');
+            console.log(response.statusCode);
+            console.log(response.body);
+            console.log(response.headers);
                         });
 
                     });
