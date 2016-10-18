@@ -65,7 +65,10 @@
 
                     </div>
                     <div class="row">
+              
+                        <% if(student_info.loan_id != null){ %>
                         <div class="col-md-6" ><a href="javascript:void(0);" data-toggle="modal" data-target="#internalNotes" class="btn btn-primary"> Add Notes</a></div>
+                        <% } %>
                         <!--<div class="col-md-6"><a href="javascript:void(0);" data-toggle="modal" data-target="#externalNotes" class="btn btn-primary">Add External Notes</a></div>-->
                     </div>
                     <br>
@@ -518,7 +521,7 @@
                     data: $scope.admin, //forms user object
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (data) {
-                    window.location = '/viewdetails/' + data.student_id;
+                    window.location = '/admin/viewdetails/' + data.student_id;
                 });
             }
         };

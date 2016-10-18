@@ -219,7 +219,14 @@
       <div class="col-sm-6 left-panel"><br>
         <div class="main-content">
           <!-- Section: home -->
-          <img src="../index_files/uploads/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
+          <% if (student_info.student_profile_pic_path ==''|| student_info.student_profile_pic_path == null){ %>
+          
+           <img src="../../index_files/blank_dp.jpg" style="width:510px; height:326.9px">
+          
+          <% }else{ %>
+             
+         <img src="../../index_files/uploads/documents/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
+          <% } %>
           <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:105px; height:28px">
             <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:105px; height:28px"></span></h2>
             <p><%= student_info.student_city%>, <%= student_info.student_state  %></p>
@@ -237,7 +244,7 @@
            <h2>Image Gallery</h2>
            <% _.each(pics, function (pics) { %>
            <div class="col-md-4">
-           <a href="../index_files/uploads/<%= pics.photo_path %>" data-lightbox="example-set" data-title="My caption"><img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"></a><br><br>
+           <a href="../../index_files/uploads/documents/<%= pics.photo_path %>" data-lightbox="example-set" data-title="My caption"><img class="img-responsive" src="../../index_files/uploads/documents/<%= pics.photo_path %>"></a><br><br>
           </div>
           <% }) %>
 

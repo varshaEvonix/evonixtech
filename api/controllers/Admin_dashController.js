@@ -276,9 +276,10 @@ module.exports = {
         if (req.method === 'POST') {
             var file_name = req.param('filename') == 'undefined' ? ' ' : req.param('filename');
             var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + file_name + "', '1')";
-            req.flash('message', 'welcome key is present');
+           
             Admin_loan_comments.query(insert_query, function (err, record)
             {
+                console.log(insert_query)
 
             });
             return res.ok({student_id: req.param('student_id')});

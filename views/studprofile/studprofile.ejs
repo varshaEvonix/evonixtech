@@ -104,7 +104,7 @@
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home" class="profile_tabs">Personal details</a></li>
-    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education Details</a></li>
+    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">University / Educational Institution</a></li>
     <li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>
     <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
 
@@ -125,7 +125,8 @@
          </span><%= student_info.student_lastname %></p>
        </div>
        <div class="col-md-3">
-         <p class="info"> <span class="small">Birth Date: <br>
+         <p class="info"> <span class="small">Birth Date: <a href="#" data-toggle="tooltip" title="We cross check validity of all information submitted including your birth date. On your special day, we feature you on the site so that funders can find you more easily. 
+Your date of birth will not be shared publicly."> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
          </span><%= student_info.student_birthdate %></p>
        </div>
 
@@ -140,7 +141,7 @@
        </span><%= student_info.student_email %></p>
      </div>
      <div class="col-md-6">
-       <p class="info"> <span class="small">Permanent Address: <br>
+       <p class="info"> <span class="small">Permanent Address: <a href="#" data-toggle="tooltip" title="Address information will not be shared publicly."> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
        </span><%= student_info.student_address %></h4>
      </div>
      
@@ -197,56 +198,57 @@
 </div>
 
 <div id="menu2" class="tab-pane fade">
-  <div class="col-md-12 white_bg">
-    <div style="font-size:22px;" class="row edit_op">Current Loan
+  <div class="col-md-12 white_bg" style="height:500px">
+    <div style="font-size:18px;" class="row edit_op info small">Current balance last verified date <a href="#" data-toggle="tooltip" title="Our administrative team enters this date after verifying it on the statements that you send to us. This field is editable and filled in by Stumuch administration only. "> <i  class="glyphicon glyphicon-question-sign"></i></a> : 18/10/2016
+
 
       <div class="row pull-right"> <%if (student_info.loan_id != null) { %><a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>
+        <%if (student_info.loan_id == null) { %> <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button><% } %></div>
         <br>
         <br>
       </div>
       <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '' || student_info.fafsa_values != null || student_info.loan_bankname != null) { %>
       <div class="row">
 
-        <div class="col-md-3">
-         <p class="info">  <span class="small">Loan Amount: <br>
+        <div class="col-md-4">
+         <p class="info">  <span class="small">Loan Current Balance / Goal: <a href="#" data-toggle="tooltip" title="This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
          </span>$<%= student_info.loan_amount %></p>
          
        </div>
       
-       <div class="col-md-6">
+       <div class="col-md-4">
         <%if (student_info.loan_bankname == '') { %>
-        <div class="col-md-6">
-         <p class="info">  <span class="small">Type of Loan: <br>
+       <!--  <div class="col-md-6"> -->
+         <p class="info">  <span class="small">Type of Loan: <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help."> <i  class="glyphicon glyphicon-question-sign"></i></a><br>
          </span>FAFSA</p>
-       </div>
-       <div class="col-md-6">
+       <!-- </div> -->
+      <!--  <div class="col-md-6">
          <p class="info">  <span class="small">Name of Loan: <br>
          </span><%= student_info.fafsa_values %></p>
-       </div>
+       </div> -->
        <% } else { %>
-       <div class="col-md-6">
+       <!-- <div class="col-md-6">
         <p class="info"> <span class="small">Type of Loan: <br>
         </span>Bank loan</p>
-      </div>
-      <div class="col-md-6">
+      </div> -->
+    <!--   <div class="col-md-6"> -->
         <p class="info"> <span class="small">Bank Name: <br>
         </span><%= student_info.loan_bankname %></p>
-      </div>
+      <!-- </div> -->
       <% } %>
     </div>
   
     
     
-    <div class="col-md-3">
-      <p class="info">  <span class="small">Loan Account Number: <br>
+    <div class="col-md-4">
+      <p class="info">  <span class="small">Loan Account Number: <a href="#" data-toggle="tooltip" title="This is the number by which your identified at your lender or loan servicer. Your loan account number is not shared with the public. "> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
       </span><%= student_info.loan_accountno %></p>
     </div>
 
     <br><br><br><br><br>
   </div>
   <% } %>
-  <div>
+ <!--  <div>
 
    <h3>Previous loans</h3><br>
    <table class="table table-hover">
@@ -281,7 +283,7 @@
     <% }) %>
   </tbody>
 </table>
-</div>
+</div> -->
 </div>
 </div>
 <div id="menu3" class="tab-pane fade"><div class="col-md-12 white_bg">
@@ -382,4 +384,9 @@
     'resizeDuration': 200,
     'wrapAround': true
   })
+</script>
+ <script>
+                                                $(document).ready(function () {
+                                                    $('[data-toggle="tooltip"]').tooltip();
+                                                });
 </script>

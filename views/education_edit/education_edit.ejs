@@ -16,13 +16,13 @@
     <div class="form-group">
      
       <label for="student_education_institute">Enter your education institute: </label>
-      <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="40" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info.student_education_institute %>" required>
+      <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="80" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info.student_education_institute %>" required>
        <p ng-show="submitted && educationform.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
        <p ng-show="submitted && educationform.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide">Institute's name limit exeeds.</p>
     </div>
     <div class="form-group">
        <label for="student_education_fieldofstudy">Enter your field of study: </label>
-      <input type="text" ng-maxlength="20" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info.student_education_fieldofstudy %>" required>
+      <input type="text" ng-maxlength="80" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info.student_education_fieldofstudy %>" required>
        <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
        <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide">Field name limit exeeds.</p>
     </div>

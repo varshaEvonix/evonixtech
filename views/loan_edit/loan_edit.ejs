@@ -58,7 +58,7 @@ input[type=file]:before {
 
 
          
-          <h2>Loan details&nbsp;&nbsp; <span class="small">Current balance last verified date: 22/09/2016</span></h2>
+          <h2>Loan details&nbsp;&nbsp; <span class="small"></span></h2>
           <br>  
        <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info.student_id %>/<%= student_info.loan_id %>" name="loanform">
 <div class="row">
@@ -124,7 +124,7 @@ input[type=file]:before {
 <div class="col-md-6">
 <div class="form-group">
       <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-      <input type="text" data-validation="custom" data-validation-regexp="^([0-9]+)$" data-validation-error-msg="Please enter your account number properly" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info.loan_accountno %>">
+      <input type="text" data-validation="custom" data-validation-regexp="^([0-9A-z]+)$" data-validation-error-msg="Please enter your account number properly" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info.loan_accountno %>">
       
     </div>
 </div>
@@ -200,7 +200,9 @@ input[type=file]:before {
         <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
         <div class="form-group">
         
-            <input class="form-control fileip" type="text" name="document_name"  placeholder="Enter the name of the file" value="" >
+            <input class="form-control fileip" type="text" name="document_name"  placeholder="Enter the name of the file" value="">
+
+
              
              <input type="file" name="document_path" class="filebtn" value=""> 
             
