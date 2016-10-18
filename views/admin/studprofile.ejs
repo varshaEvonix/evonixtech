@@ -6,14 +6,7 @@
         margin-top:15px
     }
 </style>
-<% if(req.flash('message')){ %>
-<div class="alert alert-success ">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>!</strong> <%- req.flash('message') %>
-</div>
-<%
-}
-%>
+
 <section id="main-content">
     <section class="wrapper">
         <div class="col-md-12 main-chart">
@@ -21,13 +14,13 @@
                 <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
                 <div class="col-md-7">
 
-                    <img src="<% sails.getBaseurl() %>/index_files/blank_dp.jpg" class="image_pro" />
+                    <img src="../../index_files/blank_dp.jpg" class="image_pro" />
 
                 </div>
                 <% } else { %>
                 <div class="col-md-7">
 
-                    <img src="../index_files/uploads/documents/<%= student_info.student_profile_pic_path %>" class="image_pro" />
+                    <img src="../../index_files/uploads/documents/<%= student_info.student_profile_pic_path %>" class="image_pro" />
 
                 </div>
                 <% } %>

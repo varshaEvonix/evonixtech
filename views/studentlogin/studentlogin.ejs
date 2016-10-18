@@ -328,6 +328,8 @@
                         <div ng-show="loginError" class="alert alert-danger ng-hide">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <strong>!</strong> {{loginError}}
+                            <br>
+                            {{loginErrormessage}}
                         </div>
                         <h2 class="text-center">Student Login</h2>
                         <div class="form-group col-md-12">
@@ -426,6 +428,7 @@
                 }).error(function (data) {
 //                    console.log(data.error);
                     $scope.loginError = data.error;
+                     $scope.loginErrormessage = data.errormessage;
                 });
             }
         };

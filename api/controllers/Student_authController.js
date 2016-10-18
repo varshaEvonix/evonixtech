@@ -1,10 +1,9 @@
- 
+
 
 var md5 = require('MD5');
 
 module.exports = {
-
- student_login: function (req, res) {
+    student_login: function (req, res) {
 
         return res.view('./studentlogin/studentlogin', {layout: false});
     },
@@ -16,23 +15,23 @@ module.exports = {
                 var temp = JSON.stringify(vals);
                 var student = JSON.parse(temp)[0];
                 console.log(md5(req.param('password')));
- 
+
 
                 if (md5(req.param('password')) === student.student_password) {
                     req.session.student_id = student.student_id;
 
-                        var path = '/studash/'+req.session.student_id;
+                    var path = '/studash/' + req.session.student_id;
                     req.session.student_email = student.student_email;
-                    return res.ok({path:path});
+                    return res.ok({path: path});
                 } else {
-                    res.status(500).send({error: 'Password is wrong'});
+                    res.status(500).send({error: 'Invalid Username/Password', errormessage: "Still can't sign in? Be sure to check your spam folder, your account may need verification"});
                 }
             } else {
-                res.status(500).send({error: 'Usename is wrong'});
+                res.status(500).send({error: 'Invalid Username/Password', errormessage: "Still can't sign in? Be sure to check your spam folder, your account may need verification"});
             }
         });
     },
-   student_logout: function (req, res) {
+    student_logout: function (req, res) {
         //req.logout();
         res.redirect('./studentlogin/studentlogin');
     }

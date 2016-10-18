@@ -1,73 +1,72 @@
 <%- include ../stuhead.ejs %>
-  <% _.each(student_info, function (student_info) { %>
+<% _.each(student_info, function (student_info) { %>
 <%- include ../stud_left.ejs %>
- 
-    
-  <section id="main-content">
-          <section class="wrapper">
 
-              <div class="row">
 
-                  <div class="col-lg-9 main-chart">
-                  
-                    <div class="row mtbox">
-                      <div class="col-md-3 col-sm-3 box0">
-                        <div class="box1">
-                  <span><i class="fa fa-bullseye" aria-hidden="true"></i></span>
-                  <h4 style="font-size:16px">GOAL SET</h4>
+<section id="main-content">
+    <section class="wrapper">
 
-                  <h3> $<%= student_info.loan_amount %></h3>
-                        </div>
-                  <p>Your goal set is $<%= student_info.loan_amount %></p>
-                      </div>
-                      <div class="col-md-3 col-sm-3 box0">
-                        <div class="box1">
-                  <span><i class="fa fa-money" aria-hidden="true"></i></span>
-                  <h4 style="font-size:16px">AMOUNT RAISED</h4>
-                  <h3>$<%= student_info.total_funded %></h3>
-                        </div>
-                  <p>You have collected $<%= student_info.total_funded %> till now</p>
-                      </div>
-                      <div class="col-md-3 col-sm-3 box0">
-                        <div class="box1">
-                  <span><i class="fa fa-group" aria-hidden="true"></i></span>
-                  <h4 style="font-size:16px">TOTAL DONORS</h4>
-                 
-                  <h3>0</h3>
-                        </div>
-                  <p>0 donors in total</p>
-                      </div>
-                      <div class="col-md-3 col-sm-3 box0">
-                        <div class="box1">
-                  <span><i class="fa fa-percent" aria-hidden="true"></i></span>
-                  <h4 style="font-size:16px">PERCENT COMPLETE</h4>
-                  <h3>0%</h3>
-                        </div>
-                  <p>0% goal completed</p> 
-                      </div>
-                      
-                    
-                    </div><!-- /row mt -->  
-          
-                      
-                    <!-- /row -->
-                    
-                            
-         <!-- /row -->
-          
-         <!-- /row --> 
-          
-                  </div>
-                                
-                <!-- /col-lg-3 -->
-                <% }) %>
-                <div class="col-md-3">
-  <%- include ../stud_right.ejs %>
-  </div>
-              </div>
-          </section>
-      </section>
+        <div class="row">
 
-                 
-                  <%- include ../stufoot.ejs %>
- 
+            <div class="col-lg-9 main-chart">
+
+                <div class="row mtbox">
+                    <div class="col-md-3 col-sm-3 box0">
+                        <div class="box1">
+                            <span><i class="fa fa-bullseye" aria-hidden="true"></i></span>
+                            <h4 style="font-size:16px">GOAL</h4>
+
+                            <h3> $<%= student_info.loan_amount %></h3>
+                        </div>
+                        <p>Your goal set is $<%= student_info.loan_amount %></p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 box0">
+                        <div class="box1">
+                            <span><i class="fa fa-money" aria-hidden="true"></i></span>
+                            <h4 style="font-size:16px">AMOUNT RAISED</h4>
+                            <h3>$<%= student_info.total_funded %></h3>
+                        </div>
+                        <p>You have collected $<%= student_info.total_funded %> till now</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 box0">
+                        <div class="box1">
+                            <span><i class="fa fa-group" aria-hidden="true"></i></span>
+                            <h4 style="font-size:16px">TOTAL DONORS</h4>
+
+                            <h3>0</h3>
+                        </div>
+                        <p>0 donors in total</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3 box0">
+                        <div class="box1">
+                            <span><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            <h4 style="font-size:16px">PERCENT COMPLETE</h4>
+                            <h3>0%</h3>
+                        </div>
+                        <p>0% goal completed</p> 
+                    </div>
+
+
+                </div><!-- /row mt -->  
+
+
+                <!-- /row -->
+
+
+                <!-- /row -->
+
+                <!-- /row --> 
+
+            </div>
+
+            <!-- /col-lg-3 -->
+            <% }) %>
+            <div class="col-md-3">
+                <%- include ../stud_right.ejs %>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+<%- include ../stufoot.ejs %>

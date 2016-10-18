@@ -286,7 +286,7 @@ module.exports = {
         }
     },
     studlockedprofile: function (req, res) {
-        var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id');
+        var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id')+' order by student_changed_val.student_changed_time desc';
 
         Student_changed_val.query(q, function (err, results) {
 
@@ -301,10 +301,11 @@ module.exports = {
         var student_details = '';
         var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
         var approved_values = req.param('approved_values');
-        console.log(approved_values)
+      
         if (approved_values != undefined) {
+            
             approved_values.forEach(function (values, index) {
-                var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0' WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
+                var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0', admin_changed_time=NOW() WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
                 Student_changed_val.query(query, function (err, results) {
 
                 });
@@ -356,7 +357,6 @@ module.exports = {
                 });
                 req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are discarde</div>');
             } else {
-                console.log('else')
                 req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
             }
 

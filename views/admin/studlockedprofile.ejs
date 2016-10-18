@@ -20,28 +20,42 @@
                     <tr>
                         <th></th>
                         <th><strong>Field Name</strong></td>
-                        <th class="pink"><strong>Previous Record</strong></th>
-                        <th class="blue"><strong>Changed Record</strong></th>
+                        <th style="color:red;"><strong>Previous Record</strong></th>
+                        <th style="color:green;"><strong>Changed Record</strong></th>
                         <th><strong>Record Updated Date</strong></th>
                     </tr>
                     <!--<br>-->
                 </thead>
                 <tbody>
+ 
                     <%  _.each(student_records, function (records) { %>
                     <tr>
                         <td><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"></td>
                         <td><%= records.student_master_field_name.replace('_', ' ') %></td>
-                        <td class="pink" style="max-width:200px;">
+                        <td class="" style="width:360px;color:red;">
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
-                            <img src="../index_files/uploads/documents/<%= records.student_prev_value %>" class="image_pro">
+                            <img src="../../index_files/uploads/documents/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
+                            <% }else if(records.student_master_field_name == 'video_link'){ %>
+                            <% if (records.student_prev_value == '' || records.student_prev_value ==  undefined){ %>
+                            <p>No Video</p>
                             <% }else{ %>
-
+                            <iframe width="560" height="315" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
+                            </iframe>
+                            <% } %>
+                            <% }else{ %>
                             <%= records.student_prev_value %> 
                             <% } %>
                         </td>
-                        <td class="blue" style="max-width:200px;">
+                        <td class="" style="width:360px;color:green;">
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
-                            <img src="../index_files/uploads/documents/<%= records.student_changed_value %>" class="image_pro">
+                            <img src="../../index_files/uploads/documents/<%= records.student_changed_value %>" class="image_pro" style="height:147px;width:230px;">
+                            <% }else if(records.student_master_field_name == 'video_link'){ %>
+                            <% if (records.student_changed_value == '' || records.student_changed_value ==  undefined){ %>
+                            <p>No Video</p>
+                            <% }else{ %>
+                            <iframe width="350" height="200" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
+                            </iframe>
+                            <% } %>
                             <% }else{ %>
 
                             <%= records.student_changed_value %>
@@ -114,7 +128,7 @@
 //                dataType: 'json',
                         data: {student_id: student_id, profile_status: profile_status, admin_note: admin_note, approved_values: allvalues},
                         success: function (response) {
-                      window.location.reload();
+                            window.location = response.path;
                         }
                     });
 
