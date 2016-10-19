@@ -42,6 +42,7 @@
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                             <% 
+                            console.log(mst_fafsa)
                             mst_fafsa.forEach(function (values, index) {
                             if( values.id == records.student_prev_value){ 
                             %>
