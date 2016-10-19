@@ -9,7 +9,7 @@
                   <h5 class="centered"><%= student_info.student_firstname %> <%= student_info.student_lastname %></h5>
                    
                   <li class="mt">
-                      <a class="active" href="/studash/<%= student_info.student_id %>">
+                      <a  id="dashboard" href="/studash/<%= student_info.student_id %>">
                           <i class="fa fa-tachometer" aria-hidden="true"></i>
                           <span>Dashboard</span>
                       </a>
@@ -52,7 +52,7 @@
                     
                   </li-->
                     <li class="sub-menu">
-                      <a href="/viewprofile/<%= student_info.student_id %>" >
+                      <a id="studentprofile" href="/viewprofile/<%= student_info.student_id %>" >
                           <i class="fa fa-key" aria-hidden="true"></i>
                           <span>My profile</span>
                       </a>                      

@@ -26,6 +26,10 @@
     padding: 3px 10px;
     border: 1px solid #008677;
   }
+  .pointer{
+        cursor: pointer;
+    color: red;
+  }
 </style>
 <link href="../../index_files/lightbox.css" rel="stylesheet">
 <section id="main-content">
@@ -61,10 +65,30 @@
           </div>
           <div class="row">
            <% _.each(photos, function (photos) { %>
-           <div class="col-md-4" >
+             <div class="modal fade col-md-5 center" style="margin:auto" id="myModal" role="dialog">
+  <div class="modal-dialog">
 
+  </div><br>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Delete photo</h4>
+    </div>
+    <div class="modal-body">
+      <p>Do you really want to remove this photo? You cannot undo this action.</p>
+    </div>
+    <div class="modal-footer">
+     <a href="/remove_image/<%= photos.student_id %>/<%= photos.photo_id %>"><button type="button" class="btn btn-default">Yes</button></a>
+     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+   </div>
+ </div>
+</div>
+           <div class="col-md-4" >
+              <div style="text-align:center">
              <a href="../index_files/uploads/documents/<%= photos.photo_path %>" data-lightbox="example-set">
-              <img class="img-responsive" src="../index_files/uploads/documents/<%= photos.photo_path %>"></a><br>
+              <img class="img-responsive" src="../index_files/uploads/documents/<%= photos.photo_path %>" style="height:182px; width:273px"></a><br>
+              <a class="pointer" data-toggle="modal" data-target="#myModal"><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
+              </div>
             </div>
             <% }) %>
           </div>
@@ -72,7 +96,7 @@
           
           <div class="row">
            <div class="col-md-4">
-            <input type="submit" value="submit" class="upload btn btn-default">
+            <input type="submit" value="Submit" class="upload btn btn-default">
 
             <a href="/viewprofile/<%= student_info.student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
           </div>
@@ -103,6 +127,10 @@
     'wrapAround': true
   })
 </script>
+<script>
+
+      $('#studentprofile').addClass('active');
+      </script>
 
 <!-- <script>
     var postApp = angular.module('postApp', []);

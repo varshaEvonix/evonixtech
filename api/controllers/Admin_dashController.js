@@ -217,7 +217,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" order by student_details.created_on desc LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" order by student_login_credentials.last_updated desc LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
 
@@ -278,20 +278,17 @@ module.exports = {
         }
     },
     add_notes: function (req, res) {
-        console.log("req.param('filename')");
-        console.log(req.file('file'));
-//console.log( req.file('loan_id'));
+
         var file = req.file('file');
         var filename = req.file('file')._files[0].stream.filename;
-        console.log('filename')
-        console.log(filename)
+
         var newfilename = Date.now() + filename;
         req.file('file').upload({dirname: '../public/index_files/notes_attachment/', saveAs: newfilename}, function (err, files) {
             if (err) {
 
             }
             else {
-                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + filename + "', '1')";
+                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + newfilename + "', '1')";
 
                 Admin_loan_comments.query(insert_query, function (err, record)
                 {

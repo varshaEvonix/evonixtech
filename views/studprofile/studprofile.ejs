@@ -169,13 +169,13 @@
    <div class="row">
      <div class="col-md-12">
        <p class="info"> <span class="small">About Me: <br>
-       </span><%= student_info.student_about_me %></p>
+           </span><span id="about_me"></span></p>
      </div>
    </div>
    <div class="row"><br>
      <div class="col-md-12 bot">
        <p class="info"> <span class="small">My Ambition: <br>
-       </span><%= student_info.student_ambition %></p>
+       </span><span id="ambition"></span></p>
      </div>
    </div>
  </div>
@@ -185,7 +185,7 @@
 
   <div class="row">
     <div class="col-md-4">
-      <p class="info">  <span class="small">Education Institute: <br>
+      <p class="info">  <span class="small">University / Educational Institution: <br>
       </span><%= student_info.student_education_institute %></p>
     </div>
     <div class="col-md-4 bot">
@@ -363,7 +363,25 @@
   ];
   var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
 </script>
+<script>
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
 
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
+    var about_me= htmlDecode("<%= student_info[0].student_about_me.replace(/\n/gi,'<br/>')%>");
+    var ambition= htmlDecode("<%= student_info[0].student_ambition.replace(/\n/gi,'<br/>')%>");
+
+   
+   $(document).ready(function(){
+//      alert("hi");
+
+    $('#about_me').html(about_me); 
+    $('#ambition').html(ambition); 
+   });
+</script>
 <!-- <script>
   var doughnutData = [
   {
@@ -383,3 +401,7 @@
     'wrapAround': true
   })
 </script>
+<script>
+
+      $('#studentprofile').addClass('active');
+      </script>

@@ -151,13 +151,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="info"> <span class="small">About Me: <br>
-                                        </span><%= student_info.student_about_me %></p>
+                                        </span><span id="about_me"></span></p>
                                 </div>
                             </div>
                             <div class="row"><br>
                                 <div class="col-md-12 bot">
                                     <p class="info"> <span class="small">My Ambition: <br>
-                                        </span><%= student_info.student_ambition %></p>
+                                        </span><span id="ambition"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -182,11 +182,11 @@
                         <div class="col-md-12 white_bg">
                             <div style="font-size:22px;" class="row edit_op">Current Loan
 
-                                <!--                                <div class="row pull-right"> <a href="/loan_edit/<%= student_info.student_id %>/<%= student_info.loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-                                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>-->
+
                                 <br>
                                 <br>
                             </div>
+                            <%if (student_info.loan_bankname != '' || student_info.fafsa_values != '' || student_info.fafsa_values != null || student_info.loan_bankname != null) { %>
                             <div class="row">
 
                                 <div class="col-md-3">
@@ -194,7 +194,7 @@
                                         </span>$<%= student_info.loan_amount %></p>
 
                                 </div>
-                                <%if (student_info.loan_bankname && student_info.fafsa_values != '') { %>
+
                                 <div class="col-md-6">
                                     <%if (student_info.loan_bankname == '') { %>
                                     <div class="col-md-6">
@@ -216,8 +216,8 @@
                                     </div>
                                     <% } %>
                                 </div>
-                                <div class=""></div>
-                                <% } %>
+
+
 
                                 <div class="col-md-3">
                                     <p class="info">  <span class="small">Loan Account Number: <br>
@@ -226,41 +226,10 @@
 
                                 <br><br><br><br><br>
                             </div>
+                            <% } %>
                             <div>
 
-                                <h3>Previous loans</h3><br>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Type of Loan</th>
-                                            <th>Name of Loan</th>
-                                            <th>Name of Bank</th>
-                                            <th>Account Number</th>
-                                            <th>Loan Current Balance</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% _.each(loan_list, function (loan_list) { %>
-                                        <tr>
-                                            <%if (loan_list.loan_bankname == '') { %>
-                                            <td>FAFSA</td>
-                                            <% } else {%>
-                                            <td>Bank loan</td>
-
-                                            <% } %>
-
-                                            <td><%= loan_list.fafsa_values %></td>
-                                            <td><%= loan_list.loan_bankname %></td>
-                                            <td><%= loan_list.loan_accountno %></td>
-                                            <td><%= loan_list.loan_amount %></td>
-
-
-                                            <td>Deactivated</td>
-                                        </tr>
-                                        <% }) %>
-                                    </tbody>
-                                </table>
+                           
                             </div>
                         </div>
                     </div>
@@ -447,6 +416,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <input type="hidden" name="loan_id" id="loan_id"  value="<%= student_info.loan_id %>"/>
+                            <input type="hidden" name="student_id" id="loan_id"  value="<%=student_info.student_id %>"/>
                             <button type="submit" ng-click="submitted = true" id="submit-notes" class="btn btn-default">Submit</button>
                             <p class="loading" style="display:none;">Loading....</p>
                         </div>
@@ -463,7 +433,7 @@
 <%- include ../admin/stufoot.ejs %>
 <script src="../../index_files/lightbox.js"></script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
                                 $(function () {
                                     $("#bluecircle").percircle();
                                 });
@@ -472,8 +442,26 @@
 
                                 });
 
-</script>
+</script>-->
+<script>
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
 
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
+    var about_me= htmlDecode("<%= student_info.student_about_me.replace(/\n/gi,'<br/>')%>");
+    var ambition= htmlDecode("<%= student_info.student_ambition.replace(/\n/gi,'<br/>')%>");
+
+   
+   $(document).ready(function(){
+//      alert("hi");
+
+    $('#about_me').html(about_me); 
+    $('#ambition').html(ambition); 
+   });
+</script>
 <script>
     var completePer = parseInt($("#loan_percent").val());
     var remainingPer = parseInt(100 - completePer);

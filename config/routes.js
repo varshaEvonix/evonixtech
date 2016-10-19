@@ -1,6 +1,6 @@
 
 module.exports.routes = {
-  //saurabh
+    //saurabh
     '/': 'Student_detailsController.homepage_view',
     '/studentlogin': 'StudentloginController.studentlogin',
     '/user': 'Student_detailsController.stulogin',
@@ -37,6 +37,7 @@ module.exports.routes = {
 
     '/activation_link/:id': 'Student_detailsController.activate_student',
     '/thankyou': 'ThankyouController.thankyou',
+    '/remove_image/:student_id/:photo_id': 'ProfileController.removeimage',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',

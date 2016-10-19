@@ -34,7 +34,8 @@ module.exports = {
             var student_about_me = req.param("student_about_me");
             var student_ambition = req.param("student_ambition");
 
-
+console.log('student_about_me')
+console.log(student_about_me)
 
             var update = "";
             try {

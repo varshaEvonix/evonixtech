@@ -134,6 +134,15 @@ module.exports = {
             });
         }
     },
+    'removeimage': function (req, res) {
+
+        Student_photographs.query('UPDATE `student_photographs` SET `isEnabled`= 0 WHERE `photo_id`=' + req.param('photo_id'), function (err, recordset) {
+
+            return res.redirect('/media_edit/' + req.param('student_id'));
+
+        });
+
+    },
 };
 
 // select * from user left join personal on user.id=personal.user_id left join education on education.user_id=user.id left join loan on loan.user_id=user.id where personal.user_id=1 AND education.user_id=1 AND loan.user_id=1;

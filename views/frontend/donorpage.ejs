@@ -143,40 +143,37 @@
                         <div class="panel panel-default left-box">
                             <div class="panel-heading"><%= student_details.student_firstname +' ' + student_details.student_lastname %></div>
                             <div class="panel-body">
-                                <% if(student_details.student_profile_pic_path == null){ %>
-                                <img src='../index_files/feature2.jpg' class="img-responsive" style="width: 100%;">
+
+                                <% if(student_details.student_profile_pic_path == null || student_details.student_profile_pic_path== undefined || student_details.student_profile_pic_path== ''){ %>
+                                <img src='../index_files/blank_dp.jpg' class="img-responsive" style="width: 100%;">
                                 <% }else{ %>
-                                <img src='../../index_files/uploads/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
+                                <img src='../../index_files/uploads/documents/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
                                 <% } %>
                                 <h2>$ <%= funded_amount %> <span>of $ <%= student_details.loan_amount %></span></h2>
+                                <%
+                                var percentage = (funded_amount/student_details.loan_amount)*100
+                              
+                                %>
                                 <div class="progress-item mt-0">
                                     <div class="progress mb-10">
-                                        <div data-percent="85" class="progress-bar appeared" style="width: 85%;"><span class="percent">0</span>
-                                            <span class="percent">85%</span></div>
+                                        <div data-percent="<%= percentage %>" class="progress-bar appeared" style="width: <%= percentage %>%;"><span class="percent">0</span>
+                                            <span class="percent"><%= percentage %>%</span></div>
                                     </div>
                                 </div>
                                 <p>Raised by <%= donor_count %> people </p>
                             </div>
                         </div>
-                        <p><strong>About the Student</strong></p>
+
                         <div class="panel panel-default left-box about">
                             <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-3 col-xs-3">
-                                        <img src='../../index_files/stdash/img/ui-sam.jpg' class="img-responsive" style="width: 100%;">
-                                    </div>
-                                    <div class="col-md-9 col-sm-9 col-xs-9">
-                                        <h3><strong><i class="fa fa-envelope-o"></i><%= student_details.student_firstname +' ' + student_details.student_lastname %></strong></h3>
-
-                                        <!--<p class="small">448 Facebook Friends</p>-->
-                                    </div>
-                                </div>
+                              
+                                   About the Student
+                               
                             </div>
                             <div class="panel-body">
-                                <p><strong><%= student_details.student_ambition %></strong></p>
-                                <!--<p>David Gutowski</p>-->
-                                <hr>
-                                <p><%= student_details.student_about_me %>.</p>
+                                <p><strong><%= student_details.student_about_me %></strong></p>
+                        
+                         
                             </div>
 
                         </div>
@@ -196,17 +193,17 @@
                                         <div class="form-group input-group col-md-6 col-sm-6 halfwf">
                                             <label>Email address:</label>
                                             <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
-                                            
+
                                             <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
-                                        <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
+                                            <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
                                         </div>
-                                        
+
                                         <div class="form-group input-group col-md-6 col-sm-6 halfwf">
                                             <label for="email">Your Name:</label>
                                             <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
                                             <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
                                         </div>
-                                        
+
                                         <div class="inputgp">
                                             <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
                                             <label class="checklbl"> Hide name and comment from everyone but the organizer.</label>
@@ -258,7 +255,7 @@
     postApp.controller('postController', function ($scope, $http) {
         $scope.donor = {};
         $('#donationamt').submit(function () {
-            
+
             if ($scope.donorsForm.$valid) {
                 return true;
             } else {

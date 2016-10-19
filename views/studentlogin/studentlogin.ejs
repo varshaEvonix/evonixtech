@@ -37,6 +37,8 @@
         <link href="../../index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
         <!-- CSS | Responsive media queries -->
         <link href="../../index_files/responsive.css" rel="stylesheet" type="text/css">
+        <link href="../../index_files/css-plugin-collections.css" rel="stylesheet">
+        <link id="menuzord-menu-skins" href="../../index_files/menuzord-boxed.css" rel="stylesheet">
         <style>
 
 
@@ -304,6 +306,10 @@
             .has-error{
                 color: red;
             }
+            .menuzord-menu > li > a {
+                font-size: 13px;
+                font-weight: 400;
+            }
         </style>
     </head>
     <body ng-app="postApp" ng-controller="postController">
@@ -311,9 +317,27 @@
             <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
                 <div class="header-nav-wrapper">
                     <div class="container">
-                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
+                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive"><a style="display: none;" href="javascript:void(0)"><em></em><em></em><em></em></a>
                             <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
+                            <ul style="max-height: 400px;" class="menuzord-menu menuzord-right menuzord-indented scrollable">
 
+                                <li style=""  ><a href="/allprofile">Profiles</a>
+                                </li>
+                                <li style="" ><a href="../myprofile/myprofile">My Profile</a>
+
+                                </li>
+                                <li style=""><a href="../stulogin/stulogin">Create account</a>
+
+                                </li>
+                                <li style="" class="active"><a href="/student/login">Login </a>
+
+                                </li>
+
+                            </ul>
+                            </li>
+
+
+                            </ul>
                         </nav>
                     </div>
                 </div>
@@ -428,7 +452,7 @@
                 }).error(function (data) {
 //                    console.log(data.error);
                     $scope.loginError = data.error;
-                     $scope.loginErrormessage = data.errormessage;
+                    $scope.loginErrormessage = data.errormessage;
                 });
             }
         };

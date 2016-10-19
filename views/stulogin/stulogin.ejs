@@ -429,23 +429,23 @@ textarea {
           </div>
           </div>
           
-         <div class="col-md-6">
+ <div class="col-md-6">
           <div class="field-wrap form-group input-group" >
           <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
             <label>
               Password<span class="req">*</span>
             </label>
-            <input  type="password" ng-minlength="7" ng-model="student.student_password" id="student_password" name="student_password"  required>
+            <input  type="password" ng-minlength="7" ng-model="minlength" ng-model="student.student_password" id="student_password" name="student_password"  required>
             <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
 1. Make sure that it is at least 6 characters long
-2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
+2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
 3. Don't use more than 2 identical consecutive characters
 4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
 
              <span class="clearfix"></span>
               <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
-<p ng-show="submitted && registerform.student_password.$error.pattern"  class="help-block has-error ng-hide">Not valid password.</p>
- <p ng-show="submitted && educationform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 6 characters.</p>
+
+ <p ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 7 characters.</p>
 
           </div></div>
           <div class="col-md-6">
@@ -454,10 +454,12 @@ textarea {
             <label>
             Confirm password<span class="req">*</span>
             </label>
-            <input  type="password" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
+            <input  type="password" ng-minlength="7" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
              <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
 <p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
-          </div></div></div><br>
+
+          </div></div>
+          </div><br>
      <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
        <br>
           <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>

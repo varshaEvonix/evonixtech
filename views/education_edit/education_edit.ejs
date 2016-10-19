@@ -2,57 +2,57 @@
 
 <%- include ../stud_left.ejs %>
 <section id="main-content">
-          <section class="wrapper" ng-app="postApp" ng-controller="postController">
-          <br>
-<div class="row">
-<div class="col-sm-9">
+    <section class="wrapper" ng-app="postApp" ng-controller="postController">
+        <br>
+        <div class="row">
+            <div class="col-sm-9">
 
-           <!--form action="/education_edit_submit" method="POST" role="form"-->
-           <form class="form" ng-submit="submitForm()" name="educationform" novalidate>
- 
- <h2>Education details</h2><br>
+                <!--form action="/education_edit_submit" method="POST" role="form"-->
+                <form class="form" ng-submit="submitForm()" name="educationform" novalidate>
+
+                    <h2>Education details</h2><br>
 
 
-    <div class="form-group">
-     
-      <label for="student_education_institute">Enter your education institute: </label>
-      <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="80" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info.student_education_institute %>" required>
-       <p ng-show="submitted && educationform.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
-       <p ng-show="submitted && educationform.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide">Institute's name limit exeeds.</p>
-    </div>
-    <div class="form-group">
-       <label for="student_education_fieldofstudy">Enter your field of study: </label>
-      <input type="text" ng-maxlength="80" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info.student_education_fieldofstudy %>" required>
-       <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
-       <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide">Field name limit exeeds.</p>
-    </div>
-   
-   
-    <br>
-    <input type="hidden" name="_csrf" value="<% _csrf%>" />
-    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button> 
-    <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a> 
-  </form>
-  
-  </div>
-<div class="col-md-3">
-   <%- include ../stud_right.ejs %>
-  </div>
- </section>
-  </section> 
-                
-                  <%- include ../stufoot.ejs %>
+                    <div class="form-group">
+
+                        <label for="student_education_institute">Enter your University / Educational Institution: </label>
+                        <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="200" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info.student_education_institute %>" required>
+                        <p ng-show="submitted && educationform.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
+                        <p ng-show="submitted && educationform.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide">Institute's name limit exeeds.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="student_education_fieldofstudy">Enter your field of study: </label>
+                        <input type="text" ng-maxlength="200" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info.student_education_fieldofstudy %>" required>
+                        <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
+                        <p ng-show="submitted && educationform.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide">Field name limit exeeds.</p>
+                    </div>
+
+
+                    <br>
+                    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+                    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button> 
+                    <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a> 
+                </form>
+
+            </div>
+            <div class="col-md-3">
+                <%- include ../stud_right.ejs %>
+            </div>
+    </section>
+</section> 
+
+<%- include ../stufoot.ejs %>
 <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
-     $scope.student={};
+        $scope.student = {};
 
 
-  $scope.student.student_education_institute='<%= student_info.student_education_institute %>';
-  $scope.student.student_education_fieldofstudy='<%= student_info.student_education_fieldofstudy %>';
+        $scope.student.student_education_institute = '<%= student_info.student_education_institute %>';
+        $scope.student.student_education_fieldofstudy = '<%= student_info.student_education_fieldofstudy %>';
 
 
-    
+
         $scope.submitForm = function () {
             if ($scope.educationform.$valid) {
                 $http({
@@ -67,9 +67,13 @@
                 });
 
             }
-    
+
 
         };
     });
 
+</script>
+<script>
+
+    $('#studentprofile').addClass('active');
 </script>

@@ -78,8 +78,8 @@ module.exports = {
                 console.log('The card has been declined');
                 res.redirect('donorpage/' + student_id);
             } else {
-                var q = "INSERT INTO `stumuch_db`.`donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`,`stripe_token`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900'," + stripeToken + ")";
-
+                var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`,`stripe_token`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900','" + stripeToken + "')";
+console.log(q)
                 Donors_funding_details.query(q, function (err, results) {
 //                    var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + student_id + " AND loan_details.isActive=1";
 //                    console.log(q);
