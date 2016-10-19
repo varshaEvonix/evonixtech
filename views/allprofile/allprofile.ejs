@@ -271,7 +271,7 @@
          <div class="col-sm-4 col-md-4 col-lg-4">
           <div class="causes maxwidth500 mb-sm-50">
             <div class="thumb">
-              <img class="img-fullwidth" alt="" src="../index_files/uploads/documents/<%= humans.student_profile_pic_path %>" width="250" height="230">
+              <img class="img-fullwidth" alt="" src="<% if (humans.student_profile_pic_path == '' || humans.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/documents/<%= humans.student_profile_pic_path %> <% } %>" width="250" height="230">
               <div class="donate-piechart piechart-absolute">
                 <%if (today == humans.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:21%;float:right"><% } %>
               </div>

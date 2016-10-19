@@ -34,15 +34,21 @@
                         <td><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"></td>
                         <td><%= records.student_master_field_name.replace('_', ' ') %></td>
                         <td class="" style="width:360px;color:red;">
-                            <% if (records.student_prev_value != ' ' || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
+                            <% if (records.student_prev_value != "" || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
+                             <% console.log('records.student_prev_value')  %>
+                            <% console.log(records.student_prev_value) %>
+                             <% console.log('records.student_prev_value')  %>
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
                             <img src="../../index_files/uploads/documents/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
-                            <iframe width="560" height="315" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
+                           
+                           
+                            
+                            <iframe width="315" height="177" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                             <% 
-                            console.log(mst_fafsa)
+                           
                             mst_fafsa.forEach(function (values, index) {
                             if( values.id == records.student_prev_value){ 
                             %>
@@ -57,15 +63,17 @@
                             <%= records.student_prev_value %> 
                             <% } %>
                             <% }else{ %>
+                             <% console.log('else') %>
+                         
                             <p>No previous record</p>
                             <% } %>
                         </td>
                         <td class="" style="width:360px;color:green;">
-                            <% if (records.student_changed_value == ' ' || records.student_changed_value ==  undefined || records.student_changed_value != null){ %>
+                            <% if (records.student_changed_value == '' || records.student_changed_value ==  undefined || records.student_changed_value != null){ %>
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
                             <img src="../../index_files/uploads/documents/<%= records.student_changed_value %>" class="image_pro" style="height:147px;width:230px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
-                            <iframe width="350" height="200" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
+                            <iframe width="315" height="177" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                                         <% 

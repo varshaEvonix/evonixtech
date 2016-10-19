@@ -5,6 +5,9 @@
         width:100%; 
         margin-top:15px
     }
+    /*    ul li {
+        list-style: disc !important;
+    }*/
 </style>
 
 <section id="main-content">
@@ -65,7 +68,7 @@
 
                     </div>
                     <div class="row">
-              
+
                         <% if(student_info.loan_id != null){ %>
                         <div class="col-md-6" ><a href="javascript:void(0);" data-toggle="modal" data-target="#internalNotes" class="btn btn-primary"> Add Notes</a></div>
                         <% } %>
@@ -338,26 +341,28 @@
                             if(comments.note_type==1){
                             %>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <p>
+                                <ul class="col-md-6" style="list-style:disc;padding-left: 27px;">
+                                    <li style="list-style: disc !important;">
                                         <% var comment=''; %>
                                         <% if(comments.note !='undefined'){ %>
                                         <% comment=comments.note %>
-                                        <i class="fa fa-circle-thin" aria-hidden="true"></i>
+
                                         <%= comment %>
                                         <% }else{ %>
                                         <%= comment %>
                                         <% } %>
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
-                                    <% var img=''; %>
-                                    <% if(comments.note_attachment !='undefined'){ %>
-                                    <a target="_blank" href="../../index_files/notes_attachment/<%= comments.note_attachment %>"><%= comments.note_attachment %></a>
-                                    <% }else{ %>
-                                    No Attachment
-                                    <% } %>
-                                </div>
+                                    </li>
+                                </ul>
+                                <ul class="col-md-6">
+                                    <li>
+                                        <% var img=''; %>
+                                        <% if(comments.note_attachment !='undefined'){ %>
+                                        <a target="_blank" href="../../index_files/notes_attachment/<%= comments.note_attachment %>">View</a>
+                                        <% }else{ %>
+                                        No Attachment
+                                        <% } %>
+                                    </li>
+                                </ul>
                             </div> <br>
                             <% 
                             }
@@ -401,7 +406,7 @@
                 <h4 class="modal-title">Add Notes</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" ng-submit="submitForm()" enctype="multipart/form-data" role="form" name="NotesForm" novalidate>
+                <form class="form-horizontal" id="addNoteForm" action="/add_notes" method="POST" enctype="multipart/form-data" role="form" name="NotesForm" novalidate>
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">Note Type</label>
                         <div class="col-sm-5">
@@ -409,11 +414,7 @@
                                 <input type="radio" ng-model="admin.note_type"  id="note_type"  autocomplete="off" name="note_type" value="1" required/>&nbsp;&nbsp;
                                 Internal
                             </label>
-                            <!--<input type="radio" ng-model="admin.note_type" class="form-control" id="note_type"  autocomplete="off" name="note_type[]" value="2" required/>-->
-                            <!--                            <select name="note_type" ng-model="admin.note_type" class="form-control" required>
-                                                            <option value="1">Internal Notes</option>
-                                                            <option value="2">External Notes</option>
-                                                        </select> -->
+
                             <span ng-show="submitted && NotesForm.note_type.$error.required"  class="help-block has-error ng-hide">Note type is required.</span>
                         </div>
                         <div class="col-sm-5">
@@ -437,7 +438,8 @@
                         <label class="col-sm-2 control-label">Upload Attachment</label>
                         <div class="col-sm-10">
                             <!--<input type="file" file-model="myFile" id="attachment"  name="attachment"/>-->
-                            <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+                            <!--<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>-->
+                            <input type="file" name="file" />
                             <!--<span ng-show="submitted && NotesForm.attachment.$error.required"  class="help-block has-error ng-hide">Attachment is required.</span>-->
                         </div>
                     </div>
@@ -492,39 +494,46 @@
     var myApp = angular.module('postApp', []);
     myApp.controller('postController', function ($scope, $http) {
         $scope.admin = {};
-        $scope.uploadFile = function (files) {
-            $('#submit-notes').hide();
-            $('.loading').show();
-            var fd = new FormData();
-            fd.append("file", files[0]);
-            console.log(fd);
-            $http.post('/upload_file', fd, {
-                withCredentials: true,
-                headers: {'Content-Type': undefined},
-                transformRequest: angular.identity
-            }).success(function (data) {
-                $scope.admin.filename = data;
-                $('#submit-notes').show();
-                $('.loading').hide();
-            });
-        };
-        $scope.submitForm = function () {
-
-            $scope.admin.loan_id = '<%=student_info.loan_id %>';
-            $scope.admin.student_id = '<%=student_info.student_id %>';
-
+//        $scope.uploadFile = function (files) {
+//            $('#submit-notes').hide();
+//            $('.loading').show();
+//            var fd = new FormData();
+//            fd.append("file", files[0]);
+//            console.log(fd);
+//            $http.post('/upload_file', fd, {
+//                withCredentials: true,
+//                headers: {'Content-Type': undefined},
+//                transformRequest: angular.identity
+//            }).success(function (data) {
+//                $scope.admin.filename = data;
+//                $('#submit-notes').show();
+//                $('.loading').hide();
+//            });
+//        };
+        $('#addNoteForm').submit(function () {
             if ($scope.NotesForm.$valid) {
-                $http({
-                    method: 'POST',
-//                    dataType: 'json',
-                    url: '/add_notes',
-                    data: $scope.admin, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    window.location = '/admin/viewdetails/' + data.student_id;
-                });
+                return true;
+            } else {
+                return false;
             }
-        };
+        });
+//        $scope.submitForm = function () {
+//
+//            $scope.admin.loan_id = '<%=student_info.loan_id %>';
+//            $scope.admin.student_id = '<%=student_info.student_id %>';
+//
+//            if ($scope.NotesForm.$valid) {
+//                $http({
+//                    method: 'POST',
+////                    dataType: 'json',
+//                    url: '/add_notes',
+//                    data: $scope.admin, //forms user object
+//                    headers: {'Content-Type': 'application/json'}
+//                }).success(function (data) {
+//                    window.location = '/admin/viewdetails/' + data.student_id;
+//                });
+//            }
+//        };
     });
 </script>
 
