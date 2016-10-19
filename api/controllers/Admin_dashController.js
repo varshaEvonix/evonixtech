@@ -293,11 +293,11 @@ module.exports = {
             var mst_fafsa = 'SELECT * from mst_fafsa';
 
             Mst_fafsa.query(mst_fafsa, function (err, mst_fafsa_result) {
-
+            
                 return   res.view('./admin/studlockedprofile', {
                     layout: false,
                     student_records: results,
-                    mst_fafsa:mst_fafsa_result
+                    mst_fafsa: mst_fafsa_result
                 });
             });
         });
