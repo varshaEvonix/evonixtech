@@ -73,7 +73,7 @@
                                     <th>Country</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                     <th>Lock Status</th>
+                                     <th class="text-center">Lock Status</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -103,10 +103,10 @@
                                     <%
                                     }
                                     %>
-                                       <td>    <% if(corndog.profile_lock==1) { %>
-                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    <td class="text-center">    <% if(corndog.profile_lock==1) { %>
+                                        <a style="color: #000" href="/admin/studlockedprofile/<%= corndog.student_id %>"><i style="font-size: 30px;" class="fa fa-lock" aria-hidden="true"></i></a>
                                         <% }else{ %>
-                                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        <a style="color: #000" href="/admin/studlockedprofile/<%= corndog.student_id %>"><i style="font-size: 30px;" class="fa fa-unlock" aria-hidden="true"></i></a>
                                         <% } %></td>
                                     <td class="text-right">
                                         <a type="button" href="/admin/viewdetails/<%= corndog.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
