@@ -62,7 +62,7 @@ console.log(student_about_me)
 
 
         Student_details.query('SELECT * from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
-            Student_details.query('SELECT * from student_photographs left join student_details on student_details.student_id=student_photographs.student_id where student_details.student_id= ' + req.param('id'), function (err, pics) {
+            Student_details.query('SELECT * from student_photographs left join student_details on student_details.student_id=student_photographs.student_id where  student_photographs.isEnabled = 1 AND student_details.student_id= ' + req.param('id'), function (err, pics) {
 
                 return res.view('./media_edit/media_edit', {
                     student_info: recordset,
