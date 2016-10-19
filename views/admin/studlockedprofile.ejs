@@ -41,7 +41,7 @@
                             <iframe width="560" height="315" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
-                            <% if(records.student_prev_value != null && records.student_prev_value!=''){ %>
+                            <% if(records.student_prev_value != null || records.student_prev_value!=''){ %>
                              <%= mst_fafsa[records.student_prev_value].fafsa_values %>
                             <% }else{ %>
                               <p>No previous record</p>
@@ -62,7 +62,7 @@
                             <iframe width="350" height="200" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                               <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
-                              <% if(records.student_changed_value != null && records.student_changed_value!=''){ %>
+                              <% if(records.student_changed_value != null || records.student_changed_value!=''){ %>
                                <%= mst_fafsa[records.student_changed_value].fafsa_values %>
                             <% }else{ %>
                               <p>No record changed</p>
