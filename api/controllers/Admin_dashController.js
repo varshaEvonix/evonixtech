@@ -130,7 +130,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details  left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="1" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details  left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="1" order by student_details.created_on desc LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
             var all_rows = Student_details.query('SELECT count(*) as erow from student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="1"', function (err, the_rows) {
@@ -173,7 +173,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details  left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="0" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details  left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.student_active="0" order by student_details.created_on desc LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
 
@@ -217,7 +217,7 @@ module.exports = {
 
         var per_page = 10;
         var start_from = (page - 1) * per_page;
-        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" LIMIT ' + start_from + ', ' + per_page + '';
+        var q = 'SELECT *,student_details.student_id as student_id FROM student_details left join student_login_credentials on student_login_credentials.student_id=student_details.student_id where student_login_credentials.profile_lock="1" order by student_details.created_on desc LIMIT ' + start_from + ', ' + per_page + '';
 
         Student_details.query(q, function (err, results) {
 
@@ -266,25 +266,42 @@ module.exports = {
             var file = req.file('file');
             var filename = req.file('file')._files[0].stream.filename;
             var newfilename = Date.now() + filename;
-            req.file('formdata').upload({dirname: '../public/index_files/notes_attachment/', saveAs: newfilename}, function (err, files) {
+            req.file('formdata').upload({dirname: '../public/index_files/uploads/', saveAs: newfilename}, function onUploadComplete(err, files) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log('files')
+                    console.log(files)
+                }
                 return res.ok(newfilename);
             });
         }
     },
     add_notes: function (req, res) {
+        console.log("req.param('filename')");
+        console.log(req.file('file'));
+//console.log( req.file('loan_id'));
+        var file = req.file('file');
+        var filename = req.file('file')._files[0].stream.filename;
+        console.log('filename')
+        console.log(filename)
+        var newfilename = Date.now() + filename;
+        req.file('file').upload({dirname: '../public/index_files/notes_attachment/', saveAs: newfilename}, function (err, files) {
+            if (err) {
 
-        if (req.method === 'POST') {
-            var file_name = req.param('filename') == 'undefined' ? ' ' : req.param('filename');
-            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + file_name + "', '1')";
+            }
+            else {
+                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + filename + "', '1')";
 
-            Admin_loan_comments.query(insert_query, function (err, record)
-            {
-                console.log(insert_query)
+                Admin_loan_comments.query(insert_query, function (err, record)
+                {
+                    console.log(insert_query)
 
-            });
-            return res.ok({student_id: req.param('student_id')});
+                });
+            }
+            return res.redirect('admin/viewdetails/'+ req.param('student_id'));
+        });
 
-        }
     },
     studlockedprofile: function (req, res) {
         var q = 'SELECT *, DATE_FORMAT(student_changed_time,"%Y-%m-%d") as student_changed_time FROM student_changed_val left join student_field_master on student_changed_val.student_master_field_id=student_field_master.student_master_field_id where student_changed_val.is_new_change="1" AND student_changed_val.admin_approval=0 AND student_changed_val.student_id=' + req.param('id') + ' order by student_changed_val.student_changed_time desc';
@@ -293,7 +310,7 @@ module.exports = {
             var mst_fafsa = 'SELECT * from mst_fafsa';
 
             Mst_fafsa.query(mst_fafsa, function (err, mst_fafsa_result) {
-            
+
                 return   res.view('./admin/studlockedprofile', {
                     layout: false,
                     student_records: results,
