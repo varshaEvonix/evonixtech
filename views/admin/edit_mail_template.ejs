@@ -90,7 +90,7 @@
                     var text = tinymce.activeEditor.getContent({
                         format: 'text'
                     });
-                    $scope.admin.content = htmlEncode(text);
+                    $scope.admin.content = text;
                  
                     if ($scope.mailtemplateform.$valid) {
                         $http({

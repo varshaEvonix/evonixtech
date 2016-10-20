@@ -25,6 +25,7 @@
 <link href="../../index_files/responsive.css" rel="stylesheet" type="text/css">
 <script  src="../../index_files/stdash/js/angular.min.js"></script>
 
+
 <link href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'>
 <style>
 
@@ -407,7 +408,7 @@
                                                 <label>
                                                     Contact number<span class="req">*</span>
                                                 </label>
-                                                <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
+                                                <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" format  ng-pattern="/^[0-9-]*$/" required>
                                                 <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
                                                 <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
                                                 <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
@@ -418,14 +419,15 @@
                                                 <label>
                                                     Email<span class="req">*</span>
                                                 </label>
-                                                <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required style="border-right: none;">
+                                                <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required style="border-right: none;">
 
                                                 <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
 
                                                 <span class="clearfix"></span>
-                                                <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
-                                                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide">Account with such e-mail alrady exists.</p>
-                                                <p class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
+                                                <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide student_email">Email is required.</p>
+                                                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide student_email">Account with such e-mail alrady exists.</p>
+                                                <p class="error has-error ng-hide student_email" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
+                                                <p ng-show="errorEmail_id" class="help-block has-error ng-hide student_email">{{errorEmail_id}}</p>
                                             </div>
                                         </div>
 
@@ -510,13 +512,13 @@
                                             <div class="widget dark mb-20">
                                                 <h5 class="widget-title line-bottom">Links</h5>
                                                 <ul class="list-border font-13">
-                                                    <li><a href="#">About Us</a>
+                                                    <li><a href="/aboutus">About Us</a>
                                                     </li>
-                                                    <li><a href="faq1">FAQ</a>
+                                                    <li><a href="/faq">FAQ</a>
                                                     </li>
-                                                    <li><a href="#">Terms & Conditions</a>
+                                                    <li><a href="/termsandconditions">Terms & Conditions</a>
                                                     </li>
-                                                    <li><a href="#">Privacy Policy</a>
+                                                    <li><a href="/privacypolicy">Privacy Policy</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -545,88 +547,63 @@
                                             $('[data-toggle="tooltip"]').tooltip();
                                         });
                             </script>
-
+                            <script  src="../../index_files/stdash/js/mask.js"></script>
                             <script>
 
-                                $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
+                                        $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
 
-                                    var $this = $(this),
-                                            label = $this.prev('label');
+                                            var $this = $(this),
+                                                    label = $this.prev('label');
 
-                                    if (e.type === 'keyup') {
-                                        if ($this.val() === '') {
-                                            label.removeClass('active highlight');
-                                        } else {
-                                            label.addClass('active highlight');
-                                        }
-                                    } else if (e.type === 'blur') {
-                                        if ($this.val() === '') {
-                                            label.removeClass('active highlight');
-                                        } else {
-                                            label.removeClass('highlight');
-                                        }
-                                    } else if (e.type === 'focus') {
+                                            if (e.type === 'keyup') {
+                                                if ($this.val() === '') {
+                                                    label.removeClass('active highlight');
+                                                } else {
+                                                    label.addClass('active highlight');
+                                                }
+                                            } else if (e.type === 'blur') {
+                                                if ($this.val() === '') {
+                                                    label.removeClass('active highlight');
+                                                } else {
+                                                    label.removeClass('highlight');
+                                                }
+                                            } else if (e.type === 'focus') {
 
-                                        if ($this.val() === '') {
-                                            label.removeClass('highlight');
-                                        }
-                                        else if ($this.val() !== '') {
-                                            label.addClass('highlight');
-                                        }
-                                    }
-
-
-                                    // if( $this.val() === '' ) {
-                                    //             label.removeClass('active highlight'); 
-                                    //             } else {
-                                    //             label.removeClass('highlight');   
-                                    //             }   
+                                                if ($this.val() === '') {
+                                                    label.removeClass('highlight');
+                                                }
+                                                else if ($this.val() !== '') {
+                                                    label.addClass('highlight');
+                                                }
+                                            }
 
 
-                                    //      if($("input").click(function(){
-                                    //       label.addClass("active highlight");
-                                    //        })
-                                    //       else {
-                                    //             label.removeClass('highlight');   
-                                    //             }   
-
-                                    $(document).ready(function () {
-                                        $("input:focus").click(function () {
-                                            label.addClass("active highlight");
+                                            $(document).ready(function () {
+                                                $("input:focus").click(function () {
+                                                    label.addClass("active highlight");
+                                                });
+                                            });
                                         });
-                                    });
-                                });
 
-                                $('.tab a').on('click', function (e) {
+                                        $('.tab a').on('click', function (e) {
 
-                                    e.preventDefault();
+                                            e.preventDefault();
 
-                                    $(this).parent().addClass('active');
-                                    $(this).parent().siblings().removeClass('active');
+                                            $(this).parent().addClass('active');
+                                            $(this).parent().siblings().removeClass('active');
 
-                                    target = $(this).attr('href');
+                                            target = $(this).attr('href');
 
-                                    $('.tab-content > div').not(target).hide();
+                                            $('.tab-content > div').not(target).hide();
 
-                                    $(target).fadeIn(600);
+                                            $(target).fadeIn(600);
 
-                                });
+                                        });
                             </script>
 
                             <script type="text/javascript">
 
                             </script>
-
-
-                            <!--                            <script>
-                            
-                                                            $('.counter').counterUp({
-                                                                delay: 100,
-                                                                time: 2000
-                                                            });
-                                                        </script>-->
-
-
 
                             </body>
 
@@ -644,10 +621,7 @@
                                         },
                                         link: function (scope, elm, attrs, ctrl) {
                                             ctrl.$parsers.unshift(function (viewValue, $scope) {
-                                                console.log(viewValue)
-                                                console.log(viewValue)
-                                                console.log('scope.reference')
-                                                console.log(scope.reference)
+
                                                 var noMatch = viewValue != scope.reference
                                                 ctrl.$setValidity('noMatch', !noMatch);
                                                 return (noMatch) ? noMatch : scope.reference;
@@ -659,10 +633,25 @@
                                         }
                                     }
                                 });
+
+
                                 postApp.controller('postController', function ($scope, $http) {
-                                    $scope.submitForm = function () {
+                                    $scope.student = {};
+                                    $('#student_contactno').keyup(function () {
+                                        var value = $(this).val();
+                                        assign_value(value)
+                                    })
+                                    function assign_value(value) {
+                                        $scope.student.student_contactno = value;
+                                     
+                                    }
+                                   
+
+                                    $('#registerform').submit(function () {
+//                                        $scope.student.student_contactno = $('#student_contactno').val();
+
                                         if ($scope.registerform.$valid) {
-                                            console.log('if');
+
                                             $http({
                                                 method: 'POST',
                                                 //                    dataType: 'json',
@@ -670,78 +659,46 @@
                                                 data: $scope.student, //forms user object
                                                 headers: {'Content-Type': 'application/json'}
                                             }).success(function (data) {
-                                                console.log(data);
+
                                                 window.location = '/thankyou';
+                                            }).error(function (data) {
+
+                                                $('.student_email').show();
+                                                $scope.errorEmail_id = data.error;
                                             });
 
-                                        } else {
-                                            console.log('asdasd');
                                         }
+                                    });
 
-                                    };
                                 });
 
                             </script>
                             <script type="text/javascript">
                                 $("#student_email").keyup(function () {
-                                    var inputElem = $('#registerform :input[name="student_email"]'),
-                                            data = {"emails": inputElem.val()},
-                                    eReport = ''; //error report
+                                    $('.student_email').hide();
 
-                                    $.ajax(
-                                            {
-                                                type: "POST",
-                                                url: '/checkemail',
-                                                dataType: "json",
-                                                data: data,
-                                                success: function (returnData)
-                                                {
-                                                    if (returnData !== 'true')
-                                                    {
-                                                        return '<p>This email address is already registered.</p>';
-                                                    }
-                                                    else
-                                                    {
-                                                        return true;
-                                                    }
-                                                },
-                                                error: function (xhr, textStatus, errorThrown)
-                                                {
-                                                    alert('ajax loading error... ... ' + url + query);
-                                                    return false;
-                                                }
-                                            });
-
-                                }, '');
+                                });
 
                             </script>
+                            <script>
+                                $(function () {
 
-                            <!-- <div class="form-group col-md-6">
-                                  <label for="student_firstname">First name:</label>
-                                  <input type="text" class="form-control" id="student_firstname" name="student_firstname">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="student_lastname">Last name:</label>
-                                  <input type="text" class="form-control" id="student_lastname" name="student_lastname">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="student_contactno">Contact number:</label>
-                                  <input type="text" class="form-control" id="student_contactno" name="student_contactno">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="student_email">Email:</label>
-                                  <input type="email" class="form-control" id="student_email" name="student_email">
-                                </div>
-                                
-                                <div class="form-group col-md-6">
-                                  <label for="student_password">Password:</label>
-                                  <input type="password" class="form-control" id="student_password" name="student_password">
-                                </div>
-                                
-                                <div class="form-group col-md-6">
-                                  
-                                </div>
-                                <input type="hidden" name="_csrf" value="<% _csrf%>" />
-                                <button type="submit" class="btn btn-default text-center">Submit</button>
-                                
-                              </form> -->
+                                    $("#student_contactno").mask("999-999-9999");
+
+
+                                    $("#student_contactno").on("blur", function () {
+                                        var last = $(this).val().substr($(this).val().indexOf("-") + 1);
+
+                                        if (last.length == 5) {
+                                            var move = $(this).val().substr($(this).val().indexOf("-") + 1, 1);
+
+                                            var lastfour = last.substr(1, 4);
+
+                                            var first = $(this).val().substr(0, 9);
+
+                                            $(this).val(first + move + '-' + lastfour);
+                                        }
+                                    });
+                                });
+
+                            </script>
