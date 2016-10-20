@@ -76,55 +76,74 @@ module.exports = {
             var student_email = req.param("student_email");
             var student_password = req.param("student_password");
             var insert = "";
+            var check_email_exist_or_not = "";
+            var flag = 0;
             var email_check = "";
             email_check =
-                    insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('" + student_firstname + "', '" + student_lastname + "', '" + student_contactno + "', '" + student_email + "')";
+                    check_email_exist_or_not = "SELECT student_email FROM student_details where student_email='" + student_email + "'";
 
-            Student_details.query(insert, function (err, record)
+            Student_details.query(check_email_exist_or_not, function (err, email_existance)
             {
+                if (email_existance.length > 0) {
+                    flag = 1;
+                }
 
-                var st_id = record.insertId;
-                var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('" + st_id + "', '" + student_email + "',MD5('" + student_password + "'), '0','1')";
+         
+            if (flag == 0) {
 
-                Student_login_credentials.query(credential, function (err, credential_record)
+                insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('" + student_firstname + "', '" + student_lastname + "', '" + student_contactno + "', '" + student_email + "')";
+
+                Student_details.query(insert, function (err, record)
                 {
-                    var fetch_mail_template = "SELECT * FROM mail_template where id=1";
-                    Mail_template.query(fetch_mail_template, function (err, mail_template) {
-                        mail_template = mail_template[0];
 
-                        var helper = require('sendgrid').mail;
-                        var from_email = new helper.Email('support@evonixtech.com');
-                        var to_email = new helper.Email(student_email);
-                        var html = mail_template.content;
-                        var html = html.replace('<~: firstname : ~>', student_firstname);
-                        var html = html.replace("<~: Link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
+                    var st_id = record.insertId;
+                    var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('" + st_id + "', '" + student_email + "',MD5('" + student_password + "'), '0','1')";
+
+                    Student_login_credentials.query(credential, function (err, credential_record)
+                    {
+                        var fetch_mail_template = "SELECT * FROM mail_template where id=1";
+                        Mail_template.query(fetch_mail_template, function (err, mail_template) {
+                            mail_template = mail_template[0];
+                            console.log('mail_template')
+                            console.log(mail_template)
+                            var helper = require('sendgrid').mail;
+                            var from_email = new helper.Email('support@evonixtech.com');
+                            var to_email = new helper.Email(student_email);
+
+                            var html = mail_template.content;
+                            var html = html.replace('<~: firstname : ~>', student_firstname);
+                            var html = html.replace("<~: link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
 //                        var html = html.replace("<~: Link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
 //student_photographs_insert
-                        var subject = mail_template.subject;
-                        var content = new helper.Content('text/html', html);
-                        var mail = new helper.Mail(from_email, subject, to_email, content);
+                            var subject = mail_template.subject;
+                            var content = new helper.Content('text/html', html);
+                            var mail = new helper.Mail(from_email, subject, to_email, content);
 
-                        var sg = require('sendgrid')("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");
-                        var request = sg.emptyRequest({
-                            method: 'POST',
-                            path: '/v3/mail/send',
-                            body: mail.toJSON(),
+                            var sg = require('sendgrid')("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");
+                            var request = sg.emptyRequest({
+                                method: 'POST',
+                                path: '/v3/mail/send',
+                                body: mail.toJSON(),
+                            });
+
+                            sg.API(request, function (error, response) {
+//                                console.log(error);
+//                                console.log('response.statusCode');
+//                                console.log(response.statusCode);
+//                                console.log(response.body);
+//                                console.log(response.headers);
+                            });
+
+                            return res.ok();
+                            res.redirect('../studentlogin/studentlogin');
                         });
-
-                        sg.API(request, function (error, response) {
-//                            console.log('response.statusCode');
-//                            console.log(response.statusCode);
-//                            console.log(response.body);
-//                            console.log(response.headers);
-                        });
-
-                        return res.ok();
-                        res.redirect('../studentlogin/studentlogin');
                     });
                 });
+            } else {
+                res.status(500).send({error: 'Email id already exist'});
+            }
+   });
 
-
-            });
         }
 
     },

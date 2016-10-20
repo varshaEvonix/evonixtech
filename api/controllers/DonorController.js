@@ -75,7 +75,7 @@ module.exports = {
         },
         function (err, charge) {
             if (err && err.type === 'StripeCardError') {
-                console.log('The card has been declined');
+               
                 res.redirect('donorpage/' + student_id);
             } else {
                 var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`,`stripe_token`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900','" + stripeToken + "')";

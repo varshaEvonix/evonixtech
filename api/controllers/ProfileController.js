@@ -135,7 +135,8 @@ module.exports = {
         }
     },
     'removeimage': function (req, res) {
-
+        console.log(student_id);
+        console.log(loan_id);
         Student_photographs.query('UPDATE `student_photographs` SET `isEnabled`= 0 WHERE `photo_id`=' + req.param('photo_id'), function (err, recordset) {
 
             return res.redirect('/media_edit/' + req.param('student_id'));
