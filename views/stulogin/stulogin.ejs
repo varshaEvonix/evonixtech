@@ -29,715 +29,719 @@
 <style>
 
 
-  body {
-    font-family: Helvetica;
-    background: #eee;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  hgroup { 
-    text-align:center;
-    margin-top: 4em;
-  }
-
-  h1, h3 { font-weight: 300; }
-
-  h1 { color: #636363; }
-
-  h3 { color: #4a89dc; }
-
-  form {
-    width: 50%;
-    margin: 4em auto;
-    padding: 3em 3em 2em 2em;
-    background: #fafafa;
-    border: 1px solid #ebebeb;
-    box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-  }
-
-  .group { 
-    position: relative; 
-    margin-bottom: 45px; 
-  }
-
-
-  input {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-    -webkit-appearance: none;
-    display: block;
-    background: #fff;
-    color: #636363;
-    width: 100%;
-    border: none;
-    border-radius: 0;
-    border: 1px solid #f4f4f4;
-    border-left: 0px;
-
-  }
-
-  .social-btns
-  {
-    width:210px;
-  }
-  input:focus { outline: none; }
-
-
-  /* Label */
-
-
-
-
-  /* active */
-
-  input:focus ~ label, input.used ~ label {
-    top: -20px;
-    transform: scale(.75); left: -2px;
-    /* font-size: 14px; */
-    color: #4a89dc;
-  }
-
-
-  /* Underline */
-
-  .bar {
-    position: relative;
-    display: block;
-    width: 100%;
-  }
-
-  .bar:before, .bar:after {
-    content: '';
-    height: 2px; 
-    width: 0;
-    bottom: 1px; 
-    position: absolute;
-    background: #4a89dc; 
-    transition: all 0.2s ease;
-  }
-
-  .bar:before { left: 50%; }
-
-  .bar:after { right: 50%; }
-
-
-  /* active */
-
-  input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
-
-
-  /* Highlight */
-
-  .highlight {
-    position: absolute;
-    height: 60%; 
-    width: 100%; 
-    top: 0%; 
-    left: 0;
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-
-#submit_btn{
-  display: block;
-    margin: auto;
-}
-
-  input:focus ~ .highlight {
-    animation: inputHighlighter 0.3s ease;
-  }
-
-
-  /* Animations */
-
-  @keyframes inputHighlighter {
-    from { background: #4a89dc; }
-    to  { width: 0; background: transparent; }
-  }
-
-
-  /* Button */
-
-
-  .button:focus { outline: 0; }
-
-
-  /* Button modifiers */
-
-  .buttonBlue {
-    background: #4a89dc;
-    text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
-  }
-
-  .buttonBlue:hover { background: #357bd8; }
-
-
-  /* Ripples container */
-
-
-  form h2.text-center:after {
-    content: '';
-    width: 200px;
-    height: 2px;
-    background-color: #444;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom:28px;
-  }
-
-  /* Ripples animation */
-
-  @keyframes ripples {
-    0% { opacity: 0; }
-
-    25% { opacity: 1; }
-
-    100% {
-      width: 200%;
-      padding-bottom: 200%;
-      opacity: 0;
+    body {
+        font-family: Helvetica;
+        background: #eee;
+        -webkit-font-smoothing: antialiased;
     }
-  }
 
-  footer { text-align: center; }
+    hgroup { 
+        text-align:center;
+        margin-top: 4em;
+    }
 
-  footer p {
-    color: #888;
-    font-size: 13px;
-    letter-spacing: .4px;
-  }
+    h1, h3 { font-weight: 300; }
 
-  footer a {
-    color: #4a89dc;
-    text-decoration: none;
-    transition: all .2s ease;
-  }
+    h1 { color: #636363; }
 
-  footer a:hover {
-    color: #666;
-    text-decoration: underline;
-  }
+    h3 { color: #4a89dc; }
 
-  footer img {
-    width: 80px;
-    transition: all .2s ease;
-  }
+    form {
+        width: 50%;
+        margin: 4em auto;
+        padding: 3em 3em 2em 2em;
+        background: #fafafa;
+        border: 1px solid #ebebeb;
+        box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+    }
 
-  footer img:hover { opacity: .83; }
+    .group { 
+        position: relative; 
+        margin-bottom: 45px; 
+    }
 
-  footer img:focus , footer a:focus { outline: none; }
 
-  .row.vdivide [class*='col-']:not(:last-child):after {
-    background: #e0e0e0;
-    width: 1px;
-    content: "";
-    display:block;
-    position: absolute;
-    top:0;
-    bottom: 0;
-    right: 0;
-    min-height: 70px;
-  }
-  label {
-  position:absolute;
-  transform:translateY(6px);
-  left:50px;
-  color:#333;
-  transition:all 0.25s ease;
-  -webkit-backface-visibility: hidden;
-  pointer-events: none;
-  font-size:15px;
-  
-}
+    input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        -webkit-appearance: none;
+        display: block;
+        background: #fff;
+        color: #636363;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        border: 1px solid #f4f4f4;
+        border-left: 0px;
 
-label.active {
-  transform:translateY(-20px);
-  left:2px;
-  font-size:14px;
-  .req {
-    opacity:0;
-  }
-}
+    }
 
-label.highlight {
-  color:#000;
-}
+    .social-btns
+    {
+        width:210px;
+    }
+    input:focus { outline: none; }
 
-input, textarea {
-  font-size:22px;
-  display:block;
-  width:100%;
-  height:100%;
-  padding:5px 10px;
-  background:#fff;
-  background-image:none;
-  border-left:0px;
-  color:#000;
-  border-radius:0;
-  transition:border-color .25s ease, box-shadow .25s ease;
-  &:focus {
-    outline:0;
-    border-color:$main;
-  }
-}
 
-textarea {
-  border:2px solid $gray-light;
-  resize: vertical;
-}
+    /* Label */
 
-.field-wrap {
-  position:relative;
-  margin-bottom:35px;
-  color:#fff !important;
-}
 
-.top-row {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
 
-</style>
 
-<style type="text/css">
-  .help-block {
-    display: block;
-    margin-top: -3px;
-    margin-bottom: 0px;
-    color: #737373;
-    position: absolute !important;
-    font-size: 12px;
-    left: 0;
-  }
-  form input[type="text"]:focus {
-    border-color: rgba(0, 0, 0, 0);
-    -webkit-box-shadow: none; 
-    -moz-box-shadow: none;
-    box-shadow: none;
+    /* active */
 
-  }
-  .has-error {
-    position: absolute !important;
-    font-size: 12px;
-    left: 46px;
-    top: 39px;
-  }
-  .tooltip-inner {
-     width:350px !important;
-}
-</style>
+    input:focus ~ label, input.used ~ label {
+        top: -20px;
+        transform: scale(.75); left: -2px;
+        /* font-size: 14px; */
+        color: #4a89dc;
+    }
+
+
+    /* Underline */
+
+    .bar {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+
+    .bar:before, .bar:after {
+        content: '';
+        height: 2px; 
+        width: 0;
+        bottom: 1px; 
+        position: absolute;
+        background: #4a89dc; 
+        transition: all 0.2s ease;
+    }
+
+    .bar:before { left: 50%; }
+
+    .bar:after { right: 50%; }
+
+
+    /* active */
+
+    input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+
+
+    /* Highlight */
+
+    .highlight {
+        position: absolute;
+        height: 60%; 
+        width: 100%; 
+        top: 0%; 
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+
+    #submit_btn{
+        display: block;
+        margin: auto;
+    }
+
+    input:focus ~ .highlight {
+        animation: inputHighlighter 0.3s ease;
+    }
+
+
+    /* Animations */
+
+    @keyframes inputHighlighter {
+        from { background: #4a89dc; }
+        to  { width: 0; background: transparent; }
+    }
+
+
+    /* Button */
+
+
+    .button:focus { outline: 0; }
+
+
+    /* Button modifiers */
+
+    .buttonBlue {
+        background: #4a89dc;
+        text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+    }
+
+    .buttonBlue:hover { background: #357bd8; }
+
+
+    /* Ripples container */
+
+
+    form h2.text-center:after {
+        content: '';
+        width: 200px;
+        height: 2px;
+        background-color: #444;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        margin-bottom:28px;
+    }
+
+    /* Ripples animation */
+
+    @keyframes ripples {
+        0% { opacity: 0; }
+
+        25% { opacity: 1; }
+
+        100% {
+            width: 200%;
+            padding-bottom: 200%;
+            opacity: 0;
+        }
+    }
+
+    footer { text-align: center; }
+
+    footer p {
+        color: #888;
+        font-size: 13px;
+        letter-spacing: .4px;
+    }
+
+    footer a {
+        color: #4a89dc;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+
+    footer a:hover {
+        color: #666;
+        text-decoration: underline;
+    }
+
+    footer img {
+        width: 80px;
+        transition: all .2s ease;
+    }
+
+    footer img:hover { opacity: .83; }
+
+    footer img:focus , footer a:focus { outline: none; }
+
+    .row.vdivide [class*='col-']:not(:last-child):after {
+        background: #e0e0e0;
+        width: 1px;
+        content: "";
+        display:block;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        right: 0;
+        min-height: 70px;
+    }
+    label {
+        position:absolute;
+        transform:translateY(6px);
+        left:50px;
+        color:#333;
+        transition:all 0.25s ease;
+        -webkit-backface-visibility: hidden;
+        pointer-events: none;
+        font-size:15px;
+
+    }
+
+    label.active {
+        transform:translateY(-20px);
+        left:2px;
+        font-size:14px;
+        .req {
+            opacity:0;
+        }
+    }
+
+    label.highlight {
+        color:#000;
+    }
+
+    input, textarea {
+        font-size:22px;
+        display:block;
+        width:100%;
+        height:100%;
+        padding:5px 10px;
+        background:#fff;
+        background-image:none;
+        border-left:0px;
+        color:#000;
+        border-radius:0;
+        transition:border-color .25s ease, box-shadow .25s ease;
+        &:focus {
+            outline:0;
+            border-color:$main;
+        }
+    }
+
+    textarea {
+        border:2px solid $gray-light;
+        resize: vertical;
+    }
+
+    .field-wrap {
+        position:relative;
+        margin-bottom:35px;
+        color:#fff !important;
+    }
+
+    .top-row {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    </style>
+
+    <style type="text/css">
+        .help-block {
+            display: block;
+            margin-top: -3px;
+            margin-bottom: 0px;
+            color: #737373;
+            position: absolute !important;
+            font-size: 12px;
+            left: 0;
+        }
+        form input[type="text"]:focus {
+            border-color: rgba(0, 0, 0, 0);
+            -webkit-box-shadow: none; 
+            -moz-box-shadow: none;
+            box-shadow: none;
+
+        }
+        .has-error {
+            position: absolute !important;
+            font-size: 12px;
+            left: 46px;
+            top: 39px;
+        }
+        .tooltip-inner {
+            width:350px !important;
+        }
+    </style>
 </head>
 <body  ng-app="postApp" ng-controller="postController">
-<header id="header" class="header">
-  <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
-    <div class="header-nav-wrapper">
-      <div class="container">
-        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
-         <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-         <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
-           
-
-          <li style="" ><a href="/allprofile">Profiles</a>
-
-          </li>
-          
-          <li style=""  class="active"><a href="../stulogin/stulogin">Create account</a>
-
-          </li>
-          <li style=""><a href="/student/login">Login </a>
-
-          </li>
-
-        </ul>
-      </li>
+    <header id="header" class="header">
+        <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
+            <div class="header-nav-wrapper">
+                <div class="container">
+                    <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
+                        <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
+                            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
 
 
-      
-    </ul>
-  </nav>
+                                <li style="" ><a href="/allprofile">Profiles</a>
 
-</header>
+                                </li>
 
-<div class="main-content" style="padding-top:80px;padding-bottom:15px">
+                                <li style=""  class="active"><a href="../stulogin/stulogin">Create account</a>
 
-  <!-- You only need this form and the form-register.css -->
+                                </li>
+                                <li style=""><a href="/student/login">Login </a>
 
-  <!--form action="/user" method="POST" role="form"-->
-   <form class="form" ng-submit="submitForm()" name="registerform" id="registerform" novalidate>
- <div id="signup">   
-          <h2>CREATE ACCOUNT</h2><br>
-          
+                                </li>
 
-          <div class="form-group">
-  
-
-
-          <div class="top-row row">
-          <div class="col-md-6">
-            <div class="field-wrap form-group input-group" >
-              
-              <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
- <label>
-                First name<span class="req">*</span>
-              </label>
-
-              <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
-              <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-              <p class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</p>
-                          </div></div>
-        <div class="col-md-6">
-            <div class="field-wrap form-group input-group" >
-            <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
-              <label>
-               Last name<span class="req">*</span>
-              </label>
-               <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
-              <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
-                <p class="error has-error ng-hide" ng-show="registerform.student_lastname.$error.pattern">Please enter characters only!</p>
-            </div></div>
-          
-<div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
-            <label>
-              Contact number<span class="req">*</span>
-            </label>
-             <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
-              <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
-               <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
-                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
-          </div></div>
-<div class="col-md-6">
- <div class="field-wrap form-group input-group" >
- <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
-            <label>
-              Email<span class="req">*</span>
-            </label>
-             <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required style="border-right: none;">
-             
-             <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
-
-             <span class="clearfix"></span>
-              <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
-                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide">Account with such e-mail alrady exists.</p>
-              <p class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
-          </div>
-          </div>
-          
- <div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-            <label>
-              Password<span class="req">*</span>
-            </label>
-            <input  type="password" ng-minlength="7" ng-model="minlength" ng-model="student.student_password" id="student_password" name="student_password"  required>
-            <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
-1. Make sure that it is at least 6 characters long
-2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
-3. Don't use more than 2 identical consecutive characters
-4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
-
-             <span class="clearfix"></span>
-              <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
-
- <p ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 7 characters.</p>
-
-          </div></div>
-          <div class="col-md-6">
-          <div class="field-wrap form-group input-group" >
-          <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-            <label>
-            Confirm password<span class="req">*</span>
-            </label>
-            <input  type="password" ng-minlength="7" ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
-             <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
-<p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
-
-          </div></div>
-          </div><br>
-     <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
-       <br>
-          <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
-       
-          </form>
-
-        
-        
-        
-        
-      </div>
-    
-
-</div>
-<footer id="footer" class="footer bg-black-222">
-  <div class="container pt-70 pb-30">
-    <div class="row border-bottom-black">
-     
-     <div class="col-sm-6 col-md-6">
-      <div class="widget dark mb-20">
-        <h5 class="widget-title line-bottom">Quick Contact</h5>
-        <ul class="list-border font-13">
-          <li><a href="#">+(012) 345 6789</a>
-          </li>
-          <li><a href="#">Stumuch@gmail.com</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="widget dark">
-        
-        <ul class="social-icons icon-dark icon-circled icon-sm mt-10">
-          <li><a href="#"><i class="fa fa-facebook"></i></a>
-          </li>
-          <li><a href="#"><i class="fa fa-twitter"></i></a>
-          </li>
-          
-          <li><a href="#"><i class="fa fa-youtube"></i></a>
-          </li>
-          
-          <li><a href="#"><i class="fa fa-pinterest"></i></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-6">
-      <div class="widget dark mb-20">
-        <h5 class="widget-title line-bottom">Links</h5>
-        <ul class="list-border font-13">
-          <li><a href="#">About Us</a>
-          </li>
-          <li><a href="faq1">FAQ</a>
-          </li>
-          <li><a href="#">Terms & Conditions</a>
-          </li>
-          <li><a href="#">Privacy Policy</a>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-  
-</div>
-<div class="footer-bottom bg-black-333">
-  <div class="container pt-20 pb-20">
-    <div class="row">
-      <div class="col-md-6 sm-text-center">
-        <p class="font-11 text-black-777 m-0">Copyright ©2016 STUMUCH. All Rights Reserved</p>
-      </div>
-      
-    </div>
-  </div>
-</div>
-</footer>
-<script src='../../index_files/flowup/js/jquery.min.js'></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
-<script src='../../index_files/flowup/js/main.js'></script>
-<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip(); 
-});
-</script>
-
- <script>
-
-    $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
-  
-  var $this = $(this),
-      label = $this.prev('label');
-
-      if (e.type === 'keyup') {
-            if ($this.val() === '') {
-          label.removeClass('active highlight');
-        } else {
-          label.addClass('active highlight');
-        }
-    } else if (e.type === 'blur') {
-        if( $this.val() === '' ) {
-            label.removeClass('active highlight'); 
-            } else {
-            label.removeClass('highlight');   
-            }   
-    } else if (e.type === 'focus') {
-      
-      if( $this.val() === '' ) {
-            label.removeClass('highlight'); 
-            } 
-      else if( $this.val() !== '' ) {
-            label.addClass('highlight');
-            }
-    }
-
-
-// if( $this.val() === '' ) {
-//             label.removeClass('active highlight'); 
-//             } else {
-//             label.removeClass('highlight');   
-//             }   
-
-
-//      if($("input").click(function(){
-//       label.addClass("active highlight");
-//        })
-//       else {
-//             label.removeClass('highlight');   
-//             }   
-
-  $(document).ready(function(){
-          $("input:focus").click(function(){
-              label.addClass("active highlight");
-          });
-      });
-  });
-
-$('.tab a').on('click', function (e) {
-  
-  e.preventDefault();
-  
-  $(this).parent().addClass('active');
-  $(this).parent().siblings().removeClass('active');
-  
-  target = $(this).attr('href');
-
-  $('.tab-content > div').not(target).hide();
-  
-  $(target).fadeIn(600);
-  
-});
-    </script>
-
-    <script type="text/javascript">
-      
-    </script>
-
-
-    <script>
-        
-   $('.counter').counterUp({
-            delay: 100,
-            time: 2000
-        });
-    </script>
+                            </ul>
+                            </li>
 
 
 
-</body>
+                            </ul>
+                        </nav>
 
-</html>
+                        </header>
+
+                        <div class="main-content" style="padding-top:80px;padding-bottom:15px">
+
+                            <!-- You only need this form and the form-register.css -->
+
+                            <!--form action="/user" method="POST" role="form"-->
+                            <form class="form" ng-submit="submitForm()" name="registerform" id="registerform" novalidate>
+                                <div id="signup">   
+                                    <h2>CREATE ACCOUNT</h2><br>
 
 
-   <script>
-    var postApp = angular.module('postApp', []);
-     postApp.directive('validPasswordC', function () {
-        return {
-            require: 'ngModel',
-            scope: {
-                reference: '=validPasswordC'
+                                    <div class="form-group">
 
-            },
-            link: function (scope, elm, attrs, ctrl) {
-                ctrl.$parsers.unshift(function (viewValue, $scope) {
 
-                    var noMatch = viewValue != scope.reference
-                    ctrl.$setValidity('noMatch', !noMatch);
-                    return (noMatch) ? noMatch : scope.reference;
-                });
-                scope.$watch("reference", function (value) {
 
-                    ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
-                });
-            }
-        }
-    });
-    postApp.controller('postController', function ($scope, $http) {
-        $scope.submitForm = function () {
-            if ($scope.registerform.$valid) {
-              console.log('if');
-                $http({
-                    method: 'POST',
-//                    dataType: 'json',
-                    url: '/user',
-                    data: $scope.student, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    console.log(data);
-                    window.location = '/thankyou';
-                });
+                                        <div class="top-row row">
+                                            <div class="col-md-6">
+                                                <div class="field-wrap form-group input-group" >
 
-            }else{
-              console.log('asdasd');
-            }
+                                                    <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+                                                <label>
+                                                    First name<span class="req">*</span>
+                                                </label>
 
-        };
-    });
+                                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
+                                                <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
+                                                <p class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</p>
+                                            </div></div>
+                                        <div class="col-md-6">
+                                            <div class="field-wrap form-group input-group" >
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+                                                <label>
+                                                    Last name<span class="req">*</span>
+                                                </label>
+                                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
+                                                <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
+                                                <p class="error has-error ng-hide" ng-show="registerform.student_lastname.$error.pattern">Please enter characters only!</p>
+                                            </div></div>
 
-</script>
-<script type="text/javascript">
- $("#student_email").keyup(function(){
-    var inputElem = $('#registerform :input[name="student_email"]'),
-        data = { "emails" : inputElem.val() },
-        eReport = ''; //error report
+                                        <div class="col-md-6">
+                                            <div class="field-wrap form-group input-group" >
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
+                                                <label>
+                                                    Contact number<span class="req">*</span>
+                                                </label>
+                                                <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" ng-pattern="/^[0-9]*$/" required>
+                                                <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
+                                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
+                                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
+                                            </div></div>
+                                        <div class="col-md-6">
+                                            <div class="field-wrap form-group input-group" >
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
+                                                <label>
+                                                    Email<span class="req">*</span>
+                                                </label>
+                                                <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" data-unique-email="/account/:email/free" id="student_email" name="student_email" required style="border-right: none;">
 
-    $.ajax(
-    {
-        type: "POST",
-        url: '/checkemail',
-        dataType: "json",
-        data: data, 
-        success: function(returnData)
-        {
-            if (returnData!== 'true')
-            {
-              return '<p>This email address is already registered.</p>';
-            }
-            else
-            {
-               return true;
-            }
-        },
-        error: function(xhr, textStatus, errorThrown)
-        {
-            alert('ajax loading error... ... '+url + query);
-            return false;
-        }
-    });
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
 
-}, '');
+                                                <span class="clearfix"></span>
+                                                <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
+                                                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide">Account with such e-mail alrady exists.</p>
+                                                <p class="error has-error ng-hide" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
+                                            </div>
+                                        </div>
 
-</script>
+                                        <div class="col-md-6">
+                                            <div class="field-wrap form-group input-group" >
+                                                <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+                                                <label>
+                                                    Password<span class="req">*</span>
+                                                </label>
+                                                <input  type="password" ng-minlength="7"  ng-model="student.student_password" id="student_password" name="student_password"  required>
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
+                                                      1. Make sure that it is at least 6 characters long
+                                                      2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
+                                                      3. Don't use more than 2 identical consecutive characters
+                                                      4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
 
-<!-- <div class="form-group col-md-6">
-      <label for="student_firstname">First name:</label>
-      <input type="text" class="form-control" id="student_firstname" name="student_firstname">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_lastname">Last name:</label>
-      <input type="text" class="form-control" id="student_lastname" name="student_lastname">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_contactno">Contact number:</label>
-      <input type="text" class="form-control" id="student_contactno" name="student_contactno">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="student_email">Email:</label>
-      <input type="email" class="form-control" id="student_email" name="student_email">
-    </div>
-    
-    <div class="form-group col-md-6">
-      <label for="student_password">Password:</label>
-      <input type="password" class="form-control" id="student_password" name="student_password">
-    </div>
-    
-    <div class="form-group col-md-6">
-      
-    </div>
-    <input type="hidden" name="_csrf" value="<% _csrf%>" />
-    <button type="submit" class="btn btn-default text-center">Submit</button>
-    
-  </form> -->
+                                                <span class="clearfix"></span>
+                                                <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
+
+                                                <p ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 7 characters.</p>
+
+                                            </div></div>
+                                        <div class="col-md-6">
+                                            <div class="field-wrap form-group input-group" >
+                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+                                                <label>
+                                                    Confirm password<span class="req">*</span>
+                                                </label>
+                                                <input  type="password"  ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
+                                                <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
+                                                <p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
+
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                    <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
+                                    <br>
+                                    <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
+
+                                    </form>
+
+
+
+
+
+                                </div>
+
+
+                            </div>
+                            <footer id="footer" class="footer bg-black-222">
+                                <div class="container pt-70 pb-30">
+                                    <div class="row border-bottom-black">
+
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="widget dark mb-20">
+                                                <h5 class="widget-title line-bottom">Quick Contact</h5>
+                                                <ul class="list-border font-13">
+                                                    <li><a href="#">+(012) 345 6789</a>
+                                                    </li>
+                                                    <li><a href="#">Stumuch@gmail.com</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="widget dark">
+
+                                                <ul class="social-icons icon-dark icon-circled icon-sm mt-10">
+                                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
+                                                    </li>
+                                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
+                                                    </li>
+
+                                                    <li><a href="#"><i class="fa fa-youtube"></i></a>
+                                                    </li>
+
+                                                    <li><a href="#"><i class="fa fa-pinterest"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="widget dark mb-20">
+                                                <h5 class="widget-title line-bottom">Links</h5>
+                                                <ul class="list-border font-13">
+                                                    <li><a href="#">About Us</a>
+                                                    </li>
+                                                    <li><a href="faq1">FAQ</a>
+                                                    </li>
+                                                    <li><a href="#">Terms & Conditions</a>
+                                                    </li>
+                                                    <li><a href="#">Privacy Policy</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="footer-bottom bg-black-333">
+                                    <div class="container pt-20 pb-20">
+                                        <div class="row">
+                                            <div class="col-md-6 sm-text-center">
+                                                <p class="font-11 text-black-777 m-0">Copyright ©2016 STUMUCH. All Rights Reserved</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+                            <script src='../../index_files/flowup/js/jquery.min.js'></script>
+                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                            <script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
+                            <script src='../../index_files/flowup/js/main.js'></script>
+                            <script>
+                                        $(document).ready(function () {
+                                            $('[data-toggle="tooltip"]').tooltip();
+                                        });
+                            </script>
+
+                            <script>
+
+                                $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
+
+                                    var $this = $(this),
+                                            label = $this.prev('label');
+
+                                    if (e.type === 'keyup') {
+                                        if ($this.val() === '') {
+                                            label.removeClass('active highlight');
+                                        } else {
+                                            label.addClass('active highlight');
+                                        }
+                                    } else if (e.type === 'blur') {
+                                        if ($this.val() === '') {
+                                            label.removeClass('active highlight');
+                                        } else {
+                                            label.removeClass('highlight');
+                                        }
+                                    } else if (e.type === 'focus') {
+
+                                        if ($this.val() === '') {
+                                            label.removeClass('highlight');
+                                        }
+                                        else if ($this.val() !== '') {
+                                            label.addClass('highlight');
+                                        }
+                                    }
+
+
+                                    // if( $this.val() === '' ) {
+                                    //             label.removeClass('active highlight'); 
+                                    //             } else {
+                                    //             label.removeClass('highlight');   
+                                    //             }   
+
+
+                                    //      if($("input").click(function(){
+                                    //       label.addClass("active highlight");
+                                    //        })
+                                    //       else {
+                                    //             label.removeClass('highlight');   
+                                    //             }   
+
+                                    $(document).ready(function () {
+                                        $("input:focus").click(function () {
+                                            label.addClass("active highlight");
+                                        });
+                                    });
+                                });
+
+                                $('.tab a').on('click', function (e) {
+
+                                    e.preventDefault();
+
+                                    $(this).parent().addClass('active');
+                                    $(this).parent().siblings().removeClass('active');
+
+                                    target = $(this).attr('href');
+
+                                    $('.tab-content > div').not(target).hide();
+
+                                    $(target).fadeIn(600);
+
+                                });
+                            </script>
+
+                            <script type="text/javascript">
+
+                            </script>
+
+
+                            <!--                            <script>
+                            
+                                                            $('.counter').counterUp({
+                                                                delay: 100,
+                                                                time: 2000
+                                                            });
+                                                        </script>-->
+
+
+
+                            </body>
+
+                            </html>
+
+
+                            <script>
+                                var postApp = angular.module('postApp', []);
+                                postApp.directive('validPasswordC', function () {
+                                    return {
+                                        require: 'ngModel',
+                                        scope: {
+                                            reference: '=validPasswordC'
+
+                                        },
+                                        link: function (scope, elm, attrs, ctrl) {
+                                            ctrl.$parsers.unshift(function (viewValue, $scope) {
+                                                console.log(viewValue)
+                                                console.log(viewValue)
+                                                console.log('scope.reference')
+                                                console.log(scope.reference)
+                                                var noMatch = viewValue != scope.reference
+                                                ctrl.$setValidity('noMatch', !noMatch);
+                                                return (noMatch) ? noMatch : scope.reference;
+                                            });
+                                            scope.$watch("reference", function (value) {
+
+                                                ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+                                            });
+                                        }
+                                    }
+                                });
+                                postApp.controller('postController', function ($scope, $http) {
+                                    $scope.submitForm = function () {
+                                        if ($scope.registerform.$valid) {
+                                            console.log('if');
+                                            $http({
+                                                method: 'POST',
+                                                //                    dataType: 'json',
+                                                url: '/user',
+                                                data: $scope.student, //forms user object
+                                                headers: {'Content-Type': 'application/json'}
+                                            }).success(function (data) {
+                                                console.log(data);
+                                                window.location = '/thankyou';
+                                            });
+
+                                        } else {
+                                            console.log('asdasd');
+                                        }
+
+                                    };
+                                });
+
+                            </script>
+                            <script type="text/javascript">
+                                $("#student_email").keyup(function () {
+                                    var inputElem = $('#registerform :input[name="student_email"]'),
+                                            data = {"emails": inputElem.val()},
+                                    eReport = ''; //error report
+
+                                    $.ajax(
+                                            {
+                                                type: "POST",
+                                                url: '/checkemail',
+                                                dataType: "json",
+                                                data: data,
+                                                success: function (returnData)
+                                                {
+                                                    if (returnData !== 'true')
+                                                    {
+                                                        return '<p>This email address is already registered.</p>';
+                                                    }
+                                                    else
+                                                    {
+                                                        return true;
+                                                    }
+                                                },
+                                                error: function (xhr, textStatus, errorThrown)
+                                                {
+                                                    alert('ajax loading error... ... ' + url + query);
+                                                    return false;
+                                                }
+                                            });
+
+                                }, '');
+
+                            </script>
+
+                            <!-- <div class="form-group col-md-6">
+                                  <label for="student_firstname">First name:</label>
+                                  <input type="text" class="form-control" id="student_firstname" name="student_firstname">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="student_lastname">Last name:</label>
+                                  <input type="text" class="form-control" id="student_lastname" name="student_lastname">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="student_contactno">Contact number:</label>
+                                  <input type="text" class="form-control" id="student_contactno" name="student_contactno">
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <label for="student_email">Email:</label>
+                                  <input type="email" class="form-control" id="student_email" name="student_email">
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                  <label for="student_password">Password:</label>
+                                  <input type="password" class="form-control" id="student_password" name="student_password">
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                  
+                                </div>
+                                <input type="hidden" name="_csrf" value="<% _csrf%>" />
+                                <button type="submit" class="btn btn-default text-center">Submit</button>
+                                
+                              </form> -->
