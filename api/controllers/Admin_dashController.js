@@ -446,7 +446,7 @@ module.exports = {
         var content = new helper.Content('text/html', html);
         var mail = new helper.Mail(from_email, subject, to_email, content);
 
-        var sg = require('sendgrid')("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");
+        var sg = require('sendgrid')();
         var request = sg.emptyRequest({
             method: 'POST',
             path: '/v3/mail/send',
