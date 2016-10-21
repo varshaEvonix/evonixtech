@@ -34,12 +34,9 @@ module.exports = {
             var student_about_me = req.param("student_about_me");
             var student_ambition = req.param("student_ambition");
 
-console.log('student_about_me')
-console.log(student_about_me)
-
             var update = "";
             try {
-                update = "UPDATE `student_details` SET `student_firstname`='" + student_firstname + "',`student_lastname`='" + student_lastname + "',`student_contactno`='" + student_contactno + "',`student_email`='" + student_email + "',`student_address`='" + student_address + "',`student_city`='" + student_city + "',`student_state`='" + student_state + "',`student_country`='" + student_country + "',`student_birthdate`='" + student_birthdate + "',`zip_code`='" + zip_code + "',`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + " WHERE `student_id`=" + req.param('id');
+                update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_email`=" + mysql.escape(student_email) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + " WHERE `student_id`=" + req.param('id');
 
                 throw "thrown message";
 

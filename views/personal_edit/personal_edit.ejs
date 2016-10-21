@@ -1,5 +1,5 @@
 <%- include ../stuhead.ejs %>
-<% _.each(student_info, function (student_info) { %>
+
 <%- include ../stud_left.ejs %>
 
 <style>
@@ -9,6 +9,7 @@
     .has-error {
         overflow: visible !important;
     }
+    
     .fileUpload .help-block.form-error {
         position: absolute !important;
         display: block !important;
@@ -17,6 +18,55 @@
         z-index: 99 !important;
         font-size: 13px !important;
     }
+     .fileUpload .help-block.form-error {
+  position: absolute !important;
+    display: block !important;
+    top: 52px !important;
+    left: -2px !important;
+    z-index: 99 !important;
+    font-size: 13px !important;
+}
+.fileUpload input.upload:after {
+    content: "\f040";
+    font-family: 'fontAwesome';
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: block;
+    color: #fff;
+    background-color: #00a290;
+    position: absolute;
+    top: -14px;
+    left: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+.fileUpload input.upload:before {
+    content: '';
+    width: 82px;
+    height: 50px;
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    top: -18px;
+    left: 0px;
+}
+..fileUpload {
+  overflow: visible;
+}
+.fileUpload.browse input.upload {
+  opacity: 1;
+  top: 12px;
+  left: -12px;
+  font-size: 13px;
+}
+.fileUpload.browse input.upload:focus {
+  outline: none;
+}
+.browse {
+  color: #333;
+    overflow: visible;
+}
 
 </style>
 
@@ -29,14 +79,14 @@
             <div class="col-md-9"> 
                 <h2>Personal details</h2>
                 <br>
-                <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info.student_id %>" method="POST">
+                <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info[0].student_id %>" method="POST">
 
                     <div class="col-md-12" style="margin-bottom:20px">
 
                         <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:350px">
 
                             <div class="profile_image" style="">
-                                <img src="<% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
+                                <img src="<% if (student_info[0].student_profile_pic_path == '' || student_info[0].student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info[0].student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
                                 <!-- <a class="pull-right" href="#" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best."> <i  class="glyphicon glyphicon-question-sign pull-right"></i></a> -->
 
                             </div>
@@ -151,7 +201,7 @@
                                 <!-- <p class="tip"><em>Tip:We cross check validity of all information submitted including your birth 
                            date. On your special day, we feature you on the site so that funders can find you more easily.<em></p> -->
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input type="text" data-format="YYYY-MM-DD" ng-model="student.student_birthdate" max="2016-10-13" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info.student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <input type="text" data-format="YYYY-MM-DD" ng-model="student.student_birthdate" max="2016-10-13" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info[0].student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
 
                                 </div> </div>
@@ -163,7 +213,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="student_about_me">About Yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
-                                <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required><%= student_info.student_about_me %> </textarea>
+                                <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required><%= student_info[0].student_about_me %> </textarea>
                                 <p ng-show="submitted && personalform.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
 
                             </div></div>
@@ -172,7 +222,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="student_ambition">Ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
-                                <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required><%= student_info.student_ambition %> </textarea>
+                                <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required><%= student_info[0].student_ambition %> </textarea>
                                 <p ng-show="submitted && personalform.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
 
                             </div>
@@ -183,9 +233,9 @@
                     <br>
                     <input type="hidden" name="_csrf" value="<% _csrf%>" />
                     <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
-                    <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
-                    <% var bdate = student_info.student_birthdate %>
-                    <% }) %>
+                    <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+                    <% var bdate = student_info[0].student_birthdate %>
+                   
                 </form>
 
             </div>      <div class="col-md-3"><%- include ../stud_right.ejs %></div>
@@ -212,19 +262,18 @@
     postApp.controller('postController', function ($scope, $http) {
         $scope.student = {};
 
-        < % _.each(student_info, function (student_info) { % >
-                $scope.student.student_firstname = '<%= student_info.student_firstname %>';
-        $scope.student.student_lastname = '<%= student_info.student_lastname %>';
-        $scope.student.student_contactno = '<%= student_info.student_contactno %>';
-        $scope.student.student_email = '<%= student_info.student_email %>';
-        $scope.student.student_address = '<%= student_info.student_address %>';
-        $scope.student.student_city = '<%= student_info.student_city %>';
-        $scope.student.student_state = '<%= student_info.student_state %>';
-        $scope.student.student_country = '<%= student_info.student_country %>';
-        $scope.student.student_birthdate = '<%= student_info.student_birthdate %>';
-        $scope.student.zip_code = '<%= student_info.zip_code %>';
-                $scope.student.student_about_me = ` < %= student_info.student_about_me % > `;
-                $scope.student.student_ambition = ` < %= student_info.student_ambition % > `;
+                $scope.student.student_firstname = '<%= student_info[0].student_firstname %>';
+        $scope.student.student_lastname = '<%= student_info[0].student_lastname %>';
+        $scope.student.student_contactno = '<%= student_info[0].student_contactno %>';
+        $scope.student.student_email = '<%= student_info[0].student_email %>';
+        $scope.student.student_address = '<%= student_info[0].student_address %>';
+        $scope.student.student_city = '<%= student_info[0].student_city %>';
+        $scope.student.student_state = '<%= student_info[0].student_state %>';
+        $scope.student.student_country = '<%= student_info[0].student_country %>';
+        $scope.student.student_birthdate = '<%= student_info[0].student_birthdate %>';
+        $scope.student.zip_code = '<%= student_info[0].zip_code %>';
+                $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
+                $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
                 $scope.submitForm = function () {
                     $scope.student.student_birthdate = $('#student_birthdate').val();
                     // $scope.student.student_about_me=htmlEncode($('#student_about_me').val());
@@ -232,12 +281,11 @@
                         $http({
                             method: 'POST',
                             //                    dataType: 'json',
-                            url: '/personal_edit_submit/<%= student_info.student_id %>',
+                            url: '/personal_edit_submit/<%= student_info[0].student_id %>',
                             data: $scope.student, //forms user object
                             headers: {'Content-Type': 'application/json'}
                         }).success(function (data) {
-                            console.log(data);
-                            window.location = '/viewprofile/<%= student_info.student_id %>';
+                            window.location = '/viewprofile/<%= student_info[0].student_id %>';
                         });
 
                     }
@@ -245,7 +293,7 @@
                 }
         ;
     });
-            < % }) % >  </script>
+            </script>
 <script type="text/javascript">
             $(function () {
                 $("#datetimepicker1").datetimepicker({maxDate: new Date(), format: 'YYYY-MM-DD'});

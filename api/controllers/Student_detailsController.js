@@ -45,27 +45,7 @@ module.exports = {
 
 
     },
-    'send_mail': function (req, res) {
-        var helper = require('sendgrid').mail;
-        var from_email = new helper.Email('support@evonixtech.com');
-        var to_email = new helper.Email('saurabh@evonix.co');
-        var subject = 'Stumuch activation link';
-        var content = new helper.Content('text/plain', 'Hello, this is the link for your account activation.!');
-        var mail = new helper.Mail(from_email, subject, to_email, content);
 
-        var sg = require('sendgrid')("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");
-        var request = sg.emptyRequest({
-            method: 'POST',
-            path: '/v3/mail/send',
-            body: mail.toJSON(),
-        });
-
-        sg.API(request, function (error, response) {
-//            console.log(response.statusCode);
-//            console.log(response.body);
-//            console.log(response.headers);
-        });
-    },
     'stulogin': function (req, res) {
         if (req.method == "POST")
         {
@@ -88,61 +68,63 @@ module.exports = {
                     flag = 1;
                 }
 
-         
-            if (flag == 0) {
 
-                insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('" + student_firstname + "', '" + student_lastname + "', '" + student_contactno + "', '" + student_email + "')";
+                if (flag == 0) {
 
-                Student_details.query(insert, function (err, record)
-                {
+                    insert = "INSERT INTO `student_details` (`student_firstname`, `student_lastname`, `student_contactno`, `student_email`) VALUES ('" + student_firstname + "', '" + student_lastname + "', '" + student_contactno + "', '" + student_email + "')";
 
-                    var st_id = record.insertId;
-                    var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('" + st_id + "', '" + student_email + "',MD5('" + student_password + "'), '0','1')";
-
-                    Student_login_credentials.query(credential, function (err, credential_record)
+                    Student_details.query(insert, function (err, record)
                     {
-                        var fetch_mail_template = "SELECT * FROM mail_template where id=1";
-                        Mail_template.query(fetch_mail_template, function (err, mail_template) {
-                            mail_template = mail_template[0];
-                            console.log('mail_template')
-                            console.log(mail_template)
-                            var helper = require('sendgrid').mail;
-                            var from_email = new helper.Email('support@evonixtech.com');
-                            var to_email = new helper.Email(student_email);
 
-                            var html = mail_template.content;
-                            var html = html.replace('<~: firstname : ~>', student_firstname);
-                            var html = html.replace("<~: link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
+                        var st_id = record.insertId;
+                        var credential = "INSERT INTO `student_login_credentials` (`student_id`, `student_email`, `student_password`, `student_active`,`profile_lock`) VALUES ('" + st_id + "', '" + student_email + "',MD5('" + student_password + "'), '0','1')";
+
+                        Student_login_credentials.query(credential, function (err, credential_record)
+                        {
+                            var send_grid_token = "select token from send_grid_token where id =1";
+                            Send_grid_token.query(send_grid_token, function (err, token) {
+                                var fetch_mail_template = "SELECT * FROM mail_template where id=1";
+                                Mail_template.query(fetch_mail_template, function (err, mail_template) {
+                                    mail_template = mail_template[0];
+
+                                    var helper = require('sendgrid').mail;
+                                    var from_email = new helper.Email('support@evonixtech.com');
+                                    var to_email = new helper.Email(student_email);
+
+                                    var html = mail_template.content;
+                                    var html = html.replace('<~: firstname : ~>', student_firstname);
+                                    var html = html.replace("<~: link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
 //                        var html = html.replace("<~: Link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
 //student_photographs_insert
-                            var subject = mail_template.subject;
-                            var content = new helper.Content('text/html', html);
-                            var mail = new helper.Mail(from_email, subject, to_email, content);
+                                    var subject = mail_template.subject;
+                                    var content = new helper.Content('text/html', html);
+                                    var mail = new helper.Mail(from_email, subject, to_email, content);
 
-                            var sg = require('sendgrid')("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");
-                            var request = sg.emptyRequest({
-                                method: 'POST',
-                                path: '/v3/mail/send',
-                                body: mail.toJSON(),
-                            });
+                                    var sg = require('sendgrid')(token[0].token);
+                                    var request = sg.emptyRequest({
+                                        method: 'POST',
+                                        path: '/v3/mail/send',
+                                        body: mail.toJSON(),
+                                    });
 
-                            sg.API(request, function (error, response) {
+                                    sg.API(request, function (error, response) {
 //                                console.log(error);
 //                                console.log('response.statusCode');
 //                                console.log(response.statusCode);
 //                                console.log(response.body);
 //                                console.log(response.headers);
-                            });
+                                    });
 
-                            return res.ok();
-                            res.redirect('../studentlogin/studentlogin');
+                                    return res.ok();
+                                    res.redirect('../studentlogin/studentlogin');
+                                });
+                            });
                         });
                     });
-                });
-            } else {
-                res.status(500).send({error: 'Email id already exist'});
-            }
-   });
+                } else {
+                    res.status(500).send({error: 'Email id already exist'});
+                }
+            });
 
         }
 

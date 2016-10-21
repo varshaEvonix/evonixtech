@@ -296,7 +296,7 @@ module.exports = {
 
                 });
             }
-            return res.redirect('admin/viewdetails/'+ req.param('student_id'));
+            return res.redirect('admin/viewdetails/' + req.param('student_id'));
         });
 
     },
@@ -347,31 +347,37 @@ module.exports = {
 
                     var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
                     Student_details.query(fetch_student, function (err, studentdetails) {
-                        var temp = JSON.stringify(studentdetails);
-                        var student_details = JSON.parse(temp)[0];
-                        var helper = require('sendgrid').mail;
-                        var from_email = new helper.Email('support@evonixtech.com');
-                        var to_email = new helper.Email(student_details.student_email);
-                        var subject = 'Stumuch Notification';
-                        var mail_content = "Hi " + student_details.student_firstname + ' </br></br>' + req.param('admin_note');
+                        var send_grid_token = "select token from send_grid_token where id =1";
+                        Send_grid_token.query(send_grid_token, function (err, token) {
+                            console.log('token[0].token');
+                            console.log(token[0].token);
+                            var temp = JSON.stringify(studentdetails);
+                            var student_details = JSON.parse(temp)[0];
+                            var helper = require('sendgrid').mail;
+                            var from_email = new helper.Email('support@evonixtech.com');
+                            var to_email = new helper.Email(student_details.student_email);
+                            var subject = 'Stumuch Notification';
+                            var mail_content = "Hi " + student_details.student_firstname + ' </br></br>' + req.param('admin_note');
 
-                        var content = new helper.Content('text/html', mail_content);
-                        var mail = new helper.Mail(from_email, subject, to_email, content);
+                            var content = new helper.Content('text/html', mail_content);
+                            var mail = new helper.Mail(from_email, subject, to_email, content);
 
-                        var sg = require('sendgrid')("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");
-                        var request = sg.emptyRequest({
-                            method: 'POST',
-                            path: '/v3/mail/send',
-                            body: mail.toJSON(),
+                            var sg = require('sendgrid')(token[0].token);
+                            var request = sg.emptyRequest({
+                                method: 'POST',
+                                path: '/v3/mail/send',
+                                body: mail.toJSON(),
+                            });
+
+                            sg.API(request, function (error, response) {
+                                console.log(token[0].token);
+                                console.log('response.statusCode');
+                                console.log(response.statusCode);
+                                console.log(response.body);
+                                console.log(response.headers);
+                            });
+
                         });
-
-                        sg.API(request, function (error, response) {
-                            console.log('response.statusCode');
-                            console.log(response.statusCode);
-                            console.log(response.body);
-                            console.log(response.headers);
-                        });
-
                     });
 
                 });
@@ -381,7 +387,8 @@ module.exports = {
             }
 
         });
-        var path = '/admin/studlockedprofile/' + req.param('student_id');
+        var path = '/admin/studlockedprofile/1';
+//        var path = '/admin/studlockedprofile/' + req.param('student_id');
 //        res.redirect(path);
         return res.ok({path: path});
 
