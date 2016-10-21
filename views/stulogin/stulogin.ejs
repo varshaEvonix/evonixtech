@@ -408,7 +408,7 @@
                                                 <label>
                                                     Contact number<span class="req">*</span>
                                                 </label>
-                                                <input  type="text" ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" format  ng-pattern="/^[0-9-]*$/" required>
+                                                <input  type="text"  ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" format  ng-pattern="/^[0-9-]*$/" required>
                                                 <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
                                                 <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
                                                 <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>

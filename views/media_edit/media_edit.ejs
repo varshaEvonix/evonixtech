@@ -31,6 +31,8 @@
         color: red;
     }
 </style>
+<link href="../../index_files/jqfiler/css/jquery.filer.css" type="text/css" rel="stylesheet" />
+<link href="../../index_files/jqfiler/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
 <link href="../../index_files/lightbox.css" rel="stylesheet">
 <section id="main-content">
     <section class="wrapper" ng-app="postApp" ng-controller="postController">
@@ -58,11 +60,11 @@
                         <div class="col-md-12">
                             <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
 
-                            <div class="row">
-                                <div class="col-md-4"> 
-                                    <input class="filebtn" id="uploadImages" name="image1" type="file" multiple><br>
-                                </div>
-                            </div>
+                          <div class="row">
+            <div class="col-md-12">
+             <input type="file" name="image1" id="filer_input2" multiple="multiple"><br>
+           </div>
+          </div>
                             <div class="row">
                                 <% _.each(photos, function (photos) { %>
                                 <div class="modal fade col-md-5 center" style="margin:auto" id="myModal" role="dialog">
@@ -121,6 +123,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 <script src="../../index_files/lightbox.js"></script>
+<script src="../../index_files/jqfiler/js/jquery.filer.min.js"></script>
+<script src="../../index_files/jqfiler/js/custom.js" type="text/javascript"></script>
 <script>
       lightbox.option({
           'resizeDuration': 200,
@@ -131,6 +135,7 @@
 
     $('#studentprofile').addClass('active');
 </script>
+
 
 <!-- <script>
     var postApp = angular.module('postApp', []);
