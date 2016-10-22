@@ -1,5 +1,5 @@
 <%- include ../stuhead.ejs %>
-<% _.each(student_info, function (student_info) { %>
+
 <%- include ../stud_left.ejs %>
 
 <style>
@@ -46,12 +46,12 @@
                 <h2>Media Section</h2><br>
                 <h3>Your Video</h3><br>
 
-                <form id="userVideo" enctype="multipart/form-data" action="/upload_media/<%= student_info.student_id %>" method="POST" name="userVideo" novalidate>
+                <form id="userVideo" enctype="multipart/form-data" action="/upload_media/<%= student_info[0].student_id %>" method="POST" name="userVideo" novalidate>
                     <div class="form-group row">
 
                         <div class="col-xs-10">
                             <label for="student_firstname">Enter your video link: <a href="#" data-toggle="tooltip" title="Make a statement about your life and ambitions here.  Many funders skip the text and play the video instead. This will be a link to a video hosted on YouTube or Vimeo."> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-                            <input type="text" data-validation="custom" data-validation-regexp="^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$" data-validation-error-msg="Enter a youtube embedded link" value="<%= student_info.video_link %>" name="video_link" class="form-control">
+                            <input type="text" data-validation="custom" data-validation-regexp="^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$" data-validation-error-msg="Enter a youtube embedded link" value="<%= student_info[0].video_link %>" name="video_link" class="form-control">
 
                             <div class="row">
 
@@ -100,10 +100,10 @@
                                 <div class="col-md-4">
                                     <input type="submit" value="Submit" class="upload btn btn-default">
 
-                                    <a href="/viewprofile/<%= student_info.student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
+                                    <a href="/viewprofile/<%= student_info[0].student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
                                 </div>
                             </div>
-                            <% }) %>                 
+                                      
                         </div>
                 </form>
 
@@ -142,9 +142,9 @@
     postApp.controller('postController', function ($scope, $http) {
      $scope.student={};
 
-    <% _.each(student_info, function (student_info) { %>
-  $scope.student.student_education_institute='<%= student_info.student_education_institute %>';
-  $scope.student.student_education_fieldofstudy='<%= student_info.student_education_fieldofstudy %>';
+
+  $scope.student.student_education_institute='<%= student_info[0].student_education_institute %>';
+  $scope.student.student_education_fieldofstudy='<%= student_info[0].student_education_fieldofstudy %>';
 
 
     
@@ -153,16 +153,16 @@
                 $http({
                     method: 'POST',
 //                    dataType: 'json',
-                    url: '/education_edit_submit/<%= student_info.id %>',
+                    url: '/education_edit_submit/<%= student_info[0].id %>',
                     data: $scope.student, //forms user object
                     headers: {'Content-Type': 'application/json'}
                 }).success(function (data) {
                     console.log(data);
-                    window.location = '/viewprofile/<%= student_info.student_id %>';
+                    window.location = '/viewprofile/<%= student_info[0].student_id %>';
                 });
 
             }
-            <% }) %>
+
 
         };
     });

@@ -349,8 +349,7 @@ module.exports = {
                     Student_details.query(fetch_student, function (err, studentdetails) {
                         var send_grid_token = "select token from send_grid_token where id =1";
                         Send_grid_token.query(send_grid_token, function (err, token) {
-                            console.log('token[0].token');
-                            console.log(token[0].token);
+
                             var temp = JSON.stringify(studentdetails);
                             var student_details = JSON.parse(temp)[0];
                             var helper = require('sendgrid').mail;
@@ -437,27 +436,6 @@ module.exports = {
             });
         });
     },
-    'send_mail': function (req, res) {
-        var helper = require('sendgrid').mail;
-        var from_email = new helper.Email('support@evonixtech.com');
-        var to_email = new helper.Email(student_details.student_email);
-        var subject = 'Stumuch Notification';
-        var mail_content = "Hi " + student_details.student_firstname + '</br>' + req.param('admin_note');
-        var content = new helper.Content('text/html', html);
-        var mail = new helper.Mail(from_email, subject, to_email, content);
-
-        var sg = require('sendgrid')();
-        var request = sg.emptyRequest({
-            method: 'POST',
-            path: '/v3/mail/send',
-            body: mail.toJSON(),
-        });
-
-        sg.API(request, function (error, response) {
-//            console.log(response.statusCode);
-//            console.log(response.body);
-//            console.log(response.headers);
-        });
-    },
+   
 };
 

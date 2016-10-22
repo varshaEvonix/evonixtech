@@ -5,11 +5,11 @@
            
 
               <center>
-                  <img src=" <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info.student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
-                  <h5 class="centered"><%= student_info.student_firstname %> <%= student_info.student_lastname %></h5>
+                  <img src=" <% if (student_info[0].student_profile_pic_path == '' || student_info[0].student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %> <% } %>" style="width:180px;height:115px;" class="dp_left thumbnail"></center>
+                  <h5 class="centered"><%= student_info[0].student_firstname %> <%= student_info[0].student_lastname %></h5>
                    
                   <li class="mt">
-                      <a  id="dashboard" href="/studash/<%= student_info.student_id %>">
+                      <a  id="dashboard" href="/studash/<%= student_info[0].student_id %>">
                           <i class="fa fa-tachometer" aria-hidden="true"></i>
                           <span>Dashboard</span>
                       </a>
@@ -52,7 +52,7 @@
                     
                   </li-->
                     <li class="sub-menu">
-                      <a id="studentprofile" href="/viewprofile/<%= student_info.student_id %>" >
+                      <a id="studentprofile" href="/viewprofile/<%= student_info[0].student_id %>" >
                           <i class="fa fa-key" aria-hidden="true"></i>
                           <span>My profile</span>
                       </a>                      

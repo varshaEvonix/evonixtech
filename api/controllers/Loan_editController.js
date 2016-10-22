@@ -47,11 +47,15 @@ module.exports = {
     },
     'editloansubmit': function (req, res) {
 
+
         if (req.method == "POST")
         {
-
-
-            console.log('r u t');
+            var education_id = req.param('education_id');
+            if (education_id == undefined) {
+                var education_query = "INSERT INTO `education` (`student_id`, `student_education_institute`, `student_education_fieldofstudy`, `isEnabled`,  `createdAt`) VALUES ('" + req.param('student_id') + "', '" + req.param('student_education_institute') + "', '" + req.param('student_education_fieldofstudy') + "', '1',  NULL, 'NOW()')";
+            } else {
+                var education_query = "UPDATE `education` SET `student_education_institute` = '" + req.param('student_education_institute') + "', `student_education_fieldofstudy`='" + req.param('student_education_fieldofstudy') + "'  WHERE `education`.`id` ='" + education_id + "'";
+            }
 
             var newFilename = "";
             var document_name = "";
@@ -74,14 +78,12 @@ module.exports = {
             }
 
 
-
-
             var loan_type = req.param("loan_type");
             var fafsa_values = req.param("fafsa_values");
             var loan_bankname = req.param("loan_bankname");
             var loan_accountno = req.param("loan_accountno");
             var loan_amount = req.param("loan_amount");
-      
+
 
 
             var update = "";
@@ -102,13 +104,15 @@ module.exports = {
 
                 Table_loan_document.query(insert_doc, function (err, record2)
                 {
+                    Education.query(education_query, function (err, education)
+                    {
 
 
+                        res.redirect('/viewprofile/' + req.param('student_id'));
 
-                    res.redirect('/viewprofile/' + req.param('student_id'));
-
-                    // var file_name = files.filename;
-                    //console.log(file_name);
+                        // var file_name = files.filename;
+                        //console.log(file_name);
+                    });
                 });
             });
 
@@ -148,7 +152,7 @@ module.exports = {
                 insert = "INSERT INTO `loan_details` (`student_id`, `loan_amount`, `loan_fafsa_id`, `loan_bankname`,`loan_accountno`,`isActive`) VALUES ('" + req.param('id') + "', '" + loan_amount + "','" + fafsa_values + "','','" + loan_accountno + "','1')";
 
             }
-console.log(insert);
+            console.log(insert);
 
             Loan_details.query(update, function (err, loan_active)
             {

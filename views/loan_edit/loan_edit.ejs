@@ -1,5 +1,5 @@
 <%- include ../stuhead.ejs %>
-<% _.each(student_info, function (student_info) { %>
+
 <%- include ../stud_left.ejs %>
 
 <style>
@@ -53,14 +53,47 @@
 
 <section id="main-content">
     <section class="wrapper">
-        <div class="row">
-            <div class="col-md-9">
+        <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" name="loanform">
+            <div class="row">
+                <div class="col-sm-9">
+
+                    <!--form action="/education_edit_submit" method="POST" role="form"-->
+                    <!--<form class="form" ng-submit="submitForm()" name="loanform" novalidate>-->
+
+                    <h2>Education details</h2><br>
+
+
+                    <div class="form-group">
+
+                        <label for="student_education_institute">Enter your University / Educational Institution: </label>
+                        <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="200" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info[0].student_education_institute %>" required>
+                        <p ng-show="submitted && loanform.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
+                        <p ng-show="submitted && loanform.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide">Institute's name limit exeeds.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="student_education_fieldofstudy">Enter your field of study: </label>
+                        <input type="text" ng-maxlength="200" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info[0].student_education_fieldofstudy %>" required>
+                        <p ng-show="submitted && loanform.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
+                        <p ng-show="submitted && loanform.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide">Field name limit exeeds.</p>
+                    </div>
+
+
+                    <br>
+                    <!--                    <input type="hidden" name="_csrf" value="<% _csrf%>" />
+                                        <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button> -->
+                    <!--                    <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a> -->
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
 
 
 
-                <h2>Loan details&nbsp;&nbsp; <span class="small"></span></h2>
-                <br>  
-                <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info.student_id %>/<%= student_info.loan_id %>" name="loanform">
+                    <h2>Loan details&nbsp;&nbsp; <span class="small"></span></h2>
+                    <br>  
+                    <!--                <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" name="loanform">-->
                     <div class="row">
 
 
@@ -68,7 +101,7 @@
                             <label for="loan_purpose_name">Select the type of loan <span>*</span>: </label><br>
 
                             <!-- <select name="one" onchange="if(this.value=='fafsa'){this.form['fafsa'].style.visibility='visible'}else if(this.value=='bankloan'){this.form['bankloan'].style.visibility='visible'}else {this.form['other','bankloan'].style.visibility='hidden'};"> -->
-                            <%if (student_info.loan_bankname == '') { %>
+                            <%if (student_info[0].loan_bankname == '') { %>
                             <select name="loan_type" id="loan_type" value="" class="dropdown form-group" data-validation-error-msg="Please enter loan type"  data-validation="required">
                                 <option value="" disabled>Select loan type</option>
                                 <option value="fafsa" selected="selected">FAFSA</option>
@@ -87,32 +120,32 @@
 
 
                         <div class="col-md-6">
-                            <div id="fafsa" style="<% if (student_info.loan_bankname != ''){ %>display: none;<% } %>">
+                            <div id="fafsa" style="<% if(student_info[0].loan_bankname != ''){ %>display: none;<% } %>">
 
                                 <label for="fafsa">Select loan name <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
                                 <select name="fafsa_values" id="fafsa_value" class="dropdown form-group" data-validation-error-msg="Please select loan type" data-validation="required">
 
-                                    <option value="0"  <% if (student_info.loan_fafsa_id == '-'){ %>selected="selected"<% } %> disabled>Select Loan Name</option>
-                                    <option value="1" <% if (student_info.loan_fafsa_id == '1'){ %>selected="selected"<% } %>>CornerStone</option>
-                                    <option value="2" <% if (student_info.loan_fafsa_id == '2'){ %>selected="selected"<% } %>>FedLoan Servicing (PHEAA)</option>
-                                    <option value="3" <% if (student_info.loan_fafsa_id == '3'){ %>selected="selected"<% } %>>Granite State – GSMR</option>
-                                    <option value="4" <% if (student_info.loan_fafsa_id == '4'){ %>selected="selected"<% } %>>Great Lakes Educational Loan Services, Inc.</option>
-                                    <option value="5" <% if (student_info.loan_fafsa_id == '5'){ %>selected="selected"<% } %>>HESC/Edfinancial</option>
-                                    <option value="6" <% if (student_info.loan_fafsa_id == '6'){ %>selected="selected"<% } %>>MOHELA</option>
-                                    <option value="7" <% if (student_info.loan_fafsa_id == '7'){ %>selected="selected"<% } %>>Navient</option>
-                                    <option value="8" <% if (student_info.loan_fafsa_id == '8'){ %>selected="selected"<% } %>>Nelnet</option>
-                                    <option value="9" <% if (student_info.loan_fafsa_id == '9'){ %>selected="selected"<% } %>>OSLA Servicing</option>
-                                    <option value="10" <% if (student_info.loan_fafsa_id == '10'){ %>selected="selected"<% } %>>VSAC Federal Loans</option>
-                                    <option value="11" <% if (student_info.loan_fafsa_id == '11'){ %>selected="selected"<% } %>>Other</option>
-                                    <option value="12" <% if (student_info.loan_fafsa_id == '12'){ %>selected="selected"<% } %>>I don’t know </option>
+                                    <option value="0"  <% if (student_info[0].loan_fafsa_id == '-'){ %>selected="selected"<% } %> disabled>Select Loan Name</option>
+                                    <option value="1" <% if (student_info[0].loan_fafsa_id == '1'){ %>selected="selected"<% } %>>CornerStone</option>
+                                    <option value="2" <% if (student_info[0].loan_fafsa_id == '2'){ %>selected="selected"<% } %>>FedLoan Servicing (PHEAA)</option>
+                                    <option value="3" <% if (student_info[0].loan_fafsa_id == '3'){ %>selected="selected"<% } %>>Granite State – GSMR</option>
+                                    <option value="4" <% if (student_info[0].loan_fafsa_id == '4'){ %>selected="selected"<% } %>>Great Lakes Educational Loan Services, Inc.</option>
+                                    <option value="5" <% if (student_info[0].loan_fafsa_id == '5'){ %>selected="selected"<% } %>>HESC/Edfinancial</option>
+                                    <option value="6" <% if (student_info[0].loan_fafsa_id == '6'){ %>selected="selected"<% } %>>MOHELA</option>
+                                    <option value="7" <% if (student_info[0].loan_fafsa_id == '7'){ %>selected="selected"<% } %>>Navient</option>
+                                    <option value="8" <% if (student_info[0].loan_fafsa_id == '8'){ %>selected="selected"<% } %>>Nelnet</option>
+                                    <option value="9" <% if (student_info[0].loan_fafsa_id == '9'){ %>selected="selected"<% } %>>OSLA Servicing</option>
+                                    <option value="10" <% if (student_info[0].loan_fafsa_id == '10'){ %>selected="selected"<% } %>>VSAC Federal Loans</option>
+                                    <option value="11" <% if (student_info[0].loan_fafsa_id == '11'){ %>selected="selected"<% } %>>Other</option>
+                                    <option value="12" <% if (student_info[0].loan_fafsa_id == '12'){ %>selected="selected"<% } %>>I don’t know </option>
                                 </select>
                             </div>
 
 
-                            <div id="bankloan" style="<% if (student_info.loan_bankname == ''){ %>display: none;<% } %>">
+                            <div id="bankloan" style="<% if (student_info[0].loan_bankname == ''){ %>display: none;<% } %>">
                                 <div class="form-group">
                                     <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
-                                    <input type="text" ng-model="student.loan_bankname" data-validation-error-msg="Please enter your bank name" data-validation="required" class="form-control" id="loan_bankname" data-validation-regexp="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info.loan_bankname %>">
+                                    <input type="text" ng-model="student.loan_bankname" data-validation-error-msg="Please enter your bank name" data-validation="required" class="form-control" id="loan_bankname" data-validation-regexp="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>">
 
                                 </div>
                             </div>
@@ -124,14 +157,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-                                <input type="text" data-validation="custom" data-validation-regexp="^([0-9A-z]+)$" data-validation-error-msg="Please enter your account number properly" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info.loan_accountno %>">
+                                <input type="text" data-validation="custom" data-validation-regexp="^([0-9A-z]+)$" data-validation-error-msg="Please enter your account number properly" data-validation="required" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info[0].loan_accountno %>">
 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-                                <input type="text" class="form-control" data-validation-regexp="^([0-9]+)$"  data-validation-error-msg="Please enter your loan current balance properly" data-validation-length="2-6" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info.loan_amount %>">
+                                <input type="text" class="form-control" data-validation-regexp="^([0-9]+)$"  data-validation-error-msg="Please enter your loan current balance properly" data-validation-length="2-6" data-validation="required" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info[0].loan_amount %>">
                             </div>
 
                         </div>
@@ -206,26 +239,25 @@
 
                                     <input type="file" name="document_path" class="filebtn" value=""> 
 
-
-
-
                                 </div> 
                             </div>
                             <br><br>
+                            <input type="hidden" value="<%= student_info[0].student_id %>" name="student_id">
+                            <input type="hidden" value="<%= student_info[0].education_id %>" name="education_id">
                             <button type="submit" class="btn btn-default text-center">Submit</button>
-                            <a href="/viewprofile/<%= student_info.student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+                            <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
 
-                            </form>  
+
 
                         </div>
                         <br><br><br>
                     </div>
+                </div>
             </div>
-            <% }) %>  
-
-            <div class="col-md-3">
-                <%- include ../stud_right.ejs %>
-            </div>
+        </form> 
+        <div class="col-md-3">
+            <%- include ../stud_right.ejs %>
+        </div>
     </section>
 </section>  
 
@@ -256,6 +288,33 @@
         lang: 'es'
     });
 </script>
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.student = {};
+
+        $scope.submitForm = function () {
+            if ($scope.loanform.$valid) {
+                return true;
+//                $http({
+//                    method: 'POST',
+////                    dataType: 'json',
+//                    url: '/education_edit_submit/<%= student_info[0].student_id %>',
+//                    data: $scope.student, //forms user object
+//                    headers: {'Content-Type': 'application/json'}
+//                }).success(function (data) {
+//                    console.log(data);
+//                    window.location = '/viewprofile/<%= student_info[0].student_id %>';
+//                });
+
+            } else {
+                return false;
+            }
+
+        };
+    });
+
+</script>
 
 <!-- <script>
   var postApp = angular.module('postApp', []);
@@ -279,29 +338,29 @@
                   });
                   };
 
-  <% _.each(student_info, function (student_info) { %>
+
  
-$scope.student.fafsa_values='<%= student_info.fafsa_values %>';
-$scope.student.loan_bankname='<%= student_info.loan_bankname %>';
-$scope.student.loan_accountno='<%= student_info.loan_accountno %>';
-$scope.student.loan_amount='<%= student_info.loan_amount %>';
-$scope.student.document_name='<%= student_info.document_name %>';
-$scope.student.file='<%= student_info.file %>';
-<% }) %>
+$scope.student.fafsa_values='<%= student_info[0].fafsa_values %>';
+$scope.student.loan_bankname='<%= student_info[0].loan_bankname %>';
+$scope.student.loan_accountno='<%= student_info[0].loan_accountno %>';
+$scope.student.loan_amount='<%= student_info[0].loan_amount %>';
+$scope.student.document_name='<%= student_info[0].document_name %>';
+$scope.student.file='<%= student_info[0].file %>';
+
  
   
-  <% _.each(student_info, function (student_info) { %>
+
       $scope.submitForm = function () {
           if ($scope.loanform.$valid) {
               $http({
                   method: 'POST',
 //                    dataType: 'json',
-                  url: '/loan_edit_submit/<%= student_info.student_id %>/<%= student_info.loan_id %>',
+                  url: '/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>',
                   data: $scope.student, //forms user object
                   headers: {'Content-Type': 'application/json'}
               }).success(function (data) {
                   console.log(data);
-                  window.location = '/viewprofile/<%= student_info.student_id %>';
+                  window.location = '/viewprofile/<%= student_info[0].student_id %>';
               });
 
           }
@@ -309,7 +368,7 @@ $scope.student.file='<%= student_info.file %>';
 
       };
   });
-<% }) %>
+
 </script> -->
 
 <script>

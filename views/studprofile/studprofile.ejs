@@ -26,7 +26,7 @@
                 <% } else { %>
                 <div class="col-md-7">
 
-                    <img src="../index_files/uploads/documents/<%= student_info[0].student_profile_pic_path %>" class="image_pro" />
+                    <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %>" class="image_pro" />
 
                 </div>
                 <% } %>
@@ -105,8 +105,8 @@
 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#home" class="profile_tabs">Personal details</a></li>
-                    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education Details</a></li>
-                    <li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>
+                    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education and Loan Details</a></li>
+                    <!--<li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>-->
                     <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
 
                 </ul>
@@ -181,10 +181,15 @@
                             </div>
                         </div>
                     </div>
-                    <div id="menu1" class="tab-pane fade"><div class="col-md-12 white_bg" style="min-height:300px;">
-                            <div class="row pull-right"> <a href="/education_edit/<%= student_info[0].student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
+                    <div id="menu1" class="tab-pane fade">
+                        <div class="col-md-12 white_bg" style="min-height:300px;">
 
+     <div class="row pull-right">
+                                    <a href="/education_edit/<%= student_info[0].student_id %>/" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                </div>
+                                <br>
                             <div class="row">
+                           
                                 <div class="col-md-4">
                                     <p class="info">  <span class="small">University / Educational Institution: <br>
                                         </span><%= student_info[0].student_education_institute %></p>
@@ -194,6 +199,94 @@
                                         </span><%= student_info[0].student_education_fieldofstudy  %></p>
                                 </div>
                             </div> 
+
+                            <div class="row">
+                                <div style="font-size:22px;" class="row edit_op">Current Loan
+
+<!--                                    <div class="row pull-right"> <% if (student_info[0].loan_id != null) { %><a href="/loan_edit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>-->
+                                    <br>
+                                    <br>
+                                </div>
+
+                                <%if (student_info[0].loan_bankname != '' || student_info[0].fafsa_values != '' || student_info[0].fafsa_values != null || student_info[0].loan_bankname != null) { %>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <p class="info">  <span class="small">Loan Amount: <br>
+                                            </span>$<%= student_info[0].loan_amount %></p>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <%if (student_info[0].loan_bankname == '') { %>
+                                        <div class="col-md-6">
+                                            <p class="info">  <span class="small">Type of Loan: <br>
+                                                </span>FAFSA</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="info">  <span class="small">Name of Loan: <br>
+                                                </span><%= student_info[0].fafsa_values %></p>
+                                        </div>
+                                        <% } else { %>
+                                        <div class="col-md-6">
+                                            <p class="info"> <span class="small">Type of Loan: <br>
+                                                </span>Bank loan</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="info"> <span class="small">Bank Name: <br>
+                                                </span><%= student_info[0].loan_bankname %></p>
+                                        </div>
+                                        <% } %>
+                                    </div>
+
+
+
+                                    <div class="col-md-3">
+                                        <p class="info">  <span class="small">Loan Account Number: <br>
+                                            </span><%= student_info[0].loan_accountno %></p>
+                                    </div>
+
+                                    <br><br><br><br><br>
+                                </div>
+                                <% } %>
+<!--                                <div>
+
+                                    <h3>Previous loans</h3><br>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Type of Loan</th>
+                                                <th>Name of Loan</th>
+                                                <th>Name of Bank</th>
+                                                <th>Account Number</th>
+                                                <th>Loan Current Balance</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% _.each(loan_list, function (loan_list) { %>
+                                            <tr>
+                                                <%if (loan_list.loan_bankname == '') { %>
+                                                <td>FAFSA</td>
+                                                <% } else {%>
+                                                <td>Bank loan</td>
+
+                                                <% } %>
+
+                                                <td><%= loan_list.fafsa_values %></td>
+                                                <td><%= loan_list.loan_bankname %></td>
+                                                <td><%= loan_list.loan_accountno %></td>
+                                                <td><%= loan_list.loan_amount %></td>
+
+
+                                                <td>Deactivated</td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>-->
+                            </div>
                         </div>
                     </div>
 
@@ -335,7 +428,7 @@
 
 
                                         </section>
-         
+
                                         <%- include ../stufoot.ejs %>
                                         <script src="../../index_files/lightbox.js"></script>
                                         <script>
@@ -376,7 +469,7 @@
 
 
                                             $(document).ready(function () {
-                                        //      alert("hi");
+                                                //      alert("hi");
 
                                                 $('#about_me').html(about_me);
                                                 $('#ambition').html(ambition);

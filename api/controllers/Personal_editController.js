@@ -19,6 +19,10 @@ module.exports = {
 
     },
     'editpersonalsubmit': function (req, res) {
+
+
+
+
         if (req.method == "POST")
         {
             var student_firstname = req.param("student_firstname");
@@ -33,25 +37,43 @@ module.exports = {
             var zip_code = req.param("zip_code");
             var student_about_me = req.param("student_about_me");
             var student_ambition = req.param("student_ambition");
+            var imagedata = req.param('image');
+        
+            var student_profile_pic_path = '';
+            if (imagedata != undefined) {
+                var fs = require("fs");
+                var dir_name = req.param('id');
+                var dir = '.tmp/public/index_files/uploads/' + dir_name;
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
 
+
+                var matches = imagedata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+                        response = {};
+
+                if (matches.length !== 3) {
+                    return new Error('Invalid input string');
+                }
+
+                response.type = matches[1];
+                response.data = new Buffer(matches[2], 'base64');
+                var image_name = Date.now() + '.jpg';
+                fs.writeFile('.tmp/public/index_files/uploads/' + dir_name + '/' + image_name, response.data, function (err) {
+                });
+//        var imageBuffer = decodeBase64Image(data);
+                student_profile_pic_path = image_name;
+            }
             var update = "";
-            try {
-                update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_email`=" + mysql.escape(student_email) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + " WHERE `student_id`=" + req.param('id');
 
-                throw "thrown message";
+            update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_email`=" + mysql.escape(student_email) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
 
-            }
-            catch (e) {
-
-            }
 
             Student_details.query(update, function (err, record)
             {
 
                 return res.ok();
             });
-        } else {
-            console.log('Else part');
         }
 
     },
