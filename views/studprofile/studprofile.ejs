@@ -185,7 +185,7 @@
                         <div class="col-md-12 white_bg" style="min-height:300px;">
 
      <div class="row pull-right">
-                                    <a href="/education_edit/<%= student_info[0].student_id %>/" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                    <a href="/education_edit/<%= student_info[0].student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
                                 </div>
                                 <br>
                             <div class="row">
@@ -404,8 +404,8 @@
                             <div class="row">
                                 <% _.each(pics, function (pics) { %>
                                 <div class="col-md-4" >
-                                    <a href="../index_files/uploads/documents/<%= pics.photo_path %>" data-lightbox="example-set" data-title="My caption">
-                                        <img class="img-responsive" src="../index_files/uploads/documents/<%= pics.photo_path %>"><br><br>
+                                    <a href="../index_files/uploads/<%= student_info[0].student_id %>/<%= pics.photo_path %>" data-lightbox="example-set" data-title="My caption">
+                                        <img class="img-responsive" src="../index_files/uploads/<%= student_info[0].student_id %>/<%= pics.photo_path %>"><br><br>
                                         </div>
 
                                         <% }) %>

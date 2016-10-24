@@ -1,41 +1,43 @@
 <%- include ../stuhead.ejs %>
 
 <%- include ../stud_left.ejs %>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+
+<!-- Fix for old browsers -->
+<script src="http://nervgh.github.io/js/es5-shim.min.js"></script>
+<script src="http://nervgh.github.io/js/es5-sham.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="../../index_files/stdash/js/console-sham.js"></script>
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<!--<script src="../bower_components/angular/angular.js"></script>-->
+<script src="http://code.angularjs.org/1.1.5/angular.min.js"></script>
+<script src="../../index_files/stdash/js/angular-file-upload.min.js"></script>
+<script src="controllers.js"></script>
+
+<!--thumbnails for images-->
+<script src="directives.js"></script>
 
 <style>
-    div.tooltip-inner {
-        max-width: 350px;
+    .my-drop-zone { border: dotted 3px lightgray; }
+    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+
+    html, body { height: 100%; }
+
+    canvas {
+        background-color: #f3f3f3;
+        -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+        -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+        box-shadow: 3px 3px 3px 0 #e3e3e3;
+        border: 1px solid #c3c3c3;
+        height: 100px;
+        margin: 6px 0 0 6px;
     }
 </style>
-
-<style type="text/css">
-
-    input[type=file]:before {
-        content: '\f0c6    Browse';
-        font-family: 'FontAwesome';
-        width: 99px;
-        height: 32px;
-        background: #00a290;
-        display: block;
-        color: #fff;
-        font-size: 15px;
-        position: absolute;
-        cursor: pointer;
-        margin-top: -5px;
-        border-radius: 4px;
-        padding: 3px 10px;
-        border: 1px solid #008677;
-    }
-    .pointer{
-        cursor: pointer;
-        color: red;
-    }
-</style>
-<link href="../../index_files/jqfiler/css/jquery.filer.css" type="text/css" rel="stylesheet" />
-<link href="../../index_files/jqfiler/css/themes/jquery.filer-dragdropbox-theme.css" type="text/css" rel="stylesheet" />
-<link href="../../index_files/lightbox.css" rel="stylesheet">
 <section id="main-content">
-    <section class="wrapper" ng-app="postApp" ng-controller="postController">
+    <section class="wrapper" ng-app="app">
         <br>
         <div class="row">
             <div class="col-sm-9">
@@ -60,11 +62,102 @@
                         <div class="col-md-12">
                             <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
 
-                          <div class="row">
-            <div class="col-md-12">
-             <input type="file" name="image1" id="filer_input2" multiple="multiple"><br>
-           </div>
-          </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-controller="AppController" nv-file-drop="" uploader="uploader">
+
+                                        <div class="container">
+
+
+
+                                            <div class="row">
+
+                                                <div class="col-md-2">
+
+                                                    <h3>Select files</h3>
+
+
+
+                                                    <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                                                    <input type="file" name="image_files[]" nv-file-select="" uploader="uploader" ng-model="user.image_files" multiple  /><br/>
+
+                                                </div>
+
+                                                <div class="col-md-10" style="margin-bottom: 40px">
+
+                                                    <p>Queue length: </p>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="50%">Name</th>
+
+                                                                <th ng-show="uploader.isHTML5">Progress</th>
+
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in uploader.queue">
+                                                                <td>
+                                                                    <strong>{{ item.file.name}}</strong>
+                                                                    <!-- Image preview -->
+                                                                    <!--auto height-->
+                                                                    <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                                                                    <!--auto width-->
+                                                                    <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                                                    <!--fixed width and height -->
+                                                                    <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                                                                </td>
+
+                                                                <td ng-show="uploader.isHTML5">
+                                                                    <div class="progress" style="margin-bottom: 0;">
+                                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td nowrap>
+                                                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div>
+                                                        <div>
+                                                            Queue progress:
+                                                            <div class="progress" style="">
+                                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <% _.each(photos, function (photos) { %>
                                 <div class="modal fade col-md-5 center" style="margin:auto" id="myModal" role="dialog">
@@ -87,9 +180,9 @@
                                 </div>
                                 <div class="col-md-4" >
                                     <div style="text-align:center">
-                                        <a href="../index_files/uploads/documents/<%= photos.photo_path %>" data-lightbox="example-set">
-                                            <img class="img-responsive" src="../index_files/uploads/documents/<%= photos.photo_path %>" style="height:182px; width:273px"></a><br>
-                                        <a class="pointer" data-toggle="modal" data-target="#myModal"><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
+                                        <a href="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" data-lightbox="example-set">
+                                            <img class="img-responsive" src="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" style="height:182px; width:273px"></a><br>
+                                        <a class="pointer delete-img" ><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
                                     </div>
                                 </div>
                                 <% }) %>
@@ -98,12 +191,13 @@
 
                             <div class="row">
                                 <div class="col-md-4">
+                                    <input type="hidden" id="file_name" name="file_name[]" value="">
                                     <input type="submit" value="Submit" class="upload btn btn-default">
 
                                     <a href="/viewprofile/<%= student_info[0].student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
                                 </div>
                             </div>
-                                      
+
                         </div>
                 </form>
 
@@ -120,57 +214,139 @@
 </section> 
 
 <%- include ../stufoot.ejs %>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script src="../../index_files/lightbox.js"></script>
-<script src="../../index_files/jqfiler/js/jquery.filer.min.js"></script>
-<script src="../../index_files/jqfiler/js/custom.js" type="text/javascript"></script>
 <script>
-      lightbox.option({
-          'resizeDuration': 200,
-          'wrapAround': true
-      })
-</script>
+      var files = [];
+            'use strict';
+            angular
+
+
+            .module('app', ['angularFileUpload'])
+
+            .controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
+            var uploader = $scope.uploader = new FileUploader({
+            url: '/uploadimage'
+            });
+                    // FILTERS
+
+                    uploader.filters.push({
+                    name: 'imageFilter',
+                            fn: function(item /*{File|FileLikeObject}*/, options) {
+                            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                                    return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== - 1;
+                            }
+                    });
+                    // CALLBACKS
+
+                    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+                    console.info('onWhenAddingFileFailed', item, filter, options);
+                    };
+                    uploader.onAfterAddingFile = function(fileItem) {
+
+                    console.info('onAfterAddingFile', fileItem);
+                    };
+                    uploader.onAfterAddingAll = function(addedFileItems) {
+
+                    console.info('onAfterAddingAll', addedFileItems);
+                    };
+                    uploader.onBeforeUploadItem = function(item) {
+                    console.info('onBeforeUploadItem', item);
+                    };
+                    uploader.onProgressItem = function(fileItem, progress) {
+
+                    console.info('onProgressItem', fileItem, progress);
+                    };
+                    uploader.onProgressAll = function(progress) {
+                    console.info('onProgressAll', progress);
+                    };
+                    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                  
+                    console.log('response')
+                    console.log(response)
+//                            $.each(response, function(index, value) {
+                            files.push(response);
+//                            })
+                            console.log('files')
+                            console.log(files)
+                            $('#file_name').val(files);
+                            console.info('onSuccessItem', fileItem, response, status, headers);
+                    };
+                    uploader.onErrorItem = function(fileItem, response, status, headers) {
+
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                    };
+                    uploader.onCancelItem = function(fileItem, response, status, headers) {
+                    console.info('onCancelItem', fileItem, response, status, headers);
+                    };
+                    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                    console.info('onCompleteItem', fileItem, response, status, headers);
+                    };
+                    uploader.onCompleteAll = function() {
+                    console.info('onCompleteAll');
+                    };
+                    console.info('uploader', uploader);
+            }]);</script>
+<script>
+            'use strict';
+            angular
+
+
+            .module('app')
+
+
+            // Angular File Upload module does not include this directive
+            // Only for example
+
+
+            /**
+             * The ng-thumb directive
+             * @author: nerv
+             * @version: 0.1.2, 2014-01-09
+             */
+            .directive('ngThumb', ['$window', function($window) {
+            var helper = {
+            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
+                    isFile: function(item) {
+                    return angular.isObject(item) && item instanceof $window.File;
+                    },
+                    isImage: function(file) {
+                    var type = '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+                            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== - 1;
+                    }
+            };
+                    return {
+                    restrict: 'A',
+                            template: '<canvas/>',
+                            link: function(scope, element, attributes) {
+                            if (!helper.support) return;
+                                    var params = scope.$eval(attributes.ngThumb);
+                                    if (!helper.isFile(params.file)) return;
+                                    if (!helper.isImage(params.file)) return;
+                                    var canvas = element.find('canvas');
+                                    var reader = new FileReader();
+                                    reader.onload = onLoadFile;
+                                    reader.readAsDataURL(params.file);
+                                    function onLoadFile(event) {
+                                    var img = new Image();
+                                            img.onload = onLoadImage;
+                                            img.src = event.target.result;
+                                    }
+
+                            function onLoadImage() {
+                            var width = params.width || this.width / this.height * params.height;
+                                    var height = params.height || this.height / this.width * params.width;
+                                    canvas.attr({ width: width, height: height });
+                                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
+                            }
+                            }
+                    };
+            }]);</script>
 <script>
 
-    $('#studentprofile').addClass('active');
-</script>
+            $('#studentprofile').addClass('active');</script>
 
-
-<!-- <script>
-    var postApp = angular.module('postApp', []);
-    postApp.controller('postController', function ($scope, $http) {
-     $scope.student={};
-
-
-  $scope.student.student_education_institute='<%= student_info[0].student_education_institute %>';
-  $scope.student.student_education_fieldofstudy='<%= student_info[0].student_education_fieldofstudy %>';
-
-
-    
-        $scope.submitForm = function () {
-            if ($scope.educationform.$valid) {
-                $http({
-                    method: 'POST',
-//                    dataType: 'json',
-                    url: '/education_edit_submit/<%= student_info[0].id %>',
-                    data: $scope.student, //forms user object
-                    headers: {'Content-Type': 'application/json'}
-                }).success(function (data) {
-                    console.log(data);
-                    window.location = '/viewprofile/<%= student_info[0].student_id %>';
-                });
-
-            }
-
-
-        };
-    });
-
-  </script> -->
 <script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
+            $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
 

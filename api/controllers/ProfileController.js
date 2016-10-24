@@ -102,37 +102,67 @@ module.exports = {
 
     },
     'uploadmedia': function (req, res) {
-        console.log('are you there');
 
-        if (req.method == "POST")
+        if (req.param('video_link') != '')
+        {
+            video_link = req.param('video_link');
+        }
+        if (req.param('file_name[]') != '')
         {
 
-            if (req.param('image1') != '')
-            {
-                newFilename = req.file('image1')._files[0].stream.filename;
+            var file_name = req.param('file_name[]');
+            var file_name = file_name.split(',');
+            console.log('file_name')
+            console.log(file_name)
+            file_name.forEach(function (values, index) {
+                console.log('values')
+                console.log(values)
+                var newFilename = values;
 
-                console.log(newFilename);
-                console.log('newFilename');
-                req.file('image1').upload({dirname: '../public/index_files/uploads/documents/', saveAs: newFilename}), function onUploadComplete(err, files) {
-
-                };
                 var insert_pics = "INSERT INTO `student_photographs` (`student_id`, `photo_path`, `isEnabled`) VALUES ('" + req.param('id') + "', '" + newFilename + "', '1')";
-
-            }
-            var video_link = req.param('video_link');
-            var update = "UPDATE `student_details` SET `video_link`='" + video_link + "' where student_details.student_id=" + req.param('id');
-
-
-            Student_details.query(update, function (err, record)
-            {
                 Student_photographs.query(insert_pics, function (err, record)
                 {
-
-                    return res.redirect('/viewprofile/' + req.param('id'));
+                    console.log('insert_pics')
+                    console.log(insert_pics)
+                    console.log('err')
+                    console.log(err)
 
                 });
-            });
+            })
+
         }
+        var video_link = req.param('video_link');
+        var update = "UPDATE `student_details` SET `video_link`='" + video_link + "' where student_details.student_id=" + req.param('id');
+
+
+        Student_details.query(update, function (err, record)
+        {
+
+            return res.redirect('/viewprofile/' + req.param('id'));
+
+        });
+
+    },
+    'upload_image': function (req, res) {
+        console.log('varshaa');
+        console.log(req.file('file')._files)
+        var student_id = '1';
+        var fs = require("fs");
+        var dir_name = student_id;
+        var dir = '.tmp/public/index_files/uploads/' + dir_name;
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+
+        var newFilename = req.file('file')._files[0].stream.filename;
+        newFilename = Date.now() + newFilename;
+
+        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
+            console.log(err)
+        };
+
+        return res.ok(newFilename);
+
     },
     'removeimage': function (req, res) {
         console.log(student_id);

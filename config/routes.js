@@ -33,11 +33,12 @@ module.exports.routes = {
     '/student/process': 'Student_authController.student_process',
     '/student/logout': 'Student_authController.student_logout',
     '/donatepage': 'DonatepageController.donatepage',
-    // '/sendmail': 'Student_detailsController.send_mail',
 
     '/activation_link/:id': 'Student_detailsController.activate_student',
     '/thankyou': 'ThankyouController.thankyou',
     '/remove_image/:student_id/:photo_id': 'ProfileController.removeimage',
+    '/add_loan_education/:student_id': 'Loan_editController.add_loan_education',
+    '/uploadimage': 'ProfileController.upload_image',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',
@@ -67,7 +68,6 @@ module.exports.routes = {
     '/admin/process': 'AuthController.process',
     '/admin/studlockedprofile/:id': 'Admin_dashController.studlockedprofile',
     '/admin/update_student_profile': 'Admin_dashController.update_student_profile',
-    '/admin/send': 'Admin_dashController.send_mail',
     '/donorpage/:id': 'DonorController.donorpage',
     '/paymentpage': 'DonorController.paymentpage',
     '/checkout': 'DonorController.checkout',

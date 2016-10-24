@@ -94,6 +94,10 @@
         background-color:#fff;
 
     }
+    #student_info li a.active
+    {
+        background-color: #ccc;
+    }
 </style>
 <link href="../../index_files/lightbox.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -229,10 +233,10 @@
                     <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
                     <img src="<% sails.getBaseurl() %>/index_files/blank_dp.jpg" class="image_pro" />
                     <% } else { %>
-                    <img src="../index_files/uploads/documents/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
+                    <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
                     <% } %>
-                    <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:105px; height:28px">
-                            <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:105px; height:28px"></span></h2>
+                    <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:137px; height:28px">
+                            <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:137px; height:28px"></span></h2>
                     <p><%= student_info.student_city%>, <%= student_info.student_state  %></p>
 
 
@@ -293,8 +297,9 @@
                     <br>
                     <div class="text-center don" ><a href="/donorpage/<%= student_info.student_id %>" class="btn btn-success donate_main"><strong style="font-size:22px">Donate Now</strong></a></Button></div>
                     <div class="text-center">
-                        <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:185px; height:45px">
-                        <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:185px; height:45px">
+                        <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:226px;">
+
+                        <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:226px;">
 
                     </div>
                 </div>
@@ -419,21 +424,21 @@
 
 <script>
 
-$(document).ready(function () {
+                            $(document).ready(function () {
 
-  $("#Story").addClass("active").show();
+                                $("#Story").addClass("active").show();
 
-  $("#owl-demo").owlCarousel({
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
+                                $("#owl-demo").owlCarousel({
+                                    autoPlay: 3000, //Set AutoPlay to 3 seconds
 
-      items: 4,
-      itemsDesktop: [1199, 3],
-      itemsDesktopSmall: [979, 3]
+                                    items: 4,
+                                    itemsDesktop: [1199, 3],
+                                    itemsDesktopSmall: [979, 3]
 
-  });
+                                });
 
 
-});
+                            });
 
 </script>
 <script>

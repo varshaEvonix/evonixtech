@@ -260,8 +260,6 @@ module.exports = {
 
             Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%Y-%m-%d") = "' + bdate + '" group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function (err, record) {
 
-// console.log(record);
-
                 return res.view('./homepage', {
                     student_details: recordset,
                     birthday: record,
