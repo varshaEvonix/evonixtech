@@ -38,7 +38,7 @@ module.exports.routes = {
     '/thankyou': 'ThankyouController.thankyou',
     '/remove_image/:student_id/:photo_id': 'ProfileController.removeimage',
     '/add_loan_education/:student_id': 'Loan_editController.add_loan_education',
-    '/uploadimage': 'ProfileController.upload_image',
+    '/uploadimage/:student_id': 'ProfileController.upload_image',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',

@@ -144,9 +144,8 @@ module.exports = {
 
     },
     'upload_image': function (req, res) {
-        console.log('varshaa');
-        console.log(req.file('file')._files)
-        var student_id = '1';
+      
+        var student_id = req.param('1');;
         var fs = require("fs");
         var dir_name = student_id;
         var dir = '.tmp/public/index_files/uploads/' + dir_name;
@@ -165,11 +164,11 @@ module.exports = {
 
     },
     'removeimage': function (req, res) {
-        console.log(student_id);
-        console.log(loan_id);
+   
         Student_photographs.query('UPDATE `student_photographs` SET `isEnabled`= 0 WHERE `photo_id`=' + req.param('photo_id'), function (err, recordset) {
 
-            return res.redirect('/media_edit/' + req.param('student_id'));
+//            return res.redirect('/media_edit/' + req.param('student_id'));
+            return res.ok();
 
         });
 

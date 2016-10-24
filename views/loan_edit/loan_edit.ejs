@@ -200,7 +200,7 @@
                                     </div>
                                     <tr>
                                         <td><%= loan_docs.document_name %></td>
-                                        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/documents/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                     </tr>
                                     <% }) %>
                                     <% } %>

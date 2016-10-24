@@ -182,7 +182,7 @@
                                     <div style="text-align:center">
                                         <a href="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" data-lightbox="example-set">
                                             <img class="img-responsive" src="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" style="height:182px; width:273px"></a><br>
-                                        <a class="pointer delete-img" ><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
+                                            <a data="<%= student_info[0].student_id %>" data-value="<%= photos.photo_id %>" class="pointer delete-img" href="javascript:void(0)" ><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
                                     </div>
                                 </div>
                                 <% }) %>
@@ -214,6 +214,39 @@
 </section> 
 
 <%- include ../stufoot.ejs %>
+<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
+<script src="../../index_files/stdash/js/sweetalert.min.js"></script>
+<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
+<script>
+    $('.delete-img').click(function () {
+        var photo_id = $(this).attr('data-value');
+
+        var student_id = $(this).attr('data');
+        swal({title: "Are you sure?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, Delete it!",
+            closeOnConfirm: false
+        },
+        function () {
+
+            $.ajax({
+//                url: "/change_status",
+                url: "/remove_image/"+student_id+"/"+photo_id,
+                type: "POST",
+                async: true,
+//                dataType: 'json',
+            
+                //your form data to post goes here
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+
+        });
+    });
+</script>
 <script>
       var files = [];
             'use strict';
@@ -224,7 +257,7 @@
 
             .controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
             var uploader = $scope.uploader = new FileUploader({
-            url: '/uploadimage'
+            url: '/uploadimage/<%= student_info[0].student_id %>'
             });
                     // FILTERS
 
