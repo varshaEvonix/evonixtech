@@ -87,56 +87,49 @@
                 <div class="row">
                     <div class="col-md-9">
 
-
-
                         <h2>Loan details&nbsp;&nbsp; <span class="small"></span></h2>
                         <br>  
 
                         <div class="row">
-<% console.log('student_info[0].loan_type') %>
-<% console.log(student_info[0].loan_type) %>
 
                             <div class="col-md-6">
                                 <label for="loan_purpose_name">Select the type of loan <span>*</span>: </label><br>
-                                <select name="loan_type" ng-model="loan_type" id="loan_type" value="" class="dropdown form-group"  required>
-                                    <option value="" disabled>Select loan type</option>
-                                    <option value="fafsa" <% if (student_info[0].loan_type == 'fafsa'){ %>selected="selected"<% } %>>FAFSA</option>
-                                    <option value="bankloan" <% if (student_info[0].loan_type == 'bankloan'){ %>selected="selected"<% } %>>Bank loan</option>
+                                <select name="loan_type" ng-model="student.loan_type" id="loan_type" value="" class="dropdown form-group"  required>
+                                    <option value="fafsa">FAFSA</option>
+                                    <option value="bankloan">Bank loan</option>
                                 </select>
                                 <p ng-show="submitted && loan_eduction_form.loan_type.$error.required"  class="help-block has-error ng-hide">Loan Type is required.</p>
                             </div>
 
-
-
                             <div class="col-md-6">
-                                <div id="fafsa" style="<% if(student_info[0].loan_bankname != ''){ %>display: none;<% } %>">
+                                <!--<div id="fafsa" style="<% if(student_info[0].loan_type == 'bankloan'){ %>display: none;<% } %>">-->
+                                <div id="fafsa" style="<%= (student_info[0].loan_type == 'fafsa') ? 'display: block':'display: none' %>">
 
                                     <label for="fafsa">Select loan name <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-                                    <select name="fafsa_values" ng-model="fafsa_values" id="fafsa_value" class="dropdown form-group">
-
-                                        <option value="" disabled  <% if (student_info[0].loan_fafsa_id == '-'){ %>selected="selected"<% } %>>Select Loan Name</option>
-                                        <option value="1" <% if (student_info[0].loan_fafsa_id == '1'){ %>selected="selected"<% } %>>CornerStone</option>
-                                        <option value="2" <% if (student_info[0].loan_fafsa_id == '2'){ %>selected="selected"<% } %>>FedLoan Servicing (PHEAA)</option>
-                                        <option value="3" <% if (student_info[0].loan_fafsa_id == '3'){ %>selected="selected"<% } %>>Granite State – GSMR</option>
-                                        <option value="4" <% if (student_info[0].loan_fafsa_id == '4'){ %>selected="selected"<% } %>>Great Lakes Educational Loan Services, Inc.</option>
-                                        <option value="5" <% if (student_info[0].loan_fafsa_id == '5'){ %>selected="selected"<% } %>>HESC/Edfinancial</option>
-                                        <option value="6" <% if (student_info[0].loan_fafsa_id == '6'){ %>selected="selected"<% } %>>MOHELA</option>
-                                        <option value="7" <% if (student_info[0].loan_fafsa_id == '7'){ %>selected="selected"<% } %>>Navient</option>
-                                        <option value="8" <% if (student_info[0].loan_fafsa_id == '8'){ %>selected="selected"<% } %>>Nelnet</option>
-                                        <option value="9" <% if (student_info[0].loan_fafsa_id == '9'){ %>selected="selected"<% } %>>OSLA Servicing</option>
-                                        <option value="10" <% if (student_info[0].loan_fafsa_id == '10'){ %>selected="selected"<% } %>>VSAC Federal Loans</option>
-                                        <option value="11" <% if (student_info[0].loan_fafsa_id == '11'){ %>selected="selected"<% } %>>Other</option>
-                                        <option value="12" <% if (student_info[0].loan_fafsa_id == '12'){ %>selected="selected"<% } %>>I don’t know </option>
+                                    <select name="fafsa_values" ng-model="student.fafsa_values" id="fafsa_value" class="dropdown form-group" <%= (student_info[0].loan_type == 'fafsa') ? 'required':'' %>>
+                                            <option value="">Select Loan Name</option>
+                                        <option value="1">CornerStone</option>
+                                        <option value="2">FedLoan Servicing (PHEAA)</option>
+                                        <option value="3">Granite State – GSMR</option>
+                                        <option value="4">Great Lakes Educational Loan Services, Inc.</option>
+                                        <option value="5">HESC/Edfinancial</option>
+                                        <option value="6">MOHELA</option>
+                                        <option value="7">Navient</option>
+                                        <option value="8">Nelnet</option>
+                                        <option value="9">OSLA Servicing</option>
+                                        <option value="10">VSAC Federal Loans</option>
+                                        <option value="11">Other</option>
+                                        <option value="12">I don’t know </option>
                                     </select>
                                     <p ng-show="submitted && loan_eduction_form.fafsa_values.$error.required"  class="help-block has-error ng-hide">Loan name is required.</p>
                                 </div>
 
 
-                                <div id="bankloan" style="<% if (student_info[0].loan_bankname == ''){ %>display: none;<% } %>">
+                                <div id="bankloan" style="<%= (student_info[0].loan_type == 'bankloan') ? 'display: block':'display: none' %>">
                                     <div class="form-group">
                                         <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
-                                        <input type="text" ng-model="student.loan_bankname"  class="form-control" id="loan_bankname" ng-pattern="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>" >
-                                        <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.required"  class="help-block has-error ng-hide">Loan Bankname is required.</p>
+                                        <input type="text" ng-model="student.loan_bankname"  class="form-control" id="loan_bankname" ng-pattern="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>" <%= (student_info[0].loan_type == 'bankloan') ? 'required':'' %>>
+                                               <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.required"  class="help-block has-error ng-hide">Loan Bankname is required.</p>
                                         <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.pattern"  class="help-block has-error ng-hide">Not valid bank name.</p>
                                     </div>
                                 </div>
@@ -158,6 +151,7 @@
                                     <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
                                     <input type="text" ng-model="student.loan_amount" class="form-control" ng-pattern="^([0-9]+)$"   data-validation-length="2-6" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info[0].loan_amount %>" required>
                                     <p ng-show="submitted && loan_eduction_form.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount no is required.</p>
+                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.pattern"  class="help-block has-error ng-hide">Not valid loan amount.</p>
                                 </div>
 
                             </div>
@@ -200,7 +194,7 @@
                                     </div>
                                     <tr>
                                         <td><%= loan_docs.document_name %></td>
-                                        <td><a class="pointer" data-toggle="modal" data-target="#myModal" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                        <td><a class="delete-doc" data-value="<%= loan_docs.loan_document_id %>" data="<%= student_info[0].student_id %>" href="javascript:void(0)" ><i class="fa fa-times" aria-hidden="true"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= loan_docs.document_path %>" download><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                     </tr>
                                     <% }) %>
                                     <% } %>
@@ -219,7 +213,7 @@
                                 <h2>Loan Documents</h2>
                             </div>
                             <br>
-                            <button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>
+                            <!--<button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>-->
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -229,7 +223,7 @@
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <% if (student_info[0].loan_id != null && loan_docs.length > 0){ %>
-                                      
+
                                             <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" >
                                             <% }else{ %>
                                             <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" required>
@@ -270,7 +264,37 @@
 
 <%- include ../stufoot.ejs %>
 
+<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
+<script src="../../index_files/stdash/js/sweetalert.min.js"></script>
+<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 
+<script>
+                                        $('.delete-doc').click(function () {
+                                            var loan_document_id = $(this).attr('data-value');
+                                            var student_id = $(this).attr('data');
+                                            swal({title: "Are you sure?",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "Yes, Delete it!",
+                                                closeOnConfirm: false
+                                            },
+                                            function () {
+
+                                                $.ajax({
+//                url: "/change_status",
+                                                    url: "/remove_doc/" + loan_document_id,
+                                                    type: "POST",
+                                                    async: true,
+//                dataType: 'json',
+
+                                                    //your form data to post goes here
+                                                    success: function (response) {
+                                                        window.location.reload();
+                                                    }
+                                                });
+                                            });
+                                        });</script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -281,7 +305,7 @@
                 $('#loan_bankname').removeAttr('required');
                 $('#fafsa_value').add('attr', 'required');
             } else {
-               
+
                 $('#fafsa').hide();
                 $('#bankloan').show();
                 $('#fafsa_value').removeAttr('required');
@@ -290,12 +314,7 @@
         });
     });
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script>
-    $.validate({
-        lang: 'es'
-    });
-</script>
+
 <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
@@ -305,14 +324,13 @@
         $scope.student.loan_bankname = '<%= student_info[0].loan_bankname %>';
         $scope.student.loan_accountno = '<%= student_info[0].loan_accountno %>';
         $scope.student.loan_amount = '<%= student_info[0].loan_amount %>';
-      
-
+        $scope.student.loan_type = '<%= student_info[0].loan_type %>';
+        $scope.student.fafsa_values = '<%= student_info[0].loan_fafsa_id %>';
 
         $('#loan_eduction_form').submit(function () {
 
             if ($scope.loan_eduction_form.$valid) {
                 return true;
-
             } else {
                 return false;
             }
@@ -322,60 +340,6 @@
 
 </script>
 
-<!-- <script>
-  var postApp = angular.module('postApp', []);
-  postApp.controller('postController', function ($scope, $http) {
-   $scope.student={};
-
-   $scope.uploadFile = function (files) {
-                  $('#submit-notes').hide();
-                          $('.loading').show();
-                          var fd = new FormData();
-                          fd.append("file", files[0]);
-                          console.log(fd);
-                          $http.post('/upload_file', fd, {
-                          withCredentials: true,
-                                  headers: {'Content-Type': undefined},
-                                  transformRequest: angular.identity
-                          }).success(function (data) {
-                  $scope.student.filename = data;
-                          $('#submit-notes').show();
-                          $('.loading').hide();
-                  });
-                  };
-
-
- 
-$scope.student.fafsa_values='<%= student_info[0].fafsa_values %>';
-$scope.student.loan_bankname='<%= student_info[0].loan_bankname %>';
-$scope.student.loan_accountno='<%= student_info[0].loan_accountno %>';
-$scope.student.loan_amount='<%= student_info[0].loan_amount %>';
-$scope.student.document_name='<%= student_info[0].document_name %>';
-$scope.student.file='<%= student_info[0].file %>';
-
- 
-  
-
-      $scope.submitForm = function () {
-          if ($scope.loanform.$valid) {
-              $http({
-                  method: 'POST',
-//                    dataType: 'json',
-                  url: '/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>',
-                  data: $scope.student, //forms user object
-                  headers: {'Content-Type': 'application/json'}
-              }).success(function (data) {
-                  console.log(data);
-                  window.location = '/viewprofile/<%= student_info[0].student_id %>';
-              });
-
-          }
-          
-
-      };
-  });
-
-</script> -->
 
 <script>
     $(document).ready(function () {

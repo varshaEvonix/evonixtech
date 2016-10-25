@@ -56,8 +56,9 @@
                             <p class="text-center indicate">0%</p>
                             <input type="hidden" id="loan_percent" value="0">
                             <% } else {%>
-                            <p class="text-center indicate" style="margin-top:-75px;"><%= (student_info.total_funded/student_info.loan_amount)*100 %>%</p>
-                            <input type="hidden" id="loan_percent" value="<%= (student_info.total_funded/student_info.loan_amount)*100 %>">
+                            <% var percentage= (student_info.total_funded/student_info.loan_amount)*100 %>
+                            <p class="text-center indicate" style="margin-top:-75px;"><%= percentage.toFixed(2) %> %</p>
+                            <input type="hidden" id="loan_percent" value="<%= percentage.toFixed(2) %>">
                             <% } %>
 
                         </div>
@@ -276,7 +277,7 @@
                             if(comments.note_type==2){
                             %>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6" >
                                     <p>
                                         <% var comment=''; %>
                                         <% if(comments.note !='undefined'){ %>

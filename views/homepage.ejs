@@ -139,7 +139,8 @@
                                                 <div data-percent="0" class="progress-bar"><span class="percent">0</span>
                                                 </div>
                                                 <% }  else {%>
-                                                <div data-percent="<%= (birthday.total_funded/birthday.loan_amount)*100 %>" class="progress-bar"><span class="percent"><%= (birthday.total_funded/birthday.loan_amount)*100 %></span>
+                                                <% var percentage= (birthday.total_funded/birthday.loan_amount)*100 %>
+                                                <div data-percent="<%= percentage.toFixed(2) %>" class="progress-bar"><span class="percent"><%= percentage.toFixed(2) %> %</span>
                                                 </div>
                                                 <% } %>
 
@@ -277,7 +278,8 @@
                                             <div data-percent="0" class="progress-bar"><span class="percent">0</span>
                                             </div>
                                             <% }  else {%>
-                                            <div data-percent="<%= (student_details.total_funded/student_details.loan_amount)*100 %>" class="progress-bar"><span class="percent"><%= (student_details.total_funded/student_details.loan_amount)*100 %></span>
+                                            <% var percentage= (student_details.total_funded/student_details.loan_amount)*100 %>
+                                            <div data-percent="<%= percentage.toFixed(2) %>" class="progress-bar"><span class="percent"><%= percentage.toFixed(2) %></span>
                                             </div>
                                             <% } %>
 

@@ -389,10 +389,15 @@
 
                                 <div class="col-md-5">
 
+<% if(student_info[0].video_link !=''){ %>
+<% var video_link = student_info[0].video_link %>
+<% var video_link = video_link.split('?v=') %>
+
                                     <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe width="560" height="315" src="<%= student_info[0].video_link %>" frameborder="0" allowfullscreen> 
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen> 
                                         </iframe>
                                     </div>
+<% } %>
                                 </div>
                             </div>
                             <br>   

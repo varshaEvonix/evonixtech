@@ -58,40 +58,78 @@
                         background-color:#fff;
                     }
                 </style>
-<!--                <div class="white_bg">
-                    <table class="table table-hover">
 
-                        <thead style="background-color: #443f3f;; color:#fff">
-                            <tr>
-                                <th>Donor Name</th>
-                                <th>Email</th>
-                                <th>Date</th>
-                                <th>Donated amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                        <td>John</td>
-                        <td>john@example.com</td>
-                        <td>2016-10-17</td>
-                        <td>$200</td>
-                        </tr>
+                <div class="col-md-8">
+                    <div class="white_bg">
+                        <table class="table table-hover">
 
-                        <td>Mary</td>
-                        <td>john@example.com</td>
-                        <td>2016-10-17</td>
-                        <td>$100</td>
-                        </tr>
+                            <thead style="background-color: #443f3f;; color:#fff">
+                                <tr>
+                                    <th>Donor Name</th>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th class="text-center">Donated amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(donor_l.length > 0){ %>
+                                <% _.each(donor_l, function (donor_l) { %>
+                                <tr>
+                                    <td><%= donor_l.donors_name %></td>
+                                    <td><%= donor_l.donor_email %></td>
+                                    <td><%= donor_l.funding_date %></td>
+                                    <td class="text-center">$ <%= donor_l.funded_amount %></td>
+                                </tr>
+                                <% }) %>
+                                <% }else{ %>
+                                <tr>
+                                    <td>No record Found</td>
+                                </tr>
+                                <% } %>
 
-                        <td>July</td>
-                        <td>john@example.com</td>
-                        <td>2016-10-17</td>
-                        <td>$400</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>-->
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
+                <div class="col-md-4">
+                    <div class=" white_bg">
+                        <h3 style="background-color: #443f3f;; color:#fff">External Notes</h3>
+                        <% _.each(external_notes, function (comments) {
+                        
+                        %>
+                        <div class="row">
+                                <ul class="col-md-6" style="list-style:disc;padding-left: 35px;">
+                                    <li style="list-style: disc !important;">
+                                        <% var comment=''; %>
+                                        <% if(comments.note !='undefined'){ %>
+                                        <% comment=comments.note %>
+
+                                        <%= comment %>
+                                        <% }else{ %>
+                                        <%= comment %>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                                <ul class="col-md-6">
+                                    <li>
+                                        <% var img=''; %>
+                                        <% if(comments.note_attachment !='undefined'){ %>
+                                        
+                                        <a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= comments.note_attachment %>" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                        <% }else{ %>
+                                        No Attachment
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </div>
+                        <br>
+                        <% 
+                       
+                        }) %>
+                    </div>
+                </div>
 
             </div>
 

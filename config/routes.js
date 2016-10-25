@@ -25,7 +25,7 @@ module.exports.routes = {
     '/addloan/:id': 'Loan_editController.addloan',
     '/media_edit/:id': 'Personal_editController.editmedia',
     '/loan_edit_submit/:student_id/:loan_id': 'Loan_editController.editloansubmit',
-    '/remove_doc/:student_id/:loan_id/:loan_document_id': 'Loan_editController.removedoc',
+    '/remove_doc/:loan_document_id': 'Loan_editController.removedoc',
     '/addloan_submit/:id': 'Loan_editController.addloansubmit',
     '/search_student': 'Student_detailsController.stu_search',
     '/email': 'EmailController.sendEmail',

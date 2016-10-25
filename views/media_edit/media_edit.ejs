@@ -37,7 +37,7 @@
     }
 </style>
 <section id="main-content">
-    <section class="wrapper" ng-app="app">
+    <section class="wrapper" ng-app="app" ng-controller="AppController">
         <br>
         <div class="row">
             <div class="col-sm-9">
@@ -48,23 +48,20 @@
                 <h2>Media Section</h2><br>
                 <h3>Your Video</h3><br>
 
-                <form id="userVideo" enctype="multipart/form-data" action="/upload_media/<%= student_info[0].student_id %>" method="POST" name="userVideo" novalidate>
+                <form id="mediaForm" enctype="multipart/form-data" action="/upload_media/<%= student_info[0].student_id %>" method="POST" name="mediaForm" novalidate>
                     <div class="form-group row">
 
                         <div class="col-xs-10">
                             <label for="student_firstname">Enter your video link: <a href="#" data-toggle="tooltip" title="Make a statement about your life and ambitions here.  Many funders skip the text and play the video instead. This will be a link to a video hosted on YouTube or Vimeo."> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
-                            <input type="text" data-validation="custom" data-validation-regexp="^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$" data-validation-error-msg="Enter a youtube embedded link" value="<%= student_info[0].video_link %>" name="video_link" class="form-control">
-
-                            <div class="row">
-
-                            </div>
+                            <input type="text" ng-pattern="/^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/" ng-model="student.video_link"  value="<%= student_info[0].video_link %>" name="video_link" id="video_link" class="form-control">
+                            <p ng-show="submitted && mediaForm.video_link.$error.pattern"  class="help-block has-error ng-hide video_link_error_msg">Not valid video link.</p>
                         </div>
                         <div class="col-md-12">
                             <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div ng-controller="AppController" nv-file-drop="" uploader="uploader">
+                                    <div  nv-file-drop="" uploader="uploader">
 
                                         <div class="container">
 
@@ -158,57 +155,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <% _.each(photos, function (photos) { %>
-                                <div class="modal fade col-md-5 center" style="margin:auto" id="myModal" role="dialog">
-                                    <div class="modal-dialog">
-
-                                    </div><br>
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Delete photo</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Do you really want to remove this photo? You cannot undo this action.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="/remove_image/<%= photos.student_id %>/<%= photos.photo_id %>"><button type="button" class="btn btn-default">Yes</button></a>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" >
-                                    <div style="text-align:center">
-                                        <a href="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" data-lightbox="example-set">
-                                            <img class="img-responsive" src="../index_files/uploads/<%= student_info[0].student_id %>/<%= photos.photo_path %>" style="height:182px; width:273px"></a><br>
-                                            <a data="<%= student_info[0].student_id %>" data-value="<%= photos.photo_id %>" class="pointer delete-img" href="javascript:void(0)" ><i class="fa fa-times" aria-hidden="true"></i> Delete</a>
-                                    </div>
-                                </div>
-                                <% }) %>
-                            </div>
+     
                             <br>
 
                             <div class="row">
                                 <div class="col-md-4">
                                     <input type="hidden" id="file_name" name="file_name[]" value="">
-                                    <input type="submit" value="Submit" class="upload btn btn-default">
-
+                                    <!--<input type="submit" ng-click="submitted = true" value="Submit" class="upload btn btn-default">-->
+                                    <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
                                     <a href="/viewprofile/<%= student_info[0].student_id %>"><button class="btn btn-default text-center">Cancel</button></a>
                                 </div>
                             </div>
 
                         </div>
+                    </div>
                 </form>
 
-                <br></div>
+                <br>
 
 
 
-        </div>.
-        <div class="col-md-3">
-            <%- include ../stud_right.ejs %>
-        </div>
+            </div>.
+            <div class="col-md-3">
+                <%- include ../stud_right.ejs %>
+            </div>
 
     </section>
 </section> 
@@ -217,38 +187,36 @@
 <link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
 <script src="../../index_files/stdash/js/sweetalert.min.js"></script>
 <script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
+
 <script>
-    $('.delete-img').click(function () {
-        var photo_id = $(this).attr('data-value');
+                                                $('.delete-img').click(function () {
+                                        var photo_id = $(this).attr('data-value');
+                                                var student_id = $(this).attr('data');
+                                                swal({title: "Are you sure?",
+                                                        type: "warning",
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: "#DD6B55",
+                                                        confirmButtonText: "Yes, Delete it!",
+                                                        closeOnConfirm: false
+                                                },
+                                                        function () {
 
-        var student_id = $(this).attr('data');
-        swal({title: "Are you sure?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, Delete it!",
-            closeOnConfirm: false
-        },
-        function () {
-
-            $.ajax({
+                                                        $.ajax({
 //                url: "/change_status",
-                url: "/remove_image/"+student_id+"/"+photo_id,
-                type: "POST",
-                async: true,
+                                                        url: "/remove_image/" + student_id + "/" + photo_id,
+                                                                type: "POST",
+                                                                async: true,
 //                dataType: 'json',
-            
-                //your form data to post goes here
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
 
-        });
-    });
-</script>
+                                                                //your form data to post goes here
+                                                                success: function (response) {
+                                                                window.location.reload();
+                                                                }
+                                                        });
+                                                        });
+                                        });</script>
 <script>
-      var files = [];
+            var files = [];
             'use strict';
             angular
 
@@ -292,9 +260,9 @@
                     console.info('onProgressAll', progress);
                     };
                     uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                  
+
                     console.log('response')
-                    console.log(response)
+                            console.log(response)
 //                            $.each(response, function(index, value) {
                             files.push(response);
 //                            })
@@ -317,7 +285,30 @@
                     console.info('onCompleteAll');
                     };
                     console.info('uploader', uploader);
-            }]);</script>
+                    $scope.student = {};
+                    $scope.student.video_link = '<%= student_info[0].video_link %>';
+                    $('#mediaForm').submit(function () {
+            $('.video_link_error_msg').hide();
+                    var VIDEO_LINK_REGEXP = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
+                    var isMatchRegex = VIDEO_LINK_REGEXP.test($('#video_link').val());
+                    if (isMatchRegex){
+           
+                    return true;
+            } else{
+           
+                    $('.video_link_error_msg').removeClass('ng-hide');
+                    $('.video_link_error_msg').show();
+                    return false;
+            }
+
+            });
+            }]);
+            $(document).ready(function(){
+    $('#video_link').keyup(function(){
+    $('.video_link_error_msg').hide();
+    });
+    });</script>
+
 <script>
             'use strict';
             angular
@@ -382,4 +373,3 @@
     $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-

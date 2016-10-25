@@ -151,7 +151,7 @@
                                 <% if(student_details.student_profile_pic_path == null || student_details.student_profile_pic_path== undefined || student_details.student_profile_pic_path== ''){ %>
                                 <img src='../index_files/blank_dp.jpg' class="img-responsive" style="width: 100%;">
                                 <% }else{ %>
-                                <img src='../../index_files/uploads/documents/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
+                                <img src='../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
                                 <% } %>
                                 <h2>$ <%= funded_amount %> <span>of $ <%= student_details.loan_amount %></span></h2>
                                 <%
@@ -160,8 +160,8 @@
                                 %>
                                 <div class="progress-item mt-0">
                                     <div class="progress mb-10">
-                                        <div data-percent="<%= percentage %>" class="progress-bar appeared" style="width: <%= percentage %>%;"><span class="percent">0</span>
-                                            <span class="percent"><%= percentage %>%</span></div>
+                                        <div data-percent="<%= percentage.toFixed(2) %>" class="progress-bar appeared" style="width: <%= percentage.toFixed(2) %> %;"><span class="percent">0</span>
+                                            <span class="percent"><%= percentage.toFixed(2) %>%</span></div>
                                     </div>
                                 </div>
                                 <p>Raised by <%= donor_count %> people </p>
