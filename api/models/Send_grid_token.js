@@ -7,9 +7,7 @@
 
 module.exports = {
     attributes: {
-        notifiaction: {type: 'string'},
-        student_id: {type: 'integer'},
-        by_admin: {type: 'string'},
+        token: {type: 'string'},
     }
 
 };
