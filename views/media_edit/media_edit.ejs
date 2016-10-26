@@ -58,6 +58,14 @@
                         </div>
                         <div class="col-md-12">
                             <h3>Your images:<span class="small"><a href="#" data-toggle="tooltip" title="Show that you’re for real.  You can include pictures of your dorm room (clean ones), with friends, teachers, employers, and anything related."> <i  class="glyphicon glyphicon-question-sign"></i></a></span></h3> <br>
+                            <div class="row">
+                                <% _.each(photos, function (pics) { %>
+                                <div class="col-md-4" >
+                                    <a class="delete-img" data="<%= student_info[0].student_id %>" data-value="<%= pics.photo_id %>" href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <img class="img-responsive" src="../index_files/uploads/<%= student_info[0].student_id %>/<%= pics.photo_path %>"><br><br>
+                                </div>
+                                <% }) %>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -155,7 +163,7 @@
                                     </div>
                                 </div>
                             </div>
-     
+
                             <br>
 
                             <div class="row">
@@ -290,14 +298,13 @@
                     $('#mediaForm').submit(function () {
             $('.video_link_error_msg').hide();
                     var VIDEO_LINK_REGEXP = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
-                    
                     var isMatchRegex = VIDEO_LINK_REGEXP.test($('#video_link').val());
-                    if (isMatchRegex || $('#video_link').val() ==''){
-           
-                    return true;
+                    if (isMatchRegex || $('#video_link').val() == ''){
+
+            return true;
             } else{
-           
-                    $('.video_link_error_msg').removeClass('ng-hide');
+
+            $('.video_link_error_msg').removeClass('ng-hide');
                     $('.video_link_error_msg').show();
                     return false;
             }
