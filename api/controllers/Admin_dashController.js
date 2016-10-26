@@ -278,12 +278,18 @@ module.exports = {
         }
     },
     add_notes: function (req, res) {
-
+      
+        var fs = require("fs");
         var file = req.file('file');
+        var student_id = req.param('student_id');
         var filename = req.file('file')._files[0].stream.filename;
-
+        var dir_name = student_id;
+        var dir = '.tmp/public/index_files/uploads/' + dir_name;
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
         var newfilename = Date.now() + filename;
-        req.file('file').upload({dirname: '../public/index_files/notes_attachment/', saveAs: newfilename}, function (err, files) {
+        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newfilename}, function (err, files) {
             if (err) {
 
             }
@@ -436,6 +442,5 @@ module.exports = {
             });
         });
     },
-   
 };
 

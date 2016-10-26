@@ -290,8 +290,9 @@
                     $('#mediaForm').submit(function () {
             $('.video_link_error_msg').hide();
                     var VIDEO_LINK_REGEXP = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
+                    
                     var isMatchRegex = VIDEO_LINK_REGEXP.test($('#video_link').val());
-                    if (isMatchRegex){
+                    if (isMatchRegex || $('#video_link').val() ==''){
            
                     return true;
             } else{

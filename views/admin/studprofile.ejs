@@ -87,8 +87,8 @@
                     <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education Details</a></li>
                     <li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>
                     <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
-                    <li><a data-toggle="tab" href="#menu4">Admin External Notes</a></li>
                     <li><a data-toggle="tab" href="#menu5">Admin Internal Notes</a></li>
+                    <li><a data-toggle="tab" href="#menu4">Admin External Notes</a></li>
                     <li><a data-toggle="tab" href="#menu6">Donor's details</a></li>
                 </ul>
                 <div class="tab-content">
@@ -230,7 +230,7 @@
                             <% } %>
                             <div>
 
-                           
+
                             </div>
                         </div>
                     </div>
@@ -262,7 +262,7 @@
                             <div class="row">
                                 <% _.each(pics, function (pics) { %>
                                 <div class="col-md-4" >
-                                    <img class="img-responsive" src="../index_files/uploads/<%= pics.photo_path %>"><br><br>
+                                    <img class="img-responsive" src="../index_files/uploads/<%= student_info.student_id %>/<%= pics.photo_path %>"><br><br>
                                 </div>
 
                                 <% }) %>
@@ -277,28 +277,29 @@
                             if(comments.note_type==2){
                             %>
                             <div class="row">
-                                <div class="col-md-6" >
-                                    <p>
+                                <ul class="col-md-6" style="list-style:disc;padding-left: 27px;">
+                                    <li style="list-style: disc !important;">
                                         <% var comment=''; %>
                                         <% if(comments.note !='undefined'){ %>
                                         <% comment=comments.note %>
-                                        <i class="fa fa-circle-thin" aria-hidden="true"></i>
+
                                         <%= comment %>
                                         <% }else{ %>
                                         <%= comment %>
                                         <% } %>
-                                    </p>
-                                </div>
-                                <div class="col-md-6">
-                                    <% var img=''; %>
-                                    <% if(comments.note_attachment !='undefined'){ %>
-                                    <a target="_blank" href="../index_files/notes_attachment/<%= comments.note_attachment %>"><%= comments.note_attachment %></a>
-                                    <% }else{ %>
-                                    No Attachment
-                                    <% } %>
-                                </div>
-                            </div>
-                            <br>
+                                    </li>
+                                </ul>
+                                <ul class="col-md-6">
+                                    <li>
+                                        <% var img=''; %>
+                                        <% if(comments.note_attachment !='undefined'){ %>
+                                        <a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= comments.note_attachment %>" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                        <% }else{ %>
+                                        No Attachment
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </div> <br>
                             <% 
                             }
                             }) %>
@@ -327,7 +328,7 @@
                                     <li>
                                         <% var img=''; %>
                                         <% if(comments.note_attachment !='undefined'){ %>
-                                        <a target="_blank" href="../../index_files/notes_attachment/<%= comments.note_attachment %>">View</a>
+                                        <a href="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= comments.note_attachment %>" download><i class="fa fa-download" aria-hidden="true"></i></a>
                                         <% }else{ %>
                                         No Attachment
                                         <% } %>
@@ -376,7 +377,7 @@
                 <h4 class="modal-title">Add Notes</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="addNoteForm" action="/add_notes" method="POST" enctype="multipart/form-data" role="form" name="NotesForm" novalidate>
+                <form class="form-horizontal" id="addNoteForm" action="/add_notes/<%= student_info.student_id %>/<%= student_info.loan_id %>" method="POST" enctype="multipart/form-data" role="form" name="NotesForm" novalidate>
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">Note Type</label>
                         <div class="col-sm-5">
@@ -416,8 +417,8 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <input type="hidden" name="loan_id" id="loan_id"  value="<%= student_info.loan_id %>"/>
-                            <input type="hidden" name="student_id" id="loan_id"  value="<%=student_info.student_id %>"/>
+                            <input type="hidden"  name="loan_id" id="loan_id"  value="<%= student_info.loan_id %>"/>
+                            <input type="hidden"   name="student_id"  value="<%=student_info.student_id %>"/>
                             <button type="submit" ng-click="submitted = true" id="submit-notes" class="btn btn-default">Submit</button>
                             <p class="loading" style="display:none;">Loading....</p>
                         </div>
@@ -445,23 +446,23 @@
 
 </script>-->
 <script>
-    function htmlEncode(value) {
-        return $('<div/>').text(value).html();
-    }
+                                function htmlEncode(value) {
+                                    return $('<div/>').text(value).html();
+                                }
 
-    function htmlDecode(value) {
-        return $('<div/>').html(value).text();
-    }
-    var about_me= htmlDecode("<%= student_info.student_about_me.replace(/\n/gi,'<br/>')%>");
-    var ambition= htmlDecode("<%= student_info.student_ambition.replace(/\n/gi,'<br/>')%>");
+                                function htmlDecode(value) {
+                                    return $('<div/>').html(value).text();
+                                }
+                                var about_me = htmlDecode("<%= student_info.student_about_me.replace(/\n/gi,'<br/>')%>");
+                                var ambition = htmlDecode("<%= student_info.student_ambition.replace(/\n/gi,'<br/>')%>");
 
-   
-   $(document).ready(function(){
+
+                                $(document).ready(function () {
 //      alert("hi");
 
-    $('#about_me').html(about_me); 
-    $('#ambition').html(ambition); 
-   });
+                                    $('#about_me').html(about_me);
+                                    $('#ambition').html(ambition);
+                                });
 </script>
 <script>
     var completePer = parseInt($("#loan_percent").val());
@@ -483,22 +484,7 @@
     var myApp = angular.module('postApp', []);
     myApp.controller('postController', function ($scope, $http) {
         $scope.admin = {};
-//        $scope.uploadFile = function (files) {
-//            $('#submit-notes').hide();
-//            $('.loading').show();
-//            var fd = new FormData();
-//            fd.append("file", files[0]);
-//            console.log(fd);
-//            $http.post('/upload_file', fd, {
-//                withCredentials: true,
-//                headers: {'Content-Type': undefined},
-//                transformRequest: angular.identity
-//            }).success(function (data) {
-//                $scope.admin.filename = data;
-//                $('#submit-notes').show();
-//                $('.loading').hide();
-//            });
-//        };
+
         $('#addNoteForm').submit(function () {
             if ($scope.NotesForm.$valid) {
                 return true;
@@ -506,23 +492,7 @@
                 return false;
             }
         });
-//        $scope.submitForm = function () {
-//
-//            $scope.admin.loan_id = '<%=student_info.loan_id %>';
-//            $scope.admin.student_id = '<%=student_info.student_id %>';
-//
-//            if ($scope.NotesForm.$valid) {
-//                $http({
-//                    method: 'POST',
-////                    dataType: 'json',
-//                    url: '/add_notes',
-//                    data: $scope.admin, //forms user object
-//                    headers: {'Content-Type': 'application/json'}
-//                }).success(function (data) {
-//                    window.location = '/admin/viewdetails/' + data.student_id;
-//                });
-//            }
-//        };
+
     });
 </script>
 

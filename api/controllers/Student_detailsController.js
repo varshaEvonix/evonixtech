@@ -45,7 +45,6 @@ module.exports = {
 
 
     },
-
     'stulogin': function (req, res) {
         if (req.method == "POST")
         {
@@ -93,7 +92,7 @@ module.exports = {
 
                                     var html = mail_template.content;
                                     var html = html.replace('<~: firstname : ~>', student_firstname);
-                                    var html = html.replace("<~: link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
+                                    var html = html.replace("<~: link : ~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
 //                        var html = html.replace("<~: Link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
 //student_photographs_insert
                                     var subject = mail_template.subject;

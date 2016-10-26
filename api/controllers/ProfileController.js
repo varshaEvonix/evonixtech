@@ -47,8 +47,7 @@ module.exports = {
 
             Student_details.query('SELECT dfd.donors_name, dfd.donor_email, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id') + ' order by funding_date desc', function (err, donor_l) {
                 Loan_details.query('SELECT loan_id from loan_details where student_id=1 AND isActive=1', function (err, loan_id) {
-                    console.log('loan_id')
-                    console.log(loan_id)
+                
                     if (loan_id.length > 0) {
                         Admin_loan_comments.query('select * from admin_loan_comments left join loan_details on admin_loan_comments.loan_id=loan_details.loan_id left join student_details on student_details.student_id= loan_details.student_id where loan_details.isActive=1 AND loan_details.student_id=1 order by last_updated desc', function (err, loan_comments) {
                             return res.view('./studash/studash', {

@@ -28,7 +28,7 @@ module.exports = {
             var student_firstname = req.param("student_firstname");
             var student_lastname = req.param("student_lastname");
             var student_contactno = req.param("student_contactno");
-            var student_email = req.param("student_email");
+//            var student_email = req.param("student_email");
             var student_address = req.param("student_address");
             var student_city = req.param("student_city");
             var student_state = req.param("student_state");
@@ -66,7 +66,7 @@ module.exports = {
             }
             var update = "";
 
-            update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_email`=" + mysql.escape(student_email) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
+            update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
 
 
             Student_details.query(update, function (err, record)

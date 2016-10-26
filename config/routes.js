@@ -59,7 +59,7 @@ module.exports.routes = {
     '/admin/lockedstudent/:id': 'Admin_dashController.lockedstudent',
     '/upload_file': 'Admin_dashController.upload_file',
             //'/upload_file': 'Admin_dashController.upload_file',
-            '/add_notes': 'Admin_dashController.add_notes',
+            '/add_notes/:student_id/:loan_id': 'Admin_dashController.add_notes',
     'post /updateaboutus': 'Static_pageController.updateaboutus',
     'post /updateterms': 'Static_pageController.updateterms',
     'post /updatefaq': 'Static_pageController.updatefaq',
