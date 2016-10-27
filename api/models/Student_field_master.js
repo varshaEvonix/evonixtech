@@ -7,10 +7,8 @@
 
 module.exports = {
     attributes: {
-        admin_firstname: {type: 'string'},
-        admin_lastname: {type: 'string'},
-        admin_contactno: {type: 'integer'},
-        admin_email: {type: 'string'},
-        admin_password: {type: 'string'},
+        student_master_field_id: {type: 'integer'},
+        student_master_field_name: {type: 'string'},
+        field_name: {type: 'string'},
     }
 };
