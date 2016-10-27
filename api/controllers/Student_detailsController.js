@@ -4,37 +4,6 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-// Insert:function(req,res)
-// {
-//     if(req.method=="POST")
-//         {
-//             console.log("Post");
-//             var name = req.param("name");
-//             var username = req.param("username");
-//             var email =req.param("email");
-//             console.log(userName);
-//             var insert = "INSERT INTO user(name,username,email) VALUES("+name+",'"+username+"','"+email+"')";
-//             User.query(insert,function(err,record)
-//             {
-//                 if(err)
-//                 {
-//                     console.log(err);
-//                 }
-//                 else
-//                 {
-//                     console.log(record);
-//                     res.redirect('/');
-//                 }
-//             });
-//         }
-//         else
-//         {
-//             res.render("create");
-//         }
-// },
-
-
-// var BackofficeController = require('./BackofficeController');
 module.exports = {
     'activate_student': function (req, res) {
 
@@ -48,7 +17,6 @@ module.exports = {
     'stulogin': function (req, res) {
         if (req.method == "POST")
         {
-
             var student_firstname = req.param("student_firstname");
             var student_lastname = req.param("student_lastname");
             var student_contactno = req.param("student_contactno");
@@ -66,7 +34,6 @@ module.exports = {
                 if (email_existance.length > 0) {
                     flag = 1;
                 }
-
 
                 if (flag == 0) {
 
@@ -91,10 +58,11 @@ module.exports = {
                                     var to_email = new helper.Email(student_email);
 
                                     var html = mail_template.content;
+                                    var html = html.replace(/\n/gi,'<br/>');
+ 
                                     var html = html.replace('<~: firstname : ~>', student_firstname);
                                     var html = html.replace("<~: link : ~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
-//                        var html = html.replace("<~: Link : ~>", "<a href='http://52.43.77.58:1337/activation_link/" + st_id + "'>Click Here</a>");
-//student_photographs_insert
+                              
                                     var subject = mail_template.subject;
                                     var content = new helper.Content('text/html', html);
                                     var mail = new helper.Mail(from_email, subject, to_email, content);

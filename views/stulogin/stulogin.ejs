@@ -1,4 +1,4 @@
-
+<%- include ../header2.ejs %>
 <title>Stumuch</title>
 
 <!-- Favicon and Touch Icons -->
@@ -334,7 +334,7 @@
     </style>
 </head>
 <body  ng-app="postApp" ng-controller="postController">
-    <header id="header" class="header">
+<!--    <header id="header" class="header">
         <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
             <div class="header-nav-wrapper">
                 <div class="container">
@@ -362,7 +362,7 @@
                             </ul>
                         </nav>
 
-                        </header>
+                        </header>-->
 
                         <div class="main-content" style="padding-top:80px;">
 
@@ -439,7 +439,7 @@
                                                 </label>
                                                 <input  type="password" ng-minlength="7"  ng-model="student.student_password" id="student_password" name="student_password"  required>
                                                 <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
-                                                      1. Make sure that it is at least 6 characters long
+                                                      1. Make sure that it is at least 7 characters long
                                                       2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
                                                       3. Don't use more than 2 identical consecutive characters
                                                       4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>

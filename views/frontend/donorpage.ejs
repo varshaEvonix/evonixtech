@@ -153,15 +153,17 @@
                                 <% }else{ %>
                                 <img src='../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
                                 <% } %>
-                                <h2>$ <%= funded_amount %> <span>of $ <%= student_details.loan_amount %></span></h2>
+
+                                <h2>$ <%= (funded_amount > 0) ? funded_amount : 0  %> <span>of $ <%= student_details.loan_amount %></span></h2>
                                 <%
                                 var percentage = (funded_amount/student_details.loan_amount)*100
-
+console.log('percentage')
+console.log(funded_amount)
                                 %>
                                 <div class="progress-item mt-0">
                                     <div class="progress mb-10">
-                                        <div data-percent="<%= percentage.toFixed(2) %>" class="progress-bar appeared" style="width: <%= percentage.toFixed(2) %> %;"><span class="percent">0</span>
-                                            <span class="percent"><%= percentage.toFixed(2) %>%</span></div>
+                                        <div data-percent="<%= percentage > 0 ? percentage.toFixed(2) : 0 %>" class="progress-bar appeared" style="width: <%= percentage > 0 ? percentage.toFixed(2) : 0 %>;"><span class="percent">0</span>
+                                            <span class="percent"><%= percentage > 0 ? percentage.toFixed(2) : 0 %>%</span></div>
                                     </div>
                                 </div>
                                 <p>Raised by <%= donor_count %> people </p>
@@ -194,40 +196,40 @@
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
                                     <div  id="donerinfofields" class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group input-group col-md-6 col-sm-6 halfwf">
-                                            <label>Email address:</label>
-                                            <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
+                                        <div class="col-md-12">
+                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                                <label>Email address:</label>
+                                                <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
 
-                                            <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
-                                            <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
-                                        </div>
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
+                                                <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
+                                            </div>
 
-                                        <div class="form-group input-group col-md-6 col-sm-6 halfwf">
-                                            <label for="email">Your Name:</label>
-                                            <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
-                                            <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
-                                        </div>
-                                        <div class="inputgp">
-                                       <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide name and comment from everyone but the organizer.</p>
-                                         </div>
-                                       <!--  <div class="inputgp">
-                                                                                    <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
-                                                                                    <label class="checklbl"> Hide name and comment from everyone but the organizer.</label>
-                                                                                </div>-->
+                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                                <label for="email">Your Name:</label>
+                                                <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
+                                            </div>
+                                            <div class="inputgp">
+                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide name and comment from everyone but the organizer.</p>
+                                            </div>
+                                            <!--  <div class="inputgp">
+                                                                                         <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
+                                                                                         <label class="checklbl"> Hide name and comment from everyone but the organizer.</label>
+                                                                                     </div>-->
 
-                                        <div class="">
-                                            <label for="comment">Comment:</label>
-                                            <textarea class="form-control" name="comment" ng-model="comment" rows="5" id="comment"></textarea>
+                                            <div class="">
+                                                <label for="comment">Comment:</label>
+                                                <textarea class="form-control" name="comment" ng-model="comment" rows="5" id="comment"></textarea>
+                                            </div>
+                                            <div class="inputgp">
+                                                <input type="hidden" name="loan_id" value="<%= loan_id %>">
+                                                <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
+                                                <input type="hidden" name="student_firstname" value="<%= student_details.student_firstname %>">
+                                                <input type="hidden" name="student_lastname" value="<%= student_details.student_lastname %>">
+                                                <button type="submit" ng-click="submitted = true" class="btn btn-success">Submit</button>
+                                            </div>
                                         </div>
-                                        <div class="inputgp">
-                                            <input type="hidden" name="loan_id" value="<%= loan_id %>">
-                                            <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
-                                            <input type="hidden" name="student_firstname" value="<%= student_details.student_firstname %>">
-                                            <input type="hidden" name="student_lastname" value="<%= student_details.student_lastname %>">
-                                            <button type="submit" ng-click="submitted = true" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
                                 </form>
 
                                 <div class="formbottom">
@@ -241,9 +243,9 @@
                 </div>
             </div>
         </div>
-        </div>
-
     </div>
+
+</div>
 </div>
 <%- include ../frontend/footer.ejs %>
 <script>

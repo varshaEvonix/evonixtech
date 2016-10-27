@@ -82,4 +82,6 @@ module.exports.routes = {
     '/aboutus': 'FrontendController.aboutus',
     '/faq': 'FrontendController.fetch_faq',
     '/privacypolicy': 'FrontendController.privacypolicy',
+//    '/admin/payouts': 'Admin_dashController.payouts',
+    '/admin/alltransactions': 'Admin_dashController.alltransactions',
 };

@@ -35,9 +35,7 @@
                         <td><%= records.student_master_field_name.replace('_', ' ') %></td>
                         <td class="" style="width:360px;color:red;">
                             <% if (records.student_prev_value != "" || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
-                             <% console.log('records.student_prev_value')  %>
-                            <% console.log(records.student_prev_value) %>
-                             <% console.log('records.student_prev_value')  %>
+                    
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
                           
                             <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= records.student_id %>/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
@@ -64,8 +62,7 @@
                             <%= records.student_prev_value %> 
                             <% } %>
                             <% }else{ %>
-                             <% console.log('else') %>
-                         
+
                             <p>No previous record</p>
                             <% } %>
                         </td>

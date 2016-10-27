@@ -12,13 +12,15 @@ stripe = require('stripe')('sk_test_5gf9zfejnW80X0WZvY7D8p1i');
 
 module.exports = {
     donorpage: function (req, res) {
-        var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id  where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
-        Student_details.query(q, function (err, results) {
+         var total = 0;
+        var query = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id  where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
+        Student_details.query(query, function (err, results) {
             var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
             Student_details.query(q, function (err, donors_results) {
-                var funded_amount = 0;
-                results.forEach(function (donors_results, index) {
-                    funded_amount = donors_results.funded_amount + funded_amount;
+
+                donors_results.forEach(function (donors_results, index) {
+                    
+                    total = donors_results.funded_amount + total;
                 })
 
                 var temp = JSON.stringify(donors_results);
@@ -26,7 +28,7 @@ module.exports = {
                 var donor_count = donors_results.length;
                 var loan_id = results[0].loan_id;
 
-                return res.view('./frontend/donorpage', {layout: false, student_details: student_details, funded_amount: funded_amount, donor_count: donor_count, loan_id: loan_id});
+                return res.view('./frontend/donorpage', {layout: false, student_details: student_details, funded_amount: total, donor_count: donor_count, loan_id: loan_id});
             });
         });
 
