@@ -18,7 +18,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th><label><input type="checkbox" id="checkAll"/> Check all</label></th>
                         <th><strong>Field Name</strong></td>
                         <th style="color:red;"><strong>Previous Record</strong></th>
                         <th style="color:green;"><strong>Changed Record</strong></th>
@@ -28,26 +28,33 @@
                 </thead>
                 <tbody>
 
+
                     <%  _.each(student_records, function (records) { %>
 
                     <tr>
                         <td><input class="student_record" type="checkbox" name="student_record[]" value="<%= records.student_master_field_id %>"></td>
-                        <td><%= records.student_master_field_name.replace('_', ' ') %></td>
+                       
+                        <td><% _.each(all_fields, function (values) { %>
+                           <% if(records.student_master_field_id == values.student_master_field_id){ %>
+                            <%= values.field_name %>
+                           <% } %>
+                           <% }) %>
+                            </td>
                         <td class="" style="width:360px;color:red;">
                             <% if (records.student_prev_value != "" || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
-                    
+
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
-                          
+
                             <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= records.student_id %>/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
-                           
-                           
-                            
+
+
+
                             <iframe width="315" height="177" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                             <% 
-                           
+
                             mst_fafsa.forEach(function (values, index) {
                             if( values.id == records.student_prev_value){ 
                             %>
@@ -69,13 +76,13 @@
                         <td class="" style="width:360px;color:green;">
                             <% if (records.student_changed_value == '' || records.student_changed_value ==  undefined || records.student_changed_value != null){ %>
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
-                          
+
                             <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= records.student_id %>/<%= records.student_changed_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
                             <iframe width="315" height="177" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
-                                        <% 
+                            <% 
                             mst_fafsa.forEach(function (values, index) {
                             if( values.id == records.student_changed_value){ 
                             %>
@@ -117,10 +124,9 @@
                     <%
                     }) 
                     %>
-                    <a href="javascript:void(0);" data-value="1" class="btn btn-danger update_student_status">Disapprove</a>
-                    <a href="javascript:void(0);" data-value="0" class="btn btn-success update_student_status">Approve</a>
+                    <a href="javascript:void(0);" data-value="0" class="btn btn-danger update_student_status">Disapprove</a>
+                    <a href="javascript:void(0);" data-value="1" class="btn btn-success update_student_status">Approve</a>
                 </div>
-
             </div>
         </form>
     </div>
@@ -130,7 +136,9 @@
 <script src="../../index_files/stdash/js/sweetalert.min.js"></script>
 <script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 <script>
-
+$("#checkAll").change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
     $('.update_student_status').click(function () {
         $('#admin_note_message').remove();
         $('#admin_record_message').remove();
@@ -138,10 +146,10 @@
         $('input[name="student_record[]"]:checked').each(function () {
             allvalues.push(this.value);
         });
-        if (($(this).attr('data-value') == '0') || ($(this).attr('data-value') == '1' && $('#admin_note').val() != '')) {
-            if (($(this).attr('data-value') == '1') || ($(this).attr('data-value') == '0' && allvalues.length > 0)) {
-                var status = $(this).attr('data-value') == '1' ? 'Disapprove' : 'Approve';
-                var color = $(this).attr('data-value') == '1' ? '#DD6B55' : '#4cae4c';
+        if (($(this).attr('data-value') == '1') || ($(this).attr('data-value') == '0' && $('#admin_note').val() != '')) {
+            if (($(this).attr('data-value') == '0') || ($(this).attr('data-value') == '1' && allvalues.length > 0)) {
+                var status = $(this).attr('data-value') == '1' ? 'Approve' : 'Disapprove';
+                var color = $(this).attr('data-value') == '1' ? '#4cae4c' : '#DD6B55';
                 var profile_status = $(this).attr('data-value');
                 var student_id = $('#student_id').val();
                 var admin_note = $('#admin_note').val();

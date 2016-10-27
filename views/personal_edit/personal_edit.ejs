@@ -368,8 +368,8 @@
         $scope.student.student_country = "<%= student_info[0].student_country %>";
         $scope.student.student_birthdate = "<%= student_info[0].student_birthdate %>";
         $scope.student.zip_code = "<%= student_info[0].zip_code %>";
-                $scope.student.student_about_me = ` <%= student_info[0].student_about_me %> `;
-                $scope.student.student_ambition = ` <%= student_info[0].student_ambition %> `;
+                $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
+                $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
                 $scope.submitForm = function () {
                     $('.export').trigger('click');
                     $scope.student.student_birthdate = $('#student_birthdate').val();

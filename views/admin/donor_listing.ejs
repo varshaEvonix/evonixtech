@@ -20,6 +20,9 @@
                                     <th>Funder Name</th>
                                     <th>Funder Email Id</th>
                                     <th>Funded Amount</th>
+                                    <th>Transaction Charge</th>
+                                    <th>Percentage charge</th>
+                                    <th>Balance to transfer</th>
                                     <th>Student Funded (URL)</th>
                                     <th>Student Email Id</th>
                                     <th>Funding_date</th>
@@ -27,27 +30,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 <% if(post.length > 0){ %>
-                                <% _.each(post, function (corndog) { %>
+                                <% if(post.length > 0){ %>
+                                <% _.each(post, function (values) { %>
                                 <tr>
-                                    <td><%= corndog.donors_name %></td>
-                                    <td><%= corndog.donor_email %></td>
-                                    <td>$ <%= corndog.funded_amount %></td>
-                                    <td><label> <%= sails.getBaseUrl()+'/single_profile/'+ corndog.student_id %></label></td>
-                                    <td> <%= corndog.student_email %></td>
-                                    <td> <%= corndog.funding_date %></td>
-                                    <!--<td style="display: none"> <%= corndog.stripe_token %></td>-->
+                                    <td><%= values.donors_name %></td>
+                                    <td><%= values.donor_email %></td>
+                                    <td><% var funded_amount= values.funded_amount %>
+                                        $ <%= funded_amount %></td>
+                                    <td><% var transaction_charge= 0.30 %>
+                                        $ <%= transaction_charge %></td>
+                                    <td><% var percentage_charge=(2.9/100)*values.funded_amount %>
+                                        $ <%= percentage_charge %></td>
+                                    <td><% var balance_to_transfer=(funded_amount-transaction_charge-percentage_charge) %>
+                                        $ <%= balance_to_transfer.toFixed(2) %></td>
+                                    <td><label> <%= sails.getBaseUrl()+'/single_profile/'+ values.student_id %></label></td>
+                                    <td> <%= values.student_email %></td>
+                                    <td> <%= values.funding_date %></td>
+                                    <!--<td style="display: none"> <%= values.stripe_token %></td>-->
                                 </tr>
                                 <% }) %>
-                                 <% }else{ %>
-                                 <tr><td>No Record Found</td></tr>
-<% } %>
+                                <% }else{ %>
+                                <tr><td>No Record Found</td></tr>
+                                <% } %>
                             </tbody>
                         </table>
 
                     </div>
                     <div class="text-right">
-                         <% if(post.length > 0){ %>
+                        <% if(post.length > 0){ %>
                         <ul class="pager pagination">
                             <li class="previous"><a href="/admin/donors/<%= the_prev %>">&larr; Previous</a></li>
                             <li>
@@ -58,7 +68,7 @@
 
                             <li class="next"><a href="/admin/donors/<%= the_next %>">Next &rarr;</a></li>
                         </ul>
-                         <% } %>
+                        <% } %>
                     </div>
                 </div>
 

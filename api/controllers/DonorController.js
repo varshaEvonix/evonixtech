@@ -12,14 +12,14 @@ stripe = require('stripe')('sk_test_5gf9zfejnW80X0WZvY7D8p1i');
 
 module.exports = {
     donorpage: function (req, res) {
-         var total = 0;
+        var total = 0;
         var query = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id  where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
         Student_details.query(query, function (err, results) {
             var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
             Student_details.query(q, function (err, donors_results) {
 
                 donors_results.forEach(function (donors_results, index) {
-                    
+
                     total = donors_results.funded_amount + total;
                 })
 
@@ -73,7 +73,18 @@ module.exports = {
                 comment = req.param('comment'),
                 student_firstname = req.param('student_firstname'),
                 student_lastname = req.param('student_lastname');
+        var transaction_charge = 0.30;
+        var percentage_charge = (2.9 / 100) * amount;
+        percentage_charge = percentage_charge.toFixed(2);
+        var balance_to_transfer = amount - transaction_charge - percentage_charge;
+        balance_to_transfer = balance_to_transfer.toFixed(2);
+        var last_insert_id = '';
 
+        var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '" + transaction_charge + "', '" + percentage_charge + "', '" + balance_to_transfer + "')";
+        Donors_funding_details.query(q, function (err, results) {
+            last_insert_id = results.insertId;
+        })
+        amount = amount * 100;
         var charge = stripe.charges.create({
             amount: amount, // amount in cents, again
             currency: "usd",
@@ -81,30 +92,24 @@ module.exports = {
             description: email
         },
         function (err, charge) {
+
             if (err && err.type === 'StripeCardError') {
 
                 res.redirect('donorpage/' + student_id);
             } else {
-                var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`, `amount_to_be_transferred`,`stripe_token`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '80', '10', '90', '900','" + stripeToken + "')";
-                console.log(q)
-                Donors_funding_details.query(q, function (err, results) {
-//                    var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + student_id + " AND loan_details.isActive=1";
-//                    console.log(q);
-//                    console.log(student_id);
-//                    Student_details.query(q, function (err, stude_results) {
-//                        var temp = JSON.stringify(stude_results);
-//                        var student_details = JSON.parse(temp)[0];
-//                        console.log(student_details);
+                if (charge.status == 'succeeded') {
+                    var update_query = "UPDATE `donors_funding_details` SET `status` = '1', transaction_id='" + charge.id + "' WHERE `donors_funding_details`.`donors_id` =" + last_insert_id;
+                    Donors_funding_details.query(update_query, function (err, results) {
+             
+                        res.redirect('thankyoupage');
+                    });
 
-
-                })
-                res.redirect('thankyoupage');
-//                res.redirect('thankyoupage', {student_firstname: student_firstname, student_lastname: student_lastname
-//                });
+                }
 
             }
-            console.log('Charged');
+
         });
+  
 
     },
 };

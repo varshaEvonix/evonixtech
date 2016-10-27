@@ -5,6 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 //var pager = require('sails-pager');
+var mysql = require('mysql');
 module.exports = {
     'admin_dash': function (req, res) {
         res.view();
@@ -278,7 +279,7 @@ module.exports = {
         }
     },
     add_notes: function (req, res) {
-      
+
         var fs = require("fs");
         var file = req.file('file');
         var student_id = req.param('student_id');
@@ -294,7 +295,7 @@ module.exports = {
 
             }
             else {
-                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', '" + req.param('note') + "', '" + req.param('note_type') + "', '" + newfilename + "', '1')";
+                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', " + mysql.escape(req.param('note')) + ", '" + req.param('note_type') + "', '" + newfilename + "', '1')";
 
                 Admin_loan_comments.query(insert_query, function (err, record)
                 {
@@ -313,11 +314,16 @@ module.exports = {
             var mst_fafsa = 'SELECT * from mst_fafsa';
 
             Mst_fafsa.query(mst_fafsa, function (err, mst_fafsa_result) {
+                var fields = 'SELECT * from student_field_master';
 
-                return   res.view('./admin/studlockedprofile', {
-                    layout: false,
-                    student_records: results,
-                    mst_fafsa: mst_fafsa_result
+                Student_field_master.query(fields, function (err, all_fields) {
+
+                    return   res.view('./admin/studlockedprofile', {
+                        layout: false,
+                        student_records: results,
+                        mst_fafsa: mst_fafsa_result,
+                        all_fields: all_fields,
+                    });
                 });
             });
         });
@@ -325,10 +331,10 @@ module.exports = {
     update_student_profile: function (req, res) {
 
         var student_details = '';
-        var admin_approve = req.param('profile_status') == '1' ? '0' : '1';
+        var admin_approve = req.param('profile_status');
         var approved_values = req.param('approved_values');
 
-        if (approved_values != undefined) {
+        if (approved_values != undefined && admin_approve == '1') {
 
             approved_values.forEach(function (values, index) {
                 var query = "UPDATE `student_changed_val` SET `admin_approval` = '" + admin_approve + "', is_new_change='0', admin_changed_time=NOW() WHERE `student_changed_val`.`student_master_field_id`='" + values + "' AND `student_changed_val`.`student_id` =" + req.param('student_id');
@@ -337,58 +343,59 @@ module.exports = {
                 });
             });
         }
-        var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
-        Student_changed_val.query(q, function (err, record) {
-            if (record.length == 0) {
 
-                var update_query = "UPDATE `student_login_credentials` SET `profile_lock` ='" + req.param('profile_status') + "' WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
-                Student_login_credentials.query(update_query, function (err, results) {
+        if (admin_approve == '0') {
 
-                });
-            }
-            if (admin_approve == '0') {
+            var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
+            Notifications.query(insert, function (err, results) {
 
-                var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
-                Notifications.query(insert, function (err, results) {
+                var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
+                Student_details.query(fetch_student, function (err, studentdetails) {
+                    var send_grid_token = "select token from send_grid_token where id =1";
+                    Send_grid_token.query(send_grid_token, function (err, token) {
 
-                    var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
-                    Student_details.query(fetch_student, function (err, studentdetails) {
-                        var send_grid_token = "select token from send_grid_token where id =1";
-                        Send_grid_token.query(send_grid_token, function (err, token) {
+                        var temp = JSON.stringify(studentdetails);
+                        var student_details = JSON.parse(temp)[0];
+                        var helper = require('sendgrid').mail;
+                        var from_email = new helper.Email('support@evonixtech.com');
+                        var to_email = new helper.Email(student_details.student_email);
+                        var subject = 'Stumuch Notification';
+                        var mail_content = "Hi " + student_details.student_firstname + ' <br/><br/>' + req.param('admin_note');
+                        var content = new helper.Content('text/html', mail_content);
+                        var mail = new helper.Mail(from_email, subject, to_email, content);
 
-                            var temp = JSON.stringify(studentdetails);
-                            var student_details = JSON.parse(temp)[0];
-                            var helper = require('sendgrid').mail;
-                            var from_email = new helper.Email('support@evonixtech.com');
-                            var to_email = new helper.Email(student_details.student_email);
-                            var subject = 'Stumuch Notification';
-                            var mail_content = "Hi " + student_details.student_firstname + ' </br></br>' + req.param('admin_note');
+                        var sg = require('sendgrid')(token[0].token);
+                        var request = sg.emptyRequest({
+                            method: 'POST',
+                            path: '/v3/mail/send',
+                            body: mail.toJSON(),
+                        });
 
-                            var content = new helper.Content('text/html', mail_content);
-                            var mail = new helper.Mail(from_email, subject, to_email, content);
-
-                            var sg = require('sendgrid')(token[0].token);
-                            var request = sg.emptyRequest({
-                                method: 'POST',
-                                path: '/v3/mail/send',
-                                body: mail.toJSON(),
-                            });
-
-                            sg.API(request, function (error, response) {
+                        sg.API(request, function (error, response) {
 //                                console.log(token[0].token);
 //                                console.log('response.statusCode');
 //                                console.log(response.statusCode);
 //                                console.log(response.body);
 //                                console.log(response.headers);
-                            });
-
                         });
+
                     });
+                });
+
+            });
+            req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are discarde</div>');
+        } else {
+            req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
+        }
+
+        var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
+        Student_changed_val.query(q, function (err, record) {
+            if (record.length == 0) {
+
+                var update_query = "UPDATE `student_login_credentials` SET `profile_lock` =0 WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
+                Student_login_credentials.query(update_query, function (err, results) {
 
                 });
-                req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are discarde</div>');
-            } else {
-                req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
             }
 
         });

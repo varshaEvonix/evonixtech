@@ -23,45 +23,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% _.each(post, function (corndog) { %>
+                                <% _.each(post, function (values) { %>
                                 <tr>
 
 
                                     <td>
 
-                                        <%= corndog.student_firstname %> <%= corndog.student_lastname %>
+                                        <%= values.student_firstname %> <%= values.student_lastname %>
                                     </td>
-                                    <td> <%= corndog.student_email %></td>
-                                    <td> <%= corndog.student_country %></td>
+                                    <td> <%= values.student_email %></td>
+                                    <td> <%= values.student_country %></td>
 
                                     <td>
-                                        <% if(corndog.loan_amount!=null) {%>
-                                        $ <%= corndog.loan_amount %>
+                                        <% if(values.loan_amount!=null) {%>
+                                        $ <%= values.loan_amount %>
                                         <%
                                         }else{
 
                                         }
                                         %></td>
 
-                                    <% if (corndog.student_active == 0){%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='1' class="btn btn-danger btn-sm change_status"> De-Active</a></td>
+                                    <% if (values.student_active == 0){%>
+                                    <td><a href="javascript:void(0);" data='<%= values.student_id %>' data-value='1' class="btn btn-danger btn-sm change_status"> De-Active</a></td>
                                     <%
                                     }else{%>
-                                    <td><a href="javascript:void(0);" data='<%= corndog.student_id %>' data-value='0' class="btn btn-success btn-sm change_status">Active</a></td>
+                                    <td><a href="javascript:void(0);" data='<%= values.student_id %>' data-value='0' class="btn btn-success btn-sm change_status">Active</a></td>
                                     <%
                                     }
                                     %>
-                                    <td class="text-center">    <% if(corndog.profile_lock==1) { %>
-                                        <a style="color: #000" href="/admin/studlockedprofile/<%= corndog.student_id %>"><i style="font-size: 30px;" class="fa fa-lock" aria-hidden="true"></i></a>
+                                    <td class="text-center">    <% if(values.profile_lock==1) { %>
+                                        <a style="color: #000" href="/admin/studlockedprofile/<%= values.student_id %>"><i style="font-size: 30px;" class="fa fa-lock" aria-hidden="true"></i></a>
                                         <% }else{ %>
-                                        <a style="color: #000" href="/admin/studlockedprofile/<%= corndog.student_id %>"><i style="font-size: 30px;" class="fa fa-unlock" aria-hidden="true"></i></a>
+                                        <a style="color: #000" href="/admin/studlockedprofile/<%= values.student_id %>"><i style="font-size: 30px;" class="fa fa-unlock" aria-hidden="true"></i></a>
                                         <% } %></td>
-                                    <!--                                    <td><% if(corndog.profile_lock=="1") { %>
+                                    <!--                                    <td><% if(values.profile_lock=="1") { %>
                                                                         <% } %>
                                                                         </td>-->
 
                                     <td class="text-right">
-                                        <a type="button" href="/admin/viewdetails/<%= corndog.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
+                                        <a type="button" href="/admin/viewdetails/<%= values.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
                                     </td>
                                 </tr>
                                 <% }) %>

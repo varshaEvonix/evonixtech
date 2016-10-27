@@ -199,7 +199,8 @@
                                         </span><%= student_info[0].student_education_fieldofstudy  %></p>
                                 </div>
                             </div> 
-
+                            <br>
+                            <br>
                             <div class="row">
                                 <div style="font-size:22px;" class="row edit_op">Current Loan
 
@@ -219,10 +220,12 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <%if (student_info[0].loan_bankname == '') { %>
+                                       
+                                        <%if (student_info[0].loan_type == 'fafsa') { %>
                                         <div class="col-md-6">
                                             <p class="info">  <span class="small">Type of Loan: <br>
-                                                </span>FAFSA</p>
+                                                </span>
+                                                FAFSA
                                         </div>
                                         <div class="col-md-6">
                                             <p class="info">  <span class="small">Name of Loan: <br>
@@ -231,7 +234,7 @@
                                         <% } else { %>
                                         <div class="col-md-6">
                                             <p class="info"> <span class="small">Type of Loan: <br>
-                                                </span>Bank loan</p>
+                                                </span>Bank Loan</p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="info"> <span class="small">Bank Name: <br>

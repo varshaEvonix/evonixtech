@@ -157,8 +157,6 @@
                                 <h2>$ <%= (funded_amount > 0) ? funded_amount : 0  %> <span>of $ <%= student_details.loan_amount %></span></h2>
                                 <%
                                 var percentage = (funded_amount/student_details.loan_amount)*100
-console.log('percentage')
-console.log(funded_amount)
                                 %>
                                 <div class="progress-item mt-0">
                                     <div class="progress mb-10">
@@ -191,10 +189,11 @@ console.log(funded_amount)
                                 <form role="form" id="donationamt" method="POST" action="/paymentpage" name="donorsForm" novalidate>
                                     <div class="form-group input-group"  id="amtinput">
                                         <span class="input-group-addon">$</span>
-                                        <input class="form-control" name="funding_amount" ng-model="donor.funding_amount" type="text" required>
+                                        <input class="form-control" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
                                         <span class="input-group-addon">.00</span>
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
+                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">Funding amount must be minimum $ 5.</p>
                                     <div  id="donerinfofields" class="row">
                                         <div class="col-md-12">
                                             <div class="form-group input-group col-md-6 col-sm-6 halfwf">
@@ -248,48 +247,31 @@ console.log(funded_amount)
 </div>
 </div>
 <%- include ../frontend/footer.ejs %>
-<script>
 
-//    $('.anonymous').change(function () {
-//        if ($(this).val() == '2') {
-//            $('#donor-details').show();
-//
-//        } else {
-//            $('#donor-details').hide();
-//
-//        }
-//    });
-</script>
 <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
         $scope.donor = {};
+        $scope.donor.funding_amount = '5';
         $('#donationamt').submit(function () {
 
             if ($scope.donorsForm.$valid) {
-                return true;
+                if ($scope.donor.funding_amount >= 5) {
+                    return true;
+                } else {
+                     $('.funding_amount').removeClass('ng-hide');
+                    $('.funding_amount').show();
+                    return false;
+                   
+                }
             } else {
                 return false;
             }
         })
 
-//        $scope.submitForm = function () {
-//            //            alert()
-//            if ($scope.donorsForm.$valid) {
-//                return true;
-////                $http({
-////                    method: 'POST',
-////                    //                    dataType: 'json',
-////                    url: '/paymentpage',
-////                    data: $scope.donor, //forms user object
-////                    headers: {'Content-Type': 'application/json'}
-////                }).success(function (data) {
-////                    window.location = '/admin/faq';
-////                });
-//            }else{
-//                return false;
-//            }
-//        };
+    });
+    $('#funding_amount').keyup(function () {
+        $('.funding_amount').hide();
     });
 </script>
 
