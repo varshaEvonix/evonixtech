@@ -82,6 +82,8 @@ module.exports.routes = {
     '/aboutus': 'FrontendController.aboutus',
     '/faq': 'FrontendController.fetch_faq',
     '/privacypolicy': 'FrontendController.privacypolicy',
-//    '/admin/payouts': 'Admin_dashController.payouts',
+    '/admin/payouts/:id': 'Admin_dashController.payouts',
+    '/admin/payoutsdetails/:id': 'Admin_dashController.payoutsdetails',
     '/admin/alltransactions': 'Admin_dashController.alltransactions',
+//    '/admin/submit_payout_details': 'Admin_dashController.submit_payout_details',
 };

@@ -5,8 +5,8 @@
     <section class="wrapper">
 
         <div class="row">
-            <div class="col-lg-12 main-chart">
-                <h1 class="phead">Donors Listing</h1><br>
+            <div class="col-lg-12 main-chart white_bg">
+                <h1 class="phead">All Transactions</h1><br>
                 <% if(post.length > 0){ %>
                 <button id="generate-excel" class="btn btn-primary pull-right">Generate Excel sheet</button>
                 <% } %>
@@ -18,32 +18,33 @@
                             <thead>
                                 <tr>
                                     <th>Funder Name</th>
-                                    <th>Funder Email Id</th>
+                                    <th>Funder Email</th>
                                     <th>Funded Amount</th>
                                     <th>Transaction Charge</th>
                                     <th>Percentage charge</th>
-                                    <th>Balance to transfer</th>
-                                    <th>Student Funded (URL)</th>
-                                    <th>Student Email Id</th>
-                                    <th>Funding_date</th>
+                                    <th>Balance To Transfer</th>
+                                    <th>Student Funded</th>
+                                    <th>Student Email</th>
+                                    <th>Funding Date</th>
                                     <!--<th style="display: none">Stripe Transaction Details</th>-->
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 <% if(post.length > 0){ %>
                                 <% _.each(post, function (values) { %>
+
                                 <tr>
                                     <td><%= values.donors_name %></td>
                                     <td><%= values.donor_email %></td>
-                                    <td><% var funded_amount= values.funded_amount %>
-                                        $ <%= funded_amount %></td>
-                                    <td><% var transaction_charge= 0.30 %>
-                                        $ <%= transaction_charge %></td>
-                                    <td><% var percentage_charge=(2.9/100)*values.funded_amount %>
-                                        $ <%= percentage_charge %></td>
-                                    <td><% var balance_to_transfer=(funded_amount-transaction_charge-percentage_charge) %>
-                                        $ <%= balance_to_transfer.toFixed(2) %></td>
-                                    <td><label> <%= sails.getBaseUrl()+'/single_profile/'+ values.student_id %></label></td>
+                                    <td>
+                                        $ <%= values.funded_amount %></td>
+                                    <td> $ <%= values.transaction_charge %>
+                                       </td>
+                                    <td>
+                                        $ <%= values.percentage_charge %></td>
+                                    <td>$ <%= values.balance_to_transfer %></td>
+                                    <td><label><a target="_blank" href="<%= sails.getBaseUrl()+'/single_profile/'+ values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
                                     <td> <%= values.student_email %></td>
                                     <td> <%= values.funding_date %></td>
                                     <!--<td style="display: none"> <%= values.stripe_token %></td>-->
