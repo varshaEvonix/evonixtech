@@ -58,11 +58,11 @@ module.exports = {
                                     var to_email = new helper.Email(student_email);
 
                                     var html = mail_template.content;
-                                    var html = html.replace(/\n/gi,'<br/>');
- 
-                                    var html = html.replace('<~: firstname : ~>', student_firstname);
-                                    var html = html.replace("<~: link : ~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
-                              
+                                    var html = html.replace(/\n/gi, '<br/>');
+
+                                    var html = html.replace('<~:firstname:~>', student_firstname);
+                                    var html = html.replace("<~:link:~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
+
                                     var subject = mail_template.subject;
                                     var content = new helper.Content('text/html', html);
                                     var mail = new helper.Mail(from_email, subject, to_email, content);

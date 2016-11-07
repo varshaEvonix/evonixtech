@@ -8,125 +8,109 @@
             <div class="col-lg-12 main-chart white_bg">
                 <h1 class="phead">Payout Details</h1><br>
                 <div class="col-sm-4">
-                    Student Name : <strong><%= post[0].student_firstname %> <%= post[0].student_lastname %></strong>
+                    <h3><%= post[0].student_firstname %> <%= post[0].student_lastname %></h3>
+                    <small><%= post[0].student_email %></small>
                 </div>
-                <div class="col-sm-4">
-                    Student Email : <strong><%= post[0].student_email %></strong>
-                </div>
+
                 <div class="col-sm-4">
                     Loan Amount : $ <strong><%= post[0].loan_amount %></strong>
+                    <br>
+                    <% var pending_amount = 0 %>
+                    <% _.each(post, function (values) { %>
+                    <% pending_amount = values.funded_amount + pending_amount %>
+                    <% }) %>
+                    Pending Amount : $ <strong><%= pending_amount %></strong>
                 </div>
 
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 main-chart white_bg">
-                <form action="#" method="POST" >
-                <div class="col-md-8">
-                    <h1 class="phead">Pending Payouts</h1><br>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Payouts Pending</th>
-                                <th>Payout Amount Pending</th>
-                            </tr>
-                        </thead>
-                        <tbody
-                            <% if(post.length > 0){ %>
-                            <% _.each(post, function (values) { %>
+                <form action="/admin/submitpayout" id="payoutForm" name="payoutForm" method="POST" novalidate>
+                    <div class="col-md-8">
+                        <h1 class="phead">Pending Payouts</h1><br>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Payouts Pending</th>
+                                    <th>Payout Amount Pending</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(post.length > 0){ %>
+                                <% _.each(post, function (values,index) { %>
 
-                            <tr class="payout-row">
-                                <td><input class="payout-record" type="checkbox" name="student_record[]" data="<%= values.funded_amount %>" data-value="<%= values.balance_to_transfer %>"  value="<%= values.donors_id %>"></td>
-                                <td>
-                                    <%= values.donors_name %>
-                                </td>
-                                <td> <%= values.donor_email %></td>
-                                <td>$ <%= values.funded_amount %></td>
-                                <td>$ <%= values.balance_to_transfer %></td>
-                            </tr>
+                                <tr class="payout-row">
+                                    <td><input  class="payout-record" type="checkbox" name="student_record[]"  data="<%= values.funded_amount %>" data-value="<%= values.balance_to_transfer %>"   value="<%= values.donors_id %>"></td>
+                                    <td>
+                                        <%= values.donors_name %>
+                                    </td>
+                                    <td> <%= values.donor_email %></td>
+                                    <td>$ <%= values.funded_amount %></td>
+                                    <td>$ <%= values.balance_to_transfer %></td>
+                                </tr>
 
-                            <% }) %>
-                            <% }else{ %>
-                            <tr>
-                                <td>
-                                    No Record Found
-                                </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <h1 class="phead">Payouts</h1><br><br>
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label>Funded Amount Total :</label>
+                                <% }) %>
+
+                                <% }else{ %>
+                                <tr>
+                                    <td>
+                                        No Record Found
+                                    </td>
+                                </tr>
+                                <% } %>
+
+                            </tbody>
+                        </table>
+                        <div id="admin-message"> </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h1 class="phead">Payouts</h1><br><br>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label>Funded Amount Total :</label>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span><input id="funded_amount_total" class="form-control" value="" ng-model="admin.funded_amount_total" name="funded_amount_total" required>
+
+                            </div>
+                            <span ng-show="submitted && payoutForm.funded_amount_total.$error.required"  class="help-block has-error ng-hide">Funded amount is required.</span>
                         </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">$</span><input id="funded_amount_total" class="form-control" value="" name="funded_amount_total">
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label>Payout Amount Total :</label>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span><input id="payout_amount_total" value="" class="form-control" ng-model="admin.payout_amount_total" name="payout_amount_total" required>
+
+                            </div>
+                            <span ng-show="submitted && payoutForm.payout_amount_total.$error.required"  class="help-block has-error ng-hide">Payout amount total is required.</span>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label>Note:</label>
+                            </div>
+                            <div class="input-group">
+                                <textarea ng-model="admin.payout_note" class="form-control" name="payout_note" required></textarea>
+                            </div>
+                            <span ng-show="submitted && payoutForm.payout_note.$error.required"  class="help-block has-error ng-hide">Note is required.</span>
+                        </div>
+                        <div class="form-group row">
+                            <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label>Payout Amount Total :</label>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">$</span><input id="payout_amount_total" value="" class="form-control" name="payout_amount_total">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6">
-                            <label>Note:</label>
-                        </div>
-                        <div class="input-group">
-                            <textarea class="form-control" name="payout_note"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
-                    </div>
-                </div>
-                    </form>
+                </form>
             </div> 
         </div>
     </section>
 </section>
 <%- include ../admin/stufoot.ejs %>
-<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
-<script src="../../index_files/stdash/js/sweetalert.min.js"></script>
-<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.change_status').click(function () {
-            var status = $(this).attr('data-value') == '0' ? 'De-activate' : 'Activate';
-            var stu_status = $(this).attr('data-value');
-            var student_id = $(this).attr('data');
-            swal({title: "Are you sure?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, " + status + " it!",
-                closeOnConfirm: false
-            },
-            function () {
-
-                $.ajax({
-                    url: "/change_status",
-                    type: "POST",
-                    async: true,
-                    dataType: 'json',
-                    data: {student_id: student_id, stu_status: stu_status},
-                    //your form data to post goes here
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
-
-            });
-        });
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
         var funded_amount = 0;
         var payout_amount = 0;
         $('.payout-record').change(function () {
@@ -142,8 +126,34 @@
             }
             $('#funded_amount_total').val(funded_amount);
             $('#payout_amount_total').val(payout_amount);
+            total_amounts(funded_amount, payout_amount);
+
+        });
+        $scope.admin={};
+        function total_amounts(funded_amount, payout_amount) {
+            $scope.admin.funded_amount_total = funded_amount;
+            $scope.admin.payout_amount_total = payout_amount;
+        }
+        $("#payoutForm").submit(function () {
+
+            var allvalues = [];
+            $('input[name="student_record[]"]:checked').each(function () {
+                allvalues.push(this.value);
+            });
+
+            if (allvalues.length > 0) {
+                if ($scope.payoutForm.$valid) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                $('#admin-message').append('<span id="admin_record_message" class="has-error">Please select at least one record</span>');
+                return false;
+            }
         });
     });
+
 </script>
 <script>
     $('#payouts').addClass('active');

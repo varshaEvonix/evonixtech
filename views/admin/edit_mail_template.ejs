@@ -5,8 +5,19 @@
 
         <div class="row">
             <div class="col-lg-9 main-chart">
-
-                <h1 class="phead"><%= mail_template.subject %> <a href="#" style="font-size: 30px;color:#333" data-placement="right" data-toggle="tooltip" title='For Registration template firstname and link is manadatory and should be in "<~: firstname : ~>", "<~: link : ~> " format resp.'> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></h1>
+<%
+var tooltip
+if(mail_template.id==1){
+tooltip='For Registration template firstname and link is manadatory and should be in "<~: firstname:~>", "<~: link:~> " format resp.'
+}else if(mail_template.id==2){
+tooltip='For Funder Donation template funding date, funder name, funded amount is manadatory and should be in  "<~ : funding_date :~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
+}else if(mail_template.id==3){
+tooltip='For Student Donation Mail template firstname, funder name, funded amount is manadatory and should be in "<~: firstname:~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
+}else if(mail_template.id==4){
+tooltip='For Student Donation Mail template firstname, link is manadatory and should be in "<~: firstname:~>", "<~: link: :~> " format resp.'
+}
+%>
+<h1 class="phead"><%= mail_template.subject %> <a href="#" style="font-size: 30px;color:#333" data-placement="right" data-toggle="tooltip" title='<%= tooltip %>'> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></h1>
                 <br>
                 <div class="panel panel-default">
                     <div class="panel-body">

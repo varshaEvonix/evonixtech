@@ -16,6 +16,7 @@
                                     <th>Student Email</th>
                                     <th>Payouts Pending</th>
                                     <th>Payout Amount Pending</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,6 +30,7 @@
                                     <td> <%= values.student_email %></td>
                                     <td> <%= values.pending_paouts %></td>
                                     <td> <%= values.pending_payout_amount %></td>
+                                    <td><a class="btn btn-info btn-sm" href="<% sails.getBaseurl() %>/admin/payoutsdetails/<%= values.student_id %>">View</a></td>
                                 </tr>
 
                                 <% }) %>
@@ -93,10 +95,7 @@
 
         });
     });
-    $(".payout-row").click(function () {
-        var student_id = $(this).attr('data');
-        window.location.href = "<% sails.getBaseurl() %>/admin/payoutsdetails/" + student_id;
-    });
+
 </script>
 <script>
     $('#payouts').addClass('active');

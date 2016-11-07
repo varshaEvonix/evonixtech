@@ -73,8 +73,7 @@
                                     <th>Country</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                     <th class="text-center">Lock Status</th>
-                                    <th class="text-right">Actions</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,12 +100,8 @@
                                     <%
                                     }
                                     %>
-                                      <td class="text-center">    <% if(values.profile_lock==1) { %>
-                                        <a style="color: #000" href="/admin/studlockedprofile/<%= values.student_id %>"><i style="font-size: 30px;" class="fa fa-lock" aria-hidden="true"></i></a>
-                                        <% }else{ %>
-                                        <a style="color: #000" href="/admin/studlockedprofile/<%= values.student_id %>"><i style="font-size: 30px;" class="fa fa-unlock" aria-hidden="true"></i></a>
-                                        <% } %></td>
-                                    <td class="text-right">
+                              
+                                    <td>
                                         <a type="button" href="/admin/viewdetails/<%= values.student_id %>" class="btn btn-info btn-sm"   data-original-title="View Details">View</a>
                                     </td>
                                 </tr>
@@ -153,7 +148,7 @@
 <script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 <script>
     $('.change_status').click(function () {
-        var status = $(this).attr('data-value') == '0' ? 'Activate' : 'De-activate';
+        var status = $(this).attr('data-value') == '0' ? 'De-activate' : 'Activate';
         var stu_status = $(this).attr('data-value');
         var student_id = $(this).attr('data');
         swal({title: "Are you sure?",
