@@ -85,5 +85,6 @@ module.exports.routes = {
     '/admin/payouts/:id': 'Admin_dashController.payouts',
     '/admin/payoutsdetails/:id': 'Admin_dashController.payoutsdetails',
     '/admin/alltransactions': 'Admin_dashController.alltransactions',
+    '/admin/submitpayout': 'Admin_dashController.submitpayout',
 //    '/admin/submit_payout_details': 'Admin_dashController.submit_payout_details',
 };
