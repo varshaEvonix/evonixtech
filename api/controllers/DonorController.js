@@ -22,10 +22,12 @@ module.exports = {
 
                     total = donors_results.funded_amount + total;
                 })
-
+console.log('donors_results.length')
+console.log(donors_results)
+console.log(donors_results.length)
                 var temp = JSON.stringify(donors_results);
                 var student_details = JSON.parse(temp)[0];
-                var donor_count = donors_results.length;
+                var donor_count = donors_results[0].donors_id != null ? donors_results.length :0 ;
                 var loan_id = results[0].loan_id;
 
                 return res.view('./frontend/donorpage', {layout: false, student_details: student_details, funded_amount: total, donor_count: donor_count, loan_id: loan_id});

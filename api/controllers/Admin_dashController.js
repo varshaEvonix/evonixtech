@@ -387,23 +387,23 @@ module.exports = {
         } else {
             req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
         }
+        return res.redirect('admin/locked_student_profile/' + req.param('student_id'));
 
+    },
+    locked_student_profile: function (req, res) {
         var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
         Student_changed_val.query(q, function (err, record) {
             if (record.length == 0) {
-
                 var update_query = "UPDATE `student_login_credentials` SET `profile_lock` =0 WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
                 Student_login_credentials.query(update_query, function (err, results) {
 
                 });
+                var path = '/admin/viewdetails/' + req.param('student_id');
+            } else {
+                var path = '/admin/studlockedprofile/' + req.param('student_id');
             }
-
+            return res.ok({path: path});
         });
-
-        var path = '/admin/studlockedprofile/' + req.param('student_id');
-
-        return res.ok({path: path});
-
     },
     donors_listing: function (req, res) {
         var current_page = req.param('id');
@@ -564,6 +564,29 @@ module.exports = {
     },
     submitpayout: function (req, res) {
         console.log(req.allParams());
+    },
+    submitwebhooks: function (req, res) {
+        if (req.method == "POST") {
+            var test_mode = req.param('test_mode');
+            test_mode = test_mode[0];
+            var enable_stripe = req.param('enable_stripe') != undefined ? req.param('enable_stripe') : 0;
+            var enable_stripe_connect = req.param('enable_stripe_connect') != undefined ? req.param('enable_stripe_connect') : 0;
+            var q = "UPDATE `stripe_web_hooks` SET stripe_currency='" + req.param('stripe_currency') + "', live_publishable_key=" + mysql.escape(req.param('live_publishable_key')) + ", live_secret_key=" + mysql.escape(req.param('live_secret_key')) + ", test_publishable_key=" + mysql.escape(req.param('test_publishable_key')) + ", test_secret_key=" + mysql.escape(req.param('test_secret_key')) + ", test_mode='" + test_mode + "' WHERE `stripe_web_hooks`.`id` =1";
+            Stripe_web_hooks.query(q, function (err, results) {
+                req.flash('success', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields updated successfully</div>');
+                res.redirect('admin/webhooks');
+            });
+        }
+    },
+    webhooks: function (req, res) {
+        var query = "SELECT * FROM `stripe_web_hooks` where stripe_web_hooks.id=1";
+
+        Stripe_web_hooks.query(query, function (err, record) {
+            res.view('./admin/webhooks', {
+                layout: false,
+                record: record,
+            });
+        });
     },
 };
 

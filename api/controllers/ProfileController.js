@@ -49,6 +49,7 @@ module.exports = {
 
     },
     'stu_dashboard': function (req, res) {
+        checkLastActivity();
         var loan_comments = [];
         Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate,  sd.student_profile_pic_path,  IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where  sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, student_birthdate,  sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
 
@@ -135,20 +136,12 @@ module.exports = {
 
             var file_name = req.param('file_name[]');
             var file_name = file_name.split(',');
-            console.log('file_name')
-            console.log(file_name)
             file_name.forEach(function (values, index) {
-                console.log('values')
-                console.log(values)
                 var newFilename = values;
 
                 var insert_pics = "INSERT INTO `student_photographs` (`student_id`, `photo_path`, `isEnabled`) VALUES ('" + req.param('id') + "', '" + newFilename + "', '1')";
                 Student_photographs.query(insert_pics, function (err, record)
                 {
-                    console.log('insert_pics')
-                    console.log(insert_pics)
-                    console.log('err')
-                    console.log(err)
 
                 });
             })

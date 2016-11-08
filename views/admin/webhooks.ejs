@@ -1,0 +1,127 @@
+<%- include ../admin/admin_head.ejs %>
+<%- include ../admin/sidebar.ejs %>
+<section id="main-content">
+    <section class="wrapper">
+
+        <div class="row">
+            <div class="col-lg-9 main-chart">
+<%
+var tooltip
+if(mail_template.id==1){
+tooltip='For Registration template firstname and link is manadatory and should be in "<~: firstname:~>", "<~: link:~> " format resp.'
+}else if(mail_template.id==2){
+tooltip='For Funder Donation template funding date, funder name, funded amount is manadatory and should be in  "<~ : funding_date :~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
+}else if(mail_template.id==3){
+tooltip='For Student Donation Mail template firstname, funder name, funded amount is manadatory and should be in "<~: firstname:~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
+}else if(mail_template.id==4){
+tooltip='For Forgot Password Mail template firstname, link is manadatory and should be in "<~: firstname:~>", "<~: link: :~> " format resp.'
+}
+%>
+<h1 class="phead"><%= mail_template.subject %> <a href="#" style="font-size: 30px;color:#333" data-placement="right" data-toggle="tooltip" title='<%= tooltip %>'> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></h1>
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <!--<form action="/updateaboutus" class="form-group" method="POST" role="form">-->
+                        <form class="form" ng-submit="submitForm()" name="mailtemplateform" novalidate>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Template name</label>
+                                <div class="col-xs-10">
+                                    <input type="text" ng-model="admin.title" name="title" id="title" value="" class="form-control" required>
+                                    <span ng-show="submitted && mailtemplateform.title.$error.required"  class="help-block has-error ng-hide">Template name is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Subject</label>
+                                <div class="col-xs-10">
+                                    <input type="text" ng-model="admin.subject" name="subject" id="subject" value="" class="form-control" required>
+                                    <span ng-show="submitted && mailtemplateform.subject.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-2 control-label">Enter Description</label>
+                                <div class="col-xs-10">
+                                    <textarea ng-model="admin.content" name="content" id="content"  required></textarea>
+                                    <span ng-show="submitted && mailtemplateform.content.$error.required"  class="help-block has-error ng-hide description">Description is required.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5 update_about_us" value="Update">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <%- include ../admin/notifications.ejs %>
+        </div>
+    </section>
+</section>
+
+<%- include ../admin/stufoot.ejs %>
+<script>
+    $('#aboutus').addClass('active');
+    $('#static-pages').addClass('active');
+</script>
+<script src="../../index_files/stdash/js/tinymce/jquery.tinymce.min.js"></script>
+<script src="../../index_files/stdash/js/tinymce/tinymce.min.js"></script>
+<script>
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
+
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
+    tinymce.init({
+        selector: 'textarea',
+        height: 300,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        content_css: '//www.tinymce.com/css/codepen.min.css'
+    });
+
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+
+        $scope.admin = {};
+        $scope.admin.title = "<%= mail_template.template_name %>";
+        $scope.admin.subject = "<%= mail_template.subject %>";
+        $scope.admin.template_id = "<%= mail_template.id %>";
+        $scope.admin.content = htmlDecode(`<%= content %>`);
+                $scope.submitForm = function () {
+                    var text = tinymce.activeEditor.getContent({
+                        format: 'text'
+                    });
+                    $scope.admin.content = text;
+                 
+                    if ($scope.mailtemplateform.$valid) {
+                        $http({
+                            method: 'POST',
+//                    dataType: 'json',
+                            url: '/admin/edit_mail_template',
+                            data: $scope.admin, //forms user object
+                            headers: {'Content-Type': 'application/json'}
+                        }).success(function (data) {
+                            window.location = '/admin/mailtemplate';
+                        });
+                    }
+                };
+    });
+//    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
