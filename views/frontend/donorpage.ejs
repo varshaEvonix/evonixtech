@@ -193,7 +193,7 @@
                                         <span class="input-group-addon">.00</span>
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
-                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">Funding amount must be minimum $ 5.</p>
+                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required..</p>
                                     <div  id="donerinfofields" class="row">
                                         <div class="col-md-12">
                                             <div class="form-group input-group col-md-6 col-sm-6 halfwf">
@@ -210,7 +210,7 @@
                                                 <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
                                             </div>
                                             <div class="inputgp">
-                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide name and comment from everyone but the organizer.</p>
+                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide my name and comment from the public.</p>
                                             </div>
                                             <!--  <div class="inputgp">
                                                                                          <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
@@ -229,22 +229,24 @@
                                                 <button type="submit" ng-click="submitted = true" class="btn btn-success">Submit</button>
                                             </div>
                                         </div>
-                                </form>
 
-                                <div class="formbottom">
-                                    <hr>
-                                    <p>By continuing, you agree with the Stumuch terms and privacy policy. </p>
-                                    <!--<br><a href="#" >Go back</a>-->
-                                </div>
+
+                                        <div class="formbottom">
+                                            <hr>
+                                            <p><input type="checkbox" style="" name="terms_conditions" ng-model="donor.terms_conditions" value="1" required> I agree to the Terms & Conditions and Privacy Policy.</p>
+                                            <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.terms_conditions.$error.required"  class="help-block has-error ng-hide">Required.</p>
+                                            <!--<br><a href="#" >Go back</a>-->
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>
 <%- include ../frontend/footer.ejs %>
 
@@ -256,13 +258,13 @@
         $('#donationamt').submit(function () {
 
             if ($scope.donorsForm.$valid) {
-                if ($scope.donor.funding_amount >= 5) {
+                if ($scope.donor.funding_amount > 4) {
                     return true;
                 } else {
-                     $('.funding_amount').removeClass('ng-hide');
+                    $('.funding_amount').removeClass('ng-hide');
                     $('.funding_amount').show();
                     return false;
-                   
+
                 }
             } else {
                 return false;

@@ -12,6 +12,8 @@
 
 <section id="main-content">
     <section class="wrapper">
+        <%- req.flash('error') %>
+        <%- req.flash('success') %>
         <div class="col-md-12 main-chart">
             <div class="row white_bg" >
                 <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>

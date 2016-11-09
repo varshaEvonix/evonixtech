@@ -4,45 +4,64 @@
     <section class="wrapper">
 
         <div class="row">
+            <%- req.flash('error') %>
+            <%- req.flash('success') %>
             <div class="col-lg-9 main-chart">
-<%
-var tooltip
-if(mail_template.id==1){
-tooltip='For Registration template firstname and link is manadatory and should be in "<~: firstname:~>", "<~: link:~> " format resp.'
-}else if(mail_template.id==2){
-tooltip='For Funder Donation template funding date, funder name, funded amount is manadatory and should be in  "<~ : funding_date :~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
-}else if(mail_template.id==3){
-tooltip='For Student Donation Mail template firstname, funder name, funded amount is manadatory and should be in "<~: firstname:~>", "<~: funder_name :~> ", "<~: funded_amount :~> " format resp.'
-}else if(mail_template.id==4){
-tooltip='For Forgot Password Mail template firstname, link is manadatory and should be in "<~: firstname:~>", "<~: link: :~> " format resp.'
-}
-%>
-<h1 class="phead"><%= mail_template.subject %> <a href="#" style="font-size: 30px;color:#333" data-placement="right" data-toggle="tooltip" title='<%= tooltip %>'> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></h1>
+
+                <h1 class="phead"> Stripe Payment Gateway</h1>
                 <br>
                 <div class="panel panel-default">
                     <div class="panel-body">
 
                         <!--<form action="/updateaboutus" class="form-group" method="POST" role="form">-->
-                        <form class="form" ng-submit="submitForm()" name="mailtemplateform" novalidate>
+                        <form class="form" ng-submit="submitForm()" id="stripeForm" name="stripeForm" action="/admin/submitwebhooks" method="POST" novalidate>
                             <div class="form-group row">
-                                <label class="col-xs-2 control-label">Enter Template name</label>
-                                <div class="col-xs-10">
-                                    <input type="text" ng-model="admin.title" name="title" id="title" value="" class="form-control" required>
-                                    <span ng-show="submitted && mailtemplateform.title.$error.required"  class="help-block has-error ng-hide">Template name is required.</span>
+                                <label class="col-xs-5 control-label">Stripe Currency</label>
+                                <div class="col-xs-7">
+                                    <select name="stripe_currency" ng-model="admin.stripe_currency" id="stripe_currency" class="dropdown form-group" required>
+                                        <option value="">Select Stripe Currency</option>
+                                        <option value="usd">USD</option>
+                                    </select>
+                                    <span ng-show="submitted && stripeForm.stripe_currency.$error.required"  class="help-block has-error ng-hide">Stripe currency is required.</span>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xs-2 control-label">Enter Subject</label>
-                                <div class="col-xs-10">
-                                    <input type="text" ng-model="admin.subject" name="subject" id="subject" value="" class="form-control" required>
-                                    <span ng-show="submitted && mailtemplateform.subject.$error.required"  class="help-block has-error ng-hide">Title is required.</span>
+                                <label class="col-xs-5 control-label">Stripe Publishable Key (Live)</label>
+                                <div class="col-xs-7">
+                                    <input type="text" ng-model="admin.live_publishable_key" name="live_publishable_key" id="live_publishable_key" value="" class="form-control" required>
+                                    <span ng-show="submitted && stripeForm.live_publishable_key.$error.required"  class="help-block has-error ng-hide">Live Publishable key is required.</span>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xs-2 control-label">Enter Description</label>
-                                <div class="col-xs-10">
-                                    <textarea ng-model="admin.content" name="content" id="content"  required></textarea>
-                                    <span ng-show="submitted && mailtemplateform.content.$error.required"  class="help-block has-error ng-hide description">Description is required.</span>
+                                <label class="col-xs-5 control-label">Stripe Secret Key (Live)</label>
+                                <div class="col-xs-7">
+                                    <input type="text" ng-model="admin.live_secret_key" name="live_secret_key" id="live_secret_key" class="form-control"  required>
+                                    <span ng-show="submitted && stripeForm.live_secret_key.$error.required"  class="help-block has-error ng-hide description">Live Secret key is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-5 control-label">Stripe Publishable Key (Test)</label>
+                                <div class="col-xs-7">
+                                    <input type="text" ng-model="admin.test_publishable_key" name="test_publishable_key" id="test_publishable_key" value="" class="form-control" required>
+                                    <span ng-show="submitted && stripeForm.test_publishable_key.$error.required"  class="help-block has-error ng-hide">Test Publishable key is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-5 control-label">Stripe Secret Key (Test)</label>
+                                <div class="col-xs-7">
+                                    <input type="text" ng-model="admin.test_secret_key" name="test_secret_key" id="test_secret_key" class="form-control"  required>
+                                    <span ng-show="submitted && stripeForm.test_secret_key.$error.required"  class="help-block has-error ng-hide description">Test Secret key is required.</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-5 control-label">Test Mode</label>
+                                <div class="col-xs-offset-5">
+                                    <% var test_mode_on= record[0].test_mode==1 ? 'checked':'' %>
+                                    <% var test_mode_off= record[0].test_mode==0 ? 'checked':'' %>
+                                    <label class="control-label"><input type="radio" value="1" name="test_mode[]" <%= test_mode_on %>> On</label> &nbsp;&nbsp;
+
+                                    <label class="control-label"><input type="radio" value="0" name="test_mode[]" <%= test_mode_off %>> Off</label>
+
                                 </div>
                             </div>
 
@@ -64,64 +83,30 @@ tooltip='For Forgot Password Mail template firstname, link is manadatory and sho
 
 <%- include ../admin/stufoot.ejs %>
 <script>
-    $('#aboutus').addClass('active');
-    $('#static-pages').addClass('active');
+    $('#stripe-payment-gateway').addClass('active');
 </script>
-<script src="../../index_files/stdash/js/tinymce/jquery.tinymce.min.js"></script>
-<script src="../../index_files/stdash/js/tinymce/tinymce.min.js"></script>
-<script>
-    function htmlEncode(value) {
-        return $('<div/>').text(value).html();
-    }
 
-    function htmlDecode(value) {
-        return $('<div/>').html(value).text();
-    }
-    tinymce.init({
-        selector: 'textarea',
-        height: 300,
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table contextmenu paste code'
-        ],
-        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        content_css: '//www.tinymce.com/css/codepen.min.css'
-    });
+<script>
 
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
 
         $scope.admin = {};
-        $scope.admin.title = "<%= mail_template.template_name %>";
-        $scope.admin.subject = "<%= mail_template.subject %>";
-        $scope.admin.template_id = "<%= mail_template.id %>";
-        $scope.admin.content = htmlDecode(`<%= content %>`);
-                $scope.submitForm = function () {
-                    var text = tinymce.activeEditor.getContent({
-                        format: 'text'
-                    });
-                    $scope.admin.content = text;
-                 
-                    if ($scope.mailtemplateform.$valid) {
-                        $http({
-                            method: 'POST',
-//                    dataType: 'json',
-                            url: '/admin/edit_mail_template',
-                            data: $scope.admin, //forms user object
-                            headers: {'Content-Type': 'application/json'}
-                        }).success(function (data) {
-                            window.location = '/admin/mailtemplate';
-                        });
-                    }
-                };
+        $scope.admin.stripe_currency = '<%= record[0].stripe_currency %>';
+        $scope.admin.live_publishable_key = '<%= record[0].live_publishable_key %>';
+        $scope.admin.live_secret_key = '<%= record[0].live_secret_key %>';
+        $scope.admin.test_publishable_key = '<%= record[0].test_publishable_key %>';
+        $scope.admin.test_secret_key = '<%= record[0].test_secret_key %>';
+
+        $("#stripeForm").submit(function () {
+            if ($scope.stripeForm.$valid) {
+                return true;
+            } else {
+                return false;
+            }
+        });
     });
-//    });
 
 </script>
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+
 
