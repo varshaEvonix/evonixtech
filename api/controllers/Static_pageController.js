@@ -8,35 +8,41 @@
 var mysql = require('mysql');
 module.exports = {
     'get_about_us': function (req, res) {
-        About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.about_us;
-            var re = '<br/>';
-            var about_us = text.replace(/\n/gi, re);
-            return res.view('./admin/about_admin', {
-                layout: false,
-                recordset: recordset,
-                about_us: about_us
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.about_us;
+                var re = '<br/>';
+                var about_us = text.replace(/\n/gi, re);
+                return res.view('./admin/about_admin', {
+                    layout: false,
+                    recordset: recordset,
+                    about_us: about_us
+                });
+
             });
-
-
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'edit_about_us': function (req, res) {
-        About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            About_admin.query('SELECT * FROM about_admin', function (err, recordset) {
 
-            recordset = recordset[0];
-            var text = recordset.about_us;
-            var re = '<br/>';
-            var about_us = text.replace(/\n/gi, re);
-            return res.view('./admin/edit_about_admin', {
-                layout: false,
-                recordset: recordset,
-                about_us: about_us
+                recordset = recordset[0];
+                var text = recordset.about_us;
+                var re = '<br/>';
+                var about_us = text.replace(/\n/gi, re);
+                return res.view('./admin/edit_about_admin', {
+                    layout: false,
+                    recordset: recordset,
+                    about_us: about_us
+                });
+
             });
-
-
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'updateaboutus': function (req, res) {
 
@@ -51,33 +57,39 @@ module.exports = {
         }
     },
     'get_terms_and_cond': function (req, res) {
-        Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.description;
-            var re = '<br/>';
-            var description = text.replace(/\n/gi, re);
-            return res.view('./admin/abterms', {
-                layout: false,
-                abterms: recordset,
-                description: description
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            Abterms.query('SELECT * FROM abterms', function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.description;
+                var re = '<br/>';
+                var description = text.replace(/\n/gi, re);
+                return res.view('./admin/abterms', {
+                    layout: false,
+                    abterms: recordset,
+                    description: description
+                });
+
             });
-
-
-        });
-
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'edit_terms_and_cond': function (req, res) {
-        Abterms.query('SELECT * FROM abterms', function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.description;
-            var re = '<br/>';
-            var description = text.replace(/\n/gi, re);
-            return res.view('./admin/editabterms', {
-                layout: false,
-                abterms: recordset,
-                description: description
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            Abterms.query('SELECT * FROM abterms', function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.description;
+                var re = '<br/>';
+                var description = text.replace(/\n/gi, re);
+                return res.view('./admin/editabterms', {
+                    layout: false,
+                    abterms: recordset,
+                    description: description
+                });
             });
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'updateterms': function (req, res) {
 
@@ -98,21 +110,25 @@ module.exports = {
         }
     },
     'get_faq': function (req, res) {
-        Faq.query('SELECT * FROM faq', function (err, recordset) {
-            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
-                var category = [];
-                cats.forEach(function (cats, index) {
-                    category.push(cats.category);
-                });
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            Faq.query('SELECT * FROM faq', function (err, recordset) {
+                Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
+                    var category = [];
+                    cats.forEach(function (cats, index) {
+                        category.push(cats.category);
+                    });
 
-                return res.view('./admin/faq', {
-                    layout: false,
-                    faq: recordset,
-                    category: category,
-                });
+                    return res.view('./admin/faq', {
+                        layout: false,
+                        faq: recordset,
+                        category: category,
+                    });
 
+                });
             });
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'get_category': function (req, res) {
         Faq.query('SELECT * FROM faq', function (err, recordset) {
@@ -127,20 +143,25 @@ module.exports = {
 
             });
         });
+
     },
     'editfaq': function (req, res) {
-        Faq.query('SELECT * FROM faq where id=' + req.param("id"), function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.description;
-            var re = '<br/>';
-            var description = text.replace(/\n/gi, re);
-            return res.view('./admin/editfaq', {
-                layout: false,
-                faq: recordset,
-                description: description
-            });
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            Faq.query('SELECT * FROM faq where id=' + req.param("id"), function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.description;
+                var re = '<br/>';
+                var description = text.replace(/\n/gi, re);
+                return res.view('./admin/editfaq', {
+                    layout: false,
+                    faq: recordset,
+                    description: description
+                });
 
-        });
+            });
+        } else {
+            return  res.redirect('admin/login');
+        }
     },
     'updatefaq': function (req, res) {
         if (req.method == "POST")
@@ -180,37 +201,42 @@ module.exports = {
 
     },
     privacypolicy: function (req, res) {
+        if (req.session.admin_id || req.session.admin_id != undefined) {
 
-        Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.description;
-            var re = '<br/>';
-            var description = text.replace(/\n/gi, re);
-            return res.view('./admin/privacypolicy', {
-                layout: false,
-                privacypolicy: recordset,
-                description: description
+            Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.description;
+                var re = '<br/>';
+                var description = text.replace(/\n/gi, re);
+                return res.view('./admin/privacypolicy',
+                        {
+                            layout: false,
+                            privacypolicy: recordset,
+                            description: description
+                        });
             });
-
-
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
 
     },
     editprivacypolicy: function (req, res) {
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
+                recordset = recordset[0];
+                var text = recordset.description;
+                var re = '<br/>';
+                var description = text.replace(/\n/gi, re);
+                return res.view('./admin/edit_privacypolicy', {
+                    layout: false,
+                    privacypolicy: recordset,
+                    description: description
+                });
 
-        Privacy_policy.query('SELECT * FROM privacy_policy', function (err, recordset) {
-            recordset = recordset[0];
-            var text = recordset.description;
-            var re = '<br/>';
-            var description = text.replace(/\n/gi, re);
-            return res.view('./admin/edit_privacypolicy', {
-                layout: false,
-                privacypolicy: recordset,
-                description: description
             });
-
-
-        });
+        } else {
+            return  res.redirect('admin/login');
+        }
 
     },
     updateprivacypolicy: function (req, res) {

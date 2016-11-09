@@ -7,16 +7,18 @@
 var mysql = require('mysql');
 module.exports = {
     'editpersonal': function (req, res) {
+        if (req.session.student_id || req.session.student_id != undefined) {
+            Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
 
-        Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
+                return res.view('./personal_edit/personal_edit', {
+                    student_info: recordset
 
-            return res.view('./personal_edit/personal_edit', {
-                student_info: recordset
+                });
 
             });
-
-        });
-
+        } else {
+            return  res.redirect('/student/login');
+        }
     },
     'editpersonalsubmit': function (req, res) {
 
@@ -36,7 +38,7 @@ module.exports = {
             var student_about_me = req.param("student_about_me");
             var student_ambition = req.param("student_ambition");
             var imagedata = req.param('image');
-        
+
             var student_profile_pic_path = '';
             if (imagedata != undefined) {
                 var fs = require("fs");
@@ -66,8 +68,6 @@ module.exports = {
 
             update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
 
-console.log('update')
-console.log(update)
             Student_details.query(update, function (err, record)
             {
 
@@ -78,19 +78,19 @@ console.log(update)
     },
     'editmedia': function (req, res) {
 
-
-        Student_details.query('SELECT * from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
-            Student_details.query('SELECT * from student_photographs left join student_details on student_details.student_id=student_photographs.student_id where  student_photographs.isEnabled = 1 AND student_details.student_id= ' + req.param('id'), function (err, pics) {
-
-                return res.view('./media_edit/media_edit', {
-                    student_info: recordset,
-                    photos: pics,
+        if (req.session.student_id || req.session.student_id != undefined) {
+            Student_details.query('SELECT * from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
+                Student_details.query('SELECT * from student_photographs left join student_details on student_details.student_id=student_photographs.student_id where  student_photographs.isEnabled = 1 AND student_details.student_id= ' + req.param('id'), function (err, pics) {
+                    return res.view('./media_edit/media_edit', {
+                        student_info: recordset,
+                        photos: pics,
+                    });
                 });
 
-
             });
-
-        });
+        } else {
+            return  res.redirect('/student/login');
+        }
 
     },
 };

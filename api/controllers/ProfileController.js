@@ -5,10 +5,12 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-function checkLastActivity(req) {
-    if (!req.session.lastActivity) {
-        return false; // no session.
+function checkLastActivity(req, res) {
+    if (!req.session.student_id) {
+        console.log('ifff')
+        return  res.redirect('/student/login');
     } else {
+        console.log('elseeee')
         return true;
     }
 }
@@ -18,69 +20,77 @@ module.exports = {
         res.view();
     },
     'mypro': function (req, res) {
+        if (req.session.student_id || req.session.student_id != undefined) {
 
-        Student_details.query('SELECT mf.id, mf.fafsa_values, slc.profile_lock, sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,sd.student_email, sd.student_contactno, IFNULL(sd.student_ambition,"") student_ambition, sd.student_city,  sd.student_state, sd.student_address, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, IFNULL(ed.student_education_institute, "") student_education_institute, IFNULL(ed.student_education_fieldofstudy, "") student_education_fieldofstudy, ld.loan_id, ld.loan_fafsa_id, IFNULL(ld.loan_bankname, "") loan_bankname, IFNULL(ld.loan_type, "") loan_type, IFNULL(ld.loan_accountno, "") loan_accountno, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id left join mst_fafsa mf on mf.id = ld.loan_fafsa_id where slc.student_active = 1 AND sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
+            Student_details.query('SELECT mf.id, mf.fafsa_values, slc.profile_lock, sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate, sd.student_about_me,sd.student_email, sd.student_contactno, IFNULL(sd.student_ambition,"") student_ambition, sd.student_city,  sd.student_state, sd.student_address, sd.video_link, sd.student_country, sd.zip_code, sd.student_profile_pic_path, IFNULL(ed.student_education_institute, "") student_education_institute, IFNULL(ed.student_education_fieldofstudy, "") student_education_fieldofstudy, ld.loan_id, ld.loan_fafsa_id, IFNULL(ld.loan_bankname, "") loan_bankname, IFNULL(ld.loan_type, "") loan_type, IFNULL(ld.loan_accountno, "") loan_accountno, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join education ed on ed.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id left join mst_fafsa mf on mf.id = ld.loan_fafsa_id where slc.student_active = 1 AND sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
 
-            Student_photographs.query('SELECT photo_path from student_photographs where student_id=' + req.param('id') + ' AND isEnabled=1', function (err, photorecord) {
+                Student_photographs.query('SELECT photo_path from student_photographs where student_id=' + req.param('id') + ' AND isEnabled=1', function (err, photorecord) {
 
-                Loan_details.query('SELECT loan_id, student_id, loan_amount, IFNULL(mst_fafsa.fafsa_values,"-") fafsa_values, IFNULL(loan_fafsa_id, "-") loan_fafsa_id, IFNULL(loan_bankname, "-") loan_bankname, IFNULL(loan_accountno, "-") loan_accountno from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= ' + req.param('id') + ' AND loan_details.isActive = 0', function (err, loan_l) {
+                    Loan_details.query('SELECT loan_id, student_id, loan_amount, IFNULL(mst_fafsa.fafsa_values,"-") fafsa_values, IFNULL(loan_fafsa_id, "-") loan_fafsa_id, IFNULL(loan_bankname, "-") loan_bankname, IFNULL(loan_accountno, "-") loan_accountno from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= ' + req.param('id') + ' AND loan_details.isActive = 0', function (err, loan_l) {
 
-                    Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
+                        Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
 
-                        Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
+                            Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
 
 
-                            return res.view('./studprofile/studprofile', {
-                                student_info: recordset,
-                                pics: photorecord,
-                                loan_list: loan_l,
-                                donor_list: donor_l,
-                                admin_comments: loan_comments
+                                return res.view('./studprofile/studprofile', {
+                                    student_info: recordset,
+                                    pics: photorecord,
+                                    loan_list: loan_l,
+                                    donor_list: donor_l,
+                                    admin_comments: loan_comments
 
+                                });
                             });
+
                         });
 
                     });
 
                 });
-
             });
-        });
+        } else {
+            return  res.redirect('/student/login');
+        }
 
     },
     'stu_dashboard': function (req, res) {
-        checkLastActivity();
-        var loan_comments = [];
-        Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate,  sd.student_profile_pic_path,  IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where  sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, student_birthdate,  sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
+//        checkLastActivity(req.session.student_id);
+        if (req.session.student_id || req.session.student_id != undefined) {
+            var loan_comments = [];
+            Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%Y-%m-%d") as student_birthdate,  sd.student_profile_pic_path,  IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join  donors_funding_details dfd on ld.loan_id=dfd.loan_id  where  sd.student_id = ' + req.param("id") + ' group by sd.student_id, sd.student_firstname, sd.student_lastname, student_birthdate,  sd.student_profile_pic_path, ld.loan_amount', function (err, recordset) {
 
 
-            Student_details.query('SELECT dfd.donors_name, dfd.donor_email, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id') + ' order by funding_date desc', function (err, donor_l) {
-                Loan_details.query('SELECT loan_id from loan_details where student_id=1 AND isActive=1', function (err, loan_id) {
+                Student_details.query('SELECT dfd.donors_name, dfd.donor_email, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id') + ' order by funding_date desc', function (err, donor_l) {
+                    Loan_details.query('SELECT loan_id from loan_details where student_id=1 AND isActive=1', function (err, loan_id) {
 
-                    if (loan_id.length > 0) {
-                        Admin_loan_comments.query('select * from admin_loan_comments left join loan_details on admin_loan_comments.loan_id=loan_details.loan_id left join student_details on student_details.student_id= loan_details.student_id where loan_details.isActive=1 AND loan_details.student_id=1 order by last_updated desc', function (err, loan_comments) {
+                        if (loan_id.length > 0) {
+                            Admin_loan_comments.query('select * from admin_loan_comments left join loan_details on admin_loan_comments.loan_id=loan_details.loan_id left join student_details on student_details.student_id= loan_details.student_id where loan_details.isActive=1 AND loan_details.student_id=1 order by last_updated desc', function (err, loan_comments) {
+                                return res.view('./studash/studash', {
+                                    student_info: recordset,
+                                    donor_l: donor_l,
+                                    external_notes: loan_comments
+
+                                });
+                            });
+                        } else {
+
                             return res.view('./studash/studash', {
                                 student_info: recordset,
                                 donor_l: donor_l,
                                 external_notes: loan_comments
 
                             });
-                        });
-                    } else {
 
-                        return res.view('./studash/studash', {
-                            student_info: recordset,
-                            donor_l: donor_l,
-                            external_notes: loan_comments
+                        }
+                    });
 
-                        });
-
-                    }
                 });
 
             });
-
-        });
+        } else {
+            return  res.redirect('/student/login');
+        }
 
     },
     // 'stu_dashboard': function(req, res) {

@@ -33,7 +33,8 @@ module.exports = {
     },
     student_logout: function (req, res) {
         //req.logout();
-        res.redirect('./studentlogin/studentlogin');
+        req.session.destroy();
+        res.redirect('/student/login');
     }
 
 };
