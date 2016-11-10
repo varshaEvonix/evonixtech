@@ -62,7 +62,8 @@ module.exports = {
 
                                     var html = html.replace('<~:firstname:~>', student_firstname);
                                     var html = html.replace("<~:link:~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
-
+                                    console.log('html')
+                                    console.log(html)
                                     var subject = mail_template.subject;
                                     var content = new helper.Content('text/html', html);
                                     var mail = new helper.Mail(from_email, subject, to_email, content);
