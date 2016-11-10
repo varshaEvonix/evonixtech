@@ -172,7 +172,7 @@ module.exports = {
     'upload_image': function (req, res) {
 
         var student_id = req.param('student_id');
-        ;
+
         var fs = require("fs");
         var dir_name = student_id;
         var dir = '.tmp/public/index_files/uploads/' + dir_name;

@@ -1,0 +1,54 @@
+<%- include ../frontend/header.ejs %>
+
+<div class="main-content" style="padding-top:100px">
+    <section class="cd-faq">
+        <ul class="cd-faq-categories">
+            <% _.each(category, function (category, index) { 
+            %>
+            <li><a  class="<%= (index==0) ? 'selected':'' %>" href="#<%= category %>"><%= category %></a></li>
+            <%
+            })
+            %>
+
+        </ul>
+
+        <div class="cd-faq-items">
+          <%  
+                _.each(category, function (category) { 
+                %>
+                <h3 class="panel-title"><%= category %></h3>
+                <div class="panel panel-default">
+
+                    <%  
+                    _.each(faq, function (faq) {
+                    if(faq.category==category){
+                    %>
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a>
+                    </div>
+                    <div id="collapse<%= faq.id %>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <%= faq.description %>
+                        </div>
+                    </div>
+                    <%
+                    }
+                    })
+                    %>
+                </div>
+
+                <%
+                })
+                %>
+        </div> 
+        <a href="#0" class="cd-close-panel">Close</a>
+    </section> <!-- cd-faq -->
+    <!-- Resource jQuery -->
+
+</div>
+
+
+ <%- include ../footer.ejs %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

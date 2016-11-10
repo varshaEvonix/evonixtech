@@ -366,6 +366,7 @@
                         <div class="form-group col-md-12">
                             <input type="password" ng-model="student.password" class="form-control" id="password" name="password" placeholder="Enter password" required>
                             <span ng-show="submitted && studentlogin.password.$error.required"  class="help-block has-error  ng-hide">Password is required.</span>
+                            <a href="<% sails.getBaseurl() %>/forgotpassword" class="pull-right">Forgot password ?</a>
                         </div>
                         <button type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5">Submit</button>
                         <!--<input type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5" value="Submit">-->

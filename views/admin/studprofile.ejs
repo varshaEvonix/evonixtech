@@ -264,7 +264,7 @@
                             <div class="row">
                                 <% _.each(pics, function (pics) { %>
                                 <div class="col-md-4" >
-                                    <img class="img-responsive" src="../index_files/uploads/<%= student_info.student_id %>/<%= pics.photo_path %>"><br><br>
+                                    <img class="img-responsive" src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= pics.photo_path %>"><br><br>
                                 </div>
 
                                 <% }) %>

@@ -1,54 +1,59 @@
-<%- include ../frontend/header.ejs %>
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+   
+    <link rel="stylesheet" href="../../index_files/assets/faq_css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="../../index_files/assets/faq_css/style.css"> <!-- Resource style -->
+    <script src="../../index_files/assets/faq_js/modernizr.js"></script> <!-- Modernizr -->
+    <title>Stumuch</title>
 
-<div class="main-content" style="padding-top:100px">
-    <section class="cd-faq">
-        <ul class="cd-faq-categories">
-            <% _.each(category, function (category, index) { 
+</head>
+<body>
+<%- include ../frontend/header_faq.ejs %>
+<section class="cd-faq">
+    <ul class="cd-faq-categories" style="padding-top:76px">
+        <% _.each(category, function (category, index) { 
             %>
-            <li><a  class="<%= (index==0) ? 'selected':'' %>" href="#<%= category %>"><%= category %></a></li>
+            <li><a  class="<%= (index==0) ? 'selected':'' %> hover_a" href="#<%= category %>"><%= category %></a></li>
             <%
             })
             %>
 
-        </ul>
+    </ul> <!-- cd-faq-categories -->
 
-        <div class="cd-faq-items">
-          <%  
-                _.each(category, function (category) { 
+    <div class="cd-faq-items">
+         <%
+                _.each(category, function (category) {
                 %>
-                <h3 class="panel-title"><%= category %></h3>
-                <div class="panel panel-default">
-
-                    <%  
+        <ul id="<%= category %>" class="cd-faq-group" style="padding-top:55px">
+            <li class="cd-faq-title"><h2><%= category %></h2></li>
+              <%
                     _.each(faq, function (faq) {
                     if(faq.category==category){
                     %>
-                    <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a>
-                    </div>
-                    <div id="collapse<%= faq.id %>" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <%= faq.description %>
-                        </div>
-                    </div>
-                    <%
+            <li>
+                <a class="cd-faq-trigger" href="#<%= faq.id %>">How do I change my password?</a>
+                <div class="cd-faq-content">
+                    <p> <%= faq.description %></p>
+                </div> <!-- cd-faq-content -->
+            </li>
+       <%
                     }
                     })
                     %>
-                </div>
+        </ul> <!-- cd-faq-group -->
+
 
                 <%
                 })
                 %>
-        </div> 
-        <a href="#0" class="cd-close-panel">Close</a>
-    </section> <!-- cd-faq -->
-    <!-- Resource jQuery -->
-
-</div>
-
-
- <%- include ../footer.ejs %>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- cd-faq-group -->
+    </div> <!-- cd-faq-items -->
+    <a href="#0" class="cd-close-panel">Close</a>
+</section> <!-- cd-faq -->
+<script src="../../index_files/assets/faq_js/jquery-2.1.1.js"></script>
+<script src="../../index_files/assets/faq_js/jquery.mobile.custom.min.js"></script>
+<script src="../../index_files/assets/faq_js/main.js"></script> <!-- Resource jQuery -->
+<%- include ../frontend/footer.ejs %>
+</body>
+</html>

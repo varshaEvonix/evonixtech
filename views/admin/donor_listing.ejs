@@ -17,7 +17,8 @@
                         <table class="table table-hover table2excel">
                             <thead>
                                 <tr>
-                                    <th>Funding Date</th>
+                                    <th>Funding On</th>
+                                    <th>Transferred On</th>
                                     <th>Funded Amount</th>
                                     <th>Transaction Charge</th>
                                     <th>Percentage charge</th>
@@ -36,6 +37,10 @@
                                 <% _.each(post, function (values) { %>
 
                                 <tr>
+                                    <td> <%= values.funding_date %>
+                                        <%= values.funding_time %>
+                                    
+                                    </td>
                                     <td> <%= values.funding_date %></td>
                                     <td>
                                         $ <%= values.funded_amount %></td>

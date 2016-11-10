@@ -39,6 +39,9 @@ module.exports.routes = {
     '/remove_image/:student_id/:photo_id': 'ProfileController.removeimage',
     '/add_loan_education/:student_id': 'Loan_editController.add_loan_education',
     '/uploadimage/:student_id': 'ProfileController.upload_image',
+    '/uploaddocs/:student_id': 'Education_editController.uploaddocs',
+    '/forgotpassword': 'Student_authController.forgotpassword',
+    '/submitforgotpassword': 'Student_authController.submitforgotpassword',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',
