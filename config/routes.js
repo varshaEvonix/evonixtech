@@ -42,6 +42,8 @@ module.exports.routes = {
     '/uploaddocs/:student_id': 'Education_editController.uploaddocs',
     '/forgotpassword': 'Student_authController.forgotpassword',
     '/submitforgotpassword': 'Student_authController.submitforgotpassword',
+    '/resetpassword/:student_id': 'Student_authController.resetpassword',
+    '/submitresetpassword': 'Student_authController.submitresetpassword',
 //   -------------------- varsha-------------------------------------------------------
     '/admin_dash': 'Admin_dashController.admin_dash',
     '/admin/viewdetails/:id': 'Admin_dashController.viewdetails',
