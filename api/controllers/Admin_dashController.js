@@ -608,7 +608,30 @@ module.exports = {
         }
     },
     submitpayout: function (req, res) {
-        console.log(req.allParams());
+        if (req.method == "POST") {
+            var student_record = req.param('student_record');
+            student_record.forEach(function (values, index) {
+                var query = "UPDATE `donors_funding_details` SET `payout` = '1' WHERE `donors_funding_details`.`donors_id` =" + values;
+                Donors_funding_details.query(query, function (err, results) {
+                });
+            });
+            return  res.redirect('admin/checkpayout/' + req.param('student_id') + '/' + req.param('loan_id'));
+        }
+    },
+    checkpayout: function (req, res) {
+        var loan_id = req.param('loan_id');
+        var student_id = req.param('student_id');
+        var query = "select payout from donors_funding_details where payout='1' AND loan_id=" + loan_id;
+        Donors_funding_details.query(query, function (err, results) {
+            req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
+            if (results.length > 0) {
+                return  res.redirect('admin/payoutsdetails/' + student_id);
+            } else {
+                return  res.redirect('admin/payouts/' + student_id);
+            }
+        });
+
+
     },
     submitwebhooks: function (req, res) {
 

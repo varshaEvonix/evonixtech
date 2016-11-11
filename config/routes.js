@@ -91,6 +91,7 @@ module.exports.routes = {
     '/admin/payoutsdetails/:id': 'Admin_dashController.payoutsdetails',
     '/admin/alltransactions': 'Admin_dashController.alltransactions',
     '/admin/submitpayout': 'Admin_dashController.submitpayout',
+    '/admin/checkpayout/:student_id/:loan_id': 'Admin_dashController.checkpayout',
     '/admin/webhooks': 'Admin_dashController.webhooks',
     '/admin/submitwebhooks': 'Admin_dashController.submitwebhooks',
     '/admin/locked_student_profile/:student_id': 'Admin_dashController.locked_student_profile',

@@ -6,6 +6,8 @@
 
         <div class="row">
             <div class="col-lg-12 main-chart white_bg">
+                <%- req.flash('error') %>
+                <%- req.flash('success') %>
                 <h1 class="phead">Payout Details</h1><br>
                 <div class="col-sm-4">
                     <h3><%= post[0].student_firstname %> <%= post[0].student_lastname %></h3>
@@ -26,6 +28,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12 main-chart white_bg">
+
                 <form action="/admin/submitpayout" id="payoutForm" name="payoutForm" method="POST" novalidate>
                     <div class="col-md-12">
                         <h1 class="phead">Pending Payouts</h1><br>
@@ -105,6 +108,8 @@
                             <a class="btn btn-default pull-right" id="cancel-selection">Cancel</a>
                         </div>
                         <div class="col-sm-6">
+                            <input type="hidden" name="loan_id" value="<%= post[0].loan_id %>">
+                            <input type="hidden" name="student_id" value="<%= post[0].student_id %>">
                             <input type="submit" ng-click="submitted = true" class="btn btn-primary" value="Submit">
                         </div>
                     </div>
