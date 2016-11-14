@@ -110,6 +110,7 @@
     <section class="wrapper">
         <div class="row">
             <div class="col-md-9"> 
+              
                 <h2>Personal details</h2>
                 <br>
                 <!--   <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info[0].student_id %>" method="POST">
@@ -140,9 +141,9 @@
                     <div class="col-md-8">
 
                         <input type="file" class="cropit-image-input" style="padding-bottom:10px">
-                       
+
                         <div class="cropit-preview">
-                          
+
                         </div>
 
                     </div>
@@ -297,7 +298,7 @@
                     <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
                     <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
                     <% var bdate = student_info[0].student_birthdate %>
-                  
+
                 </form>
 
             </div>      <div class="col-md-3"><%- include ../stud_right.ejs %></div>
@@ -330,12 +331,11 @@
                 imageBackgroundBorderWidth: 20,
                 smallImage: 'allow',
                 minZoom: 'fit',
-               
                 imageState: {
                     src: 'http://lorempixel.com/500/400/',
                 },
             });
-             $('.image-editor').cropit('imageSrc', '<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %>');
+            $('.image-editor').cropit('imageSrc', '<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %>');
             $('.image-editor').cropit('previewSize', {width: 510, height: 327});
             $('.rotate-cw').click(function () {
                 $('.image-editor').cropit('rotateCW');
@@ -345,11 +345,11 @@
             });
 
             $('.export').click(function () {
-                var imageData = $('.image-editor').cropit('export',{
-  type: 'image/jpeg',
-  quality: .9,
-  originalSize: false
-});
+                var imageData = $('.image-editor').cropit('export', {
+                    type: 'image/jpeg',
+                    quality: .9,
+                    originalSize: false
+                });
                 append_image(imageData);
 
             });
@@ -358,7 +358,7 @@
             $scope.student.image = data;
         }
 
-                $scope.student.student_firstname = "<%= student_info[0].student_firstname %>";
+        $scope.student.student_firstname = "<%= student_info[0].student_firstname %>";
         $scope.student.student_lastname = "<%= student_info[0].student_lastname %>";
         $scope.student.student_contactno = "<%= student_info[0].student_contactno %>";
         $scope.student.student_email = "<%= student_info[0].student_email %>";
@@ -389,14 +389,14 @@
                 }
         ;
     });
-            </script>
+</script>
 <script>
 
 </script>
 <script type="text/javascript">
-            $(function () {
-                $("#datetimepicker1").datetimepicker({ format: 'YYYY-MM-DD'});
-            });
+    $(function () {
+        $("#datetimepicker1").datetimepicker({format: 'YYYY-MM-DD'});
+    });
 </script>
 <script>
     $(document).ready(function () {

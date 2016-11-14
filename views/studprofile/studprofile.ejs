@@ -12,10 +12,9 @@
 <section id="main-content">
     <section class="wrapper">
 
-
-
-
         <div class="col-md-9 main-chart">
+            <%- req.flash('error') %>
+            <%- req.flash('success') %>
             <div class="row white_bg" style="min-height:296px;" >
                 <% if (student_info[0].student_profile_pic_path == '' || student_info[0].student_profile_pic_path == null) { %>
                 <div class="col-md-7">
@@ -115,7 +114,7 @@
 
 
                     <div id="home" class="tab-pane fade in active"><div class="col-md-12 white_bg">
-                            <div class="row pull-right"> <a href="/personal_edit/<%= student_info[0].student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
+                            <div class="row pull-right"> <a href="/personalinfo" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
                             <div class="row">
                                 <div class="col-md-3">
                                     <p class="info"> <span class="small">First Name: <br>
@@ -185,7 +184,7 @@
                         <div class="col-md-12 white_bg" style="min-height:300px;">
 
                             <div class="row pull-right">
-                                <a href="/education_edit/<%= student_info[0].student_id %>" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                <a href="/educationandlaoninfo" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
                             </div>
                             <br>
                             <div class="row">
@@ -220,7 +219,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                       
+
                                         <%if (student_info[0].loan_type == 'fafsa') { %>
                                         <div class="col-md-6">
                                             <p class="info">  <span class="small">Type of Loan: <br>

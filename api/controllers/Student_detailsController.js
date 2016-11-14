@@ -9,9 +9,13 @@ module.exports = {
 
         Student_login_credentials.query('UPDATE `student_login_credentials` SET `student_active`= 1 where student_id =' + req.param('id'));
 
-        return	res.redirect('/student/login');
+        return	res.redirect('/login');
 
 
+
+    },
+    'signup': function (req, res) {
+        return	res.view('./stulogin/stulogin');
 
     },
     'stulogin': function (req, res) {

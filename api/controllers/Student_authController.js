@@ -8,33 +8,34 @@ module.exports = {
         return res.view('./studentlogin/studentlogin', {layout: false});
     },
     student_process: function (req, res) {
+        var select_query = "select * from student_login_credentials where student_login_credentials.student_active = 1 AND student_email ='" + req.param('email') + "' ";
 
-        Student_login_credentials.query("select * from student_login_credentials where student_login_credentials.student_active = 1 AND student_email ='" + req.param('email') + "' ", function (err, vals) {
+        Student_login_credentials.query(select_query, function (err, vals) {
 
             if (vals.length > 0) {
                 var temp = JSON.stringify(vals);
                 var student = JSON.parse(temp)[0];
-                console.log(md5(req.param('password')));
-
 
                 if (md5(req.param('password')) === student.student_password) {
                     req.session.student_id = student.student_id;
 
-                    var path = '/studash/' + req.session.student_id;
+                    var path = '/dashboard';
                     req.session.student_email = student.student_email;
                     return res.ok({path: path});
                 } else {
-                    res.status(500).send({error: 'Invalid Username/Password', errormessage: "Still can't sign in? Be sure to check your spam folder, your account may need verification"});
+                    req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Invalid Username/Password</br>Still can not sign in? Be sure to check your spam folder, your account may need verification</div>');
+                    res.status(500).send();
                 }
             } else {
-                res.status(500).send({error: 'Invalid Username/Password', errormessage: "Still can't sign in? Be sure to check your spam folder, your account may need verification"});
+                req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Invalid Username/Password</br>Still can not sign in? Be sure to check your spam folder, your account may need verification</div>');
+                res.status(500).send();
             }
         });
     },
     student_logout: function (req, res) {
         //req.logout();
         req.session.destroy();
-        res.redirect('/student/login');
+        res.redirect('/login');
     },
     forgotpassword: function (req, res) {
 
@@ -116,7 +117,7 @@ module.exports = {
             var query = "UPDATE `student_login_credentials` SET `student_password` = '" + password + "' WHERE `student_login_credentials`.`student_id` =" + student_id;
             Student_login_credentials.query(query, function (err, vals) {
                 req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Password has been changed successfully</div>');
-                return res.redirect('/student/login');
+                return res.redirect('/login');
             });
         }
     }

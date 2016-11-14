@@ -106,7 +106,7 @@
                                 <!--<div id="fafsa" style="<% if(student_info[0].loan_type == 'bankloan'){ %>display: none;<% } %>">-->
                                 <div id="fafsa" style="<%= (student_info[0].loan_type == 'fafsa') ? 'display: block':'display: none' %>">
 
-                                    <label for="fafsa">Select loan name <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
+                                    <label for="fafsa">Select loan servicer <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
                                     <select name="fafsa_values" ng-model="student.fafsa_values" id="fafsa_value" class="dropdown form-group" <%= (student_info[0].loan_type == 'fafsa') ? 'required':'' %>>
                                             <option value="">Select Loan Name</option>
                                         <option value="1">CornerStone</option>

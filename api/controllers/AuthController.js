@@ -54,7 +54,7 @@ module.exports = {
                 if (md5(req.param('password')) === student.student_password) {
                     req.session.student_id = student.student_id;
 
-                        var path = '/studash/'+req.session.student_id;
+                        var path = '/dashboard';
                     req.session.student_email = student.student_email;
                     return res.ok({path:path});
                 } else {

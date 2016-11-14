@@ -30,7 +30,7 @@ var select_query = 'SELECT ld.loan_id, sd.student_id, sd.student_firstname, sd.s
         }
         });
         } else {
-return  res.redirect('/student/login');
+return  res.redirect('/login');
 }
 },
         'editeducationsubmit': function (req, res) {

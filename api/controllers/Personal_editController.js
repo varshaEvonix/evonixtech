@@ -8,7 +8,7 @@ var mysql = require('mysql');
 module.exports = {
     'editpersonal': function (req, res) {
         if (req.session.student_id || req.session.student_id != undefined) {
-            Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.param('id'), function (err, recordset) {
+            Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.session.student_id, function (err, recordset) {
 
                 return res.view('./personal_edit/personal_edit', {
                     student_info: recordset
@@ -17,7 +17,7 @@ module.exports = {
 
             });
         } else {
-            return  res.redirect('/student/login');
+            return  res.redirect('/login');
         }
     },
     'editpersonalsubmit': function (req, res) {
@@ -70,6 +70,12 @@ module.exports = {
 
             Student_details.query(update, function (err, record)
             {
+                if (err) {
+
+                    req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + err[0].Error + '</div>');
+                } else {
+                    req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Information updated successfully</div>');
+                }
 
                 return res.ok();
             });
@@ -89,7 +95,7 @@ module.exports = {
 
             });
         } else {
-            return  res.redirect('/student/login');
+            return  res.redirect('/login');
         }
 
     },

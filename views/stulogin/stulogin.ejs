@@ -203,7 +203,7 @@
         }
     }
 
-    
+
 
     footer p {
         color: #888;
@@ -334,371 +334,373 @@
     </style>
 </head>
 <body  ng-app="postApp" ng-controller="postController">
-<!--    <header id="header" class="header">
-        <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
-            <div class="header-nav-wrapper">
-                <div class="container">
-                    <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
-                        <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-                            <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
-
-
-                                <li style="" ><a href="/allprofile">Profiles</a>
-
+    <!--    <header id="header" class="header">
+            <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
+                <div class="header-nav-wrapper">
+                    <div class="container">
+                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive">
+                            <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
+                                <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+    
+    
+                                    <li style="" ><a href="/allprofile">Profiles</a>
+    
+                                    </li>
+    
+                                    <li style=""  class="active"><a href="../signup">Create account</a>
+    
+                                    </li>
+                                    <li style=""><a href="/student/login">Login </a>
+    
+                                    </li>
+    
+                                </ul>
                                 </li>
+    
+    
+    
+                                </ul>
+                            </nav>
+    
+                            </header>-->
 
-                                <li style=""  class="active"><a href="../stulogin/stulogin">Create account</a>
+    <div class="main-content" style="padding-top:80px;">
 
-                                </li>
-                                <li style=""><a href="/student/login">Login </a>
+        <!-- You only need this form and the form-register.css -->
 
-                                </li>
-
-                            </ul>
-                            </li>
-
-
-
-                            </ul>
-                        </nav>
-
-                        </header>-->
-
-                        <div class="main-content" style="padding-top:80px;">
-
-                            <!-- You only need this form and the form-register.css -->
-
-                            <!--form action="/user" method="POST" role="form"-->
-                            <form class="form" ng-submit="submitForm()" name="registerform" id="registerform" novalidate>
-                                <div id="signup">   
-                                    <h2>CREATE ACCOUNT</h2><br>
+        <!--form action="/user" method="POST" role="form"-->
+        <form class="form" ng-submit="submitForm()" name="registerform" id="registerform" novalidate>
+            <div id="signup">   
+                <h2>CREATE ACCOUNT</h2><br>
 
 
-                                    <div class="form-group">
+                <div class="form-group">
 
 
 
-                                        <div class="top-row row">
-                                            <div class="col-md-6">
-                                                <div class="field-wrap form-group input-group" >
+                    <div class="top-row row">
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
 
-                                                    <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
-                                                <label>
-                                                    First name<span class="req">*</span>
-                                                </label>
+                                <span class="input-group-addon icon-back" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+                                <label>
+                                    First name<span class="req">*</span>
+                                </label>
 
-                                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
-                                                <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
-                                                <p class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</p>
-                                            </div></div>
-                                        <div class="col-md-6">
-                                            <div class="field-wrap form-group input-group" >
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
-                                                <label>
-                                                    Last name<span class="req">*</span>
-                                                </label>
-                                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
-                                                <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
-                                                <p class="error has-error ng-hide" ng-show="registerform.student_lastname.$error.pattern">Please enter characters only!</p>
-                                            </div></div>
+                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_firstname" id="student_firstname" name="student_firstname" required>
+                                <p ng-show="submitted && registerform.student_firstname.$error.required"  class="help-block has-error ng-hide">First name is required.</p>
+                                <p class="error has-error ng-hide" ng-show="registerform.student_firstname.$error.pattern">Please enter characters only!</p>
+                            </div></div>
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-person"></i></span>
+                                <label>
+                                    Last name<span class="req">*</span>
+                                </label>
+                                <input  type="text" ng-pattern="/^[A-z ]*$/" ng-model="student.student_lastname" id="student_lastname" name="student_lastname" required>
+                                <p ng-show="submitted && registerform.student_lastname.$error.required"  class="help-block has-error ng-hide">Last name is required.</p>
+                                <p class="error has-error ng-hide" ng-show="registerform.student_lastname.$error.pattern">Please enter characters only!</p>
+                            </div></div>
 
-                                        <div class="col-md-6">
-                                            <div class="field-wrap form-group input-group" >
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
-                                                <label>
-                                                    Contact number<span class="req">*</span>
-                                                </label>
-                                                <input  type="text"  ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" format  ng-pattern="/^[0-9-]*$/" required>
-                                                <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
-                                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
-                                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
-                                            </div></div>
-                                        <div class="col-md-6">
-                                            <div class="field-wrap form-group input-group" >
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
-                                                <label>
-                                                    Email<span class="req">*</span>
-                                                </label>
-                                                <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required style="border-right: none;">
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-call"></i></span>
+                                <label>
+                                    Contact number<span class="req">*</span>
+                                </label>
+                                <input  type="text"  ng-maxlength="12" ng-model="student.student_contactno" id="student_contactno" name="student_contactno" format  ng-pattern="/^[0-9-]*$/" required>
+                                <p ng-show="submitted && registerform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
+                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.pattern">The The contact number you entered is not valid! (format: 123-456-7890)</p>
+                                <p class="error has-error ng-hide" ng-show="registerform.student_contactno.$error.maxlength">The contact number you entered is not valid! (format: 123-456-7890)</p>
+                            </div></div>
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-android-mail"></i></span>
+                                <label>
+                                    Email<span class="req">*</span>
+                                </label>
+                                <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required style="border-right: none;">
 
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
 
-                                                <span class="clearfix"></span>
-                                                <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide student_email">Email is required.</p>
-                                                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide student_email">Account with such e-mail alrady exists.</p>
-                                                <p class="error has-error ng-hide student_email" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
-                                                <p ng-show="errorEmail_id" class="help-block has-error ng-hide student_email">{{errorEmail_id}}</p>
-                                            </div>
-                                        </div>
+                                <span class="clearfix"></span>
+                                <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide student_email">Email is required.</p>
+                                <p ng-show="registerForm.email.$error.unique" class="help-block has-error ng-hide student_email">Account with such e-mail alrady exists.</p>
+                                <p class="error has-error ng-hide student_email" ng-show="registerform.student_email.$error.pattern">The email address you entered is not valid.</p>
+                                <p ng-show="errorEmail_id" class="help-block has-error ng-hide student_email">{{errorEmail_id}}</p>
+                            </div>
+                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="field-wrap form-group input-group" >
-                                                <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-                                                <label>
-                                                    Password<span class="req">*</span>
-                                                </label>
-                                                <input  type="password" ng-minlength="7"  ng-model="student.student_password" id="student_password" name="student_password"  required>
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
-                                                      1. Make sure that it is at least 7 characters long
-                                                      2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
-                                                      3. Don't use more than 2 identical consecutive characters
-                                                      4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
+                                <span class="input-group-addon " style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+                                <label>
+                                    Password<span class="req">*</span>
+                                </label>
+                                <input  type="password" ng-minlength="7"  ng-model="student.student_password" id="student_password" name="student_password"  required>
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
+                                      1. Make sure that it is at least 7 characters long
+                                      2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
+                                      3. Don't use more than 2 identical consecutive characters
+                                      4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
 
-                                                <span class="clearfix"></span>
-                                                <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
+                                <span class="clearfix"></span>
+                                <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
 
-                                                <p ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 7 characters.</p>
+                                <p ng-show="submitted && registerform.student_password.$error.minlength"  class="help-block has-error ng-hide">Please enter at least 7 characters.</p>
 
-                                            </div></div>
-                                        <div class="col-md-6">
-                                            <div class="field-wrap form-group input-group" >
-                                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
-                                                <label>
-                                                    Confirm password<span class="req">*</span>
-                                                </label>
-                                                <input  type="password"  ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
-                                                <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
-                                                <p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
-
-                                            </div>
-                                        </div>
-                                    </div><br>
-                                    <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
-                                    <br>
-                                    <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
-
-                                    </form>
-
-
-
-
-
-                                </div>
-
+                            </div></div>
+                        <div class="col-md-6">
+                            <div class="field-wrap form-group input-group" >
+                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-right:none;"><i class="ion-locked"></i></span>
+                                <label>
+                                    Confirm password<span class="req">*</span>
+                                </label>
+                                <input  type="password"  ng-model="student.student_c_password" id="student_c_password" name="student_c_password"  valid-password-c="student.student_password"  required>
+                                <span ng-show="submitted && registerform.student_c_password.$error.required"  class="help-block has-error ng-hide">Confirm Password is required.</span>
+                                <p ng-show="submitted && registerform.student_c_password.$error.noMatch" class="help-block has-error ng-hide"><br>Passwords do not match.</p>
 
                             </div>
-                            <footer id="footer" class="footer bg-black-222">
-                                <div class="container pt-70 pb-30">
-                                    <div class="row border-bottom-black">
+                        </div>
+                    </div><br>
+                    <!--  <div style="margin:auto" class="center"> <input type="checkbox" name = "checkbox">I agree to Stumuch terms and conditions and privacy policy.</div> -->
+                    <br>
+                    <button id="submit_btn" type="submit" ng-click="submitted = true" class="btn btn-primary"/>SUBMIT</button><br>
 
-                                        <div class="col-sm-6 col-md-6">
-                                            <div class="widget dark mb-20">
-                                                <h5 class="widget-title line-bottom">Quick Contact</h5>
-                                                <ul class="list-border font-13">
-                                                    <li><a href="#">+(012) 345 6789</a>
-                                                    </li>
-                                                    <li><a href="#">Stumuch@gmail.com</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="widget dark">
-
-                                                <ul class="social-icons icon-dark icon-circled icon-sm mt-10">
-                                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
-                                                    </li>
-                                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
-                                                    </li>
-
-                                                    <li><a href="#"><i class="fa fa-youtube"></i></a>
-                                                    </li>
-
-                                                    <li><a href="#"><i class="fa fa-pinterest"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6">
-                                            <div class="widget dark mb-20">
-                                                <h5 class="widget-title line-bottom">Links</h5>
-                                                <ul class="list-border font-13">
-                                                    <li><a href="/aboutus">About Us</a>
-                                                    </li>
-                                                    <li><a href="/faq">FAQ</a>
-                                                    </li>
-                                                    <li><a href="/termsandconditions">Terms & Conditions</a>
-                                                    </li>
-                                                    <li><a href="/privacypolicy">Privacy Policy</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="footer-bottom bg-black-333">
-                                    <div class="container pt-20 pb-20">
-                                        <div class="row">
-                                            <div class="col-md-6 sm-text-center">
-                                                <p class="font-11 text-black-777 m-0">Copyright ©2016 STUMUCH. All Rights Reserved</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </footer>
-                            <script src='../../index_files/flowup/js/jquery.min.js'></script>
-                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                            <script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
-                            <script src='../../index_files/flowup/js/main.js'></script>
-                            <script>
-                                        $(document).ready(function () {
-                                            $('[data-toggle="tooltip"]').tooltip();
-                                        });
-                            </script>
-                            <script  src="../../index_files/stdash/js/mask.js"></script>
-                            <script>
-
-                                        $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
-
-                                            var $this = $(this),
-                                                    label = $this.prev('label');
-
-                                            if (e.type === 'keyup') {
-                                                if ($this.val() === '') {
-                                                    label.removeClass('active highlight');
-                                                } else {
-                                                    label.addClass('active highlight');
-                                                }
-                                            } else if (e.type === 'blur') {
-                                                if ($this.val() === '') {
-                                                    label.removeClass('active highlight');
-                                                } else {
-                                                    label.removeClass('highlight');
-                                                }
-                                            } else if (e.type === 'focus') {
-
-                                                if ($this.val() === '') {
-                                                    label.removeClass('highlight');
-                                                }
-                                                else if ($this.val() !== '') {
-                                                    label.addClass('highlight');
-                                                }
-                                            }
+                    </form>
 
 
-                                            $(document).ready(function () {
-                                                $("input:focus").click(function () {
-                                                    label.addClass("active highlight");
-                                                });
-                                            });
-                                        });
-
-                                        $('.tab a').on('click', function (e) {
-
-                                            e.preventDefault();
-
-                                            $(this).parent().addClass('active');
-                                            $(this).parent().siblings().removeClass('active');
-
-                                            target = $(this).attr('href');
-
-                                            $('.tab-content > div').not(target).hide();
-
-                                            $(target).fadeIn(600);
-
-                                        });
-                            </script>
-
-                            <script type="text/javascript">
-
-                            </script>
-
-                            </body>
-
-                            </html>
 
 
-                            <script>
-                                var postApp = angular.module('postApp', []);
-                                postApp.directive('validPasswordC', function () {
-                                    return {
-                                        require: 'ngModel',
-                                        scope: {
-                                            reference: '=validPasswordC'
 
-                                        },
-                                        link: function (scope, elm, attrs, ctrl) {
-                                            ctrl.$parsers.unshift(function (viewValue, $scope) {
+                </div>
 
-                                                var noMatch = viewValue != scope.reference
-                                                ctrl.$setValidity('noMatch', !noMatch);
-                                                return (noMatch) ? noMatch : scope.reference;
-                                            });
-                                            scope.$watch("reference", function (value) {
 
-                                                ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
-                                            });
-                                        }
-                                    }
+            </div>
+            <footer id="footer" class="footer bg-black-222">
+                <div class="container pt-70 pb-30">
+                    <div class="row border-bottom-black">
+
+                        <div class="col-sm-6 col-md-6">
+                            <div class="widget dark mb-20">
+                                <h5 class="widget-title line-bottom">Quick Contact</h5>
+                                <ul class="list-border font-13">
+                                    <li><a href="#">+1 407 437 3194</a>
+                                    </li>
+                                    <li><a href="mailto:support@stumuch.com">support@stumuch.com</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="widget dark">
+
+                                <ul class="social-icons icon-dark icon-circled icon-sm mt-10">
+                                    <li><a href="https://www.facebook.com/stumuch"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a href="https://twitter.com/stumuchservices"><i class="fa fa-twitter"></i></a>
+                                    </li>
+
+                                    <li><a href="https://www.youtube.com/user/stumuchservices"><i class="fa fa-youtube"></i></a>
+                                    </li>
+
+                                    <li><a href="https://www.pinterest.com/stumuch/"><i class="fa fa-pinterest"></i></a>
+                                    <li><a href="https://www.instagram.com/stumuchservices/"><i class="fa fa-instagram"></i></a>
+                                    <li><a href="http://stumuch.blogspot.com"><i class="fa fa-google"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="widget dark mb-20">
+                                <h5 class="widget-title line-bottom">Links</h5>
+                                <ul class="list-border font-13">
+                                    <li><a href="/aboutus">About Us</a>
+                                    </li>
+                                    <li><a href="/faq">FAQ</a>
+                                    </li>
+                                    <li><a href="/termsandconditions">Terms & Conditions</a>
+                                    </li>
+                                    <li><a href="/privacypolicy">Privacy Policy</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="footer-bottom bg-black-333">
+                    <div class="container pt-20 pb-20">
+                        <div class="row">
+                            <div class="col-md-6 sm-text-center">
+                                <p class="font-11 text-black-777 m-0">Copyright ©2016 STUMUCH. All Rights Reserved</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <script src='../../index_files/flowup/js/jquery.min.js'></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src='../../index_files/flowup/js/jquery.FlowupLabels.js'></script>
+            <script src='../../index_files/flowup/js/main.js'></script>
+            <script>
+                        $(document).ready(function () {
+                            $('[data-toggle="tooltip"]').tooltip();
+                        });
+            </script>
+            <script  src="../../index_files/stdash/js/mask.js"></script>
+            <script>
+
+                        $('.form').find('input, textarea').on('keyup blur focus click', function (e) {
+
+                            var $this = $(this),
+                                    label = $this.prev('label');
+
+                            if (e.type === 'keyup') {
+                                if ($this.val() === '') {
+                                    label.removeClass('active highlight');
+                                } else {
+                                    label.addClass('active highlight');
+                                }
+                            } else if (e.type === 'blur') {
+                                if ($this.val() === '') {
+                                    label.removeClass('active highlight');
+                                } else {
+                                    label.removeClass('highlight');
+                                }
+                            } else if (e.type === 'focus') {
+
+                                if ($this.val() === '') {
+                                    label.removeClass('highlight');
+                                }
+                                else if ($this.val() !== '') {
+                                    label.addClass('highlight');
+                                }
+                            }
+
+
+                            $(document).ready(function () {
+                                $("input:focus").click(function () {
+                                    label.addClass("active highlight");
                                 });
+                            });
+                        });
+
+                        $('.tab a').on('click', function (e) {
+
+                            e.preventDefault();
+
+                            $(this).parent().addClass('active');
+                            $(this).parent().siblings().removeClass('active');
+
+                            target = $(this).attr('href');
+
+                            $('.tab-content > div').not(target).hide();
+
+                            $(target).fadeIn(600);
+
+                        });
+            </script>
+
+            <script type="text/javascript">
+
+            </script>
+
+            </body>
+
+            </html>
 
 
-                                postApp.controller('postController', function ($scope, $http) {
-                                    $scope.student = {};
-                                    $('#student_contactno').keyup(function () {
-                                        var value = $(this).val();
-                                        assign_value(value)
-                                    })
-                                    function assign_value(value) {
-                                        $scope.student.student_contactno = value;
-                                     
-                                    }
-                                   
+            <script>
+                var postApp = angular.module('postApp', []);
+                postApp.directive('validPasswordC', function () {
+                    return {
+                        require: 'ngModel',
+                        scope: {
+                            reference: '=validPasswordC'
 
-                                    $('#registerform').submit(function () {
+                        },
+                        link: function (scope, elm, attrs, ctrl) {
+                            ctrl.$parsers.unshift(function (viewValue, $scope) {
+
+                                var noMatch = viewValue != scope.reference
+                                ctrl.$setValidity('noMatch', !noMatch);
+                                return (noMatch) ? noMatch : scope.reference;
+                            });
+                            scope.$watch("reference", function (value) {
+
+                                ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
+                            });
+                        }
+                    }
+                });
+
+
+                postApp.controller('postController', function ($scope, $http) {
+                    $scope.student = {};
+                    $('#student_contactno').keyup(function () {
+                        var value = $(this).val();
+                        assign_value(value)
+                    })
+                    function assign_value(value) {
+                        $scope.student.student_contactno = value;
+
+                    }
+
+
+                    $('#registerform').submit(function () {
 //                                        $scope.student.student_contactno = $('#student_contactno').val();
 
-                                        if ($scope.registerform.$valid) {
+                        if ($scope.registerform.$valid) {
 
-                                            $http({
-                                                method: 'POST',
-                                                //                    dataType: 'json',
-                                                url: '/user',
-                                                data: $scope.student, //forms user object
-                                                headers: {'Content-Type': 'application/json'}
-                                            }).success(function (data) {
+                            $http({
+                                method: 'POST',
+                                //                    dataType: 'json',
+                                url: '/user',
+                                data: $scope.student, //forms user object
+                                headers: {'Content-Type': 'application/json'}
+                            }).success(function (data) {
 
-                                                window.location = '/thankyou';
-                                            }).error(function (data) {
+                                window.location = '/thankyou';
+                            }).error(function (data) {
 
-                                                $('.student_email').show();
-                                                $scope.errorEmail_id = data.error;
-                                            });
+                                $('.student_email').show();
+                                $scope.errorEmail_id = data.error;
+                            });
 
-                                        }
-                                    });
+                        }
+                    });
 
-                                });
+                });
 
-                            </script>
-                            <script type="text/javascript">
-                                $("#student_email").keyup(function () {
-                                    $('.student_email').hide();
+            </script>
+            <script type="text/javascript">
+                $("#student_email").keyup(function () {
+                    $('.student_email').hide();
 
-                                });
+                });
 
-                            </script>
-                            <script>
-                                $(function () {
+            </script>
+            <script>
+                $(function () {
 
-                                    $("#student_contactno").mask("999-999-9999");
+                    $("#student_contactno").mask("999-999-9999");
 
 
-                                    $("#student_contactno").on("blur", function () {
-                                        var last = $(this).val().substr($(this).val().indexOf("-") + 1);
+                    $("#student_contactno").on("blur", function () {
+                        var last = $(this).val().substr($(this).val().indexOf("-") + 1);
 
-                                        if (last.length == 5) {
-                                            var move = $(this).val().substr($(this).val().indexOf("-") + 1, 1);
+                        if (last.length == 5) {
+                            var move = $(this).val().substr($(this).val().indexOf("-") + 1, 1);
 
-                                            var lastfour = last.substr(1, 4);
+                            var lastfour = last.substr(1, 4);
 
-                                            var first = $(this).val().substr(0, 9);
+                            var first = $(this).val().substr(0, 9);
 
-                                            $(this).val(first + move + '-' + lastfour);
-                                        }
-                                    });
-                                });
+                            $(this).val(first + move + '-' + lastfour);
+                        }
+                    });
+                });
 
-                            </script>
+            </script>
