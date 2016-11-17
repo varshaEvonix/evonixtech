@@ -1562,9 +1562,7 @@ section > .container-fluid {
   .sm-text-left {
     text-align: left !important;
   }
-  #search{
-    padding-top:124px;
-  }
+  
   .sm-pull-none {
     float: none !important;
   }
@@ -7201,7 +7199,6 @@ blockquote p {
 
 
 
-
 @media only screen and (max-width: 767px) {
   .jumbotron h1 {
     font-size: 28px;
@@ -7218,6 +7215,23 @@ blockquote p {
   #tarea{
     width:228px;
   }
+  
+}
+@media only screen and (max-width: 500px) {
+
+  #search_input{
+    width:62% !important;
+  }
+  #media_div{
+    margin-top:530px !important;
+  }
+  #donate_div{
+    margin-top:-810px !important;
+  }
+   #student_info{
+    margin-top:301px !important;
+  }
+  
 }
 
 
@@ -7231,6 +7245,9 @@ blockquote p {
   }
   #prog{
     width:191px;
+  }
+  #search_input{
+    width:80% !important;
   }
   
 }
@@ -7250,4 +7267,9 @@ blockquote p {
   #jumbo{
     height:650px!important;
   }
+}
+
+.progress-bar.appeared
+{
+min-width:10%;
 }
