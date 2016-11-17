@@ -99,9 +99,7 @@ console.log(donors_results.length)
 
                 res.redirect('donorpage/' + student_id);
             } else {
-                console.log('charge')
-                console.log(charge)
-                console.log(charge.status)
+           
                 if (charge.status == 'succeeded') {
                     var update_query = "UPDATE `donors_funding_details` SET `status` = '1', transaction_id='" + charge.id + "' WHERE `donors_funding_details`.`donors_id` =" + last_insert_id;
                     Donors_funding_details.query(update_query, function (err, results) {

@@ -223,36 +223,24 @@
 
 
     <% _.each(student_info, function (student_info) { %>
-  
 
-    
-      <div class="col-sm-12">
-            <div class="col-sm-6">
-              <div class="main-content">
 
-            <div class="left-panel">
-            <div class="panel-body"><br>
-
-              
-               
+    <div class="panel-body">
+        <div class="col-sm-12">
+            <div class="col-sm-6 left-panel"><br>
+                <div class="main-content">
                     <!-- Section: home -->
                     <% if (student_info.student_profile_pic_path == '' || student_info.student_profile_pic_path == null) { %>
                     <img src="<% sails.getBaseurl() %>/index_files/blank_dp.jpg" class="image_pro" />
                     <% } else { %>
-                    <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= student_info.student_profile_pic_path %>" style="width:510px;">
+                    <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= student_info.student_profile_pic_path %>" style="width:510px; height:326.9px">
                     <% } %>
                     <h2><%= student_info.student_firstname %> <%= student_info.student_lastname %><span class="pull-right"> <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:137px; height:28px">
                             <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:137px; height:28px"></span></h2>
                     <p><%= student_info.student_city%>, <%= student_info.student_state  %></p>
 
-</div>
-</div>
 
- <br>
- <div class="left-panel" id="media_div">
- <div class="panel-body">
-    
-                  
+                    <hr>
 
                     <h2>My Video</h2>
                     <% if (student_info.video_link == '' || student_info.video_link == null) { %>
@@ -280,11 +268,11 @@
 
                         <% }) %>
                     </div>
-                    </div></div>
                 </div></div>
 
+
             <div class="col-sm-6">
-                <div class="panel panel-default" id="donate_div">
+                <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-md-4">
                             <p>Collected</p>
@@ -311,20 +299,16 @@
                             <p>Goal</p>
                             <h1 style="margin:none !important">$<%= student_info.loan_amount %></h1>
                         </div>
-                      <div class="row">
-                   
-                    <div class="col-md-12">
-                    <br><Br><Br>
+                        <br></div>
+
+                    <br>
                     <div class="text-center don" ><a href="/donorpage/<%= student_info.student_id %>" class="btn btn-success donate_main"><strong style="font-size:22px">Donate Now</strong></a></Button></div>
                     <div class="text-center">
-                    <div class="col-md-6 col-sm-6">
-                        <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:100%;">
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                        <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:100%;">
-</div>
+                        <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:226px;">
+
+                        <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:226px;">
+
                     </div>
-                    </div></div></div>
                 </div>
 
 

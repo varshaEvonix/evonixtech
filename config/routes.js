@@ -40,7 +40,7 @@ module.exports.routes = {
     '/remove_image/:student_id/:photo_id': 'ProfileController.removeimage',
     '/add_loan_education/:student_id': 'Loan_editController.add_loan_education',
     '/uploadimage/:student_id': 'ProfileController.upload_image',
-    '/uploaddocs/:student_id': 'Education_editController.uploaddocs',
+    '/uploaddocs': 'Education_editController.uploaddocs',
     '/forgotpassword': 'Student_authController.forgotpassword',
     '/submitforgotpassword': 'Student_authController.submitforgotpassword',
     '/resetpassword/:student_id': 'Student_authController.resetpassword',

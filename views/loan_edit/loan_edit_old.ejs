@@ -1,41 +1,7 @@
 <%- include ../stuhead.ejs %>
 
 <%- include ../stud_left.ejs %>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
 
-<!-- Fix for old browsers -->
-<script src="http://nervgh.github.io/js/es5-shim.min.js"></script>
-<script src="http://nervgh.github.io/js/es5-sham.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script src="../../index_files/stdash/js/console-sham.js"></script>
-
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
-<!--<script src="../bower_components/angular/angular.js"></script>-->
-<script src="http://code.angularjs.org/1.1.5/angular.min.js"></script>
-<script src="../../index_files/stdash/js/angular-file-upload.min.js"></script>
-<script src="/controllers.js"></script>
-
-<!--thumbnails for images-->
-<script src="/directives.js"></script>
-
-<style>
-    .my-drop-zone { border: dotted 3px lightgray; }
-    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-    .another-file-over-class { border: dotted 3px green; }
-
-    html, body { height: 100%; }
-
-    canvas {
-        background-color: #f3f3f3;
-        -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
-        -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
-        box-shadow: 3px 3px 3px 0 #e3e3e3;
-        border: 1px solid #c3c3c3;
-        height: 100px;
-        margin: 6px 0 0 6px;
-    }
-</style>
 <style>
     div.tooltip-inner {
         max-width: 350px;
@@ -86,7 +52,7 @@
 </style>
 
 <section id="main-content">
-    <section class="wrapper" ng-app="app" ng-controller="AppController">
+    <section class="wrapper" ng-app="postApp" ng-controller="postController">
         <% if (student_info[0].loan_id == null && student_info[0].education_id == null){ %>
         <form  ng-submit="submitForm()" class="form" method="POST" enctype="multipart/form-data" action="/add_loan_education/<%= student_info[0].student_id %>" name="loan_eduction_form" id="loan_eduction_form" novalidate>
             <% }else{ %>
@@ -140,7 +106,7 @@
                                 <!--<div id="fafsa" style="<% if(student_info[0].loan_type == 'bankloan'){ %>display: none;<% } %>">-->
                                 <div id="fafsa" style="<%= (student_info[0].loan_type == 'fafsa') ? 'display: block':'display: none' %>">
 
-                                    <label for="fafsa">Select loan name <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
+                                    <label for="fafsa">Select loan servicer <span>*</span>:  <a href="#" data-toggle="tooltip" title="Your loan servicer manages billing and services related to your federal student loan. Loan servicers work with students on repayment plans and consolidation. It’s important to keep in touch with your servicer. If life circumstances change, the servicer may be of help. "> <i  class="glyphicon glyphicon-question-sign"></i></a></label><br>
                                     <select name="fafsa_values" ng-model="student.fafsa_values" id="fafsa_value" class="dropdown form-group" <%= (student_info[0].loan_type == 'fafsa') ? 'required':'' %>>
                                             <option value="">Select Loan Name</option>
                                         <option value="1">CornerStone</option>
@@ -163,9 +129,9 @@
                                 <div id="bankloan" style="<%= (student_info[0].loan_type == 'bankloan') ? 'display: block':'display: none' %>">
                                     <div class="form-group">
                                         <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
-                                        <input type="text" ng-model="student.loan_bankname"  class="form-control" id="loan_bankname"   name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>" <%= (student_info[0].loan_type == 'bankloan') ? 'required':'' %>>
+                                        <input type="text" ng-model="student.loan_bankname"  class="form-control" id="loan_bankname" ng-pattern="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>" <%= (student_info[0].loan_type == 'bankloan') ? 'required':'' %>>
                                                <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.required"  class="help-block has-error ng-hide">Loan Bankname is required.</p>
-                                        <!--<p ng-show="submitted && loan_eduction_form.loan_bankname.$error.pattern"  class="help-block has-error ng-hide">Not valid bank name.</p>-->
+                                        <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.pattern"  class="help-block has-error ng-hide">Not valid bank name.</p>
                                     </div>
                                 </div>
 
@@ -176,17 +142,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-                                    <input type="text" ng-model="student.loan_accountno"   class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info[0].loan_accountno %>" required>
+                                    <input type="text" ng-model="student.loan_accountno"  ng-pattern="^([0-9A-z]+)$" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info[0].loan_accountno %>" required>
                                     <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.required"  class="help-block has-error ng-hide">Loan account no is required.</p>
-                                    <!--<p ng-show="submitted && loan_eduction_form.loan_accountno.$error.pattern"  class="help-block has-error ng-hide">Not valid account number.</p>-->
+                                    <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.pattern"  class="help-block has-error ng-hide">Not valid account number.</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
-                                    <input type="text" ng-model="student.loan_amount" class="form-control"    data-validation-length="2-6" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info[0].loan_amount %>" required>
+                                    <input type="text" ng-model="student.loan_amount" class="form-control" ng-pattern="^([0-9]+)$"   data-validation-length="2-6" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info[0].loan_amount %>" required>
                                     <p ng-show="submitted && loan_eduction_form.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount no is required.</p>
-                                    <!--<p ng-show="submitted && loan_eduction_form.loan_amount.$error.pattern"  class="help-block has-error ng-hide">Not valid loan amount.</p>-->
+                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.pattern"  class="help-block has-error ng-hide">Not valid loan amount.</p>
                                 </div>
 
                             </div>
@@ -254,119 +220,32 @@
                             <div class="col-md-12">
 
 
-                                <!--                                <div class="input_fields_wrap form-horizontal">
-                                                                    <div class="form-group">
-                                                                        <div class="col-md-6">
-                                                                            <% if (student_info[0].loan_id != null && loan_docs.length > 0){ %>
-                                
-                                                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" >
-                                                                            <% }else{ %>
-                                                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" required>
-                                                                            <% } %>
-                                                                            <p ng-show="submitted && loan_eduction_form.document_name.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
-                                                                        </div> 
-                                                                        <div class=" col-md-6">
-                                
-                                                                            <input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" > 
-                                                                            <p ng-show="submitted && loan_eduction_form.loan_doc.$error.required"  class="help-block has-error ng-hide">Loan document is required.</p>
-                                
-                                                                        </div> 
-                                
-                                                                    </div>
-                                                                </div>-->
-                                <div  nv-file-drop="" uploader="uploader">
+                                <div class="input_fields_wrap form-horizontal">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <% if (student_info[0].loan_id != null && loan_docs.length > 0){ %>
 
-                                    <div class="container">
+                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" >
+                                            <% }else{ %>
+                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" required>
+                                            <% } %>
+                                            <p ng-show="submitted && loan_eduction_form.document_name.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
+                                        </div> 
+                                        <div class=" col-md-6">
 
-                                        <div class="row">
+                                            <!--<input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" >--> 
+                                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                                            <button type="button" class="upload_docs">Upload</button>
+                                            <!--<p ng-show="submitted && loan_eduction_form.loan_doc.$error.required"  class="help-block has-error ng-hide">Loan document is required.</p>-->
 
-                                            <div class="col-md-2">
-
-                                                <h3>Select Images</h3>
-
-
-
-                                                <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
-                                                <input type="file" name="image_files[]" nv-file-select="" uploader="uploader" ng-model="user.image_files" multiple  /><br/>
-
-                                            </div>
-
-                                            <div class="col-md-10" style="margin-bottom: 40px">
-
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th width="50%">Name</th>
-
-                                                            <th ng-show="uploader.isHTML5">Progress</th>
-
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="item in uploader.queue">
-                                                            <td>
-                                                                <strong>{{ item.file.name}}</strong>
-                                                                <!-- Image preview -->
-                                                                <!--auto height-->
-                                                                <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
-                                                                <!--auto width-->
-                                                                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
-                                                                <!--fixed width and height -->
-                                                                <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
-                                                            </td>
-
-                                                            <td ng-show="uploader.isHTML5">
-                                                                <div class="progress" style="margin-bottom: 0;">
-                                                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                                                                </div>
-                                                            </td>
-
-                                                            <td nowrap>
-                                                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                                                    <span class="glyphicon glyphicon-upload"></span> Upload
-                                                                </button>
-                                                                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                                                </button>
-                                                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                                                    <span class="glyphicon glyphicon-trash"></span> Remove
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div>
-                                                    <div>
-                                                        Queue progress:
-                                                        <div class="progress" style="">
-                                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
-                                                        </div>
-                                                    </div>
-                                                    <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                                                        <span class="glyphicon glyphicon-upload"></span> Upload all
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
-                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
-                                                        <span class="glyphicon glyphicon-trash"></span> Remove all
-                                                    </button>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
+                                        </div> 
 
                                     </div>
-
                                 </div>
                                 <br><br>
                                 <!--<input type="hidden" value="<%= student_info[0].student_id %>" name="student_id">-->
                                 <input type="hidden" value="<%= student_info[0].education_id %>" name="education_id">
                                 <div class="form-group">
-                                    <input type="hidden" id="file_name" name="file_name[]" value="">
                                     <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
                                     <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
                                 </div>
@@ -393,218 +272,140 @@
 <script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
 
 <script>
-                                                $('.delete-doc').click(function () {
-                                        var loan_document_id = $(this).attr('data-value');
-                                                var student_id = $(this).attr('data');
-                                                swal({title: "Are you sure?",
-                                                        type: "warning",
-                                                        showCancelButton: true,
-                                                        confirmButtonColor: "#DD6B55",
-                                                        confirmButtonText: "Yes, Delete it!",
-                                                        closeOnConfirm: false
-                                                },
-                                                        function () {
+                                        $('.delete-doc').click(function () {
+                                            var loan_document_id = $(this).attr('data-value');
+                                            var student_id = $(this).attr('data');
+                                            swal({title: "Are you sure?",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "Yes, Delete it!",
+                                                closeOnConfirm: false
+                                            },
+                                            function () {
 
-                                                        $.ajax({
+                                                $.ajax({
 //                url: "/change_status",
-                                                        url: "/remove_doc/" + loan_document_id,
-                                                                type: "POST",
-                                                                async: true,
+                                                    url: "/remove_doc/" + loan_document_id,
+                                                    type: "POST",
+                                                    async: true,
 //                dataType: 'json',
 
-                                                                //your form data to post goes here
-                                                                success: function (response) {
-                                                                window.location.reload();
-                                                                }
-                                                        });
-                                                        });
+                                                    //your form data to post goes here
+                                                    success: function (response) {
+                                                        window.location.reload();
+                                                    }
+                                                });
+                                            });
                                         });</script>
 
 <script type="text/javascript">
-            $(document).ready(function () {
-    $('#loan_type').change(function () {
-    if ($(this).val() == 'fafsa') {
-    $('#fafsa').show();
-            $('#bankloan').hide();
-            $('#loan_bankname').removeAttr('required');
-            $('#fafsa_value').add('attr', 'required');
-    } else {
+    $(document).ready(function () {
+        $('#loan_type').change(function () {
+            if ($(this).val() == 'fafsa') {
+                $('#fafsa').show();
+                $('#bankloan').hide();
+                $('#loan_bankname').removeAttr('required');
+                $('#fafsa_value').add('attr', 'required');
+            } else {
 
-    $('#fafsa').hide();
-            $('#bankloan').show();
-            $('#fafsa_value').removeAttr('required');
-            $('#loan_bankname').add('attr', 'required');
-    }
-    });
+                $('#fafsa').hide();
+                $('#bankloan').show();
+                $('#fafsa_value').removeAttr('required');
+                $('#loan_bankname').add('attr', 'required');
+            }
+        });
     });</script>
 
 <script>
-            var files = [];
-            'use strict';
-            angular
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.student = {};
+        $scope.getFileDetails = function (e) {
 
+         var  files = [];
+            $scope.$apply(function () {
 
-            .module('app', ['angularFileUpload'])
+                // STORE THE FILE OBJECT IN AN ARRAY.
+                for (var i = 0; i < e.files.length; i++) {
+                    $scope.student.file = e.files[i];
+                    console.log('$scope.student.file')
+                    console.log($scope.student.file)
 
-            .controller('AppController', ['$scope', 'FileUploader', function($scope, FileUploader) {
-            $scope.student = {};
-                    $scope.student.student_education_institute = '<%= student_info[0].student_education_institute %>';
-                    $scope.student.student_education_fieldofstudy = '<%= student_info[0].student_education_fieldofstudy %>';
-                    $scope.student.loan_bankname = '<%= student_info[0].loan_bankname %>';
-                    $scope.student.loan_accountno = '<%= student_info[0].loan_accountno %>';
-                    $scope.student.loan_amount = '<%= student_info[0].loan_amount %>';
-                    $scope.student.loan_type = '<%= student_info[0].loan_type %>';
-                    $scope.student.fafsa_values = '<%= student_info[0].loan_fafsa_id %>';
-                    $('#loan_eduction_form').submit(function () {
+                    $scope.student.files.push(e.files[i]);
+                }
+
+            });
+            $('.upload_docs').click(function () {
+                alert()
+                console.log('here')
+                console.log($scope.student.files)
+                for (var i = 0; i < $scope.student.files.length; i++) {
+                    var file = $scope.student.files[i];
+                    $.ajax({
+                        url: "/uploaddocs",
+                        type: "POST",
+                        async: true,
+                        data: file,
+                        //your form data to post goes here
+                        success: function (response) {
+                            console.log('response');
+                            console.log(response);
+                        }
+                    });
+                }
+            });
+            console.log('$scope.files')
+            console.log($scope.student.files)
+        };
+        $scope.student.student_education_institute = '<%= student_info[0].student_education_institute %>';
+        $scope.student.student_education_fieldofstudy = '<%= student_info[0].student_education_fieldofstudy %>';
+        $scope.student.loan_bankname = '<%= student_info[0].loan_bankname %>';
+        $scope.student.loan_accountno = '<%= student_info[0].loan_accountno %>';
+        $scope.student.loan_amount = '<%= student_info[0].loan_amount %>';
+        $scope.student.loan_type = '<%= student_info[0].loan_type %>';
+        $scope.student.fafsa_values = '<%= student_info[0].loan_fafsa_id %>';
+//        $scope.student.files = $scope.files;
+
+        $('#loan_eduction_form').submit(function () {
 
             if ($scope.loan_eduction_form.$valid) {
-            return true;
+                return true;
             } else {
-            return false;
+                return false;
             }
 
-            });
-                    var uploader = $scope.uploader = new FileUploader({
-                    url: '/uploaddocs/<%= student_info[0].student_id %>'
-                    });
-                    // FILTERS
+        });
+    });</script>
 
-                    uploader.filters.push({
-                    name: 'imageFilter',
-                            fn: function(item /*{File|FileLikeObject}*/, options) {
-                                console.log('item')
-                                console.log(item)
-                                console.log('options')
-                                console.log(options)
-                            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-                                    return '|jpg|png|jpeg|bmp|gif|docx|'.indexOf(type) !== - 1;
-                            }
-                    });
-                    // CALLBACKS
 
-                    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-                    console.info('onWhenAddingFileFailed', item, filter, options);
-                    };
-                    uploader.onAfterAddingFile = function(fileItem) {
+<script>
+    $(document).ready(function () {
+        var max_fields = 10; //maximum input boxes allowed
+        var wrapper = $(".input_fields_wrap"); //Fields wrapper
+        var add_button = $(".add_field_button"); //Add button ID
 
-                    console.info('onAfterAddingFile', fileItem);
-                    };
-                    uploader.onAfterAddingAll = function(addedFileItems) {
-
-                    console.info('onAfterAddingAll', addedFileItems);
-                    };
-                    uploader.onBeforeUploadItem = function(item) {
-                    console.info('onBeforeUploadItem', item);
-                    };
-                    uploader.onProgressItem = function(fileItem, progress) {
-
-                    console.info('onProgressItem', fileItem, progress);
-                    };
-                    uploader.onProgressAll = function(progress) {
-                    console.info('onProgressAll', progress);
-                    };
-                    uploader.onSuccessItem = function(fileItem, response, status, headers) {
-
-                    console.log('response')
-                            console.log(response)
-//                            $.each(response, function(index, value) {
-                            files.push(response);
-//                            })
-                            console.log('files')
-                            console.log(files)
-                            $('#file_name').val(files);
-                            console.info('onSuccessItem', fileItem, response, status, headers);
-                    };
-                    uploader.onErrorItem = function(fileItem, response, status, headers) {
-
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                    };
-                    uploader.onCancelItem = function(fileItem, response, status, headers) {
-                    console.info('onCancelItem', fileItem, response, status, headers);
-                    };
-                    uploader.onCompleteItem = function(fileItem, response, status, headers) {
-                    console.info('onCompleteItem', fileItem, response, status, headers);
-                    };
-                    uploader.onCompleteAll = function() {
-                    console.info('onCompleteAll');
-                    };
-                    console.info('uploader', uploader);
-                    $scope.student = {};
-                    $scope.student.video_link = '<%= student_info[0].video_link %>';
-                    $('#mediaForm').submit(function () {
-            $('.video_link_error_msg').hide();
-                    var VIDEO_LINK_REGEXP = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
-                    var isMatchRegex = VIDEO_LINK_REGEXP.test($('#video_link').val());
-                    if (isMatchRegex || $('#video_link').val() == ''){
-
-            return true;
-            } else{
-
-            $('.video_link_error_msg').removeClass('ng-hide');
-                    $('.video_link_error_msg').show();
-                    return false;
+        var x = 1; //initlal text box count
+        $(add_button).click(function (e) { //on add input button click
+            e.preventDefault();
+            if (x < max_fields) { //max input box allowed
+                x++; //text box increment
+                // $(wrapper).append('<div><input type="text"  class="form-control" name="mytext[]"/><input type="file"><a href="#" class="remove_field">Remove</a></div>'); //add input box
+                $(wrapper).append('<div class="form-group"><div class="col-md-6"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name[]" placeholder="Enter the name of the file"></div><div class="col-md-6"><input type="file" name="loan_doc" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div></div>'); //add input box
             }
-
-            });
-            }]);
-            $(document).ready(function(){
-    $('#video_link').keyup(function(){
-    $('.video_link_error_msg').hide();
-    });
+        });
+        $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        })
+    });</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
     });</script>
 
 <script>
-            'use strict';
-            angular
 
-
-            .module('app')
-
-
-            // Angular File Upload module does not include this directive
-            // Only for example
-
-
-            /**
-             * The ng-thumb directive
-             * @author: nerv
-             * @version: 0.1.2, 2014-01-09
-             */
-            .directive('ngThumb', ['$window', function($window) {
-            var helper = {
-            support: !!($window.FileReader && $window.CanvasRenderingContext2D),
-                    isFile: function(item) {
-                    return angular.isObject(item) && item instanceof $window.File;
-                    },
-                    isImage: function(file) {
-                    var type = '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
-                            return '|jpg|png|jpeg|bmp|gif|docx|'.indexOf(type) !== - 1;
-                    }
-            };
-                    return {
-                    restrict: 'A',
-                            template: '<canvas/>',
-                            link: function(scope, element, attributes) {
-                            if (!helper.support) return;
-                                    var params = scope.$eval(attributes.ngThumb);
-                                    if (!helper.isFile(params.file)) return;
-                                    if (!helper.isImage(params.file)) return;
-                                    var canvas = element.find('canvas');
-                                    var reader = new FileReader();
-                                    reader.onload = onLoadFile;
-                                    reader.readAsDataURL(params.file);
-                                    function onLoadFile(event) {
-                                    var img = new Image();
-                                            img.onload = onLoadImage;
-                                            img.src = event.target.result;
-                                    }
-
-                            function onLoadImage() {
-                            var width = params.width || this.width / this.height * params.height;
-                                    var height = params.height || this.height / this.width * params.width;
-                                    canvas.attr({ width: width, height: height });
-                                    canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
-                            }
-                            }
-                    };
-            }]);</script>
+    $('#studentprofile').addClass('active');
+</script>

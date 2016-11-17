@@ -233,7 +233,9 @@
                                         </div> 
                                         <div class=" col-md-6">
 
-                                            <input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" > 
+                                            <!--<input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" >--> 
+                                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                                            <button type="button" class="upload_docs">Upload</button>
                                             <!--<p ng-show="submitted && loan_eduction_form.loan_doc.$error.required"  class="help-block has-error ng-hide">Loan document is required.</p>-->
 
                                         </div> 
@@ -313,13 +315,49 @@
                 $('#loan_bankname').add('attr', 'required');
             }
         });
-    });
-</script>
+    });</script>
 
 <script>
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
         $scope.student = {};
+        $scope.getFileDetails = function (e) {
+
+         var  files = [];
+            $scope.$apply(function () {
+
+                // STORE THE FILE OBJECT IN AN ARRAY.
+                for (var i = 0; i < e.files.length; i++) {
+                    $scope.student.file = e.files[i];
+                    console.log('$scope.student.file')
+                    console.log($scope.student.file)
+
+                    $scope.student.files.push(e.files[i]);
+                }
+
+            });
+            $('.upload_docs').click(function () {
+                alert()
+                console.log('here')
+                console.log($scope.student.files)
+                for (var i = 0; i < $scope.student.files.length; i++) {
+                    var file = $scope.student.files[i];
+                    $.ajax({
+                        url: "/uploaddocs",
+                        type: "POST",
+                        async: true,
+                        data: file,
+                        //your form data to post goes here
+                        success: function (response) {
+                            console.log('response');
+                            console.log(response);
+                        }
+                    });
+                }
+            });
+            console.log('$scope.files')
+            console.log($scope.student.files)
+        };
         $scope.student.student_education_institute = '<%= student_info[0].student_education_institute %>';
         $scope.student.student_education_fieldofstudy = '<%= student_info[0].student_education_fieldofstudy %>';
         $scope.student.loan_bankname = '<%= student_info[0].loan_bankname %>';
@@ -327,6 +365,7 @@
         $scope.student.loan_amount = '<%= student_info[0].loan_amount %>';
         $scope.student.loan_type = '<%= student_info[0].loan_type %>';
         $scope.student.fafsa_values = '<%= student_info[0].loan_fafsa_id %>';
+//        $scope.student.files = $scope.files;
 
         $('#loan_eduction_form').submit(function () {
 
@@ -337,9 +376,7 @@
             }
 
         });
-    });
-
-</script>
+    });</script>
 
 
 <script>
@@ -357,19 +394,16 @@
                 $(wrapper).append('<div class="form-group"><div class="col-md-6"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name[]" placeholder="Enter the name of the file"></div><div class="col-md-6"><input type="file" name="loan_doc" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div></div>'); //add input box
             }
         });
-
         $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
             e.preventDefault();
             $(this).parent('div').remove();
             x--;
         })
-    });
-</script>
+    });</script>
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+    });</script>
 
 <script>
 
