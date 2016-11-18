@@ -7215,6 +7215,20 @@ blockquote p {
   #tarea{
     width:228px;
   }
+  .don{
+    padding-top:66px;
+  }
+   h1{
+    font-size:29px !important;
+  }
+  #serverstatus01{
+    width: 104px;
+    height: 106px;
+  }
+  #login_size{
+    width:100%;
+  }
+
   
 }
 @media only screen and (max-width: 500px) {
@@ -7223,15 +7237,27 @@ blockquote p {
     width:62% !important;
   }
   #media_div{
-    margin-top:530px !important;
+    margin-top:345px !important;
   }
   #donate_div{
-    margin-top:-810px !important;
+    margin-top:-620px !important;
   }
    #student_info{
     margin-top:301px !important;
   }
-  
+  .don{
+    padding-top:66px;
+  }
+  h1{
+    font-size:29px !important;
+  }
+  #serverstatus01{
+    width: 104px;
+    height: 106px;
+  }
+  #login_size{
+    width:100%;
+  }
 }
 
 
@@ -7249,7 +7275,15 @@ blockquote p {
   #search_input{
     width:80% !important;
   }
-  
+  .don{
+    padding-top:66px;
+  }
+  h1{
+    font-size:29px !important;
+  }
+  #login_size{
+    width:100%;
+  }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
