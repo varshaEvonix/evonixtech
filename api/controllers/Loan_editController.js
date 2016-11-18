@@ -47,7 +47,9 @@ module.exports = {
     },
     'editloansubmit': function (req, res) {
 
-
+        var n = 5;
+        console.log('here')
+        console.log(req.allParams())
         if (req.method == "POST")
         {
             var education_id = req.param('education_id');
@@ -55,37 +57,6 @@ module.exports = {
             var loan_id = req.param('loan_id');
 
             var education_query = "UPDATE `education` SET `student_education_institute` = '" + req.param('student_education_institute') + "', `student_education_fieldofstudy`='" + req.param('student_education_fieldofstudy') + "'  WHERE `education`.`student_id` ='" + student_id + "'";
-
-
-            var newFilename = "";
-            var document_name = "";
-            var insert_doc = "";
-            var fs = require("fs");
-            var dir_name = student_id;
-            if (req.file('loan_doc')._files.length > 0) {
-
-                var dir = '.tmp/public/index_files/uploads/' + dir_name;
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
-                var doc_files = req.file('loan_doc')._files
-//                doc_files.forEach(function (values, index) {
-                newFilename = req.file('loan_doc')._files[0].stream.filename;
-                newFilename = Date.now() + newFilename;
-
-                req.file('loan_doc').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
-                    console.log(err)
-                };
-                document_name = req.param('document_name[]');
-
-                insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + loan_id + "', '1');";
-
-                Table_loan_document.query(insert_doc, function (err, loan_document)
-                {
-
-                });
-            }
-
 
             var loan_type = req.param("loan_type");
             var fafsa_values = req.param("fafsa_values");
@@ -109,15 +80,46 @@ module.exports = {
                 Education.query(education_query, function (err, education)
                 {
 
-                    res.redirect('/viewprofile/' + req.param('student_id'));
-
-                    // var file_name = files.filename;
-                    //console.log(file_name);
                 });
 
             });
 
+            for (var i = 0; i <= n; i++) {
+                console.log("req.file('file' + i).length")
+//                console.log(req.file('file' + i).length)
+                if (req.param('document_name' + i) != undefined && req.param('document_name' + i) != '') {
+                    var newFilename = "";
+                    var document_name = "";
+                    var insert_doc = "";
+                    var fs = require("fs");
+                    var dir_name = student_id;
+
+                    var dir = '.tmp/public/index_files/uploads/' + dir_name;
+                    if (!fs.existsSync(dir)) {
+                        fs.mkdirSync(dir);
+                    }
+
+                    req.file('file' + i).upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
+                        if (!err) {
+                            document_name = req.param('document_name' + i);
+                            newFilename = req.file('file' + i)._files[0].stream.filename;
+                            newFilename = Date.now() + newFilename;
+                            insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + loan_id + "', '1');";
+
+                            Table_loan_document.query(insert_doc, function (err, loan_document)
+                            {
+
+                            });
+                        }
+                    };
+
+                } else {
+                    console.log('elseee')
+                }
+            }
+            res.redirect('/viewprofile/' + req.param('student_id'));
         }
+
 
     },
     'add_loan_education': function (req, res) {

@@ -7198,7 +7198,6 @@ blockquote p {
 
 
 
-
 @media only screen and (max-width: 767px) {
   .jumbotron h1 {
     font-size: 28px;
@@ -7221,45 +7220,62 @@ blockquote p {
    h1{
     font-size:29px !important;
   }
-  #serverstatus01{
-    width: 104px;
-    height: 106px;
-  }
+ 
   #login_size{
-    width:100%;
+    width:95%;
+  }
+  #registerform{
+    width:95%;
   }
 
   
 }
+
 @media only screen and (max-width: 500px) {
 
+.menuzord-menu {
+    margin-top: 21px !important;
+}
   #search_input{
     width:62% !important;
   }
-  #media_div{
-    margin-top:345px !important;
-  }
-  #donate_div{
-    margin-top:-620px !important;
-  }
-   #student_info{
-    margin-top:301px !important;
-  }
+ 
+  
+        #serverstatus01 {
+            width: 139px !important;
+            height: 139px !important;
+        }
+   #donate_div h1 {
+    font-size: 29px;
+   }
   .don{
-    padding-top:66px;
+    padding-top: 135px;
   }
   h1{
     font-size:29px !important;
   }
-  #serverstatus01{
-    width: 104px;
-    height: 106px;
-  }
+  
   #login_size{
-    width:100%;
+    width:95%;
+  }
+  #registerform{
+    width:95%;
   }
 }
 
+@media only screen and (min-width: 501px) and (max-width: 767px) {
+#serverstatus01 {
+            width: 170px !important;
+            height: 170px !important;
+        }
+   #donate_div h1 {
+    font-size: 29px;
+   }
+  .don{
+    padding-top: 160px;
+  }
+
+}
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   #cent{
@@ -7282,7 +7298,20 @@ blockquote p {
     font-size:29px !important;
   }
   #login_size{
-    width:100%;
+    width:95%;
+  }
+  #registerform{
+    width:95%;
+  }
+  #serverstatus01 {
+            width: 139px !important;
+            height: 139px !important;
+        }
+   #donate_div h1 {
+    font-size: 29px;
+   }
+   .don{
+    padding-top: 122px;
   }
 }
 
@@ -7306,4 +7335,10 @@ blockquote p {
 .progress-bar.appeared
 {
 min-width:10%;
+}
+.donate_circle{
+  padding-top:56px;
+}
+.donate_bot{
+  padding-top:15px;
 }

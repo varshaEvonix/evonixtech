@@ -234,7 +234,8 @@
                                         <div class=" col-md-6">
 
                                             <!--<input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" >--> 
-                                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                                            <input type="file" id="file" name="file[]" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
+                                            <!--<input type="file" id="file" name="file[]" multiple class="upload_docs" />-->
                                             <button type="button" class="upload_docs">Upload</button>
                                             <!--<p ng-show="submitted && loan_eduction_form.loan_doc.$error.required"  class="help-block has-error ng-hide">Loan document is required.</p>-->
 
@@ -318,12 +319,13 @@
     });</script>
 
 <script>
+    var files = [];
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
         $scope.student = {};
         $scope.getFileDetails = function (e) {
 
-         var  files = [];
+
             $scope.$apply(function () {
 
                 // STORE THE FILE OBJECT IN AN ARRAY.
@@ -331,32 +333,11 @@
                     $scope.student.file = e.files[i];
                     console.log('$scope.student.file')
                     console.log($scope.student.file)
-
-                    $scope.student.files.push(e.files[i]);
+                    files.push(e.files[i]);
                 }
 
             });
-            $('.upload_docs').click(function () {
-                alert()
-                console.log('here')
-                console.log($scope.student.files)
-                for (var i = 0; i < $scope.student.files.length; i++) {
-                    var file = $scope.student.files[i];
-                    $.ajax({
-                        url: "/uploaddocs",
-                        type: "POST",
-                        async: true,
-                        data: file,
-                        //your form data to post goes here
-                        success: function (response) {
-                            console.log('response');
-                            console.log(response);
-                        }
-                    });
-                }
-            });
-            console.log('$scope.files')
-            console.log($scope.student.files)
+
         };
         $scope.student.student_education_institute = '<%= student_info[0].student_education_institute %>';
         $scope.student.student_education_fieldofstudy = '<%= student_info[0].student_education_fieldofstudy %>';
@@ -376,7 +357,59 @@
             }
 
         });
-    });</script>
+    });
+    $('.upload_docs').click(function () {
+        var temp = [];
+        var vals = [];
+        for (var j = 0; j < files.length; j++) {
+                temp.push(files[j]);
+                var formdata = new FormData();
+                var tmp = files[j];
+                console.log('files[j]')
+                console.log(files[j])
+                formdata.append("file[]", tmp);
+                var request = new XMLHttpRequest();
+                request.open('POST', '/uploaddocs', true);
+                request.onreadystatechange = function () {
+                    var status;
+                    var data;
+                    // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
+                    if (request.readyState == 4) { // `DONE`
+                        status = request.status;
+//                        if (status == 200) {
+                            console.log('data');
+                            console.log(request.responseText);
+                            vals.push(request.responseText);
+                            
+                    }
+                };
+                request.send(formdata);
+        }
+         console.log('vals')
+         console.log(vals)
+
+    });
+//    window.onload = function () {
+//
+//        var f = (function () {
+//            var xhr = [];
+//            for (i = 0; i < 3; i++) {
+//                (function (i) {
+//                    xhr[i] = new XMLHttpRequest();
+//                    url = "closure.php?data=" + i;
+//                    xhr[i].open("GET", url, true);
+//                    xhr[i].onreadystatechange = function () {
+//                        if (xhr[i].readyState == 4 && xhr[i].status == 200) {
+//                            console.log('Response from request ' + i + ' [ ' + xhr[i].responseText + ']');
+//                        }
+//                    };
+//                    xhr[i].send();
+//                })(i);
+//            }
+//        })();
+//
+//    };
+</script>
 
 
 <script>

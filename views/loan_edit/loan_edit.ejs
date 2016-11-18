@@ -214,7 +214,7 @@
                                 <h2>Loan Documents</h2>
                             </div>
                             <br>
-                            <!--<button class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></button>-->
+                            <a href="javascript:void(0);" class="add_field_button btn btn-primary add_more">Add More Fields&nbsp; <span><i class="fa fa-plus"></i></span></a>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -224,19 +224,18 @@
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <% if (student_info[0].loan_id != null && loan_docs.length > 0){ %>
-
-                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" >
+                                   
+                                            <input ng-model="student.document_name0" class="form-control fileip" type="text" name="document_name0"  placeholder="Enter the name of the file" value="" >
                                             <% }else{ %>
-                                            <input ng-model="student.document_name" class="form-control fileip" type="text" name="document_name[]"  placeholder="Enter the name of the file" value="" required>
+
+                                            <input ng-model="student.document_name0" class="form-control fileip" type="text" name="document_name0"  placeholder="Enter the name of the file" value="" required>
                                             <% } %>
-                                            <p ng-show="submitted && loan_eduction_form.document_name.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
+                                            <p ng-show="submitted && loan_eduction_form.document_name0.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
                                         </div> 
                                         <div class=" col-md-6">
 
                                             <!--<input type="file" name="loan_doc" ng-model="student.loan_doc" class="filebtn pull-right" value="" >--> 
-                                            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().getFileDetails(this)" />
-                                            <button type="button" class="upload_docs">Upload</button>
-                                            <!--<p ng-show="submitted && loan_eduction_form.loan_doc.$error.required"  class="help-block has-error ng-hide">Loan document is required.</p>-->
+                                            <input type="file"  name="file0" class="doc-file" />
 
                                         </div> 
 
@@ -285,13 +284,9 @@
                                             function () {
 
                                                 $.ajax({
-//                url: "/change_status",
                                                     url: "/remove_doc/" + loan_document_id,
                                                     type: "POST",
                                                     async: true,
-//                dataType: 'json',
-
-                                                    //your form data to post goes here
                                                     success: function (response) {
                                                         window.location.reload();
                                                     }
@@ -318,46 +313,11 @@
     });</script>
 
 <script>
+    var files = [];
     var postApp = angular.module('postApp', []);
     postApp.controller('postController', function ($scope, $http) {
         $scope.student = {};
-        $scope.getFileDetails = function (e) {
 
-         var  files = [];
-            $scope.$apply(function () {
-
-                // STORE THE FILE OBJECT IN AN ARRAY.
-                for (var i = 0; i < e.files.length; i++) {
-                    $scope.student.file = e.files[i];
-                    console.log('$scope.student.file')
-                    console.log($scope.student.file)
-
-                    $scope.student.files.push(e.files[i]);
-                }
-
-            });
-            $('.upload_docs').click(function () {
-                alert()
-                console.log('here')
-                console.log($scope.student.files)
-                for (var i = 0; i < $scope.student.files.length; i++) {
-                    var file = $scope.student.files[i];
-                    $.ajax({
-                        url: "/uploaddocs",
-                        type: "POST",
-                        async: true,
-                        data: file,
-                        //your form data to post goes here
-                        success: function (response) {
-                            console.log('response');
-                            console.log(response);
-                        }
-                    });
-                }
-            });
-            console.log('$scope.files')
-            console.log($scope.student.files)
-        };
         $scope.student.student_education_institute = '<%= student_info[0].student_education_institute %>';
         $scope.student.student_education_fieldofstudy = '<%= student_info[0].student_education_fieldofstudy %>';
         $scope.student.loan_bankname = '<%= student_info[0].loan_bankname %>';
@@ -376,30 +336,18 @@
             }
 
         });
-    });</script>
+    });
 
 
-<script>
-    $(document).ready(function () {
-        var max_fields = 10; //maximum input boxes allowed
-        var wrapper = $(".input_fields_wrap"); //Fields wrapper
-        var add_button = $(".add_field_button"); //Add button ID
+    $('.add_more').click(function () {
+        var temp = $('.fileip').length;
+        // temp = temp + 1;
+        $('.input_fields_wrap').append('<div class="form-group"><div class="col-md-6"><input class="form-control fileip" name="document_name' + temp + '" placeholder="Enter the name of the file" value="" type="text"></div><div class="col-md-6"><input name="file' + temp + '" class="doc-file" type="file"></div></div>')
+    })
+</script>
 
-        var x = 1; //initlal text box count
-        $(add_button).click(function (e) { //on add input button click
-            e.preventDefault();
-            if (x < max_fields) { //max input box allowed
-                x++; //text box increment
-                // $(wrapper).append('<div><input type="text"  class="form-control" name="mytext[]"/><input type="file"><a href="#" class="remove_field">Remove</a></div>'); //add input box
-                $(wrapper).append('<div class="form-group"><div class="col-md-6"><input class="form-control fileip" ng-model="student.document_name" type="text" name="document_name[]" placeholder="Enter the name of the file"></div><div class="col-md-6"><input type="file" name="loan_doc" class="filebtn"><a href="#" class="remove_field"><i class="fa fa-times-circle" aria-hidden="true"></i></a></div></div>'); //add input box
-            }
-        });
-        $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-            e.preventDefault();
-            $(this).parent('div').remove();
-            x--;
-        })
-    });</script>
+
+
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();

@@ -29,9 +29,9 @@ var select_query = 'SELECT ld.loan_id, sd.student_id, sd.student_firstname, sd.s
         });
         }
         });
-        } else {
+} else {
 return  res.redirect('/login');
-}
+        }
 },
         'editeducationsubmit': function (req, res) {
 
@@ -50,24 +50,25 @@ return  res.redirect('/login');
 
         },
         'uploaddocs': function (req, res) {
-
-      var student_id = req.param('student_id');
-        var fs = require("fs");
-        var dir_name = student_id;
-        var dir = '.tmp/public/index_files/uploads/' + dir_name;
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
-        }
-
-        var newFilename = req.file('file')._files[0].stream.filename;
-//        newFilename = Date.now() + newFilename;
-
-        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
-            console.log(err)
-        };
-
-        return res.ok(newFilename);
-
+console.log("req.file('file[]')");
+console.log(req.file('file[]'));
+//        var student_id = '1';
+//                var fs = require("fs");
+//                var dir_name = student_id;
+//                var dir = '.tmp/public/index_files/uploads/' + dir_name;
+//                if (!fs.existsSync(dir)) {
+//        fs.mkdirSync(dir);
+//        }
+//
+//        var newFilename = req.file('file[]')._files[0].stream.filename;
+//                console.log('newFilename')
+//                console.log(newFilename)
+////        newFilename = Date.now() + newFilename;
+//
+//                req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
+//        console.log(err)
+//        };
+//                return res.ok(newFilename);
         }
 
 };
