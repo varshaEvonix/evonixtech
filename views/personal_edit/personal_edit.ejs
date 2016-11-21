@@ -110,7 +110,7 @@
     <section class="wrapper">
         <div class="row">
             <div class="col-md-9"> 
-              
+
                 <h2>Personal details</h2>
                 <br>
                 <!--   <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info[0].student_id %>" method="POST">
@@ -179,7 +179,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
 
-                                <label for="student_firstname">Your firstname: </label>
+                                <label for="student_firstname">* Your firstname: </label>
                                 <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" ng-pattern="/^[a-zA-Z]+$/" value="<%= student_info[0].student_firstname %>" required>
                                 <p ng-show="submitted && personalform.student_firstname.$error.required" class="help-block has-error ng-hide">Firstname is required.</p>
                                 <p ng-show="submitted && personalform.student_firstname.$error.pattern" class="help-block has-error ng-hide">Please enter your name properly</p>
@@ -187,7 +187,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="student_lastname">Your lastname: </label>
+                                <label for="student_lastname">* Your lastname: </label>
                                 <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" ng-pattern="/^[a-zA-Z]+$/" placeholder="Enter your last name" value="<%= student_info[0].student_lastname %>" required>
                                 <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
                                 <p ng-show="submitted && personalform.student_lastname.$error.pattern" class="help-block has-error ng-hide">Please enter your last name properly</p>
@@ -197,7 +197,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="student_contactno">Your contact number: </label>
+                                <label for="student_contactno">* Your contact number: </label>
                                 <input type="text" ng-model="student.student_contactno"  class="form-control" id="student_contactno" name="student_contactno" placeholder="Enter your Contact number" value="<%= student_info[0].student_contactno %>" required>
                                 <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Contact number is required.</p>
                                 <!--<p ng-show="submitted && personalform.student_contactno.$error.pattern" class="help-block has-error ng-hide">Please enter characters only</p>-->
@@ -205,7 +205,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="student_email">Your email: </label>
+                                <label for="student_email">* Your email: </label>
                                 <input type="text" ng-model="student.student_email" class="form-control" id="student_email" name="student_email"  placeholder="Enter your email about you" value="<%= student_info[0].student_email %>" readonly required>
                                 <p ng-show="submitted && personalform.student_contactno.$error.required"  class="help-block has-error ng-hide">Email is required.</p>
                                 <!--<p ng-show="submitted && personalform.student_contactno.$error.pattern" class="help-block has-error ng-hide">Enter your email properly</p>-->
@@ -215,7 +215,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group ">
-                                <label for="student_address">Your address: </label>
+                                <label for="student_address">* Your address: </label>
                                 <input type="text" maxlength="288" ng-maxlength="288" ng-model="student.student_address" class="form-control" id="student_address" name="student_address" placeholder="Enter your address" value="<%= student_info[0].student_address %>" required>
                                 <p ng-show="submitted && personalform.student_address.$error.required"  class="help-block has-error ng-hide">Address is required.</p>
                                 <p ng-show="submitted && personalform.student_address.$error.maxlength"   class="help-block has-error ng-hide">Address should be up to 288 characters.</p>
@@ -223,7 +223,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="student_city">Your city: </label>
+                                <label for="student_city">* Your city: </label>
                                 <input type="text" ng-model="student.student_city" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_city" name="student_city" placeholder="Enter your city" value="<%= student_info[0].student_city %>" required>
                                 <p ng-show="submitted && personalform.student_city.$error.required"  class="help-block has-error ng-hide">City is required.</p>
                                 <p ng-show="submitted && personalform.student_city.$error.pattern" class="help-block has-error ng-hide">Please enter characters only</p>
@@ -233,16 +233,70 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="student_state">Your state: </label>
-                                <input type="text" ng-model="student.student_state" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= student_info[0].student_state %>" required>
+                                <label for="student_state">* Your state: </label>
+                                <!--<input type="text" ng-model="student.student_state" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= student_info[0].student_state %>" required>-->
+                                <select  ng-model="student.student_state"  class="form-control" id="student_state" name="student_state" placeholder="Enter your state" required>
+                                    
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District Of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>	
                                 <p ng-show="submitted && personalform.student_state.$error.required"  class="help-block has-error ng-hide">State is required.</p>
                                 <p ng-show="submitted && personalform.student_state.$error.pattern" class="help-block has-error ng-hide">EPlease enter characters only</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="student_country">Your country: </label>
-                                <input type="text" ng-model="student.student_country" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="<%= student_info[0].student_country %>" required>
+                                <label for="student_country">* Your country: </label>
+                                <input type="text" ng-model="student.student_country" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_country" name="student_country" placeholder="Enter your country" value="United States of America" readonly required>
                                 <p ng-show="submitted && personalform.student_country.$error.required"  class="help-block has-error ng-hide">Country is required.</p>
                                 <p ng-show="submitted && personalform.student_country.$error.pattern" class="help-block has-error ng-hide">Please enter characters only</p>
                             </div></div>
@@ -250,7 +304,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="zip_code">Enter Zip Code: </label>
+                                <label for="zip_code">* Enter Zip Code: </label>
                                 <div class="input-group">
                                     <input type="text" ng-pattern="/^[0-9]+$/" ng-model="student.zip_code" class="form-control" id="zip_code" name="zip_code" placeholder="Enter Zip Code" value="<%= student_info[0].zip_code %>" required>
                                 </div> </div>
@@ -259,12 +313,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="student_birthdate">Your birthdate: <a href="#" data-toggle="tooltip" title=" We cross check validity of all information submitted including your birth 
-                                                                                  date. On your special day, we feature you on the site so that funders can find you more easily.  "> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <label for="student_birthdate">* Your birthdate: <a href="#" data-toggle="tooltip" title=" We cross check validity of all information submitted including your birth 
+                                                                                    date. On your special day, we feature you on the site so that funders can find you more easily.  "> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
                                 <!-- <p class="tip"><em>Tip:We cross check validity of all information submitted including your birth 
                            date. On your special day, we feature you on the site so that funders can find you more easily.<em></p> -->
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input type="text" data-format="YYYY-MM-DD" ng-model="student.student_birthdate" max="2016-10-13" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info[0].student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <input type="text" data-format="MM-DD-YYYY" ng-model="student.student_birthdate" max="10-13-2016" class="form-control" id="student_birthdate" name="student_birthdate" placeholder="Enter your birthdate" value="<%= student_info[0].student_birthdate %>" required><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
 
                                 </div> </div>
@@ -275,7 +329,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="student_about_me">About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <label for="student_about_me">* About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
                                 <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required><%= student_info[0].student_about_me %> </textarea>
                                 <p ng-show="submitted && personalform.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
 
@@ -284,7 +338,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="student_ambition">Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <label for="student_ambition">* Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
                                 <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required><%= student_info[0].student_ambition %> </textarea>
                                 <p ng-show="submitted && personalform.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
 
@@ -296,7 +350,7 @@
                     <br>
                     <input type="hidden" name="_csrf" value="<% _csrf%>" />
                     <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Submit">
-                    <a href="/viewprofile/<%= student_info[0].student_id %>"><button type="cancel" class="btn btn-default text-center">Cancel</button></a>
+                    <a href="/viewprofile" class="btn btn-default text-center">Cancel</a>
                     <% var bdate = student_info[0].student_birthdate %>
 
                 </form>
@@ -365,7 +419,7 @@
         $scope.student.student_address = "<%= student_info[0].student_address %>";
         $scope.student.student_city = "<%= student_info[0].student_city %>";
         $scope.student.student_state = "<%= student_info[0].student_state %>";
-        $scope.student.student_country = "<%= student_info[0].student_country %>";
+        $scope.student.student_country = "United States of America";
         $scope.student.student_birthdate = "<%= student_info[0].student_birthdate %>";
         $scope.student.zip_code = "<%= student_info[0].zip_code %>";
                 $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
@@ -381,7 +435,7 @@
                             data: $scope.student, //forms user object
                             headers: {'Content-Type': 'application/json'}
                         }).success(function (data) {
-                            window.location = '/viewprofile/<%= student_info[0].student_id %>';
+                            window.location = '/viewprofile';
                         });
 
                     }
@@ -395,7 +449,7 @@
 </script>
 <script type="text/javascript">
     $(function () {
-        $("#datetimepicker1").datetimepicker({format: 'YYYY-MM-DD'});
+        $("#datetimepicker1").datetimepicker({format: 'MM-DD-YYYY'});
     });
 </script>
 <script>

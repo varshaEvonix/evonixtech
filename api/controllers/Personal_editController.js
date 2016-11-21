@@ -8,7 +8,7 @@ var mysql = require('mysql');
 module.exports = {
     'editpersonal': function (req, res) {
         if (req.session.student_id || req.session.student_id != undefined) {
-            Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%Y-%m-%d") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.session.student_id, function (err, recordset) {
+            Student_details.query('SELECT *, DATE_FORMAT(student_details.student_birthdate,"%m-%d-%Y") as student_birthdate, IFNULL(student_details.student_ambition, "") student_ambition from student_details where student_details.student_id= ' + req.session.student_id, function (err, recordset) {
 
                 return res.view('./personal_edit/personal_edit', {
                     student_info: recordset
@@ -66,13 +66,13 @@ module.exports = {
             }
             var update = "";
 
-            update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=" + mysql.escape(student_birthdate) + ",`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
+            update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=STR_TO_DATE(" + mysql.escape(student_birthdate) + ", '%m-%d-%Y'),`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
 
             Student_details.query(update, function (err, record)
             {
                 if (err) {
 
-                    req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + err[0].Error + '</div>');
+                    req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Something is wrong informaion not updated</div>');
                 } else {
                     req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Information updated successfully</div>');
                 }

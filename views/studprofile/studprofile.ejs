@@ -126,7 +126,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <p class="info"> <span class="small">Birth Date: <br>
-                                        </span><%= student_info[0].student_birthdate %></p>
+                                            <% console.log(student_info[0].student_birthdate) %>
+                                        </span><%= (student_info[0].student_birthdate!='0000-00-00')? student_info[0].student_birthdate : 'MM-DD-YYYY' %></p>
                                 </div>
 
                             </div><br>

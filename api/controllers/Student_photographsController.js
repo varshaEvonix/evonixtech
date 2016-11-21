@@ -37,7 +37,7 @@ var insert = "INSERT INTO `student_photographs` (`student_id`, `photo_path`, `is
         });
             });
        
-        return res.redirect('/viewprofile/'+req.param('id'));
+        return res.redirect('/viewprofile');
     // var file_name = files.filename;
      //console.log(file_name);
             

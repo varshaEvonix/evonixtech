@@ -11,7 +11,7 @@ module.exports.routes = {
     '/allprofile': 'Student_detailsController.allprofiles',
     '/single_profile/:id': 'Student_detailsController.singleprofile',
     //'/viewprofile':'ProfileController.mypro',
-    '/viewprofile/:id': 'ProfileController.mypro',
+    '/viewprofile': 'ProfileController.mypro',
     '/upload_dp/:id': 'ProfileController.upload',
     '/dashboard': 'ProfileController.stu_dashboard',
     '/upload_media/:id': 'ProfileController.uploadmedia',

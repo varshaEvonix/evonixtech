@@ -111,7 +111,7 @@ module.exports = {
                 }
 
             }
-            res.redirect('/viewprofile/' + req.param('student_id'));
+            res.redirect('/viewprofile');
         }
 
 
@@ -173,7 +173,7 @@ module.exports = {
                 }
 
             });
-            res.redirect('/viewprofile/' + student_id);
+            res.redirect('/viewprofile');
 
         }
     },
@@ -226,7 +226,7 @@ module.exports = {
 
                     {
 
-                        res.redirect('/viewprofile/' + req.param('id'));
+                        res.redirect('/viewprofile');
 
                     });
                 });
@@ -263,7 +263,7 @@ module.exports = {
                     });
                 });
 
-                return res.redirect('/viewprofile/' + req.param('student_id'));
+                return res.redirect('/viewprofile');
                 // var file_name = files.filename;
                 //console.log(file_name);
 
