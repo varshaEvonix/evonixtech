@@ -47,9 +47,6 @@ module.exports = {
     },
     'editloansubmit': function (req, res) {
 
-        var n = 5;
-        console.log('here')
-        console.log(req.allParams())
         if (req.method == "POST")
         {
             var education_id = req.param('education_id');
@@ -63,7 +60,6 @@ module.exports = {
             var loan_bankname = req.param("loan_bankname");
             var loan_accountno = req.param("loan_accountno");
             var loan_amount = req.param("loan_amount");
-
 
             var update = "";
             var update_doc = "";
@@ -84,10 +80,10 @@ module.exports = {
 
             });
 
-            for (var i = 0; i <= n; i++) {
-                console.log("req.file('file' + i).length")
-//                console.log(req.file('file' + i).length)
+            for (var i = 0; i <= 5; i++) {
+
                 if (req.param('document_name' + i) != undefined && req.param('document_name' + i) != '') {
+
                     var newFilename = "";
                     var document_name = "";
                     var insert_doc = "";
@@ -98,24 +94,22 @@ module.exports = {
                     if (!fs.existsSync(dir)) {
                         fs.mkdirSync(dir);
                     }
+                    document_name = req.param('document_name' + i);
 
-                    req.file('file' + i).upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
-                        if (!err) {
-                            document_name = req.param('document_name' + i);
-                            newFilename = req.file('file' + i)._files[0].stream.filename;
-                            newFilename = Date.now() + newFilename;
+                    req.file('file' + i).upload({dirname: '../public/index_files/uploads/' + dir_name + '/'}, function (err, uploadedFiles) {
+                        if (uploadedFiles.length > 0) {
+                            newFilename = uploadedFiles[0].fd.split('/').slice(-1);
                             insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + loan_id + "', '1');";
 
                             Table_loan_document.query(insert_doc, function (err, loan_document)
                             {
 
                             });
-                        }
-                    };
 
-                } else {
-                    console.log('elseee')
+                        }
+                    });
                 }
+
             }
             res.redirect('/viewprofile/' + req.param('student_id'));
         }
@@ -127,10 +121,12 @@ module.exports = {
 
         if (req.method == "POST")
         {
-
             var student_id = req.param("student_id") == undefined ? req.session.student_id : req.param("student_id");
             var education_query = "INSERT INTO `education` (`student_id`, `student_education_institute`, `student_education_fieldofstudy`, `isEnabled`) VALUES ('" + student_id + "', '" + req.param('student_education_institute') + "', '" + req.param('student_education_fieldofstudy') + "', '1')";
+            Education.query(education_query, function (err, education)
+            {
 
+            });
             var loan_type = req.param("loan_type");
             var loan_fafsa_id = req.param("fafsa_values") != undefined ? req.param("fafsa_values") : '';
             var loan_bankname = req.param("loan_bankname") != undefined ? req.param("loan_bankname") : '';
@@ -145,44 +141,41 @@ module.exports = {
                 console.log('err')
                 console.log(err)
                 var loan_id = record.insertId;
-                var newFilename = "";
-                var document_name = "";
-                var insert_doc = "";
+                for (var i = 0; i <= 5; i++) {
 
-                var fs = require("fs");
-                var dir_name = student_id;
-                var dir = '.tmp/public/index_files/uploads/' + dir_name;
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
+                    if (req.param('document_name' + i) != undefined && req.param('document_name' + i) != '') {
+
+                        var newFilename = "";
+                        var document_name = "";
+                        var insert_doc = "";
+                        var fs = require("fs");
+                        var dir_name = student_id;
+
+                        var dir = '.tmp/public/index_files/uploads/' + dir_name;
+                        if (!fs.existsSync(dir)) {
+                            fs.mkdirSync(dir);
+                        }
+                        document_name = req.param('document_name' + i);
+
+                        req.file('file' + i).upload({dirname: '../public/index_files/uploads/' + dir_name + '/'}, function (err, uploadedFiles) {
+                            if (uploadedFiles.length > 0) {
+                                newFilename = uploadedFiles[0].fd.split('/').slice(-1);
+                                insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + loan_id + "', '1');";
+
+                                Table_loan_document.query(insert_doc, function (err, loan_document)
+                                {
+
+                                });
+
+                            }
+                        });
+                    }
                 }
-                var doc_files = req.file('loan_doc')._files
-//                doc_files.forEach(function (values, index) {
-                newFilename = req.file('loan_doc')._files[0].stream.filename;
-                newFilename = Date.now() + newFilename;
-
-                req.file('loan_doc').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newFilename}), function onUploadComplete(err, files) {
-                    console.log(err)
-                };
-                document_name = req.param('document_name[]');
-
-                insert_doc = "INSERT INTO `table_loan_document` (`document_name`, `document_path`, `loan_id`, `isPublic`) VALUES ('" + document_name + "', '" + newFilename + "', '" + loan_id + "', '1');";
-
-                Table_loan_document.query(insert_doc, function (err, loan_document)
-                {
-
-                });
-//                })
-                Education.query(education_query, function (err, education)
-                {
-
-                    res.redirect('/viewprofile/' + student_id);
-
-                });
 
             });
+            res.redirect('/viewprofile/' + student_id);
 
         }
-
     },
     'addloansubmit': function (req, res) {
 
