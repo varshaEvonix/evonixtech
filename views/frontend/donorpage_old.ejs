@@ -1,0 +1,279 @@
+<%- include ../frontend/header.ejs %>
+
+<style>
+    .outerbox {
+        background-color: #fff;
+        min-height: 200px;
+        box-shadow: 0 3px 7px rgba(0,0,0,0.1);
+        padding: 20px;
+        border-radius: 4px;
+        margin: 40px 0px;
+    }
+    .panel-body {
+        padding: 0px;
+    }
+    #donationamt {
+        background: #fff none repeat scroll 0 0 !important;
+        border: medium none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #donationamt, #donationamt #amtinput .input-group-addon, 
+    #donationamt #amtinput .input-group-addon, 
+    #donationamt #amtinput .input-group-addon,
+    #donationamt #amtinput input
+    {
+        border-radius: 0px;
+        border: none;
+        background-color: #e6fffc;
+        color: #00a290;
+        font-size: 90px;
+    }
+    #donationamt #amtinput input {
+        text-align: right;
+        height: 120px;
+    }
+    #donationamt #amtinput input:focus {
+        box-shadow: none;
+    }
+    .col-md-offset-1 {
+        margin-left: 8.33333333%;
+    }
+    .left-box .panel-body {
+        padding: 20px;
+    }
+    .left-box .panel-body h2 {
+        font-size: 36px;
+        margin: 10px 0px;
+    }
+    .left-box .panel-body h2 span {
+        font-size: 26px;
+        color: #777;
+    }
+    .panel-heading {
+        background-color: #00a290 !important;
+        color: #fff !important;
+        border-color: #00a290 !important;
+    }
+    .panel.panel-default {
+        border-color: #00a290 !important;
+    }
+    .left-box.about p {
+        font-size: 14px;
+    }
+    .left-box.about hr {
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }
+    .left-box.about .panel-heading {
+        color: #fff !important;
+    }
+    .left-box.about .panel-heading p {
+        font-size: 12px;
+    }
+    .left-box.about .panel-heading h3 {
+        color: #fff !important;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    #donerinfoform, #donerinfoform input {
+        border-radius: 4px;
+        border: 1px solid #eee;
+        background-color: #fff;
+        color: #00a290;
+        font-size: 90px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    #donerinfoform {
+        border: none;
+        box-shadow: none;
+    }
+    #donerinfoform label {
+        position: initial;
+        padding-top: 20px;
+    }
+    #donerinfoform .form-group {
+        display: block;
+    }
+    .checklbl {
+        display: inline-block !importants;
+    }    
+    #donerinfoform input {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+        padding: 10px;
+    }
+    .form-group {
+        height: 58px;
+    }
+    label {
+        position: initial !important;
+        display: block;
+    }
+    .formbottom {
+        padding: 15px;
+    }
+    .checkbox input[type="checkbox"] {
+        width: 20px !important;
+    }
+    .inputgp {
+        /*        height: 100px !important;*/
+    }
+    #donerinfofields {
+        padding: 15px;
+        margin-top:-24px;
+    }
+    #donerinfofields .halfwf {
+        width: 48%;
+        display: inline-block;
+    }
+    label, .hide_name{
+        color:#504949 !important;
+    }
+</style> 
+
+<div  class="main-content" style="padding-top:80px;padding-bottom:15px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 outerbox">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="panel panel-default left-box">
+                            <div class="panel-heading"><%= student_details.student_firstname +' ' + student_details.student_lastname %></div>
+                            <div class="panel-body">
+
+                                <% if(student_details.student_profile_pic_path == null || student_details.student_profile_pic_path== undefined || student_details.student_profile_pic_path== ''){ %>
+                                <img src='../index_files/blank_dp.jpg' class="img-responsive" style="width: 100%;">
+                                <% }else{ %>
+                                <img src='../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
+                                <% } %>
+
+                                <h2>$ <%= (funded_amount > 0) ? funded_amount : 0  %> <span>of $ <%= student_details.loan_amount %></span></h2>
+                                <%
+                                var percentage = (funded_amount/student_details.loan_amount)*100
+                                %>
+                                <div class="progress-item mt-0">
+                                    <div class="progress mb-10">
+                                        <div data-percent="<%= percentage > 0 ? percentage.toFixed(2) : 0 %>" class="progress-bar appeared" style="width: <%= percentage > 0 ? percentage.toFixed(2) : 0 %>;"><span class="percent">0</span>
+                                            <span class="percent"><%= percentage > 0 ? percentage.toFixed(2) : 0 %>%</span></div>
+                                    </div>
+                                </div>
+                                <p>Raised by <%= donor_count %> people </p>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default left-box about">
+                            <div class="panel-heading">
+
+                                About the Student
+
+                            </div>
+                            <div class="panel-body">
+                                <p><strong><%= student_details.student_about_me %></strong></p>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Enter your donation amount</div>
+                            <div class="panel-body">
+                                <form role="form" id="donationamt" method="POST" action="/paymentpage" name="donorsForm" novalidate>
+                                    <div class="form-group input-group"  id="amtinput">
+                                        <span class="input-group-addon">$</span>
+                                        <input class="form-control" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
+                                        <span class="input-group-addon">.00</span>
+                                    </div>
+                                    <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
+                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required..</p>
+                                    <div  id="donerinfofields" class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                                <label>Email address:</label>
+                                                <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
+
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
+                                                <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
+                                            </div>
+
+                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                                <label for="email">Your Name:</label>
+                                                <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
+                                            </div>
+                                            <div class="inputgp">
+                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide my name and comment from the public.</p>
+                                            </div>
+                                            <!--  <div class="inputgp">
+                                                                                         <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
+                                                                                         <label class="checklbl"> Hide name and comment from everyone but the organizer.</label>
+                                                                                     </div>-->
+
+                                            <div class="">
+                                                <label for="comment">Comment:</label>
+                                                <textarea class="form-control" name="comment" ng-model="comment" rows="5" id="comment"></textarea>
+                                            </div>
+                                            <div class="inputgp">
+                                                <input type="hidden" name="loan_id" value="<%= loan_id %>">
+                                                <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
+                                                <input type="hidden" name="student_firstname" value="<%= student_details.student_firstname %>">
+                                                <input type="hidden" name="student_lastname" value="<%= student_details.student_lastname %>">
+                                                <button type="submit" ng-click="submitted = true" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="formbottom">
+                                            <hr>
+                                            <p><input type="checkbox" style="" name="terms_conditions" ng-model="donor.terms_conditions" value="1" required> I agree to the Terms & Conditions and Privacy Policy.</p>
+                                            <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.terms_conditions.$error.required"  class="help-block has-error ng-hide">Required.</p>
+                                            <!--<br><a href="#" >Go back</a>-->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<%- include ../frontend/footer.ejs %>
+
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.donor = {};
+        $scope.donor.funding_amount = '5';
+        $('#donationamt').submit(function () {
+
+            if ($scope.donorsForm.$valid) {
+                if ($scope.donor.funding_amount > 4) {
+                    return true;
+                } else {
+                    $('.funding_amount').removeClass('ng-hide');
+                    $('.funding_amount').show();
+                    return false;
+
+                }
+            } else {
+                return false;
+            }
+        })
+
+    });
+    $('#funding_amount').keyup(function () {
+        $('.funding_amount').hide();
+    });
+</script>
+
