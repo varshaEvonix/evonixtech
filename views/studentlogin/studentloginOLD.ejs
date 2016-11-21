@@ -1,6 +1,6 @@
-<%- include ../header.ejs %>
+<%- include ../header2.ejs %>
 <!DOCTYPE html>
-<html><head>
+<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths no-mobile" style="" dir="ltr" lang="en"><head>
 
         <!-- Meta Tags -->
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -24,36 +24,23 @@
         <!--<link rel="stylesheet" href="../../index_files/mdl/material.min.css">-->
 
         <script  src="../../index_files/stdash/js/angular.min.js"></script>
-         <link rel="stylesheet" type="text/css" href="slick/slick.css" />
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-    <!-- <link href="index_files/bootstrap.css" rel="stylesheet" type="text/css"> -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="index_files/jquery-ui.css" rel="stylesheet" type="text/css">
-    <link href="index_files/animate.css" rel="stylesheet" type="text/css">
-    <link href="index_files/css-plugin-collections.css" rel="stylesheet">
-    <!-- CSS | menuzord megamenu skins -->
-    <link id="menuzord-menu-skins" href="index_files/menuzord-boxed.css" rel="stylesheet">
-    <!-- CSS | Main style file -->
-    <link href="index_files/style-main.css" rel="stylesheet" type="text/css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-
-    <!-- CSS | Preloader Styles -->
-    <link href="index_files/preloader.css" rel="stylesheet" type="text/css">
-    <!-- CSS | Custom Margin Padding Collection -->
-    <link href="index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
-    <!-- CSS | Responsive media queries -->
-    <link href="index_files/responsive.css" rel="stylesheet" type="text/css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <!-- CSS | Style css. This is the file where you can place your own custom css code. Just uncomment it and use it. -->
-    <!-- <link href="css/style.css" rel="stylesheet" type="text/css"> -->
-
-    <!-- Revolution Slider 5.x CSS settings -->
-    <link href="index_files/settings.css" rel="stylesheet" type="text/css">
-    <link href="index_files/layers.css" rel="stylesheet" type="text/css">
-    <link href="index_files/navigation.css" rel="stylesheet" type="text/css">
-    
-    <!-- CSS | Theme Color -->
-    <link href="index_files/theme-skin-blue-gary.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="../../index_files/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="../../index_files/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link href="../../index_files/animate.css" rel="stylesheet" type="text/css">
+        <!--<link href="../../index_files/css-plugin-collections.css" rel="stylesheet">-->
+        <!-- CSS | menuzord megamenu skins -->
+        <link id="menuzord-menu-skins" href="../../index_files/menuzord-boxed.css" rel="stylesheet">
+        <!-- CSS | Main style file -->
+        <link href="../../index_files/style-main.css" rel="stylesheet" type="text/css">
+        <!-- CSS | Preloader Styles -->
+        <link href="../../index_files/preloader.css" rel="stylesheet" type="text/css">
+        <!-- CSS | Custom Margin Padding Collection -->
+        <link href="../../index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+        <!-- CSS | Responsive media queries -->
+        <link href="../../index_files/responsive.css" rel="stylesheet" type="text/css">
+        <link href="../../index_files/css-plugin-collections.css" rel="stylesheet">
+        <link id="menuzord-menu-skins" href="../../index_files/menuzord-boxed.css" rel="stylesheet">
         <style>
 
 
@@ -350,11 +337,7 @@
                             <span ng-show="submitted && studentlogin.password.$error.required"  class="help-block has-error  ng-hide">Password is required.</span>
                             <a href="<% sails.getBaseurl() %>/forgotpassword" class="pull-right">Forgot password ?</a>
                         </div>
-                        <div class="row">
-                        <div class="col-md-12" style="margin:auto;text-align:center">
-                        <button type="submit" ng-click="submitted = true" class="btn btn-default" >Submit</button>
-                        </div>
-                        </div>
+                        <button type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5">Submit</button>
                         <!--<input type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5" value="Submit">-->
                     </form>
                 </div>
@@ -362,9 +345,31 @@
         </div>
         </div>
 
-           <%- include ../footer.ejs %>
+        <%- include ../footer.ejs %>
+    </body>
+</html>
 
-<script src="../../index_files/jquery-ui.js"></script>
-<script src="../../index_files/bootstrap.js"></script>
-<!-- JS | jquery plugin collection for this theme -->
-<script src="../../index_files/jquery-plugin-collection.js"></script>
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.student = {};
+        $scope.submitForm = function () {
+            if ($scope.studentlogin.$valid) {
+                $http({
+                    method: 'POST',
+//                    dataType: 'json',
+                    url: '/student/process',
+                    data: $scope.student, //forms user object
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function (data) {
+
+                    window.location = data.path;
+                }).error(function (data) {
+                    window.location.reload();
+
+                });
+            }
+        };
+    });
+
+</script>

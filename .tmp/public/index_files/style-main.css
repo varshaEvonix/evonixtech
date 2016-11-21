@@ -7239,7 +7239,9 @@ blockquote p {
   #search_input{
     width:62% !important;
   }
- 
+ .donate_500{
+  padding: 7px 19px;
+ }
   
         #serverstatus01 {
             width: 139px !important;
@@ -7261,6 +7263,15 @@ blockquote p {
   #registerform{
     width:95%;
   }
+  .indicate{
+        margin-top: -78px !important;
+    margin-left: 29px !important;
+
+  }
+  #serverstatus01 {
+    width: 117px !important;
+    height: 117px !important;
+}
 }
 
 @media only screen and (min-width: 501px) and (max-width: 767px) {
@@ -7341,4 +7352,64 @@ min-width:10%;
 }
 .donate_bot{
   padding-top:15px;
+}
+
+#loader {
+
+ position: absolute;
+    left: 53%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 8px solid #ccc;
+    border-radius: 50%;
+    border-top: 8px solid #000;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 }
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+  from{ bottom:-100px; opacity:0 }
+  to{ bottom:0; opacity:1 }
+}
+
+#myDiv {
+  display: none;
+  text-align: center;
+}
+#preloader_bg{
+  width: 100%;
+    display: block;
+    position: fixed;
+    z-index: 999999;
+    height: 100%;
+    background-color: #fff;
 }

@@ -10,12 +10,7 @@
 
 <link rel="icon" href="../../index_files/favicon.png">
     <!-- Meta Tags -->
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="description" content="CharityPress - Nonprofit, Crowdfunding &amp; Charity HTML5 Template">
-    <meta name="keywords" content="building,business,construction,cleaning,transport,workshop">
-    <meta name="author" content="ThemeMascot">
-
+   
     <!-- Page Title -->
     <title>Stumuch</title>
 
@@ -144,9 +139,13 @@
     <!--STYLES END-->
   </head>
 
-  <body >
-    <%- body %>
+  <body onload="preload_page()">
 
+  <div id="preloader_bg">
+<img src="index_files/logo.png">
+<div id="loader"></div>
+</div>
+    <%- body %>
 
 
     <!--
@@ -200,6 +199,23 @@
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
+    <script>
+// var myVar;
+
+// function preload_page() {
+//     myVar = setTimeout(showPage, 3000);
+// }
+
+// function showPage() {
+//   document.getElementById("loader").style.display = "none";
+//   document.getElementById("myDiv").style.display = "block";
+// }
+$(window).load(function() {
+  
+  $("#loader").fadeOut(1000);
+  $("#preloader_bg").fadeOut(1000);
+});
+</script>
     <!--SCRIPTS END-->
   </body>
 </html>

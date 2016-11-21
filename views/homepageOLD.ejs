@@ -125,7 +125,7 @@
 
                                 <div class="causes maxwidth500 mb-sm-50">
                                     <div class="thumb">
-                                        <a href="/single_profile/<%= birthday.student_id %>">  <img src=" <% if (birthday.student_profile_pic_path == '' || birthday.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/<%= birthday.student_id %>/<%= birthday.student_profile_pic_path %> <% } %>" style="" class="dp_left thumbnail"></a>
+                                        <a href="/single_profile/<%= birthday.student_id %>">  <img src=" <% if (birthday.student_profile_pic_path == '' || birthday.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/<%= birthday.student_id %>/<%= birthday.student_profile_pic_path %> <% } %>" style="width:360px;height:230px;" class="dp_left thumbnail"></a>
                                         <div class="donate-piechart piechart-absolute">
 
 
@@ -256,7 +256,7 @@
                             <div class="item mb-10">
                                 <div class="image-box-thum">
                                     <a href="/single_profile/<%= student_details.student_id %>"> 
-                                        <img src=" <% if (student_details.student_profile_pic_path == '' || student_details.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %> <% } %>" style="">
+                                        <img src=" <% if (student_details.student_profile_pic_path == '' || student_details.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %> <% } %>" style="width:360px;height:230px;">
 
                                     </a>
 
@@ -293,7 +293,7 @@
                                         <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$<%= student_details.total_funded %></strong>collected</li>
                                         <% if (student_details.loan_amount != "0") { %>
-                                        <li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success donate_500"><strong class="white">Donate</strong></button></a></li>
+                                        <li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
                                         <% } %>
                                     </ul>
                                 </div>
