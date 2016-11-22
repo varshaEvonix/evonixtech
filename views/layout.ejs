@@ -139,12 +139,9 @@
     <!--STYLES END-->
   </head>
 
-  <body onload="preload_page()">
+  <body>
 
-  <div id="preloader_bg">
-<img src="index_files/logo.png">
-<div id="loader"></div>
-</div>
+  
     <%- body %>
 
 
@@ -210,11 +207,7 @@
 //   document.getElementById("loader").style.display = "none";
 //   document.getElementById("myDiv").style.display = "block";
 // }
-$(window).load(function() {
-  
-  $("#loader").fadeOut(1000);
-  $("#preloader_bg").fadeOut(1000);
-});
+
 </script>
     <!--SCRIPTS END-->
   </body>
