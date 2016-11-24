@@ -326,14 +326,14 @@
 
                     <form method="post" ng-submit="submitForm()" name="adminLogin" role="form" novalidate> 
                         <div ng-show="loginError" class="alert alert-danger ng-hide">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
                             <strong>!</strong> {{loginError}}
                         </div>
                         <h2 class="text-center">Admin Login</h2>
                         <div class="form-group col-md-12">
                             <input type="email" ng-model="admin.email" class="form-control" id="email" name="email" placeholder="Enter email" required>
                             <span class="help-block has-error  ng-hide" ng-show="submitted && adminLogin.email.$error.required">Email Id is required</span>
-                            <span class="help-block has-error  ng-hide" ng-show="submitted && adminLogin.email.$error.email">Not valid email!</span>
+                            <!--<span class="help-block has-error  ng-hide" ng-show="submitted && adminLogin.email.$error.email">Not valid email!</span>-->
                         </div>
                         <div class="form-group col-md-12">
                             <input type="password" ng-model="admin.password" class="form-control" id="password" name="password" placeholder="Enter password" required>

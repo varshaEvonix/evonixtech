@@ -363,7 +363,30 @@
         </div>
 
            <%- include ../footer.ejs %>
+<script>
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.student = {};
+        $scope.submitForm = function () {
+            if ($scope.studentlogin.$valid) {
+                $http({
+                    method: 'POST',
+//                    dataType: 'json',
+                    url: '/student/process',
+                    data: $scope.student, //forms user object
+                    headers: {'Content-Type': 'application/json'}
+                }).success(function (data) {
 
+                    window.location = data.path;
+                }).error(function (data) {
+                    window.location.reload();
+
+                });
+            }
+        };
+    });
+
+</script>
 <script src="../../index_files/jquery-ui.js"></script>
 <script src="../../index_files/bootstrap.js"></script>
 <!-- JS | jquery plugin collection for this theme -->

@@ -289,12 +289,7 @@ module.exports = {
             var filename = req.file('file')._files[0].stream.filename;
             var newfilename = Date.now() + filename;
             req.file('formdata').upload({dirname: '../public/index_files/uploads/', saveAs: newfilename}, function onUploadComplete(err, files) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    console.log('files')
-                    console.log(files)
-                }
+
                 return res.ok(newfilename);
             });
         }
@@ -372,9 +367,13 @@ module.exports = {
         if (admin_approve == '0') {
 
             var insert = "INSERT INTO `notifications` (`notifiaction`, `student_id`, `by_admin`) VALUES ('" + req.param('admin_note') + "', '" + req.param('student_id') + "', '1');";
+            console.log('insert')
+            console.log(insert)
             Notifications.query(insert, function (err, results) {
 
                 var fetch_student = "select * from student_details where student_id =" + req.param('student_id');
+                console.log('fetch_student')
+                console.log(fetch_student)
                 Student_details.query(fetch_student, function (err, studentdetails) {
                     var send_grid_token = "select token from send_grid_token where id =1";
                     Send_grid_token.query(send_grid_token, function (err, token) {
@@ -408,7 +407,7 @@ module.exports = {
                 });
 
             });
-            req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are discarde</div>');
+            req.flash('error', '<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>You have disapproved some field changes. An email has been sent out to the user who owns this account to inform about the disapproval. Make sure that when you disapprove a change, explain yourself, ask for documentation, and / or suggest for further clarifications or changes.</div>');
         } else {
             req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
         }
@@ -418,12 +417,15 @@ module.exports = {
     locked_student_profile: function (req, res) {
         var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
         Student_changed_val.query(q, function (err, record) {
+            
             if (record.length == 0) {
                 var update_query = "UPDATE `student_login_credentials` SET `profile_lock` =0 WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
+          
                 Student_login_credentials.query(update_query, function (err, results) {
 
                 });
-                var path = '/admin/viewdetails/' + req.param('student_id');
+//                var path = '/admin/viewdetails/' + req.param('student_id');
+                var path = '/admin/studlockedprofile/' + req.param('student_id');
             } else {
                 var path = '/admin/studlockedprofile/' + req.param('student_id');
             }

@@ -24,10 +24,10 @@ module.exports = {
                     req.session.admin_contactno = admin.admin_contactno;
                     return res.ok();
                 } else {
-                    res.status(500).send({error: 'Password is wrong'});
+                    res.status(500).send({error: 'Login failed'});
                 }
             } else {
-                res.status(500).send({error: 'Usename is wrong'});
+                res.status(500).send({error: 'Login failed'});
             }
    
         });

@@ -7,7 +7,7 @@
 
 module.exports = {
     'fetch_faq': function (req, res) {
-        Faq.query('SELECT * from faq', function (err, recordset) {
+        Faq.query('SELECT * from faq where isEnabled=1', function (err, recordset) {
             Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
                 var category = [];
                 cats.forEach(function (cats, index) {

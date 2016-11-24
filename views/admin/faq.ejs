@@ -5,6 +5,8 @@
     <section class="wrapper">
 
         <div class="row">
+            <%- req.flash('error') %>
+            <%- req.flash('success') %>
             <div class="col-lg-9 main-chart">
                 <h1 class="phead">Frequently Asked Questions
                     <!--                    <a href="/editfaq" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit</a>-->
@@ -22,7 +24,12 @@
                     if(faq.category==category){
                     %>
                     <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a><span class="pull-right"><a style="display: block;" href="/admin/editfaq/<%= faq.id %>" title="Edit" class="pull-right">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a>
+                        <span class="pull-right">
+                            <a style="display: block;" href="/admin/editfaq/<%= faq.id %>" title="Edit" class="pull-left"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style="display: block;" href="javascript:void(0)" data="<%= faq.id %>" title="Delete" class="pull-right delete-faq"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        </span>
                     </div>
                     <div id="collapse<%= faq.id %>" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -40,7 +47,7 @@
                 %>
             </div>
 
-        <%- include ../admin/notifications.ejs %>
+            <%- include ../admin/notifications.ejs %>
         </div>
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -93,14 +100,13 @@
 </section>
 
 <%- include ../admin/stufoot.ejs %>
-<!--<script src="../../index_files/stdash/js/typeahead.min.js"></script>-->
 <script src="../../index_files/stdash/js/typeahead.js"></script>
 <script>
                                         var postApp = angular.module('postApp', []);
                                         postApp.controller('postController', function ($scope, $http) {
                                             $('#category').typeahead({
                                                 onSelect: function (item) {
-                                                    console.log(item)
+                                                   
                                                     $('#category').val(item.text);
                                                     $scope.admin.category = item.text;
                                                 },
@@ -117,7 +123,6 @@
                                                         }
                                                     },
                                                     preProcess: function (data) {
-                                                        console.log(data.category);
                                                         return data.category;
                                                     }
                                                 }
@@ -139,6 +144,36 @@
                                             };
                                         });
 
+</script>
+<link href="../../index_files/stdash/css/sweetalert.css" rel="stylesheet">
+<script src="../../index_files/stdash/js/sweetalert.min.js"></script>
+<script src="../../index_files/stdash/js/sweetalert-dev.js"></script>
+<script>
+                                        $('.delete-faq').click(function () {
+                                            var faq_id = $(this).attr('data');
+                                            swal({title: "Are you sure?",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "Yes, Delete it!",
+                                                closeOnConfirm: false
+                                            },
+                                            function () {
+
+                                                $.ajax({
+                                                    url: "/admin/delete_faq",
+                                                    type: "POST",
+                                                    async: true,
+                                                    dataType: 'json',
+                                                    data: {faq_id: faq_id},
+                                                    //your form data to post goes here
+                                                    success: function (response) {
+                                                        window.location.reload();
+                                                    }
+                                                });
+
+                                            });
+                                        });
 </script>
 <script>
     $('#faq').addClass('active');

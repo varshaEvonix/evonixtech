@@ -111,7 +111,7 @@ module.exports = {
     },
     'get_faq': function (req, res) {
         if (req.session.admin_id || req.session.admin_id != undefined) {
-            Faq.query('SELECT * FROM faq', function (err, recordset) {
+            Faq.query('SELECT * FROM faq where isEnabled=1', function (err, recordset) {
                 Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
                     var category = [];
                     cats.forEach(function (cats, index) {
@@ -158,6 +158,17 @@ module.exports = {
                     description: description
                 });
 
+            });
+        } else {
+            return  res.redirect('admin/login');
+        }
+    },
+    'delete_faq': function (req, res) {
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            var faq_query = "UPDATE `faq` SET `isEnabled` = '0' WHERE `faq`.`id` =" + req.param('faq_id');
+            Faq.query(faq_query, function (err, recordset) {
+                req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Record Deleted</div>');
+                return res.ok();
             });
         } else {
             return  res.redirect('admin/login');

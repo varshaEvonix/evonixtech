@@ -47,11 +47,12 @@
 
                             <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= records.student_id %>/<%= records.student_prev_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
-
-
-
-                            <iframe width="315" height="177" src="<%= records.student_prev_value %>" frameborder="0" allowfullscreen> 
+                            <% if(records.student_prev_value!=''){ %>
+                                <% var video_link = records.student_prev_value %>
+                                    <% var video_link = video_link.split('?v=') %>
+                            <iframe width="315" height="177" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen> 
                             </iframe>
+                            <% } %>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                             <% 
 
@@ -79,7 +80,9 @@
 
                             <img src="<% sails.getBaseurl() %>/index_files/uploads/<%= records.student_id %>/<%= records.student_changed_value %>" class="image_pro" style="height:93px;width:145px;">
                             <% }else if(records.student_master_field_name == 'video_link'){ %>
-                            <iframe width="315" height="177" src="<%= records.student_changed_value %>" frameborder="0" allowfullscreen> 
+                          <% var video_link = records.student_changed_value %>
+                                    <% var video_link = video_link.split('?v=') %>
+                            <iframe width="315" height="177" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen> 
                             </iframe>
                             <% }else if(records.student_master_field_name == 'loan_fafsa_id'){ %>
                             <% 

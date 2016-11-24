@@ -54,6 +54,7 @@ module.exports.routes = {
     '/admin/editabterms': 'Static_pageController.edit_terms_and_cond',
     '/admin/faq': 'Static_pageController.get_faq',
     '/admin/editfaq/:id': 'Static_pageController.editfaq',
+    '/admin/delete_faq': 'Static_pageController.delete_faq',
     '/admin/privacypolicy': 'Static_pageController.privacypolicy',
     '/admin/editprivacypolicy': 'Static_pageController.editprivacypolicy',
     '/updateprivacypolicy': 'Static_pageController.updateprivacypolicy',
