@@ -102,7 +102,7 @@ module.exports = {
 
     },
     'stu_search': function (req, res) {
-        console.log(req.param('stu_name'));
+
         var stu_name = req.param('stu_name'); //=='undefined'? '' : req.param('stu_name');
 
         if (stu_name == undefined)
@@ -111,15 +111,18 @@ module.exports = {
         }
         var bday_check = req.param('bday_check');
         var arr = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ");
+        var sql = "SELECT DATE_FORMAT( NOW( ) , '%m-%d-%Y') as today";
         var bdate = arr[0];
-
+        Student_details.query(sql, function (err, result) {
+            bdate = result[0].today;
+        });
 
 
         var stu_search = '';
         var bday_search_string = '';
         var sort_string = '';
         if (bday_check == '1') {
-            bday_search_string = 'and DATE_FORMAT(student_birthdate,"%m-%d-%Y") = "' + bdate + '"';
+            bday_search_string = 'and DATE_FORMAT(student_birthdate,"%m-%d") = DATE_FORMAT(NOW(),"%m-%d")';
             bday_sort_string = ' order by sd.student_lastname';
         }
         else {
@@ -133,7 +136,6 @@ module.exports = {
 
         stu_search += bday_sort_string;
 
-        // console.log(stu_search);
         //stu_search ="SELECT * from student_details left join loan_details on loan_details.student_id=student_details.student_id left join student_login_credentials on student_login_credentials.student_id = student_details.student_id  WHERE  (student_firstname LIKE '%"+stu_name+"%' OR student_lastname LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%' OR student_city LIKE '%"+stu_name+"%') AND student_login_credentials.student_active=1" ;
         Student_details.query(stu_search, function (err, recordset) {
             // Student_details.query('SELECT * from student_details WHERE student_firstname LIKE '%" . '"+stu_name+"' . "%'', function(err, recordset) {         	
@@ -230,7 +232,7 @@ module.exports = {
 
         Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%m-%d-%Y") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by ld.created_on DESC limit 0,11', function (err, recordset) {
 
-            Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%m-%d-%Y") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%m-%d-%Y") = "' + bdate + '" group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function (err, record) {
+            Student_details.query('SELECT sd.student_id, sd.student_firstname, sd.student_lastname, DATE_FORMAT(sd.student_birthdate,"%m-%d-%Y") as student_birthdate, LEFT(sd.student_about_me, 53) student_about_me, sd.student_profile_pic_path, IFNULL(ld.loan_amount,0) loan_amount, IFNULL(sum(dfd.funded_amount),0) as total_funded from student_login_credentials  slc inner join student_details sd on slc.student_id=sd.student_id  left join loan_details ld on ld.student_id=sd.student_id and ld.isActive=1 left join donors_funding_details dfd on ld.loan_id=dfd.loan_id  where slc.student_active = 1 AND slc.profile_lock = 0 and DATE_FORMAT(student_birthdate,"%m-%d") = DATE_FORMAT(NOW(),"%m-%d") group by sd.student_id, sd.student_firstname, sd.student_lastname, sd.student_birthdate, sd.student_about_me, sd.student_profile_pic_path, ld.loan_amount order by sd.student_lastname', function (err, record) {
 
                 return res.view('./homepage', {
                     student_details: recordset,
@@ -270,8 +272,6 @@ module.exports = {
                 Student_photographs.query('SELECT * from student_photographs where student_id=' + req.param('id'), function (err, photorecord) {
 
                     Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
-
-                        console.log(recordset);
 
                         return res.view('./myprofile/myprofile', {
                             student_info: recordset,

@@ -7,10 +7,9 @@
 
 function checkLastActivity(req, res) {
     if (!req.session.student_id) {
-        console.log('ifff')
+      
         return  res.redirect('/login');
     } else {
-        console.log('elseeee')
         return true;
     }
 }

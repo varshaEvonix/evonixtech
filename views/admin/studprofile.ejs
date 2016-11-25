@@ -250,8 +250,13 @@
                                 <div class="col-md-5">
 
                                     <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe width="560" height="315" src="<%= student_info.video_link %>" frameborder="0" allowfullscreen> 
+
+                                        <% var video_link = student_info.video_link %>
+                                        <% var video_link = video_link.split('?v=') %>
+                                  
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen> 
                                         </iframe>
+
                                     </div>
                                 </div>
                             </div>
@@ -262,6 +267,7 @@
                                 </div>
                             </div>
                             <div class="row">
+                               
                                 <% _.each(pics, function (pics) { %>
                                 <div class="col-md-4" >
                                     <img class="img-responsive" src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= pics.photo_path %>"><br><br>

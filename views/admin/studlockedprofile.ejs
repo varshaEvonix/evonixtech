@@ -28,7 +28,6 @@
                 </thead>
                 <tbody>
 
-
                     <%  _.each(student_records, function (records) { %>
 
                     <tr>
@@ -41,7 +40,7 @@
                            <% }) %>
                             </td>
                         <td class="" style="width:360px;color:red;">
-                            <% if (records.student_prev_value != "" || records.student_prev_value !=  undefined || records.student_prev_value != null){ %>
+                            <% if ((records.student_prev_value!='') && (records.student_prev_value!=undefined) && (records.student_prev_value!=null)){ %>
 
                             <% if( records.student_master_field_name == 'student_profile_pic_path' || records.student_master_field_name == 'photo_path'){ %>
 

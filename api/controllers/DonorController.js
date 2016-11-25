@@ -14,17 +14,19 @@ module.exports = {
     donorpage: function (req, res) {
         var total = 0;
         var query = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id  where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
+        console.log('query')
+        console.log(query)
         Student_details.query(query, function (err, results) {
             var q = "select * from student_details left join loan_details on student_details.student_id=loan_details.student_id left join donors_funding_details on donors_funding_details.loan_id=loan_details.loan_id where student_details.student_id=" + req.param('id') + " AND loan_details.isActive=1";
+            console.log('q')
+            console.log(q)
             Student_details.query(q, function (err, donors_results) {
 
                 donors_results.forEach(function (donors_results, index) {
 
                     total = donors_results.funded_amount + total;
                 })
-console.log('donors_results.length')
-console.log(donors_results)
-console.log(donors_results.length)
+
                 var temp = JSON.stringify(donors_results);
                 var student_details = JSON.parse(temp)[0];
                 var donor_count = donors_results[0].donors_id != null ? donors_results.length :0 ;

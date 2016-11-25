@@ -28,24 +28,6 @@
 <!-- CSS | Theme Color -->
 <link href="../../index_files/theme-skin-blue-gary.css" rel="stylesheet" type="text/css">
 
-<!-- external javascripts -->
-<!-- <script src="../../index_files/jquery-2.js"></script> -->
-<!-- <script src="../../index_files/jquery-ui.js"></script> -->
-<!-- <script src="../../index_files/bootstrap.js"></script> -->
-<!-- JS | jquery plugin collection for this theme -->
-<!-- <script src="../../index_files/jquery-plugin-collection.js"></script> -->
-
-<!-- Revolution Slider 5.x SCRIPTS -->
-<!-- <script src="../../index_files/jquery_002.js"></script> -->
-<!-- <script src="../../index_files/jquery.js"></script> -->
-<!-- <script async src="//static.addtoany.com/menu/page.js"></script> -->
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
  
 
  <style>
@@ -110,6 +92,7 @@
             <div class="thumb">
               <img class="img-fullwidth" alt="" src="<% if (humans.student_profile_pic_path == '' || humans.student_profile_pic_path == null) { %>../../index_files/blank_dp.jpg <% } else { %>../../index_files/uploads/<%= humans.student_id %>/<%= humans.student_profile_pic_path %> <% } %>" width="250" height="230">
               <div class="donate-piechart piechart-absolute">
+             
                 <%if (today == humans.student_birthdate) { %> <img src="../../index_files/cake.png" style="width:21%;float:right"><% } %>
               </div>
             </div>
@@ -135,7 +118,8 @@
               <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                 <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
                 <li class="target-fund"><strong>$<%= humans.total_funded %></strong>collected</li>
-                <li ><a href="/donorpage/<%= humans.student_id %>"> <button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>
+                <!--<li ><a href="/donorpage/<%= humans.student_id %>"> <button class="btn btn-success"><strong class="white">Donate</strong></button></a></li>-->
+                <li ><a href="/donorpage/<%= humans.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
               </ul>
             </div>
           </div>

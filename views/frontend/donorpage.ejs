@@ -193,7 +193,7 @@
                                         <span class="input-group-addon">.00</span>
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
-                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required..</p>
+                                    <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required.</p>
                                     <div  id="donerinfofields" class="row">
                                         <div class="col-md-12">
                                             <div class="form-group input-group col-md-6 col-sm-6 halfwf">
@@ -210,7 +210,8 @@
                                                 <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
                                             </div>
                                             <div class="inputgp">
-                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">Hide my name and comment from the public.</p>
+                                                <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">
+                                                    Hide my name and comment from the public. It will only be visible to the Stumuch administration and funding receiver</p>
                                             </div>
                                             <!--  <div class="inputgp">
                                                                                          <input type="checkbox" name="hide_name" ng-model="donor.hide_name" value="1" style="left: -3px; bottom: 12px; width: 20px; display: inline-block;-webkit-appearance: normal; appearance: normal;">
@@ -233,7 +234,7 @@
 
                                         <div class="formbottom">
                                             <hr>
-                                            <p><input type="checkbox" style="" name="terms_conditions" ng-model="donor.terms_conditions" value="1" required> I agree to the Terms & Conditions and Privacy Policy.</p>
+                                            <p><input type="checkbox" style="" name="terms_conditions" ng-model="donor.terms_conditions" value="1" required> I agree to the <a target="_blank" href="/termsandconditions">Terms & Conditions</a> and <a target="_blank" href="/privacypolicy">Privacy Policy</a>.</p>
                                             <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.terms_conditions.$error.required"  class="help-block has-error ng-hide">Required.</p>
                                             <!--<br><a href="#" >Go back</a>-->
                                         </div>

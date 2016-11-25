@@ -293,7 +293,8 @@
                                         <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$<%= student_details.total_funded %></strong>collected</li>
                                         <% if (student_details.loan_amount != "0") { %>
-                                        <li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success donate_500"><strong class="white">Donate</strong></button></a></li>
+                                        <!--<li > <a href="/donorpage/<%= student_details.student_id %>"><button class="btn btn-success donate_500"><strong class="white">Donate</strong></button></a></li>-->
+                                        <li > <a href="/donorpage/<%= student_details.student_id %>" class="btn btn-success donate_500"><strong class="white">Donate</strong></a></li>
                                         <% } %>
                                     </ul>
                                 </div>
