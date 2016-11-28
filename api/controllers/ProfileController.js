@@ -7,7 +7,7 @@
 
 function checkLastActivity(req, res) {
     if (!req.session.student_id) {
-      
+
         return  res.redirect('/login');
     } else {
         return true;
@@ -163,9 +163,12 @@ module.exports = {
         Student_details.query(update, function (err, record)
         {
 
-            return res.redirect('/viewprofile');
 
         });
+        req.flash('success', '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Media added successfully</div>');
+        req.flash('active_menu', 'menu3');
+
+        return res.redirect('/viewprofile');
 
     },
     'upload_image': function (req, res) {

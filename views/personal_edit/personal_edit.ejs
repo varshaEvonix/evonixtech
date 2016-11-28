@@ -182,7 +182,7 @@
                                 <label for="student_firstname">* Your firstname: </label>
                                 <input type="text" ng-model="student.student_firstname" class="form-control" id="student_firstname" name="student_firstname" placeholder="Enter your first name" ng-pattern="/^[a-zA-Z]+$/" value="<%= student_info[0].student_firstname %>" required>
                                 <p ng-show="submitted && personalform.student_firstname.$error.required" class="help-block has-error ng-hide">Firstname is required.</p>
-                                <p ng-show="submitted && personalform.student_firstname.$error.pattern" class="help-block has-error ng-hide">Please enter your name properly</p>
+                                <p ng-show="submitted && personalform.student_firstname.$error.pattern" class="help-block has-error ng-hide">Only alphabets allowed in this field</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -190,7 +190,7 @@
                                 <label for="student_lastname">* Your lastname: </label>
                                 <input type="text" ng-model="student.student_lastname" class="form-control" id="student_lastname" name="student_lastname" ng-pattern="/^[a-zA-Z]+$/" placeholder="Enter your last name" value="<%= student_info[0].student_lastname %>" required>
                                 <p ng-show="submitted && personalform.student_lastname.$error.required"  class="help-block has-error ng-hide">Lastname is required.</p>
-                                <p ng-show="submitted && personalform.student_lastname.$error.pattern" class="help-block has-error ng-hide">Please enter your last name properly</p>
+                                <p ng-show="submitted && personalform.student_lastname.$error.pattern" class="help-block has-error ng-hide">Only alphabets allowed in this field</p>
                             </div>
                         </div>
                     </div>

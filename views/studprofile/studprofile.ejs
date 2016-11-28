@@ -100,13 +100,13 @@
 
 
             <div class="row">
-
+                <% var temp= req.flash('active_menu') %>
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home" class="profile_tabs">Personal details</a></li>
-                    <li><a data-toggle="tab" href="#menu1"  class="profile_tabs">Education and Loan Details</a></li>
+                    <li class="<%= temp.length > 0 ? '' : 'active' %>"><a data-toggle="tab" href="#home" class="profile_tabs">Account Information</a></li>
+                    <li class="<%= temp[0]=='menu1' ? 'active': '' %>"><a data-toggle="tab" href="#menu1"  class="profile_tabs">Funding Profile</a></li>
                     <!--<li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>-->
-                    <li><a data-toggle="tab" href="#menu3" class="profile_tabs">Media</a></li>
+                    <li class="<%= temp[0]=='menu3' ? 'active': '' %>"><a data-toggle="tab" href="#menu3" class="profile_tabs">Funding Profile Media</a></li>
 
                 </ul>
 
@@ -141,7 +141,7 @@
                                         </span><%= student_info[0].student_email %></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="info"> <span class="small">Permanent Address: <br>
+                                    <p class="info"> <span class="small">Address: <br>
                                         </span><%= student_info[0].student_address %></h4>
                                 </div>
 
@@ -167,18 +167,7 @@
                             <div class="row">
 
                             </div><br>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="info"> <span class="small">About Me: <br>
-                                        </span><span id="about_me"></span></p>
-                                </div>
-                            </div>
-                            <div class="row"><br>
-                                <div class="col-md-12 bot">
-                                    <p class="info"> <span class="small">My Ambition: <br>
-                                        </span><span id="ambition"></span></p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div id="menu1" class="tab-pane fade">
@@ -202,7 +191,7 @@
                             <br>
                             <br>
                             <div class="row">
-                                <div style="font-size:22px;" class="row edit_op">Current Loan
+                                <div style="font-size:22px;" class="row edit_op">Loan Details
 
                                     <!--                                    <div class="row pull-right"> <% if (student_info[0].loan_id != null) { %><a href="/loan_edit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
                                                                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new loan <i class="fa fa-plus" aria-hidden="true"></i></button></a></div>-->
@@ -214,7 +203,7 @@
                                 <div class="row">
 
                                     <div class="col-md-3">
-                                        <p class="info">  <span class="small">Loan Amount: <br>
+                                        <p class="info">  <span class="small">Loan Current Balance: <br>
                                             </span>$<%= student_info[0].loan_amount %></p>
 
                                     </div>
@@ -228,7 +217,7 @@
                                                 FAFSA
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="info">  <span class="small">Name of Loan: <br>
+                                            <p class="info">  <span class="small">Loan Servicer: <br>
                                                 </span><%= student_info[0].fafsa_values %></p>
                                         </div>
                                         <% } else { %>
@@ -237,7 +226,7 @@
                                                 </span>Bank Loan</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="info"> <span class="small">Bank Name: <br>
+                                            <p class="info"> <span class="small">Loan Servicer: <br>
                                                 </span><%= student_info[0].loan_bankname %></p>
                                         </div>
                                         <% } %>
@@ -246,49 +235,25 @@
 
 
                                     <div class="col-md-3">
-                                        <p class="info">  <span class="small">Loan Account Number: <br>
+                                        <p class="info">  <span class="small">Loan Account Number:<a href="#" data-toggle="tooltip" title="Your loan account number will not be visible to the public."> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
                                             </span><%= student_info[0].loan_accountno %></p>
                                     </div>
 
                                     <br><br><br><br><br>
                                 </div>
                                 <% } %>
-                                <!--                                <div>
-                                
-                                                                    <h3>Previous loans</h3><br>
-                                                                    <table class="table table-hover">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Type of Loan</th>
-                                                                                <th>Name of Loan</th>
-                                                                                <th>Name of Bank</th>
-                                                                                <th>Account Number</th>
-                                                                                <th>Loan Current Balance</th>
-                                                                                <th>Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <% _.each(loan_list, function (loan_list) { %>
-                                                                            <tr>
-                                                                                <%if (loan_list.loan_bankname == '') { %>
-                                                                                <td>FAFSA</td>
-                                                                                <% } else {%>
-                                                                                <td>Bank loan</td>
-                                
-                                                                                <% } %>
-                                
-                                                                                <td><%= loan_list.fafsa_values %></td>
-                                                                                <td><%= loan_list.loan_bankname %></td>
-                                                                                <td><%= loan_list.loan_accountno %></td>
-                                                                                <td><%= loan_list.loan_amount %></td>
-                                
-                                
-                                                                                <td>Deactivated</td>
-                                                                            </tr>
-                                                                            <% }) %>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="info"> <span class="small">About Me: <br>
+                                            </span><span id="about_me"></span></p>
+                                    </div>
+                                </div>
+                                <div class="row"><br>
+                                    <div class="col-md-12 bot">
+                                        <p class="info"> <span class="small">My Ambition: <br>
+                                            </span><span id="ambition"></span></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -306,7 +271,7 @@
                             <div class="row">
 
                                 <div class="col-md-3">
-                                    <p class="info">  <span class="small">Loan Amount: <br>
+                                    <p class="info">  <span class="small">Loan Current Balance: <br>
                                         </span>$<%= student_info[0].loan_amount %></p>
 
                                 </div>
@@ -318,7 +283,7 @@
                                             </span>FAFSA</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="info">  <span class="small">Name of Loan: <br>
+                                        <p class="info">  <span class="small">Loan Servicer: <br>
                                             </span><%= student_info[0].fafsa_values %></p>
                                     </div>
                                     <% } else { %>
@@ -327,7 +292,7 @@
                                             </span>Bank loan</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="info"> <span class="small">Bank Name: <br>
+                                        <p class="info"> <span class="small">Loan Servicer: <br>
                                             </span><%= student_info[0].loan_bankname %></p>
                                     </div>
                                     <% } %>
@@ -336,7 +301,7 @@
 
 
                                 <div class="col-md-3">
-                                    <p class="info">  <span class="small">Loan Account Number: <br>
+                                    <p class="info">  <span class="small">Loan Account Number:<a href="#" data-toggle="tooltip" title="Your loan account number will not be visible to the public."> <i  class="glyphicon glyphicon-question-sign"></i></a> <br>
                                         </span><%= student_info[0].loan_accountno %></p>
                                 </div>
 
@@ -350,7 +315,7 @@
                                     <thead>
                                         <tr>
                                             <th>Type of Loan</th>
-                                            <th>Name of Loan</th>
+                                            <th>Loan Servicer</th>
                                             <th>Name of Bank</th>
                                             <th>Account Number</th>
                                             <th>Loan Current Balance</th>
@@ -383,7 +348,7 @@
                     </div>
                     <div id="menu3" class="tab-pane fade">
                         <div class="col-md-12 white_bg">
-                            <h3><u>Media</u> <span class="pull-right"><a href="/media_edit/<%= student_info[0].student_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></span></h3><br>
+                            <h3><u>Funding Profile Media</u> <span class="pull-right"><a href="/media_edit/<%= student_info[0].student_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></span></h3><br>
 
                             <div class="row">
                                 <h3 style="margin-left:15px"> Your Video</h3>
