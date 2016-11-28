@@ -136,6 +136,19 @@
     label, .hide_name{
         color:#504949 !important;
     }
+    @media only screen and (max-width: 991px) {
+  .amt_font{
+    font-size:50px !important;
+  }
+  @media only screen and (max-width: 767px) {
+  
+  
+  #donerinfofields .halfwf {
+        width: 100%;
+        
+    }
+
+  }
 </style> 
 
 <div  class="main-content" style="padding-top:80px;padding-bottom:15px;">
@@ -188,15 +201,15 @@
                             <div class="panel-body">
                                 <form role="form" id="donationamt" method="POST" action="/paymentpage" name="donorsForm" novalidate>
                                     <div class="form-group input-group"  id="amtinput">
-                                        <span class="input-group-addon">$</span>
-                                        <input class="form-control" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
-                                        <span class="input-group-addon">.00</span>
+                                        <span class="input-group-addon amt_font">$</span>
+                                        <input class="form-control amt_font" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
+                                        <span class="input-group-addon amt_font">.00</span>
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
                                     <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required.</p>
                                     <div  id="donerinfofields" class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                            <div class="form-group input-group col-md-6 col-xs-12 col-sm-12 halfwf">
                                                 <label>Email address:</label>
                                                 <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
 
@@ -204,7 +217,7 @@
                                                 <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
                                             </div>
 
-                                            <div class="form-group input-group col-md-6 col-sm-6 halfwf">
+                                            <div class="form-group input-group col-md-6 col-xs-12 col-sm-12 halfwf">
                                                 <label for="email">Your Name:</label>
                                                 <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
                                                 <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>

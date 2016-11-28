@@ -327,7 +327,8 @@
                     <form method="post" ng-submit="submitForm()" name="adminLogin" role="form" novalidate> 
                         <div ng-show="loginError" class="alert alert-danger ng-hide">
                             <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
-                            <strong>!</strong> {{loginError}}
+                            <strong>!</strong> {{loginError}}</br>
+                            <small>{{loginErrormessage}}</small>
                         </div>
                         <h2 class="text-center">Admin Login</h2>
                         <div class="form-group col-md-12">
@@ -428,6 +429,7 @@
                 }).error(function (data) {
 //                    console.log(data.error);
                     $scope.loginError = data.error;
+                    $scope.loginErrormessage = data.errorMessage;
                 });
             }
         };

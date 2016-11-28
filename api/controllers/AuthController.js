@@ -24,10 +24,10 @@ module.exports = {
                     req.session.admin_contactno = admin.admin_contactno;
                     return res.ok();
                 } else {
-                    res.status(500).send({error: 'Login failed'});
+                    res.status(500).send({error: 'Login failed',errorMessage:'Most likely you have entered incorrect login or password.'});
                 }
             } else {
-                res.status(500).send({error: 'Login failed'});
+                res.status(500).send({error: 'Login failed',errorMessage:'Most likely you have entered incorrect login or password.'});
             }
    
         });
