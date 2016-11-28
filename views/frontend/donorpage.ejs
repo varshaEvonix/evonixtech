@@ -32,7 +32,7 @@
         font-size: 90px;
     }
     #donationamt #amtinput input {
-        text-align: right;
+        text-align: left;
         height: 120px;
     }
     #donationamt #amtinput input:focus {
@@ -184,7 +184,7 @@
                         <div class="panel panel-default left-box about">
                             <div class="panel-heading">
 
-                                About the Student
+                                About
 
                             </div>
                             <div class="panel-body">
@@ -203,7 +203,7 @@
                                     <div class="form-group input-group"  id="amtinput">
                                         <span class="input-group-addon amt_font">$</span>
                                         <input class="form-control amt_font" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
-                                        <span class="input-group-addon amt_font">.00</span>
+                                       
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
                                     <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required.</p>
