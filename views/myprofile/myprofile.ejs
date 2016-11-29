@@ -334,8 +334,11 @@
 
                         <% }) %> 
                         <br>
+                              <% if(donor_l.length > 0){ %>
                         <div class="panel panel-success" style="">
+                      
                             <div class="panel-heading panel-success">Recent donations</div>
+                         
                             <div class="panel-body">
                                 <ul>
                                     <% _.each(donor_l, function (donor_l) { %>
@@ -349,8 +352,9 @@
 
                                 </ul>
                             </div>
+                              
                         </div>
-
+ <% } %>
                     </div>
 
                     <div class="col-md-6 col-md-pull-6 col-sm-6 col-sm-pull-6">

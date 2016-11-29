@@ -19,9 +19,10 @@
                     <br>
                     <% var pending_amount = 0 %>
                     <% _.each(post, function (values) { %>
-                    <% pending_amount = values.funded_amount + pending_amount %>
+                    
+                    <% pending_amount = values.balance_to_transfer + pending_amount %>
                     <% }) %>
-                    Pending Amount : $ <strong><%= pending_amount %></strong>
+                    Pending Amount : $ <strong><%= pending_amount.toFixed(2) %></strong>
                 </div>
 
             </div>

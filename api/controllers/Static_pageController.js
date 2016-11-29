@@ -195,6 +195,18 @@ module.exports = {
     addfaq: function (req, res) {
         if (req.method == "POST")
         {
+//            var select_category = "select * from mst_category where category=" + mysql.escape(req.param("category"));
+//            Mst_category.query(selectQuery, function (err, category_result)
+//            {
+//                if(category_result.length > 0){
+//                    //insert
+////                    var category="";
+//                }else{
+//                    //update
+////                    var 
+//                }
+//
+//            });
             var selectQuery = "INSERT INTO `stumuch_db`.`faq` (`name`, `description`,  `category`) VALUES (" + mysql.escape(req.param("question")) + ", " + mysql.escape(req.param("description")) + "," + mysql.escape(req.param("category")) + ")";
 
             Faq.query(selectQuery, function (err, record)

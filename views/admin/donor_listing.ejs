@@ -27,33 +27,33 @@
                                     <th>Funder Email</th>
                                     <th>Student Funded</th>
                                     <th>Transferred (Y/N)?</th>
-                                    
+
                                     <!--<th style="display: none">Stripe Transaction Details</th>-->
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                             
                                 <% if(post.length > 0){ %>
                                 <% _.each(post, function (values) { %>
 
                                 <tr>
                                     <td> <%= values.funding_date %>
                                         <%= values.funding_time %>
-                                    
+
                                     </td>
                                     <td> <%= values.funding_date %></td>
                                     <td>
                                         $ <%= values.funded_amount %></td>
                                     <td> $ <%= values.transaction_charge %>
-                                       </td>
-                                       <td>
+                                    </td>
+                                    <td>
                                         $ <%= values.percentage_charge %></td>
-                                        <td>$ <%= values.balance_to_transfer %></td>
+                                    <td>$ <%= values.balance_to_transfer %></td>
                                     <td><%= values.donors_name %></td>
                                     <td><%= values.donor_email %></td>
-                                   
-                                    <td><label><a target="_blank" href="<%= sails.getBaseUrl()+'/single_profile/'+ values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
-                                    <td></td>
+
+                                    <td><label><a target="_blank" href="<%= sails.getBaseUrl()+'/admin/viewdetails/'+ values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
+                                    <td><%= values.payout=='1'?'Y':'N' %></td>
                                     <!--<td style="display: none"> <%= values.stripe_token %></td>-->
                                 </tr>
                                 <% }) %>

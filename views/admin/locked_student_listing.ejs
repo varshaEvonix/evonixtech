@@ -47,6 +47,8 @@
     <section class="wrapper">
 
         <div class="row">
+             <%- req.flash('error') %>
+            <%- req.flash('success') %>
             <div class="col-lg-12 main-chart white_bg">
                 <h1 class="phead">Locked Student Listing</h1><br>
                 <div class="col-sm-12">
