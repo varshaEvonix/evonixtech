@@ -492,7 +492,7 @@ module.exports = {
 
             var per_page = 10;
             var start_from = (page - 1) * per_page;
-            var q = 'SELECT donors_funding_details.*,TIME_FORMAT(funding_date,"%H:%i %r") as funding_time,DATE_FORMAT(funding_date,"%Y-%m-%d") as funding_date,student_details.student_id, student_details.student_firstname,student_details.student_lastname,student_details.student_email FROM donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" order by donors_funding_details.funding_date desc LIMIT ' + start_from + ', ' + per_page;
+            var q = 'SELECT donors_funding_details.*,TIME_FORMAT(funding_date,"%H:%i %r") as funding_time,DATE_FORMAT(funding_date,"%Y-%m-%d") as funding_date,TIME_FORMAT(transfered_date,"%H:%i %r") as transfered_time,DATE_FORMAT(transfered_date,"%Y-%m-%d") as transfered_date,student_details.student_id, student_details.student_firstname,student_details.student_lastname,student_details.student_email FROM donors_funding_details left join loan_details on loan_details.loan_id=donors_funding_details.loan_id left join student_details on loan_details.student_id=student_details.student_id where loan_details.isActive="1" order by donors_funding_details.funding_date desc LIMIT ' + start_from + ', ' + per_page;
 
             Donors_funding_details.query(q, function (err, results) {
 
