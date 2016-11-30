@@ -1,6 +1,6 @@
 <%- include ../admin/admin_head.ejs %>
 <%- include ../admin/sidebar.ejs %>
-
+<% console.log(faq) %>
 
 <section id="main-content">
     <section class="wrapper">
@@ -13,11 +13,11 @@
                     <div class="panel-body">
 
                         <!--<form action="/updatefaq" class="form-group" method="POST" role="form">-->
-                        <form class="form" ng-submit="submitForm()" name="faqform" novalidate>
+                        <form class="form" ng-submit="submitForm()" action="/updatefaq" method="POST" name="faqform" novalidate>
                             <div class="form-group row">
                                 <label class="col-xs-2 control-label">Enter Category</label>
                                 <div class="col-xs-10">
-                                    <input type="text" name="category" ng-model="admin.category" value="<%= faq.category %>" id="category" autocomplete="off" class="form-control" required>
+                                    <input type="text" name="category" ng-model="admin.category" value="<%= faq.category_name %>" id="category" autocomplete="off" class="form-control" required>
                                     <span ng-show="submitted && faqform.name.$error.required"  class="help-block has-error ng-hide">Category is required.</span>
                                 </div>
                             </div>
@@ -37,6 +37,7 @@
                             </div>
 
                             <div class="form-group row">
+                                <input type="hidden" name="faq_id" value="<%= faq.id %>">
                                 <input type="submit" ng-click="submitted = true" class="btn btn-primary col-xs-offset-5" value="Update">
                             </div>
                         </form>
@@ -55,30 +56,30 @@
 <script src="../../index_files/stdash/js/typeahead.js"></script>
 
 <script>
-    $('#category').typeahead({
-        onSelect: function (item) {
-            console.log(item)
-            $('#category').val(item.text);
-            $scope.admin.category = item.text;
-        },
-        ajax: {
-            url: "/get_category",
-            timeout: 500,
-            displayField: 'category',
-            triggerLength: 1,
-            method: "get",
-            loadingClass: "loading-circle",
-            preDispatch: function (query) {
-                return {
-                    search: query
-                }
-            },
-            preProcess: function (data) {
-                console.log(data.category);
-                return data.category;
-            }
-        }
-    });
+                                    $('#category').typeahead({
+                                        onSelect: function (item) {
+                                            console.log(item)
+                                            $('#category').val(item.text);
+                                            $scope.admin.category = item.text;
+                                        },
+                                        ajax: {
+                                            url: "/get_category",
+                                            timeout: 500,
+                                            displayField: 'category',
+                                            triggerLength: 1,
+                                            method: "get",
+                                            loadingClass: "loading-circle",
+                                            preDispatch: function (query) {
+                                                return {
+                                                    search: query
+                                                }
+                                            },
+                                            preProcess: function (data) {
+                                                console.log(data.category);
+                                                return data.category;
+                                            }
+                                        }
+                                    });
 </script>
 <script>
     $('#faq').addClass('active');
@@ -87,20 +88,23 @@
         $scope.admin = {};
 
         $scope.admin.faq_id = '<%= faq.id %>';
-        $scope.admin.category = '<%= faq.category %>';
+        $scope.admin.category = '<%= faq.category_name %>';
         $scope.admin.name = '<%= faq.name %>';
         $scope.admin.description = `<%= faq.description %>`;
                 $scope.submitForm = function () {
                     if ($scope.faqform.$valid) {
-                        $http({
-                            method: 'POST',
-//                    dataType: 'json',
-                            url: '/updatefaq',
-                            data: $scope.admin, //forms user object
-                            headers: {'Content-Type': 'application/json'}
-                        }).success(function (data) {
-                            window.location = '/admin/faq';
-                        });
+                        return true;
+//                        $http({
+//                            method: 'POST',
+////                    dataType: 'json',
+//                            url: '/updatefaq',
+//                            data: $scope.admin, //forms user object
+//                            headers: {'Content-Type': 'application/json'}
+//                        }).success(function (data) {
+//                            window.location = '/admin/faq';
+//                        });
+                    } else {
+                        return false;
                     }
                 };
     });

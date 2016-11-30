@@ -7,16 +7,13 @@
 
 module.exports = {
     'fetch_faq': function (req, res) {
-        Faq.query('SELECT * from faq where isEnabled=1', function (err, recordset) {
-            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
-                var category = [];
-                cats.forEach(function (cats, index) {
-                    category.push(cats.category);
-                });
+        Faq.query('SELECT * from faq left join mst_category on mst_category.category_id=faq.category_id where isEnabled=1 AND mst_category.status=1', function (err, recordset) {
+            Faq.query("SELECT * from faq left join mst_category on mst_category.category_id=faq.category_id where isEnabled=1 AND mst_category.status=1 group by faq.category_id", function (err, cats) {
+
                 return res.view('./frontend/faq', {
                     layout: false,
                     faq: recordset,
-                    category: category,
+                    category: cats,
                 });
 
             });

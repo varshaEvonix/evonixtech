@@ -14,16 +14,14 @@
                 </h1>
                 <br>
                 <%  
-                console.log('category')
-                console.log(category)
                 _.each(category, function (category) { 
                 %>
-                <h3 class="panel-title"><%= category %></h3>
+                <h3 class="panel-title"><a class=" delete-category" data="<%= category.category_id %>" href="javascript:void(0);"><i class="fa fa-trash-o" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= category.category_name %></h3>
                 <div class="panel panel-default">
 
                     <%  
                     _.each(faq, function (faq) {
-                    if(faq.category==category){
+                    if(faq.category_id==category.category_id){
                     %>
                     <div class="panel-heading">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= faq.id %>"><b><%= faq.name %></b></a>
@@ -168,6 +166,33 @@
                                                     async: true,
                                                     dataType: 'json',
                                                     data: {faq_id: faq_id},
+                                                    //your form data to post goes here
+                                                    success: function (response) {
+                                                        window.location.reload();
+                                                    }
+                                                });
+
+                                            });
+                                        });
+</script>
+<script>
+                                        $('.delete-category').click(function () {
+                                            var category_id = $(this).attr('data');
+                                            swal({title: "Are you sure?",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "Yes, Delete it!",
+                                                closeOnConfirm: false
+                                            },
+                                            function () {
+
+                                                $.ajax({
+                                                    url: "/admin/delete_category",
+                                                    type: "POST",
+                                                    async: true,
+                                                    dataType: 'json',
+                                                    data: {category_id: category_id},
                                                     //your form data to post goes here
                                                     success: function (response) {
                                                         window.location.reload();

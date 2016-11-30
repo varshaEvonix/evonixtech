@@ -111,17 +111,12 @@ module.exports = {
     },
     'get_faq': function (req, res) {
         if (req.session.admin_id || req.session.admin_id != undefined) {
-            Faq.query('SELECT * FROM faq where isEnabled=1', function (err, recordset) {
-                Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
-                    var category = [];
-                    cats.forEach(function (cats, index) {
-                        category.push(cats.category);
-                    });
-
+            Faq.query('SELECT * FROM faq left join mst_category on mst_category.category_id=faq.category_id  where mst_category.status=1 AND faq.isEnabled=1', function (err, recordset) {
+                Faq.query("SELECT * from faq left join mst_category on mst_category.category_id=faq.category_id where isEnabled=1 AND mst_category.status=1 group by faq.category_id", function (err, cats) {
                     return res.view('./admin/faq', {
                         layout: false,
                         faq: recordset,
-                        category: category,
+                        category: cats,
                     });
 
                 });
@@ -131,23 +126,23 @@ module.exports = {
         }
     },
     'get_category': function (req, res) {
-        Faq.query('SELECT * FROM faq', function (err, recordset) {
-            Faq.query("SELECT DISTINCT category FROM faq", function (err, cats) {
-                var category = [];
 
-                cats.forEach(function (cats, index) {
-                    category.push(cats.category);
-                });
+        Faq.query("SELECT * FROM mst_category", function (err, cats) {
+            var category = [];
 
-                return res.ok({category: category});
-
+            cats.forEach(function (cats, index) {
+                category.push(cats.category_name);
             });
+
+            return res.ok({category: category});
+
         });
+
 
     },
     'editfaq': function (req, res) {
         if (req.session.admin_id || req.session.admin_id != undefined) {
-            Faq.query('SELECT * FROM faq where id=' + req.param("id"), function (err, recordset) {
+            Faq.query('SELECT * FROM faq left join mst_category on mst_category.category_id=faq.category_id where faq.id=' + req.param("id"), function (err, recordset) {
                 recordset = recordset[0];
                 var text = recordset.description;
                 var re = '<br/>';
@@ -174,52 +169,97 @@ module.exports = {
             return  res.redirect('admin/login');
         }
     },
+    'delete_category': function (req, res) {
+        if (req.session.admin_id || req.session.admin_id != undefined) {
+            var faq_query = "UPDATE `mst_category` SET `status` = '0' WHERE `mst_category`.`category_id` =" + req.param('category_id');
+            Faq.query(faq_query, function (err, recordset) {
+                req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Category Deleted</div>');
+                return res.ok();
+            });
+        } else {
+            return  res.redirect('admin/login');
+        }
+    },
     'updatefaq': function (req, res) {
+
         if (req.method == "POST")
         {
-            var selectQuery = "UPDATE faq SET category=" + mysql.escape(req.param("category")) + ",  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("name")) + " WHERE `faq`.`id` =" + req.param("faq_id");
-
-            Faq.query(selectQuery, function (err, record)
+            var postdata = req.allParams();
+            var category_id = '';
+            var select_category = "select * from mst_category where category_name=" + mysql.escape(req.param("category"));
+            Mst_category.query(select_category, function (err, category_result)
             {
-                if (err)
-                {
+                if (category_result.length > 0) {
+                    category_id = category_result[0].category_id;
+                    var category_query = "UPDATE `mst_category` SET `status` = '1' WHERE `mst_category`.`category_id` =" + category_id;
+                    Mst_category.query(category_query, function (err, result)
+                    {
+                    });
+                    var selectQuery = "UPDATE faq SET category_id=" + category_id + ",  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("name")) + " WHERE `faq`.`id` =" + req.param("faq_id");
+
+                    Faq.query(selectQuery, function (err, record)
+                    {
+
+                    });
+                } else {
+                    var category_query = 'INSERT INTO `mst_category` (`category_name`,  `status`) VALUES (' + mysql.escape(req.param("category")) + ',1)';
+                    Mst_category.query(category_query, function (err, result)
+                    {
+
+                        category_id = result.insertId;
+                        var selectQuery = "UPDATE faq SET category_id=" + category_id + ",  description =" + mysql.escape(req.param("description")) + ", name=" + mysql.escape(req.param("name")) + " WHERE `faq`.`id` =" + req.param("faq_id");
+
+                        Faq.query(selectQuery, function (err, record)
+                        {
+
+                        });
+                    });
 
                 }
-                else
-                {
-                    res.ok();
-                }
+                req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Faq Updated successfully</div>');
+                return  res.redirect('admin/faq');
+
             });
+
         }
     },
     addfaq: function (req, res) {
         if (req.method == "POST")
         {
-//            var select_category = "select * from mst_category where category=" + mysql.escape(req.param("category"));
-//            Mst_category.query(selectQuery, function (err, category_result)
-//            {
-//                if(category_result.length > 0){
-//                    //insert
-////                    var category="";
-//                }else{
-//                    //update
-////                    var 
-//                }
-//
-//            });
-            var selectQuery = "INSERT INTO `stumuch_db`.`faq` (`name`, `description`,  `category`) VALUES (" + mysql.escape(req.param("question")) + ", " + mysql.escape(req.param("description")) + "," + mysql.escape(req.param("category")) + ")";
-
-            Faq.query(selectQuery, function (err, record)
+            var category_id = '';
+            var select_category = "select * from mst_category where category_name=" + mysql.escape(req.param("category"));
+            Mst_category.query(select_category, function (err, category_result)
             {
-                if (err)
-                {
+                if (category_result.length > 0) {
+                    category_id = category_result[0].category_id;
+                    var category_query = "UPDATE `mst_category` SET `status` = '1' WHERE `mst_category`.`category_id` =" + category_id;
+                    Mst_category.query(category_query, function (err, result)
+                    {
+                    });
+                    var selectQuery = "INSERT INTO `faq` (`name`, `description`,  `category_id`) VALUES (" + mysql.escape(req.param("question")) + ", " + mysql.escape(req.param("description")) + "," + category_id + ")";
 
+                    Faq.query(selectQuery, function (err, record)
+                    {
+
+                    });
+                } else {
+                    var category_query = 'INSERT INTO `mst_category` (`category_name`,  `status`) VALUES (' + mysql.escape(req.param("category")) + ',1)';
+                    Mst_category.query(category_query, function (err, result)
+                    {
+                        category_id = result.insertId;
+                        var selectQuery = "INSERT INTO `faq` (`name`, `description`,  `category_id`) VALUES (" + mysql.escape(req.param("question")) + ", " + mysql.escape(req.param("description")) + "," + category_id + ")";
+
+                        Faq.query(selectQuery, function (err, record)
+                        {
+
+                        });
+
+                    });
                 }
-                else
-                {
-                    res.ok();
-                }
+
             });
+            req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Faq Added successfully</div>');
+            res.ok();
         }
 
     },
