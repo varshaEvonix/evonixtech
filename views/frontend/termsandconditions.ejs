@@ -4,7 +4,9 @@
 
     <div class="container" style="padding-bottom:25px">
         <div class="row">
-
+<% console.log('recordset.name') %>
+<% console.log(recordset.name) %>
+<% console.log(description) %>
             <div class="col-md-12" style="background-color:#fff">
                 <div style="padding:9px 50px">
                     <h2 class="text-center"><%= recordset.name %></h2>
@@ -18,7 +20,7 @@
 
 
     </div>
-    <%- include ../footer.ejs %>
+    <%- include footer.ejs %>
     <script>
         function htmlEncode(value) {
             return $('<div/>').text(value).html();

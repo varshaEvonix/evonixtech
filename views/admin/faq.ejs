@@ -16,7 +16,7 @@
                 <%  
                 _.each(category, function (category) { 
                 %>
-                <h3 class="panel-title"><a class=" delete-category" data="<%= category.category_id %>" href="javascript:void(0);"><i class="fa fa-trash-o" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= category.category_name %></h3>
+                <h3 class="panel-title"><a class=" delete-category" title="Delete Category" data="<%= category.category_id %>" href="javascript:void(0);"><i class="fa fa-trash-o" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= category.category_name %></h3>
                 <div class="panel panel-default">
 
                     <%  

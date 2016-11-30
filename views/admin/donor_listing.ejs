@@ -52,7 +52,7 @@
                                     <td><%= values.donors_name %></td>
                                     <td><%= values.donor_email %></td>
 
-                                    <td><label><a target="_blank" href="<%= sails.getBaseUrl()+'/admin/viewdetails/'+ values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
+                                    <td><label><a target="_blank" href="/admin/viewdetails/<%= values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
                                     <td><%= values.payout=='1'?'Y':'N' %></td>
                                     <!--<td style="display: none"> <%= values.stripe_token %></td>-->
                                 </tr>
