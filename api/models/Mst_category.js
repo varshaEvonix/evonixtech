@@ -7,20 +7,11 @@
 
 module.exports = {
     attributes: {
-        name: {
-            type: 'string',
-            required: true
-        },
-        description: {type: 'longtext',
-            required: true
-        },
         category: {type: 'string',
             required: true
-        }
-    },
-    validation_messages: {
-        name: {
-            required: 'Name is required',
+        },
+        status: {type: 'integer',
+            required: true
         }
     }
 };
