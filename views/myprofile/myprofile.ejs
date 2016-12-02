@@ -24,6 +24,9 @@
         line-height: 30px !important;
         background-color: #148407 !important;
     }
+    .fbshare{
+        background: url("../../index_files/fbshare.png") no-repeat;
+    }
 </style>
 <style>
     .Ans
@@ -274,11 +277,18 @@
                                         <div class="text-center don" ><a href="/donorpage/<%= student_info.student_id %>" class="btn btn-success donate_main"><strong style="font-size:22px">Donate Now</strong></a></Button></div>
                                         <div class="text-center">
                                             <div class="col-md-6 col-sm-6 face">
-                                                <div class="fb-share-button" data-href="/single_profile/<%= student_info.student_id %>" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+                                                <!--<div class="fb-share-button"  data-href="/single_profile/<%= student_info.student_id %>" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>-->
+                                                <div data-href="/single_profile/<%= student_info.student_id %>" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"><input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:100%;"></a></div>
                                                 <!--<input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:100%;">-->
                                             </div>
                                             <div class="col-md-6 col-sm-6 twit">
-                                                <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:100%;">
+                                                <% var link=sails.getBaseUrl()+'/single_profile/'+student_info.student_id  %>
+                                             
+                                                <a class="twitter-share-button" target="_blank"
+                                                   href="https://twitter.com/intent/tweet?text=<%= link %>">
+                                                    <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:100%;"></a>
+
+                                                <!--<input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:100%;">-->
                                             </div>
                                         </div>
                                     </div></div></div>

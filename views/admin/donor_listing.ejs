@@ -27,12 +27,13 @@
                                     <th>Funder Email</th>
                                     <th>Student Funded</th>
                                     <th>Transferred (Y/N)?</th>
+                                    <th style="display: none">Stripe Transaction Id</th>
 
                                     <!--<th style="display: none">Stripe Transaction Details</th>-->
                                 </tr>
                             </thead>
                             <tbody>
-                             
+                         
                                 <% if(post.length > 0){ %>
                                 <% _.each(post, function (values) { %>
 
@@ -56,7 +57,7 @@
 
                                     <td><label><a target="_blank" href="/admin/viewdetails/<%= values.student_id %>"><%= values.student_firstname %> <%= values.student_lastname %></a></label></td>
                                     <td><%= values.payout=='1'?'Y':'N' %></td>
-                                    <!--<td style="display: none"> <%= values.stripe_token %></td>-->
+                                    <td style="display: none"> <%= values.transaction_id %></td>
                                 </tr>
                                 <% }) %>
                                 <% }else{ %>

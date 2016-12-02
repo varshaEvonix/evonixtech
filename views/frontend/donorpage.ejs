@@ -202,7 +202,7 @@
                                 <form role="form" id="donationamt" method="POST" action="/paymentpage" name="donorsForm" novalidate>
                                     <div class="form-group input-group"  id="amtinput">
                                         <span class="input-group-addon amt_font">$</span>
-                                        <input class="form-control amt_font" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" ng-min="5" type="text" autocomplete="off" required>
+                                        <input class="form-control amt_font" name="funding_amount" id="funding_amount" ng-model="donor.funding_amount" value="" maxlength="4" ng-maxlength="4" ng-min="5" type="text" autocomplete="off" required>
                                        
                                     </div>
                                     <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
