@@ -213,14 +213,14 @@
                                                 <label>Email address:</label>
                                                 <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
 
-                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email id is required.</p>
-                                                <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Not valid email!</p>
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email address is required.</p>
+                                                <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Invalid email address</p>
                                             </div>
 
                                             <div class="form-group input-group col-md-6 col-xs-12 col-sm-12 halfwf">
                                                 <label for="email">Your Name:</label>
                                                 <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
-                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name id is required.</p>
+                                                <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Donor name is required.</p>
                                             </div>
                                             <div class="inputgp">
                                                 <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">

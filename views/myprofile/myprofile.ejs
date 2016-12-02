@@ -174,6 +174,16 @@
     }
 </style>
 <body class="">
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <%- include ../header2.ejs %>
     <div id="wrapper" class="clearfix">
         <!-- preloader -->
@@ -264,7 +274,8 @@
                                         <div class="text-center don" ><a href="/donorpage/<%= student_info.student_id %>" class="btn btn-success donate_main"><strong style="font-size:22px">Donate Now</strong></a></Button></div>
                                         <div class="text-center">
                                             <div class="col-md-6 col-sm-6 face">
-                                                <input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:100%;">
+                                                <div class="fb-share-button" data-href="/single_profile/<%= student_info.student_id %>" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+                                                <!--<input type="image" src="../../index_files/fbshare.png" alt="Submit" style="width:100%;">-->
                                             </div>
                                             <div class="col-md-6 col-sm-6 twit">
                                                 <input type="image" src="../../index_files/tshare.png" alt="Submit" style="width:100%;">
@@ -334,11 +345,11 @@
 
                         <% }) %> 
                         <br>
-                              <% if(donor_l.length > 0){ %>
+                        <% if(donor_l.length > 0){ %>
                         <div class="panel panel-success" style="">
-                      
+
                             <div class="panel-heading panel-success">Recent donations</div>
-                         
+
                             <div class="panel-body">
                                 <ul>
                                     <% _.each(donor_l, function (donor_l) { %>
@@ -352,9 +363,9 @@
 
                                 </ul>
                             </div>
-                              
+
                         </div>
- <% } %>
+                        <% } %>
                     </div>
 
                     <div class="col-md-6 col-md-pull-6 col-sm-6 col-sm-pull-6">
@@ -424,7 +435,7 @@
         <!-- Footer --><br><br></div></div></div></div></div> </div>
 </div>
 <%- include ../footer.ejs %>
- <script src="../../index_files/stdash/js/chart-master/Chart.js"></script>
+<script src="../../index_files/stdash/js/chart-master/Chart.js"></script>
 <!-- JS | Custom script for all pages -->
 
 
@@ -442,21 +453,21 @@
 
 <script>
 
-                                      $(document).ready(function () {
+                                    $(document).ready(function () {
 
-                                          $("#Story").addClass("active").show();
+                                        $("#Story").addClass("active").show();
 
-                                          $("#owl-demo").owlCarousel({
-                                              autoPlay: 3000, //Set AutoPlay to 3 seconds
+                                        $("#owl-demo").owlCarousel({
+                                            autoPlay: 3000, //Set AutoPlay to 3 seconds
 
-                                              items: 4,
-                                              itemsDesktop: [1199, 3],
-                                              itemsDesktopSmall: [979, 3]
+                                            items: 4,
+                                            itemsDesktop: [1199, 3],
+                                            itemsDesktopSmall: [979, 3]
 
-                                          });
+                                        });
 
 
-                                      });
+                                    });
 
 </script>
 <script>

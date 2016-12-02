@@ -125,7 +125,7 @@
                                         </span><%= student_info[0].student_lastname %></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <p class="info"> <span class="small">Birth Date: <br>
+                                    <p class="info"> <span class="small">Birth Date: <a href="#" data-toggle="tooltip" title="Your contact information and birth date will not be visible to the public."><i  class="glyphicon glyphicon-question-sign"></i></a> <br>
                                             <% console.log(student_info[0].student_birthdate) %>
                                         </span><%= (student_info[0].student_birthdate!='0000-00-00')? student_info[0].student_birthdate : 'MM-DD-YYYY' %></p>
                                 </div>
@@ -190,7 +190,7 @@
                             </div> 
                             <br>
                             <br>
-                            <div class="row">
+                            <div class="row" style="margin-left:0px;">
                                 <div style="font-size:22px;" class="row edit_op">Loan Details
 
                                     <!--                                    <div class="row pull-right"> <% if (student_info[0].loan_id != null) { %><a href="/loan_edit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> <% } %>
