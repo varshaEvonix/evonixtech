@@ -65,7 +65,9 @@ module.exports = {
                                     var html = html.replace(/\n/gi, '<br/>');
 
                                     var html = html.replace('<~:firstname:~>', student_firstname);
-                                    var html = html.replace("<~:link:~>", "<a href=" + sails.getBaseurl() + "/activation_link/" + st_id + "'>Click Here</a>");
+                                    var protocol = req.connection.encrypted ? 'https' : 'http';
+                                    var baseUrl = protocol + '://' + req.headers.host + '/';
+                                    var html = html.replace("<~:link:~>", "<a href=" + baseUrl + "activation_link/" + st_id + "'>Click Here</a>");
                                     console.log('html')
                                     console.log(html)
                                     var subject = mail_template.subject;

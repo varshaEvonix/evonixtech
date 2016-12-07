@@ -1,6 +1,7 @@
 <%- include ../stuhead.ejs %>
 
 <%- include ../stud_left.ejs %>
+<% var current_menu=req.param('tab')%>
 
 <style>
     .image_pro{
@@ -103,17 +104,17 @@
                 <% var temp= req.flash('active_menu') %>
 
                 <ul class="nav nav-tabs">
-                    <li class="<%= temp.length > 0 ? '' : 'active' %>"><a data-toggle="tab" href="#home" class="profile_tabs">Account Information</a></li>
-                    <li class="<%= temp[0]=='menu1' ? 'active': '' %>"><a data-toggle="tab" href="#menu1"  class="profile_tabs">Funding Profile</a></li>
+                    <li class="<%= (temp.length <= 0)&&(!current_menu) ? 'active' : '' %>"><a data-toggle="tab" href="#home" class="profile_tabs">Account Information</a></li>
+                    <li class="<%= (temp[0]=='menu1')||(current_menu=='menu1') ? 'active': '' %>"><a data-toggle="tab" href="#menu1"  class="profile_tabs">Funding Profile</a></li>
                     <!--<li><a data-toggle="tab" href="#menu2" class="profile_tabs">Loan Details</a></li>-->
-                    <li class="<%= temp[0]=='menu3' ? 'active': '' %>"><a data-toggle="tab" href="#menu3" class="profile_tabs">Funding Profile Media</a></li>
+                    <li class="<%= (temp[0]=='menu3')||(current_menu=='menu3') ? 'active': '' %>"><a data-toggle="tab" href="#menu3" class="profile_tabs">Funding Profile Media</a></li>
 
                 </ul>
 
                 <div class="tab-content">
 
 
-                    <div id="home" class="tab-pane fade in active"><div class="col-md-12 white_bg">
+                    <div id="home" class="tab-pane fade <%= (temp.length <= 0)&&(!current_menu) ? 'in active' : '' %>"><div class="col-md-12 white_bg">
                             <div class="row pull-right"> <a href="/personalinfo" class="btn btn-theme04 edit_op"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></div><br>
                             <div class="row">
                                 <div class="col-md-3">
@@ -170,7 +171,7 @@
 
                         </div>
                     </div>
-                    <div id="menu1" class="tab-pane fade">
+                    <div id="menu1" class="tab-pane fade <%= (temp[0]=='menu1')||(current_menu=='menu1') ? 'in active': '' %>">
                         <div class="col-md-12 white_bg" style="min-height:300px;">
 
                             <div class="row pull-right">
@@ -258,7 +259,7 @@
                         </div>
                     </div>
 
-                    <div id="menu2" class="tab-pane fade">
+                    <div id="menu2" class="tab-pane fade <%= (temp[0]=='menu2')||(current_menu=='menu2') ? 'in active': '' %>">
                         <div class="col-md-12 white_bg">
                             <div style="font-size:22px;" class="row edit_op">Current Loan
 
@@ -346,7 +347,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="menu3" class="tab-pane fade">
+                    <div id="menu3" class="tab-pane fade <%= (temp[0]=='menu3')||(current_menu=='menu3') ? 'in active': '' %>">
                         <div class="col-md-12 white_bg">
                             <h3><u>Funding Profile Media</u> <span class="pull-right"><a href="/media_edit/<%= student_info[0].student_id %>" class="btn btn-theme04"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a></span></h3><br>
 

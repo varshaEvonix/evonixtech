@@ -354,8 +354,9 @@
                     <div class="col-md-6">
                         <h3 >Funder Details</h3>
                         <br>
-                        <p><strong>Name</strong> : <%= donor_name %></p><br>
-                        <p><strong>Email Id</strong> : <%= email_id %></p>
+                     
+                        <p><strong>Name</strong> : <%= postdata.donor_name %></p><br>
+                        <p><strong>Email Id</strong> : <%= postdata.email_id %></p>
 
 
                     </div>
@@ -379,7 +380,7 @@
                         <tr>
                             <td class="text-right pad-right hidden-border"><strong>Funding Amount</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$ <%= funding_amount %>.00</td>
+                            <td class="text-right pad-right hidden-border">$ <%= postdata.funding_amount %>.00</td>
                         </tr>
                         <tr>
                             <td class="text-right pad-right hidden-border"><strong>Tax</strong></td>
@@ -387,7 +388,7 @@
                             <td class="text-right pad-right hidden-border">$00.00</td>
                         </tr>
                         <tr>
-                       <% var total = funding_amount %>
+                       <% var total = postdata.funding_amount %>
                             <td class="pad-right text-right"><strong class="text-lg text-accent">Total</strong></td>
 
                             <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$ <%= total %>.00</b></strong></td>
@@ -403,7 +404,7 @@
             <br>
             <div class="row">
             <div class="col-md-12" style="margin:auto;text-align:center">
-            <% var data_amount= funding_amount * 100 %>
+            <% var data_amount= postdata.funding_amount * 100 %>
                 <h2>
                 To Transfer Your Fund</h2>
                     <form action="/subscribe" method="POST">
@@ -419,13 +420,13 @@
                     </script>
                     <input type="hidden" name="amount" value="<%= total %>">
                     <input type="hidden" name="data_amount" value="<%= data_amount %>">
-                    <input type="hidden" name="email" value="<%= email_id %>">
-                    <input type="hidden" name="loan_id" value="<%= loan_id %>">
-                    <input type="hidden" name="donor_name" value="<%= donor_name %>">
-                    <input type="hidden" name="comment" value="<%= comment %>">
+                    <input type="hidden" name="email" value="<%= postdata.email_id %>">
+                    <input type="hidden" name="loan_id" value="<%= postdata.loan_id %>">
+                    <input type="hidden" name="donor_name" value="<%= postdata.donor_name %>">
+                    <input type="hidden" name="comment" value="<%= postdata.comment %>">
                     <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
-                    <input type="hidden" name="student_firstname" value="<%= student_firstname %>">
-                    <input type="hidden" name="student_lastname" value="<%= student_lastname %>">
+                    <input type="hidden" name="student_firstname" value="<%= postdata.student_firstname %>">
+                    <input type="hidden" name="student_lastname" value="<%= postdata.student_lastname %>">
 
                 </form>
             </div>
