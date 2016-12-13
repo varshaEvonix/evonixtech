@@ -129,9 +129,20 @@
         padding: 15px;
 
     }
+
+    .note_donate{
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size:18px;
+    }
     #donerinfofields .halfwf {
         width: 48%;
         display: inline-block;
+        margin-bottom: 60px;
+    }
+    .halfwferr.help-block {
+        position: absolute;
+        top: 80px;
     }
     label, .hide_name{
         color:#504949 !important;
@@ -209,23 +220,28 @@
                                         <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.required"  class="help-block has-error ng-hide">Funding amount is required.</p>
                                         <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.funding_amount.$error.pattern"  class="help-block has-error ng-hide">Please enter only numbers.</p>
                                         <p style="font-size:13px;color: red" ng-show="submitted"  class="help-block has-error ng-hide funding_amount">A minimum funding amount of $5 is required.</p>
-
+                                           
+                                        <p class="note_donate">NOTE:- <span style="color:#333">A 5% Stumuch service fee will subtracted from your donation. A 2.9% credit card transaction fee  and $0.30 card processing fee will be subtracted as well. For queries about charges, refer to the <a href="/faq" target="_blank" class="faq_link">FAQ</a></span></p>
+                                           
                                         <div  id="donerinfofields" class="row">
                                             <div class="col-md-12">
 
-                                                <div class="form-group input-group col-md-6 col-xs-12 col-sm-12 halfwf">
+                                                <div class="form-group input-group halfwf">
                                                     <label>Email address:</label>
                                                     <input type="email" class="form-control" ng-model="donor.email_id" name="email_id" id="email" required>
 
-                                                    <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="help-block has-error ng-hide">Email address is required.</p>
-                                                    <p style="font-size:13px;color: red" class="help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Invalid email address</p>
+                                                    <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.email_id.$error.required"  class="halfwferr help-block has-error ng-hide">Email address is required.</p>
+                                                    <p style="font-size:13px;color: red" class="halfwferr help-block has-error  ng-hide" ng-show="submitted && donorsForm.email_id.$error.email">Invalid email address</p>
                                                 </div>
 
-                                                <div class="form-group input-group col-md-6 col-xs-12 col-sm-12 halfwf">
+                                                <div class="form-group input-group halfwf">
                                                     <label for="email">Your Name:</label>
                                                     <input type="text" name="donor_name" ng-model="donor.donor_name" class="form-control" required>
-                                                    <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.donor_name.$error.required"  class="help-block has-error ng-hide">Donor name is required.</p>
+                                                    <p style="font-size:13px;color: red" ng-show="submitted && donorsForm.donor_name.$error.required"  class="halfwferr help-block has-error ng-hide">Donor name is required.</p>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <span class="clearfix"></span>
                                                 <div class="inputgp">
                                                     <p style="font-size:17px;color:#999;padding-bottom:18px" class="hide_name"> <input type="checkbox" style="" name="hide_name" ng-model="donor.hide_name" value="1">
                                                         Hide my name and comment from the public. It will only be visible to the Stumuch administration and funding receiver</p>
@@ -348,4 +364,3 @@
                                                         $('.funding_amount').hide();
                                                     });
 </script>
-

@@ -113,7 +113,31 @@
 
                 <h2>Personal details</h2>
                 <br>
-                <div class="image-editor">
+                <!--   <form id="userPhoto" enctype="multipart/form-data" action="/upload_dp/<%= student_info[0].student_id %>" method="POST">
+                  
+                  <div class="col-md-12" style="margin-bottom:20px">
+      
+                  <div class="thumbnail" style="background-color:#fff;border:0px;display:block;margin:0px auto;width:350px">
+                  
+                  <div class="profile_image" style="">
+                  <img src="<% if (student_info[0].student_profile_pic_path == '' || student_info[0].student_profile_pic_path == null) { %><% sails.getBaseurl() %>/index_files/blank_dp.jpg <% } else { %><% sails.getBaseurl() %>/index_files/uploads/documents/<%= student_info[0].student_profile_pic_path %> <% } %>" style="width: 100%;" data-toggle="tooltip" title="This is the image that is shown on the site along with your name.  Make it as real as possible. A simple face image works best.">
+                  
+                  
+                    </div>
+                    <div class="fileUpload btn btn-default browse">
+      <span class="fa fa-pencil pencil_icon"></span>
+       <input  name="userPhoto" data-validation="required" type="file" data-validation="mime size" data-validation-allowing="jpg, png, gif"  class="upload"  data-validation-error-msg-mime="You can only upload images" data-validation-error-msg="Upload your image first">
+      </div>
+                   <div class="fileUpload btn btn-default pull-right">
+      <span class="fa fa-check pencil_icon"></span>
+        <input type="submit" value="submit" class="upload"/>
+      </div>
+                  
+                    </div>
+                    
+                   
+         </div>
+        </form> --> <div class="image-editor">
                     <div class="col-md-8">
 
                         <input type="file" class="cropit-image-input" style="padding-bottom:10px">
@@ -212,7 +236,7 @@
                                 <label for="student_state">* Your state: </label>
                                 <!--<input type="text" ng-model="student.student_state" ng-pattern="/^[a-zA-Z ]+$/" class="form-control" id="student_state" name="student_state" placeholder="Enter your state" value="<%= student_info[0].student_state %>" required>-->
                                 <select  ng-model="student.student_state"  class="form-control" id="student_state" name="student_state" placeholder="Enter your state" required>
-
+                                    
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -339,85 +363,86 @@
 <%- include ../stufoot.ejs %>
 
 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+                        $.validate({
+                            lang: 'es',
+                            modules: 'file'
+                        });
+</script>
+
+
 
 <script>
-                        var postApp = angular.module('postApp', []);
-                        postApp.controller('postController', function ($scope, $http) {
-                            $scope.student = {};
-                            $(function () {
-                                $('.image-editor').cropit({
-                                    exportZoom: 1.25,
-                                    imageBackground: true,
-                                    imageBackgroundBorderWidth: 5,
-                                    smallImage: 'allow',
-                                    minZoom: 'fit',
-                                    imageState: {
-                                        src: 'http://lorempixel.com/500/400/',
-                                    },
-                                });
-                                $('.image-editor').cropit('imageSrc', '<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %>');
-                                $('.image-editor').cropit('previewSize', {width: 510, height: 327});
-                                $('.rotate-cw').click(function () {
-                                    $('.image-editor').cropit('rotateCW');
-                                });
-                                $('.rotate-ccw').click(function () {
-                                    $('.image-editor').cropit('rotateCCW');
-                                });
+    var postApp = angular.module('postApp', []);
+    postApp.controller('postController', function ($scope, $http) {
+        $scope.student = {};
+        $(function () {
+            $('.image-editor').cropit({
+                exportZoom: 1.25,
+                imageBackground: true,
+                imageBackgroundBorderWidth: 20,
+                smallImage: 'allow',
+                minZoom: 'fit',
+                imageState: {
+                    src: 'http://lorempixel.com/500/400/',
+                },
+            });
+            $('.image-editor').cropit('imageSrc', '<% sails.getBaseurl() %>/index_files/uploads/<%= student_info[0].student_id %>/<%= student_info[0].student_profile_pic_path %>');
+            $('.image-editor').cropit('previewSize', {width: 510, height: 327});
+            $('.rotate-cw').click(function () {
+                $('.image-editor').cropit('rotateCW');
+            });
+            $('.rotate-ccw').click(function () {
+                $('.image-editor').cropit('rotateCCW');
+            });
 
-                                $('.export').click(function () {
-                                    var imageData = $('.image-editor').cropit('export', {
-                                        type: 'image/jpeg',
-                                        quality: .9,
-                                        originalSize: false
-                                    });
-                                    append_image(imageData);
+            $('.export').click(function () {
+                var imageData = $('.image-editor').cropit('export', {
+                    type: 'image/jpeg',
+                    quality: .9,
+                    originalSize: false
+                });
+                append_image(imageData);
 
-                                });
+            });
+        });
+        function append_image(data) {
+            $scope.student.image = data;
+        }
 
-                            });
-
-                            function append_image(data) {
-                                $scope.student.image = data;
-                            }
-                            $scope.student.imageuploaded='0';
-                            $('.cropit-image-input').change(function () {
-                                $scope.student.imageuploaded='1';
-                            });
-                            
-                            $scope.student.student_firstname = "<%= student_info[0].student_firstname %>";
-                            $scope.student.student_lastname = "<%= student_info[0].student_lastname %>";
-                            $scope.student.student_contactno = "<%= student_info[0].student_contactno %>";
-                            $scope.student.student_email = "<%= student_info[0].student_email %>";
-                            $scope.student.student_address = "<%= student_info[0].student_address %>";
-                            $scope.student.student_city = "<%= student_info[0].student_city %>";
-                            $scope.student.student_state = "<%= student_info[0].student_state %>";
-                            $scope.student.student_country = "United States of America";
-                            $scope.student.student_birthdate = "<%= student_info[0].student_birthdate %>";
-                            $scope.student.zip_code = "<%= student_info[0].zip_code %>";
-                                    $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
-                                    $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
-                                    $scope.submitForm = function () {
-                                       
-                                        $('.export').trigger('click');
-                                        $scope.student.student_birthdate = $('#student_birthdate').val();
-                                        if ($scope.personalform.$valid) {
-                                            $http({
-                                                method: 'POST',
-                                                //                    dataType: 'json',
-                                                url: '/personal_edit_submit/<%= student_info[0].student_id %>',
-                                                data: $scope.student, //forms user object
-                                                headers: {'Content-Type': 'application/json'}
-                                            }).success(function (data) {
-                                                window.location = '/viewprofile';
-                                            });
-
-                                        }
-
-                                    };
-                            
+        $scope.student.student_firstname = "<%= student_info[0].student_firstname %>";
+        $scope.student.student_lastname = "<%= student_info[0].student_lastname %>";
+        $scope.student.student_contactno = "<%= student_info[0].student_contactno %>";
+        $scope.student.student_email = "<%= student_info[0].student_email %>";
+        $scope.student.student_address = "<%= student_info[0].student_address %>";
+        $scope.student.student_city = "<%= student_info[0].student_city %>";
+        $scope.student.student_state = "<%= student_info[0].student_state %>";
+        $scope.student.student_country = "United States of America";
+        $scope.student.student_birthdate = "<%= student_info[0].student_birthdate %>";
+        $scope.student.zip_code = "<%= student_info[0].zip_code %>";
+                $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
+                $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
+                $scope.submitForm = function () {
+                    $('.export').trigger('click');
+                    $scope.student.student_birthdate = $('#student_birthdate').val();
+                    if ($scope.personalform.$valid) {
+                        $http({
+                            method: 'POST',
+                            //                    dataType: 'json',
+                            url: '/personal_edit_submit/<%= student_info[0].student_id %>',
+                            data: $scope.student, //forms user object
+                            headers: {'Content-Type': 'application/json'}
+                        }).success(function (data) {
+                            window.location = '/viewprofile';
                         });
+
+                    }
+
+                }
+        ;
+    });
 </script>
 <script>
 

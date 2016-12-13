@@ -366,7 +366,7 @@
                         <br>
                         <p><strong>Name </strong>: <%= student_details.student_firstname %> <%= student_details.student_lastname %></p><br>
                         <p><strong>Email Id </strong> : <%= student_details.student_email %></p><br>
-                        <p><strong>Loan Amount</strong> : $ <%= student_details.loan_amount %></p>
+                        <p><strong>Goal Amount</strong> : $ <%= student_details.loan_amount %></p>
                     </div>
 
                 </div>
@@ -383,13 +383,23 @@
                             <td class="text-right pad-right hidden-border">$ <%= postdata.funding_amount %>.00</td>
                         </tr>
                         <tr>
-                            <td class="text-right pad-right hidden-border"><strong>Tax</strong></td>
+                            <td class="text-right pad-right hidden-border"><strong>Credit card transaction charge</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$00.00</td>
+                            <td class="text-right pad-right hidden-border">$0.30</td>
+                        </tr>
+                         <tr>
+                            <td class="text-right pad-right hidden-border"><strong>Credit card processing charge</strong></td>
+
+                            <td class="text-right pad-right hidden-border">$00.00(2.9%)</td>
+                        </tr>
+                         <tr>
+                            <td class="text-right pad-right hidden-border"><strong>Stumuch fees</strong></td>
+
+                            <td class="text-right pad-right hidden-border">$00.00(5%)</td>
                         </tr>
                         <tr>
                        <% var total = postdata.funding_amount %>
-                            <td class="pad-right text-right"><strong class="text-lg text-accent">Total</strong></td>
+                            <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
 
                             <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$ <%= total %>.00</b></strong></td>
                         </tr>
@@ -405,6 +415,7 @@
             <div class="row">
             <div class="col-md-12" style="margin:auto;text-align:center">
             <% var data_amount= postdata.funding_amount * 100 %>
+            <span>For queries about charges, refer to the <a href="#">FAQ</a></span>
                 <h2>
                 To Transfer Your Fund</h2>
                     <form action="/subscribe" method="POST">
