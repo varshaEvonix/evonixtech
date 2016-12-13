@@ -377,31 +377,38 @@
                 <table class="table">
 
                     <tbody>
+                        <% var total = 0 %>
+                        <% var funding_amount = postdata.funding_amount %>
+                     
                         <tr>
                             <td class="text-right pad-right hidden-border"><strong>Funding Amount</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$ <%= postdata.funding_amount %>.00</td>
+                            <td class="text-right pad-right hidden-border">$ <%= funding_amount %></td>
                         </tr>
                         <tr>
                             <td class="text-right pad-right hidden-border"><strong>Credit card transaction charge</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$0.30</td>
+                            <td class="text-right pad-right hidden-border">$ 0.30</td>
                         </tr>
                          <tr>
                             <td class="text-right pad-right hidden-border"><strong>Credit card processing charge</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$00.00(2.9%)</td>
+                            <!--<td class="text-right pad-right hidden-border">$00.00(2.9%)</td>-->
+                            <% var credit_card_processing = (2.9/100) * postdata.funding_amount %>
+                            <td class="text-right pad-right hidden-border">$ <%= credit_card_processing.toFixed(2) %></td>
                         </tr>
                          <tr>
                             <td class="text-right pad-right hidden-border"><strong>Stumuch fees</strong></td>
 
-                            <td class="text-right pad-right hidden-border">$00.00(5%)</td>
+                            <!--<td class="text-right pad-right hidden-border">$00.00(5%)</td>-->
+                            <% var stumuch_fees = (5/100) * postdata.funding_amount %>
+                            <td class="text-right pad-right hidden-border">$ <%= stumuch_fees.toFixed(2) %></td>
                         </tr>
                         <tr>
-                       <% var total = postdata.funding_amount %>
+                       <% var total = (postdata.funding_amount)-(0.30 + credit_card_processing + stumuch_fees) %>
                             <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
 
-                            <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$ <%= total %>.00</b></strong></td>
+                            <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$ <%= total.toFixed(2) %></b></strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -414,7 +421,7 @@
             <br>
             <div class="row">
             <div class="col-md-12" style="margin:auto;text-align:center">
-            <% var data_amount= postdata.funding_amount * 100 %>
+            <% var data_amount= total * 100 %>
             <span>For queries about charges, refer to the <a href="#">FAQ</a></span>
                 <h2>
                 To Transfer Your Fund</h2>

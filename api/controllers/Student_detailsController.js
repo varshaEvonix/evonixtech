@@ -281,8 +281,6 @@ module.exports = {
                             pics: photorecord,
                             loan_comments: loan_comments
 
-
-
                         });
                     });
 
