@@ -31,8 +31,9 @@
                 <h1 class="phead">Page Video</h1><br>
                 <div class="col-sm-8">
                     <div class="embed-responsive embed-responsive-16by9">
-
-                        <iframe width="560" height="315" src="<%= recordset.video_link %>" frameborder="0" allowfullscreen></iframe>
+                        <% var video_link = recordset.video_link  %>
+                        <% var video_link = video_link.split('?v=')  %>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen></iframe>
 
                     </div>
                 </div>
