@@ -1,58 +1,19 @@
-<!DOCTYPE html>
-<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths no-mobile" style="" dir="ltr" lang="en"><head>
-
-        <!-- Meta Tags -->
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <meta name="description" content="CharityPress - Nonprofit, Crowdfunding &amp; Charity HTML5 Template">
-        <meta name="keywords" content="building,business,construction,cleaning,transport,workshop">
-        <meta name="author" content="ThemeMascot">
-
-        <!-- Page Title -->
-        <title>Stumuch</title>
-
-        <!-- Favicon and Touch Icons -->
-        <link rel="stylesheet" href="../../index_files/assets/form-register.css">
-        <link rel="stylesheet" href="../../index_files/bootstrap-social.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
-        <!--<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">-->
-        <!--<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>-->
-        <!--<link rel="stylesheet" href="../../index_files/mdl/material.min.css">-->
-
-        <script  src="../../index_files/stdash/js/angular.min.js"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-        <link href="../../index_files/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="../../index_files/jquery-ui.css" rel="stylesheet" type="text/css">
-        <link href="../../index_files/animate.css" rel="stylesheet" type="text/css">
-        <!--<link href="../../index_files/css-plugin-collections.css" rel="stylesheet">-->
-        <!-- CSS | menuzord megamenu skins -->
-        <link id="menuzord-menu-skins" href="../../index_files/menuzord-boxed.css" rel="stylesheet">
-        <!-- CSS | Main style file -->
-        <link href="../../index_files/style-main.css" rel="stylesheet" type="text/css">
-        <!-- CSS | Preloader Styles -->
-        <link href="../../index_files/preloader.css" rel="stylesheet" type="text/css">
-        <!-- CSS | Custom Margin Padding Collection -->
-        <link href="../../index_files/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
-        <!-- CSS | Responsive media queries -->
-        <link href="../../index_files/responsive.css" rel="stylesheet" type="text/css">
-        <link href="../../index_files/css-plugin-collections.css" rel="stylesheet">
-        <link id="menuzord-menu-skins" href="../../index_files/menuzord-boxed.css" rel="stylesheet">
-        <link rel="icon" href="../../index_files/favicon.png">
+<%- include ../frontend/header.ejs %>
         <style>
 
-                .pad-right
+              /*  .pad-right
                 {
                     padding-right:81px !important;
-                }
+                }*/
             body {
                 font-family: Helvetica;
                 background: #eee;
                 -webkit-font-smoothing: antialiased;
             }
+.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+    background: rgba(3,3,3,.23);
 
+}
             hgroup { 
                 text-align:center;
                 margin-top: 4em;
@@ -65,7 +26,7 @@
             h3 { color: #4a89dc; }
 
             .main-content {
-                width: 50%;
+             
                 margin: 4em auto;
                 padding: 3em 3em 2em 2em;
                 background: #fff;
@@ -305,37 +266,16 @@
                 font-size: 13px;
                 font-weight: 400;
             }
+            @media only screen and (min-width: 992px) {
+    .main-content {
+             width:50%;
+
+            }
+}
         </style>
     </head>
     <body ng-app="postApp" ng-controller="postController">
-        <header id="header" class="header">
-            <div class="header-nav navbar-fixed-top header-dark navbar-white navbar-transparent bg-transparent-1 navbar-sticky-animated">
-                <div class="header-nav-wrapper">
-                    <div class="container">
-                        <nav style="" id="menuzord-right" class="menuzord default no-bg menuzord-responsive"><a style="display: none;" href="javascript:void(0)"><em></em><em></em><em></em></a>
-                            <a href="../"><img src="./../../index_files/stulogo.png" style="width:186px;padding-top:11px"></a>
-                            <ul style="max-height: 400px;" class="menuzord-menu menuzord-right menuzord-indented scrollable">
 
-                                <li style=""  ><a href="/allprofile">Profiles</a>
-                                </li>
-                               
-                                <li style=""><a href="../signup">Create account</a>
-
-                                </li>
-                                <li style="" class="active"><a href="/student/login">Login </a>
-
-                                </li>
-
-                            </ul>
-                            </li>
-
-
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
         <div style="padding-top:30px">
         <div class="main-content" style="padding-top:50px;">
             <div class="row">
@@ -421,7 +361,7 @@
             <br>
             <div class="row">
             <div class="col-md-12" style="margin:auto;text-align:center">
-            <% var data_amount= total * 100 %>
+            <% var data_amount= funding_amount * 100 %>
             <span>For queries about charges, refer to the <a href="#">FAQ</a></span>
                 <h2>
                 To Transfer Your Fund</h2>
@@ -436,7 +376,7 @@
                         data-image="../../index_files/favicon.png" data-allow-remember-me="false">
                             
                     </script>
-                    <input type="hidden" name="amount" value="<%= total %>">
+                    <input type="hidden" name="amount" value="<%= funding_amount %>">
                     <input type="hidden" name="data_amount" value="<%= data_amount %>">
                     <input type="hidden" name="email" value="<%= postdata.email_id %>">
                     <input type="hidden" name="loan_id" value="<%= postdata.loan_id %>">

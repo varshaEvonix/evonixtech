@@ -178,7 +178,7 @@
                                     <img src='../../index_files/uploads/<%= student_details.student_id %>/<%= student_details.student_profile_pic_path %>' class="img-responsive" style="width: 100%;">
                                     <% } %>
 
-                                    <h2>$ <%= (funded_amount > 0) ? funded_amount : 0  %> <span>of $ <%= student_details.loan_amount %></span></h2>
+                                    <h2>$ <%= (funded_amount > 0) ? funded_amount.toFixed(2) : 0  %> <span>of $ <%= student_details.loan_amount %></span></h2>
                                     <%
                                     var percentage = (funded_amount/student_details.loan_amount)*100
                                     %>
