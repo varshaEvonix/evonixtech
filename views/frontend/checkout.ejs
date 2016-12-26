@@ -334,7 +334,8 @@
                             <td class="text-right pad-right hidden-border"><strong>Credit card processing charge</strong></td>
 
                             <!--<td class="text-right pad-right hidden-border">$00.00(2.9%)</td>-->
-                            <% var credit_card_processing = (2.9/100) * postdata.funding_amount %>
+                            <% var credit_card_processing = 2.9/100 * postdata.funding_amount %>
+<% console.log(credit_card_processing) %>
                             <td class="text-right pad-right hidden-border">$ <%= credit_card_processing.toFixed(2) %></td>
                         </tr>
                          <tr>
@@ -362,7 +363,7 @@
             <div class="row">
             <div class="col-md-12" style="margin:auto;text-align:center">
             <% var data_amount= funding_amount * 100 %>
-            <span>For queries about charges, refer to the <a href="#">FAQ</a></span>
+            <span>For queries about charges, refer to the <a href="/faq">FAQ</a></span>
                 <h2>
                 To Transfer Your Fund</h2>
                     <form action="/subscribe" method="POST">

@@ -540,7 +540,7 @@ module.exports = {
 
             var per_page = 10;
             var start_from = (page - 1) * per_page;
-            var q = "SELECT student_details.student_firstname, student_details.student_lastname, student_details.student_email, count( * ) AS pending_paouts, sum( donors_funding_details.funded_amount ) AS pending_payout_amount, student_details.student_id AS student_id FROM student_details LEFT JOIN student_login_credentials ON student_login_credentials.student_id = student_details.student_id LEFT JOIN loan_details ON loan_details.student_id = student_details.student_id LEFT JOIN donors_funding_details ON donors_funding_details.loan_id = loan_details.loan_id WHERE donors_funding_details.status=1 AND donors_funding_details.payout = '0' ORDER BY student_details.created_on DESC LIMIT " + start_from + ', ' + per_page;
+            var q = "SELECT student_details.student_firstname, student_details.student_lastname, student_details.student_email, count( * ) AS pending_paouts, sum( donors_funding_details.balance_to_transfer ) AS pending_payout_amount, student_details.student_id AS student_id FROM student_details LEFT JOIN student_login_credentials ON student_login_credentials.student_id = student_details.student_id LEFT JOIN loan_details ON loan_details.student_id = student_details.student_id LEFT JOIN donors_funding_details ON donors_funding_details.loan_id = loan_details.loan_id WHERE donors_funding_details.status=1 AND donors_funding_details.payout = '0' ORDER BY student_details.created_on DESC LIMIT " + start_from + ', ' + per_page;
 
             Student_details.query(q, function (err, results) {
 

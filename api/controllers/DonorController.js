@@ -6,9 +6,9 @@
  */
 //Test Secret Key : sk_test_5gf9zfejnW80X0WZvY7D8p1i
 //Test Public Key : pk_test_KdIGs1802FcIkWNJZW1zpd47
-//Live Secret Key : sk_test_5gf9zfejnW80X0WZvY7D8p1i
-//Live Publishable Key : pk_test_KdIGs1802FcIkWNJZW1zpd47
-stripe = require('stripe')('sk_test_5gf9zfejnW80X0WZvY7D8p1i');
+//Live Secret Key : sk_live_e5JPUbtIxty2ImsjFc2FOOvq
+//Live Publishable Key : pk_live_kBmmjDGhHdevPDoOyfBNMTYi
+stripe = require('stripe')('sk_live_e5JPUbtIxty2ImsjFc2FOOvq');
 
 module.exports = {
     donorpage: function (req, res) {
@@ -51,7 +51,7 @@ module.exports = {
                     var comment = 'NULL';
                     var student_firstname = req.param('student_firstname');
                     var student_lastname = req.param('student_lastname');
-                    var stripePubKey = 'pk_test_KdIGs1802FcIkWNJZW1zpd47';
+                    var stripePubKey = 'pk_live_kBmmjDGhHdevPDoOyfBNMTYi';
 
                     var donor_name = req.param('donor_name');
                     comment = req.param('comment');

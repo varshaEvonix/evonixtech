@@ -32,7 +32,8 @@
                                     </td>
                                     <td> <%= values.student_email %></td>
                                     <td> <%= values.pending_paouts %></td>
-                                    <td> <%= values.pending_payout_amount %></td>
+                                    <% var balance_to_transfer= values.pending_payout_amount %>
+                                    <td> <%= balance_to_transfer.toFixed(2) %></td>
                                     <td><a class="btn btn-info btn-sm" href="<% sails.getBaseurl() %>/admin/payoutsdetails/<%= values.student_id %>">View</a></td>
                                 </tr>
 
