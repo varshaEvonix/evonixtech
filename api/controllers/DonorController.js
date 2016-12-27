@@ -4,11 +4,6 @@
  * @description :: Server-side logic for managing Donors
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-//Test Secret Key : sk_test_5gf9zfejnW80X0WZvY7D8p1i
-//Test Public Key : pk_test_KdIGs1802FcIkWNJZW1zpd47
-//Live Secret Key : sk_live_e5JPUbtIxty2ImsjFc2FOOvq
-//Live Publishable Key : pk_live_kBmmjDGhHdevPDoOyfBNMTYi
-
 
 module.exports = {
     donorpage: function (req, res) {
