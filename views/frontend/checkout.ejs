@@ -1,403 +1,409 @@
 <%- include ../frontend/header.ejs %>
-        <style>
+<style>
 
-              /*  .pad-right
-                {
-                    padding-right:81px !important;
-                }*/
-            body {
-                font-family: Helvetica;
-                background: #eee;
-                -webkit-font-smoothing: antialiased;
-            }
-.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
-    background: rgba(3,3,3,.23);
+    /*  .pad-right
+      {
+          padding-right:81px !important;
+      }*/
+    body {
+        font-family: Helvetica;
+        background: #eee;
+        -webkit-font-smoothing: antialiased;
+    }
+    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+        background: rgba(3,3,3,.23);
 
-}
-            hgroup { 
-                text-align:center;
-                margin-top: 4em;
-            }
+    }
+    hgroup { 
+        text-align:center;
+        margin-top: 4em;
+    }
 
-            h1, h3 { font-weight: 300; }
+    h1, h3 { font-weight: 300; }
 
-            h1 { color: #636363; }
+    h1 { color: #636363; }
 
-            h3 { color: #4a89dc; }
+    h3 { color: #4a89dc; }
 
-            .main-content {
-             
-                margin: 4em auto;
-                padding: 3em 3em 2em 2em;
-                background: #fff;
-                border: 1px solid #ebebeb;
-                box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-
-            }
-
-            .group { 
-                position: relative; 
-                margin-bottom: 45px; 
-            }
-
-
-            input {
-                font-size: 18px;
-                padding: 10px 10px 10px 5px;
-                -webkit-appearance: none;
-                display: block;
-                background: #fafafa;
-                color: #636363;
-                width: 100%;
-                border: none;
-                border-radius: 0;
-                border-bottom: 1px solid #757575;
-            }
-
-            .social-btns
-            {
-                width:210px;
-            }
-            input:focus { outline: none; }
-
-
-            /* Label */
-
-            label {
-                color: #999; 
-                font-size: 18px;
-                font-weight: normal;
-                position: absolute;
-                pointer-events: none;
-                left: 5px;
-                top: 10px;
-                transition: all 0.2s ease;
-            }
-
-
-            /* active */
-
-            input:focus ~ label, input.used ~ label {
-                top: -20px;
-                transform: scale(.75); left: -2px;
-                /* font-size: 14px; */
-                color: #4a89dc;
-            }
-
-
-            /* Underline */
-
-            .bar {
-                position: relative;
-                display: block;
-                width: 100%;
-            }
-
-            .bar:before, .bar:after {
-                content: '';
-                height: 2px; 
-                width: 0;
-                bottom: 1px; 
-                position: absolute;
-                background: #4a89dc; 
-                transition: all 0.2s ease;
-            }
-
-            .bar:before { left: 50%; }
-
-            .bar:after { right: 50%; }
-
-
-            /* active */
-
-            input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
-
-
-            /* Highlight */
-
-            .highlight {
-                position: absolute;
-                height: 60%; 
-                width: 100px; 
-                top: 25%; 
-                left: 0;
-                pointer-events: none;
-                opacity: 0.5;
-            }
-
-
-            /* active */
-
-            input:focus ~ .highlight {
-                animation: inputHighlighter 0.3s ease;
-            }
-
-
-            /* Animations */
-
-            @keyframes inputHighlighter {
-                from { background: #4a89dc; }
-                to  { width: 0; background: transparent; }
-            }
-
-
-            /* Button */
-
-            .button {
-                position: relative;
-                display: inline-block;
-                padding: 12px 24px;
-                margin: .3em 0 1em 0;
-                width: 100%;
-                vertical-align: middle;
-                color: #fff;
-                font-size: 16px;
-                line-height: 20px;
-                -webkit-font-smoothing: antialiased;
-                text-align: center;
-                letter-spacing: 1px;
-                background: transparent;
-                border: 0;
-                border-bottom: 2px solid #3160B6;
-                cursor: pointer;
-                transition: all 0.15s ease;
-            }
-            .button:focus { outline: 0; }
-
-
-            /* Button modifiers */
-
-            .buttonBlue {
-                background: #4a89dc;
-                text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
-            }
-
-            .buttonBlue:hover { background: #357bd8; }
-
-
-            /* Ripples container */
-
-            .ripples {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                background: transparent;
-            }
-
-
-            /* Ripples circle */
-
-            .ripplesCircle {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                opacity: 0;
-                width: 0;
-                height: 0;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.25);
-            }
-
-            .ripples.is-active .ripplesCircle {
-                animation: ripples .4s ease-in;
-            }
-        
-
-            /* Ripples animation */
-
-            @keyframes ripples {
-                0% { opacity: 0; }
-
-                25% { opacity: 1; }
-
-                100% {
-                    width: 200%;
-                    padding-bottom: 200%;
-                    opacity: 0;
-                }
-            }
-
-
-            footer p {
-                color: #888;
-                font-size: 13px;
-                letter-spacing: .4px;
-            }
-
-            footer a {
-                color: #4a89dc;
-                text-decoration: none;
-                transition: all .2s ease;
-            }
-
-            footer a:hover {
-                color: #666;
-                text-decoration: underline;
-            }
-
-            footer img {
-                width: 80px;
-                transition: all .2s ease;
-            }
-
-            footer img:hover { opacity: .83; }
-
-            footer img:focus , footer a:focus { outline: none; }
-
-            .row.vdivide [class*='col-']:not(:last-child):after {
-                background: #e0e0e0;
-                width: 1px;
-                content: "";
-                display:block;
-                position: absolute;
-                top:0;
-                bottom: 0;
-                right: 0;
-                min-height: 70px;
-            }
-            .has-error{
-                color: red;
-            }
-            .menuzord-menu > li > a {
-                font-size: 13px;
-                font-weight: 400;
-            }
-            @media only screen and (min-width: 992px) {
     .main-content {
-             width:50%;
 
-            }
+        margin: 4em auto;
+        padding: 3em 3em 2em 2em;
+        background: #fff;
+        border: 1px solid #ebebeb;
+        box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+
+    }
+
+    .group { 
+        position: relative; 
+        margin-bottom: 45px; 
+    }
+
+
+    input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        -webkit-appearance: none;
+        display: block;
+        background: #fafafa;
+        color: #636363;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid #757575;
+    }
+
+    .social-btns
+    {
+        width:210px;
+    }
+    input:focus { outline: none; }
+
+
+    /* Label */
+
+    label {
+        color: #999; 
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: all 0.2s ease;
+    }
+
+
+    /* active */
+
+    input:focus ~ label, input.used ~ label {
+        top: -20px;
+        transform: scale(.75); left: -2px;
+        /* font-size: 14px; */
+        color: #4a89dc;
+    }
+
+
+    /* Underline */
+
+    .bar {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+
+    .bar:before, .bar:after {
+        content: '';
+        height: 2px; 
+        width: 0;
+        bottom: 1px; 
+        position: absolute;
+        background: #4a89dc; 
+        transition: all 0.2s ease;
+    }
+
+    .bar:before { left: 50%; }
+
+    .bar:after { right: 50%; }
+
+
+    /* active */
+
+    input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
+
+
+    /* Highlight */
+
+    .highlight {
+        position: absolute;
+        height: 60%; 
+        width: 100px; 
+        top: 25%; 
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+
+    /* active */
+
+    input:focus ~ .highlight {
+        animation: inputHighlighter 0.3s ease;
+    }
+
+
+    /* Animations */
+
+    @keyframes inputHighlighter {
+        from { background: #4a89dc; }
+        to  { width: 0; background: transparent; }
+    }
+
+
+    /* Button */
+
+    .button {
+        position: relative;
+        display: inline-block;
+        padding: 12px 24px;
+        margin: .3em 0 1em 0;
+        width: 100%;
+        vertical-align: middle;
+        color: #fff;
+        font-size: 16px;
+        line-height: 20px;
+        -webkit-font-smoothing: antialiased;
+        text-align: center;
+        letter-spacing: 1px;
+        background: transparent;
+        border: 0;
+        border-bottom: 2px solid #3160B6;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .button:focus { outline: 0; }
+
+
+    /* Button modifiers */
+
+    .buttonBlue {
+        background: #4a89dc;
+        text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+    }
+
+    .buttonBlue:hover { background: #357bd8; }
+
+
+    /* Ripples container */
+
+    .ripples {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+    }
+
+
+    /* Ripples circle */
+
+    .ripplesCircle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .ripples.is-active .ripplesCircle {
+        animation: ripples .4s ease-in;
+    }
+
+
+    /* Ripples animation */
+
+    @keyframes ripples {
+        0% { opacity: 0; }
+
+        25% { opacity: 1; }
+
+        100% {
+            width: 200%;
+            padding-bottom: 200%;
+            opacity: 0;
+        }
+    }
+
+
+    footer p {
+        color: #888;
+        font-size: 13px;
+        letter-spacing: .4px;
+    }
+
+    footer a {
+        color: #4a89dc;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+
+    footer a:hover {
+        color: #666;
+        text-decoration: underline;
+    }
+
+    footer img {
+        width: 80px;
+        transition: all .2s ease;
+    }
+
+    footer img:hover { opacity: .83; }
+
+    footer img:focus , footer a:focus { outline: none; }
+
+    .row.vdivide [class*='col-']:not(:last-child):after {
+        background: #e0e0e0;
+        width: 1px;
+        content: "";
+        display:block;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        right: 0;
+        min-height: 70px;
+    }
+    .has-error{
+        color: red;
+    }
+    .menuzord-menu > li > a {
+        font-size: 13px;
+        font-weight: 400;
+    }
+    @media only screen and (min-width: 992px) {
+        .main-content {
+            width:50%;
+
+        }
+    }
+</style>
+</head>
+<% 
+function RoundNum( num, precision ) {
+return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
 }
-        </style>
-    </head>
-    <body ng-app="postApp" ng-controller="postController">
+%>
+<body ng-app="postApp" ng-controller="postController">
 
-        <div style="padding-top:30px">
+    <div style="padding-top:30px">
         <div class="main-content" style="padding-top:50px;">
             <div class="row">
 
                 <div class="col-md-12">
 
-                 
-                   
-                        
-        <div class="row white_bg">
-            <br>
-            <div class="col-md-11" style="margin:auto">
-            <div class="col-md-offset-2">
-                <div class="row">
 
-                    <div class="col-md-6">
-                        <h3 >Funder Details</h3>
+
+
+                    <div class="row white_bg">
                         <br>
-                     
-                        <p><strong>Name</strong> : <%= postdata.donor_name %></p><br>
-                        <p><strong>Email Id</strong> : <%= postdata.email_id %></p>
+                        <div class="col-md-11" style="margin:auto">
+                            <div class="col-md-offset-2">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <h3 >Funder Details</h3>
+                                        <br>
+
+                                        <p><strong>Name</strong> : <%= postdata.donor_name %></p><br>
+                                        <p><strong>Email Id</strong> : <%= postdata.email_id %></p>
 
 
+                                    </div>
+
+                                    <div class="col-md-6" style="padding-left:20px">
+                                        <h3 >Student Details</h3>
+                                        <br>
+                                        <p><strong>Name </strong>: <%= student_details.student_firstname %> <%= student_details.student_lastname %></p><br>
+                                        <p><strong>Email Id </strong> : <%= student_details.student_email %></p><br>
+                                        <p><strong>Goal Amount</strong> : $ <%= student_details.loan_amount %></p>
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table">
+
+                                        <tbody>
+                                            <% var total = 0 %>
+                                            <% var funding_amount = postdata.funding_amount %>
+
+                                            <tr>
+                                                <td class="text-right pad-right hidden-border"><strong>Funding Amount</strong></td>
+
+                                                <td class="text-right pad-right hidden-border">$<%= funding_amount %></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right pad-right hidden-border"><strong>Credit card transaction charge</strong></td>
+
+                                                <td class="text-right pad-right hidden-border">$0.30</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right pad-right hidden-border"><strong>Credit card processing charge</strong></td>
+
+                                                <!--<td class="text-right pad-right hidden-border">$00.00(2.9%)</td>-->
+                                                <% var credit_card_processing = 2.9/100 * postdata.funding_amount %>
+                                                
+                                                <td class="text-right pad-right hidden-border">$<%= RoundNum(credit_card_processing,2) %></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right pad-right hidden-border"><strong>Stumuch fees</strong></td>
+
+                                                <!--<td class="text-right pad-right hidden-border">$00.00(5%)</td>-->
+                                                <% var stumuch_fees = (5/100) * postdata.funding_amount %>
+                                                <td class="text-right pad-right hidden-border">$<%= RoundNum(stumuch_fees,2) %></td>
+                                            </tr>
+                                            <tr>
+                                                <% var total = (postdata.funding_amount)-(0.30 + credit_card_processing + stumuch_fees) %>
+                                                <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
+
+                                                <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= RoundNum(total,2) %></b></strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+                    <!--<br>-->
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12" style="margin:auto;text-align:center">
+                            <% var data_amount= funding_amount * 100 %>
+                            <span>For queries about charges, refer to the <a href="/faq">FAQ</a></span>
+                            <h2>
+                                To Transfer Your Fund</h2>
+                            <form action="/subscribe" method="POST">
+                                <script
+                                    src="https://checkout.stripe.com/checkout.js" 
+                                    class="stripe-button"
+                                    data-key="<%= stripePubKey %>"
+                                    data-amount="<%= data_amount %>"
+                                    data-name="Fund by Credit Card"
+                                    data-email="<%= postdata.email_id %>"
+                                    data-image="../../index_files/favicon.png" data-allow-remember-me="false">
 
-                    <div class="col-md-6" style="padding-left:20px">
-                        <h3 >Student Details</h3>
-                        <br>
-                        <p><strong>Name </strong>: <%= student_details.student_firstname %> <%= student_details.student_lastname %></p><br>
-                        <p><strong>Email Id </strong> : <%= student_details.student_email %></p><br>
-                        <p><strong>Goal Amount</strong> : $ <%= student_details.loan_amount %></p>
+                                </script>
+                                <input type="hidden" name="amount" value="<%= funding_amount %>">
+                                <input type="hidden" name="data_amount" value="<%= data_amount %>">
+                                <input type="hidden" name="email" value="<%= postdata.email_id %>">
+                                <input type="hidden" name="loan_id" value="<%= postdata.loan_id %>">
+                                <input type="hidden" name="donor_name" value="<%= postdata.donor_name %>">
+                                <input type="hidden" name="comment" value="<%= postdata.comment %>">
+                                <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
+                                <input type="hidden" name="student_firstname" value="<%= postdata.student_firstname %>">
+                                <input type="hidden" name="student_lastname" value="<%= postdata.student_lastname %>">
+
+                            </form>
+                        </div>
                     </div>
-
-                </div>
-                <br>
-                </div><br>
-                <div class="row">
-                <div class="col-md-12">
-                <table class="table">
-
-                    <tbody>
-                        <% var total = 0 %>
-                        <% var funding_amount = postdata.funding_amount %>
-                     
-                        <tr>
-                            <td class="text-right pad-right hidden-border"><strong>Funding Amount</strong></td>
-
-                            <td class="text-right pad-right hidden-border">$<%= funding_amount %></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right pad-right hidden-border"><strong>Credit card transaction charge</strong></td>
-
-                            <td class="text-right pad-right hidden-border">$0.30</td>
-                        </tr>
-                         <tr>
-                            <td class="text-right pad-right hidden-border"><strong>Credit card processing charge</strong></td>
-
-                            <!--<td class="text-right pad-right hidden-border">$00.00(2.9%)</td>-->
-                            <% var credit_card_processing = 2.9/100 * postdata.funding_amount %>
-                            <td class="text-right pad-right hidden-border">$<%= credit_card_processing.toFixed(2) %></td>
-                        </tr>
-                         <tr>
-                            <td class="text-right pad-right hidden-border"><strong>Stumuch fees</strong></td>
-
-                            <!--<td class="text-right pad-right hidden-border">$00.00(5%)</td>-->
-                            <% var stumuch_fees = (5/100) * postdata.funding_amount %>
-                            <td class="text-right pad-right hidden-border">$<%= stumuch_fees.toFixed(2) %></td>
-                        </tr>
-                        <tr>
-                       <% var total = (postdata.funding_amount)-(0.30 + credit_card_processing + stumuch_fees) %>
-                            <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
-
-                            <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= total.toFixed(2) %></b></strong></td>
-                        </tr>
-                    </tbody>
-                </table>
                 </div>
 
-                </div>
-            </div>
-            </div>
-            <!--<br>-->
-            <br>
-            <div class="row">
-            <div class="col-md-12" style="margin:auto;text-align:center">
-            <% var data_amount= funding_amount * 100 %>
-            <span>For queries about charges, refer to the <a href="/faq">FAQ</a></span>
-                <h2>
-                To Transfer Your Fund</h2>
-                    <form action="/subscribe" method="POST">
-                    <script
-                        src="https://checkout.stripe.com/checkout.js" 
-                        class="stripe-button"
-                        data-key="<%= stripePubKey %>"
-                        data-amount="<%= data_amount %>"
-                        data-name="Fund by Credit Card"
-                        data-email="<%= postdata.email_id %>"
-                        data-image="../../index_files/favicon.png" data-allow-remember-me="false">
-                            
-                    </script>
-                    <input type="hidden" name="amount" value="<%= funding_amount %>">
-                    <input type="hidden" name="data_amount" value="<%= data_amount %>">
-                    <input type="hidden" name="email" value="<%= postdata.email_id %>">
-                    <input type="hidden" name="loan_id" value="<%= postdata.loan_id %>">
-                    <input type="hidden" name="donor_name" value="<%= postdata.donor_name %>">
-                    <input type="hidden" name="comment" value="<%= postdata.comment %>">
-                    <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
-                    <input type="hidden" name="student_firstname" value="<%= postdata.student_firstname %>">
-                    <input type="hidden" name="student_lastname" value="<%= postdata.student_lastname %>">
 
-                </form>
-            </div>
+                <!--<input type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5" value="Submit">-->
+
             </div>
         </div>
-        
-                     
-                        <!--<input type="submit" ng-click="submitted = true" class="btn btn-default col-md-offset-5" value="Submit">-->
-                   
-                </div>
-            </div>
-        </div>
+    </div>
 </div>
-      <%- include ../footer.ejs %>
+<%- include ../footer.ejs %>
 
 
