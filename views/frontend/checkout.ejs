@@ -354,7 +354,7 @@ return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(prec
                                                 <% var total = (postdata.funding_amount)-(0.30 + credit_card_processing + stumuch_fees) %>
                                                 <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
 
-                                                <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= RoundNum(total,2) %></b></strong></td>
+                                                <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= total.toFixed(2) %></b></strong></td>
                                             </tr>
                                         </tbody>
                                     </table>
