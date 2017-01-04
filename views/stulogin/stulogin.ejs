@@ -421,7 +421,7 @@
                                 </label>
                                 <input  type="text" ng-model="student.student_email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="student_email" name="student_email" required style="border-right: none;">
 
-                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></span>
+                                <a href="javascript:void(0);" class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Your email address is your user name."><i  class="glyphicon glyphicon-question-sign"></i></a>
 
                                 <span class="clearfix"></span>
                                 <p ng-show="submitted && registerform.student_email.$error.required"  class="help-block has-error ng-hide student_email">Email is required.</p>
@@ -438,11 +438,11 @@
                                     Password<span class="req">*</span>
                                 </label>
                                 <input  type="password" ng-minlength="7"  ng-model="student.student_password" id="student_password" name="student_password"  required>
-                                <span class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
-                                      1. Make sure that it is at least 7 characters long
-                                      2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
+                                <a href="javascript:void(0);" class="input-group-addon" style="background-color: #fff;border:1px solid #f4f4f4;border-left:none;" data-toggle="tooltip" title="Recommendations for creating a strong password:
+                                      1. Make sure that it is at least 6 characters long
+                                      2. Make sure that you use at least  1 lowercase, 1 UPPERCASE and 1 number
                                       3. Don't use more than 2 identical consecutive characters
-                                      4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></span>
+                                      4. Don't use your user name"><i  class="glyphicon glyphicon-question-sign"></i></a>
 
                                 <span class="clearfix"></span>
                                 <span ng-show="submitted && registerform.student_password.$error.required"  class="help-block has-error ng-hide">Password is required.</span>
