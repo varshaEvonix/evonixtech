@@ -58,7 +58,7 @@ module.exports = {
                                     mail_template = mail_template[0];
 
                                     var helper = require('sendgrid').mail;
-                                    var from_email = new helper.Email('support@evonixtech.com');
+                                    var from_email = new helper.Email('support@stumuch.com');
                                     var to_email = new helper.Email(student_email);
 
                                     var html = mail_template.content;
@@ -68,8 +68,7 @@ module.exports = {
                                     var protocol = req.connection.encrypted ? 'https' : 'http';
                                     var baseUrl = protocol + '://' + req.headers.host + '/';
                                     var html = html.replace("<~:link:~>", "<a href=" + baseUrl + "activation_link/" + st_id + "'>Click Here</a>");
-                                    console.log('html')
-                                    console.log(html)
+
                                     var subject = mail_template.subject;
                                     var content = new helper.Content('text/html', html);
                                     var mail = new helper.Mail(from_email, subject, to_email, content);

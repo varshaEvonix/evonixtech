@@ -61,7 +61,7 @@ module.exports = {
                             mail_template = mail_template[0];
 
                             var helper = require('sendgrid').mail;
-                            var from_email = new helper.Email('support@evonixtech.com');
+                            var from_email = new helper.Email('support@stumuch.com');
                             var to_email = new helper.Email(student_email);
 
                             var html = mail_template.content;
