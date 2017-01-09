@@ -56,14 +56,14 @@
         <% if (student_info[0].loan_id == null && student_info[0].education_id == null){ %>
         <form  ng-submit="submitForm()" class="form" method="POST" enctype="multipart/form-data" action="/add_loan_education/<%= student_info[0].student_id %>" name="loan_eduction_form" id="loan_eduction_form" novalidate>
             <% }else{ %>
-            <form class="form" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" name="loan_eduction_form" id="loan_eduction_form" novalidate>
+            <form class="form" ng-submit="submitForm()" method="POST" enctype="multipart/form-data" action="/loan_edit_submit/<%= student_info[0].student_id %>/<%= student_info[0].loan_id %>" name="loan_eduction_form" id="loan_eduction_form" novalidate>
                 <% } %>
                 <div class="row">
                     <div class="col-sm-9">
 
                         <!--form action="/education_edit_submit" method="POST" role="form"-->
                         <!--<form class="form" ng-submit="submitForm()" name="loanform" novalidate>-->
-                      
+
 
                         <h2>Education Details</h2><br>
 
@@ -224,7 +224,7 @@
                                     <div class="form-group">
                                         <div class="col-md-6">
                                             <% if (student_info[0].loan_id != null && loan_docs.length > 0){ %>
-                                   
+
                                             <input ng-model="student.document_name0" class="form-control fileip" type="text" name="document_name0"  placeholder="Enter the name of the file" value="" >
                                             <% }else{ %>
 
@@ -241,20 +241,34 @@
 
                                     </div>
                                 </div>
-                                <br><br>
-                                <!--<input type="hidden" value="<%= student_info[0].student_id %>" name="student_id">-->
-                                <input type="hidden" value="<%= student_info[0].education_id %>" name="education_id">
+     
+                            </div>
+                            <br><br><br>
+                        </div>
+                        <br>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9">
+                            <h2>Personal Details</h2> <br>
+                            <div class="form-group col-md-12">
+                                <label for="student_about_me">* About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required></textarea>
+                                <p ng-show="submitted && loan_eduction_form.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="student_ambition">* Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
+                                <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required></textarea>
+                                <p ng-show="submitted && loan_eduction_form.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
+                            </div>
+                    </div>
+                </div>
+                      <input type="hidden" value="<%= student_info[0].education_id %>" name="education_id">
                                 <div class="form-group">
                                     <button type="submit" ng-click="submitted = true" class="btn btn-default text-center">Submit</button>
                                     <a href="/viewprofile?tab=menu1" class="btn btn-default text-center">Cancel</a>
                                 </div>
-
-
-                            </div>
-                            <br><br><br>
-                        </div>
-                    </div>
-                </div>
             </form> 
             <div class="col-md-3">
                 <%- include ../stud_right.ejs %>
@@ -325,6 +339,8 @@
         $scope.student.loan_amount = '<%= student_info[0].loan_amount %>';
         $scope.student.loan_type = '<%= student_info[0].loan_type %>';
         $scope.student.fafsa_values = '<%= student_info[0].loan_fafsa_id %>';
+        $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
+                                    $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
 //        $scope.student.files = $scope.files;
 
         $('#loan_eduction_form').submit(function () {

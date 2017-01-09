@@ -302,7 +302,7 @@
                             <p ng-show="submitted && personalform.student_birthdate.$error.date"  class="help-block has-error ng-hide">Enter your birth date correctly.</p>
                         </div>
                     </div>
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="student_about_me">* About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
@@ -320,7 +320,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
 
                     <br>
@@ -396,8 +396,8 @@
                             $scope.student.student_country = "United States of America";
                             $scope.student.student_birthdate = "<%= student_info[0].student_birthdate %>";
                             $scope.student.zip_code = "<%= student_info[0].zip_code %>";
-                                    $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
-                                    $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
+//                                    $scope.student.student_about_me = `<%= student_info[0].student_about_me %>`;
+//                                    $scope.student.student_ambition = `<%= student_info[0].student_ambition %>`;
                                     $scope.submitForm = function () {
                                        
                                         $('.export').trigger('click');

@@ -276,7 +276,8 @@
 </head>
 <% 
 function RoundNum( num, precision ) {
-return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+return temp;
 }
 %>
 <body ng-app="postApp" ng-controller="postController">
@@ -340,22 +341,25 @@ return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(prec
 
                                                 <!--<td class="text-right pad-right hidden-border">$00.00(2.9%)</td>-->
                                                 <% var credit_card_processing = 2.9/100 * postdata.funding_amount %>
+                                                <% var creditcardprocessing = RoundNum(credit_card_processing,2) %>
                                                 
-                                                <td class="text-right pad-right hidden-border">$<%= RoundNum(credit_card_processing,2) %></td>
+                                                <td class="text-right pad-right hidden-border">$<%= creditcardprocessing %></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-right pad-right hidden-border"><strong>Stumuch fees</strong></td>
 
                                                 <!--<td class="text-right pad-right hidden-border">$00.00(5%)</td>-->
                                                 <% var stumuch_fees = (5/100) * postdata.funding_amount %>
-                                                <td class="text-right pad-right hidden-border">$<%= RoundNum(stumuch_fees,2) %></td>
+                                                <% var stumuchfees = RoundNum(stumuch_fees,2) %>
+                                                <td class="text-right pad-right hidden-border">$<%= stumuchfees %></td>
                                             </tr>
                                             <tr>
-                                                <% var total = (postdata.funding_amount)-(0.30 + credit_card_processing + stumuch_fees) %>
-                                               
+                                                <% var total = (postdata.funding_amount)-(0.30 + parseFloat(creditcardprocessing) + parseFloat(stumuchfees)) %>
+                                                <%  total = RoundNum(total,2) %>
+                                 
                                                 <td class="pad-right text-right"><strong class="text-lg text-accent">Total to be paid to student loan account</strong></td>
 
-                                                <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= total.toFixed(2) %></b></strong></td>
+                                                <td class="pad-right text-right"><strong class="text-lg text-accent"><b>$<%= total %></b></strong></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -369,6 +373,7 @@ return (+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(prec
                     <div class="row">
                         <div class="col-md-12" style="margin:auto;text-align:center">
                             <% var data_amount= funding_amount * 100 %>
+                            <%  data_amount= RoundNum(data_amount,2) %>
                             <span>For queries about charges, refer to the <a href="/faq">FAQ</a></span>
                             <h2>
                                 To Transfer Your Fund</h2>

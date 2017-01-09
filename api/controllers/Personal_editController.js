@@ -35,8 +35,8 @@ module.exports = {
             var student_country = req.param("student_country");
             var student_birthdate = req.param("student_birthdate");
             var zip_code = req.param("zip_code");
-            var student_about_me = req.param("student_about_me");
-            var student_ambition = req.param("student_ambition");
+//            var student_about_me = req.param("student_about_me");
+//            var student_ambition = req.param("student_ambition");
             var imagedata = req.param('image');
 
             var student_profile_pic_path = '';
@@ -64,9 +64,9 @@ module.exports = {
                 });
 //        var imageBuffer = decodeBase64Image(data);
                 student_profile_pic_path = image_name;
-                update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=STR_TO_DATE(" + mysql.escape(student_birthdate) + ", '%m-%d-%Y'),`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
+                update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=STR_TO_DATE(" + mysql.escape(student_birthdate) + ", '%m-%d-%Y'),`zip_code`=" + mysql.escape(zip_code) + ", student_profile_pic_path = " + mysql.escape(student_profile_pic_path) + " WHERE `student_id`=" + req.param('id');
             }else{
-             update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=STR_TO_DATE(" + mysql.escape(student_birthdate) + ", '%m-%d-%Y'),`zip_code`=" + mysql.escape(zip_code) + ",`student_about_me`=" + mysql.escape(student_about_me) + ",`student_ambition`=" + mysql.escape(student_ambition) + " WHERE `student_id`=" + req.param('id');   
+             update = "UPDATE `student_details` SET `student_firstname`=" + mysql.escape(student_firstname) + ",`student_lastname`=" + mysql.escape(student_lastname) + ",`student_contactno`=" + mysql.escape(student_contactno) + ",`student_address`=" + mysql.escape(student_address) + ",`student_city`=" + mysql.escape(student_city) + ",`student_state`=" + mysql.escape(student_state) + ",`student_country`=" + mysql.escape(student_country) + ",`student_birthdate`=STR_TO_DATE(" + mysql.escape(student_birthdate) + ", '%m-%d-%Y'),`zip_code`=" + mysql.escape(zip_code) + " WHERE `student_id`=" + req.param('id');   
             }
      
 
