@@ -274,7 +274,7 @@ module.exports = {
 
             Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
 
-                Student_photographs.query('SELECT * from student_photographs where student_id=' + req.param('id'), function (err, photorecord) {
+                Student_photographs.query('SELECT * from student_photographs where student_photographs.isEnabled=1 AND student_id=' + req.param('id'), function (err, photorecord) {
 
                     Admin_loan_comments.query('SELECT note, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where note_type=2 and student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
 

@@ -121,6 +121,7 @@
             <br>
             <div class="row">
                 <div class="col-md-6">
+                <% if(student_records.length > 0){ %>
                     <%  _.each(student_records, function (records) { %>
                     <input type="hidden" name="student_id" id="student_id" value="<%= records.student_id %>">
                     <%
@@ -128,6 +129,9 @@
                     %>
                     <a href="javascript:void(0);" data-value="0" class="btn btn-danger update_student_status">Disapprove</a>
                     <a href="javascript:void(0);" data-value="1" class="btn btn-success update_student_status">Approve</a>
+                     <%
+                    }
+                    %>
                 </div>
             </div>
         </form>

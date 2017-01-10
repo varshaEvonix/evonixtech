@@ -299,26 +299,31 @@ module.exports = {
         var fs = require("fs");
         var file = req.file('file');
         var student_id = req.param('student_id');
-        var filename = req.file('file')._files[0].stream.filename;
+//        var filename = req.file('file')._files[0].stream.filename;
         var dir_name = student_id;
         var dir = '.tmp/public/index_files/uploads/' + dir_name;
+        var newfilename = '';
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
         }
-        var newfilename = Date.now() + filename;
-        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newfilename}, function (err, files) {
+
+//            var newfilename = Date.now() + filename;
+        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/'}, function onUploadComplete(err, files) {
             if (err) {
-
+         
             }
-            else {
-                var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', " + mysql.escape(req.param('note')) + ", '" + req.param('note_type') + "', '" + newfilename + "', '1')";
+            if (files.length > 0) {
 
-                Admin_loan_comments.query(insert_query, function (err, record)
-                {
-                    console.log(insert_query)
-
-                });
+                newfilename = files[0].fd.split('/').slice(-1);
             }
+
+            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', " + mysql.escape(req.param('note')) + ", '" + req.param('note_type') + "', '" + newfilename + "', '1')";
+
+            Admin_loan_comments.query(insert_query, function (err, record)
+            {
+                console.log(insert_query)
+
+            });
             return res.redirect('admin/viewdetails/' + req.param('student_id'));
         });
 
@@ -384,7 +389,9 @@ module.exports = {
                         var from_email = new helper.Email('support@stumuch.com');
                         var to_email = new helper.Email(student_details.student_email);
                         var subject = 'Stumuch Notification';
-                        var mail_content = "Hi " + student_details.student_firstname + ' <br/><br/>' + req.param('admin_note');
+                        var html = req.param('admin_note');
+                        html = html.replace(/\n/gi, '<br/>');
+                        var mail_content = "Hi " + student_details.student_firstname + ' <br/><br/>' + html;
                         var content = new helper.Content('text/html', mail_content);
                         var mail = new helper.Mail(from_email, subject, to_email, content);
 
@@ -417,10 +424,10 @@ module.exports = {
     locked_student_profile: function (req, res) {
         var q = "SELECT * FROM student_changed_val where student_id=" + req.param('student_id') + " AND admin_approval=0 AND is_new_change='1'";
         Student_changed_val.query(q, function (err, record) {
-            
+
             if (record.length == 0) {
                 var update_query = "UPDATE `student_login_credentials` SET `profile_lock` =0 WHERE `student_login_credentials`.`student_id` =" + req.param('student_id');
-          
+
                 Student_login_credentials.query(update_query, function (err, results) {
 
                 });
@@ -624,7 +631,7 @@ module.exports = {
         var loan_id = req.param('loan_id');
         var student_id = req.param('student_id');
         var query = "select payout from donors_funding_details where payout='0' AND loan_id=" + loan_id;
-       
+
         Donors_funding_details.query(query, function (err, results) {
 
             req.flash('success', '<div class="alert alert-success "><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Fields are approved</div>');
