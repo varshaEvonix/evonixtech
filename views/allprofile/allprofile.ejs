@@ -1,4 +1,5 @@
 <%- include ../header.ejs %>
+
 <!-- Page Title -->
 <title>Stumuch</title>
 
@@ -31,6 +32,12 @@
 }
 </style>
 </head>
+<% 
+function RoundNum( num, precision ) {
+var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+return temp;
+}
+%>
 <body class="" style="">
 
   <!-- preloader -->
@@ -100,8 +107,8 @@
                   </div>
                   <% }  else {%>
                   <% var percentage= (humans.total_funded/humans.loan_amount)*100 %>
-                  <div data-percent="<%= percentage.toFixed(2) %>" class="progress-bar">
-                      <span class="percent"><%= percentage.toFixed(2) %></span>
+                  <div data-percent="<%= RoundNum(percentage,2) %>" class="progress-bar">
+                      <span class="percent"><%= RoundNum(percentage,2) %></span>
                   </div>
                   <% } %>
 
@@ -110,9 +117,10 @@
               </div>
               <ul class="list-inline project-conditions text-center bg-deep m-0 p-10">
                 <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
-                <li class="target-fund"><strong>$<%= humans.total_funded %></strong>collected</li>
-                
+                <li class="target-fund"><strong>$<%= RoundNum(humans.total_funded,2) %></strong>collected</li>
+                 <% if (humans.loan_amount != "0") { %>
                 <li ><a href="/donorpage/<%= humans.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
+                  <% } %>
               </ul>
             </div>
           </div>

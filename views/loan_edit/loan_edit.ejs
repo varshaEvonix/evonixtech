@@ -72,14 +72,14 @@
 
                             <label for="student_education_institute">Enter your University / Educational Institution: </label>
                             <input type="text" ng-model="student.student_education_institute" class="form-control" id="student_education_institute" ng-maxlength="200" name="student_education_institute" placeholder="Enter your education institute" value="<%= student_info[0].student_education_institute %>" required>
-                            <p ng-show="submitted && loan_eduction_form.student_education_institute.$error.required"  class="help-block has-error ng-hide">Institute name is required.</p>
-                            <p ng-show="submitted && loan_eduction_form.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide">Institute's name limit exceeds.</p>
+                            <p ng-show="submitted && loan_eduction_form.student_education_institute.$error.required"  class="help-block has-error ng-hide ng-cloak">Institute name is required.</p>
+                            <p ng-show="submitted && loan_eduction_form.student_education_institute.$error.maxlength"  class="help-block has-error ng-hide ng-cloak">Institute's name limit exceeds.</p>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="student_education_fieldofstudy">Enter your field of study: </label>
                             <input type="text" ng-maxlength="200" ng-model="student.student_education_fieldofstudy" class="form-control" id="student_education_fieldofstudy" name="student_education_fieldofstudy" placeholder="Enter your field of study" value="<%= student_info[0].student_education_fieldofstudy %>" required>
-                            <p ng-show="submitted && loan_eduction_form.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide">Field of study is required.</p>
-                            <p ng-show="submitted && loan_eduction_form.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide">Field name limit exceeds.</p>
+                            <p ng-show="submitted && loan_eduction_form.student_education_fieldofstudy.$error.required"  class="help-block has-error ng-hide ng-cloak">Field of study is required.</p>
+                            <p ng-show="submitted && loan_eduction_form.student_education_fieldofstudy.$error.maxlength"  class="help-block has-error ng-hide ng-cloak">Field name limit exceeds.</p>
                         </div>
 
                     </div>
@@ -99,7 +99,7 @@
                                     <option value="fafsa">FAFSA</option>
                                     <option value="bankloan">Bank loan</option>
                                 </select>
-                                <p ng-show="submitted && loan_eduction_form.loan_type.$error.required"  class="help-block has-error ng-hide">Loan Type is required.</p>
+                                <p ng-show="submitted && loan_eduction_form.loan_type.$error.required"  class="help-block has-error ng-hide ng-cloak">Loan Type is required.</p>
                             </div>
 
                             <div class="col-md-6">
@@ -122,7 +122,7 @@
                                         <option value="11">Other</option>
                                         <option value="12">I don’t know </option>
                                     </select>
-                                    <p ng-show="submitted && loan_eduction_form.fafsa_values.$error.required"  class="help-block has-error ng-hide">Loan name is required.</p>
+                                    <p ng-show="submitted && loan_eduction_form.fafsa_values.$error.required"  class="help-block has-error ng-hide ng-cloak">Loan name is required.</p>
                                 </div>
 
 
@@ -130,8 +130,8 @@
                                     <div class="form-group">
                                         <label for="loan_bankname">Enter your bank name <span>*</span>: </label>
                                         <input type="text" ng-model="student.loan_bankname"  class="form-control" id="loan_bankname" ng-pattern="^([A-z ]+)$"  name="loan_bankname" placeholder="Enter your bank name" value="<%= student_info[0].loan_bankname %>" <%= (student_info[0].loan_type == 'bankloan') ? 'required':'' %>>
-                                               <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.required"  class="help-block has-error ng-hide">Loan Bankname is required.</p>
-                                        <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.pattern"  class="help-block has-error ng-hide">Not valid bank name.</p>
+                                               <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.required"  class="help-block has-error ng-hide ng-cloak">Loan Bankname is required.</p>
+                                        <p ng-show="submitted && loan_eduction_form.loan_bankname.$error.pattern"  class="help-block has-error ng-hide ng-cloak">Not valid bank name.</p>
                                     </div>
                                 </div>
 
@@ -143,16 +143,16 @@
                                 <div class="form-group">
                                     <label for="loan_accountno">Enter your loan account number <span>*</span>:<a href="#" data-toggle="tooltip" title="We can only help you crowd fund 1 loan at a time. Choose your largest loan or the one that is due sooner. "> <i  class="glyphicon glyphicon-question-sign"></i></a> </label>
                                     <input type="text" ng-model="student.loan_accountno"  ng-pattern="^([0-9A-z]+)$" class="form-control" id="loan_accountno" name="loan_accountno" placeholder="Enter your loan account number" value="<%= student_info[0].loan_accountno %>" required>
-                                    <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.required"  class="help-block has-error ng-hide">Loan account no is required.</p>
-                                    <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.pattern"  class="help-block has-error ng-hide">Not valid account number.</p>
+                                    <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.required"  class="help-block has-error ng-hide ng-cloak">Loan account no is required.</p>
+                                    <p ng-show="submitted && loan_eduction_form.loan_accountno.$error.pattern"  class="help-block has-error ng-hide ng-cloak">Not valid account number.</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="loan_amount">Enter your loan current balance <span>*</span>: <a href="#" data-toggle="tooltip" title=" This is the remaining amount of balance due for you to pay your loan/s up. For FAFSA loans, it is the combination of all your loans (principle, interest, fees, and subsidized or unsubsidized) if you have multiple loans. Look for ‘current balance’ on your statement."><i  class="glyphicon glyphicon-question-sign"></i></a> </label>
                                     <input type="text" ng-model="student.loan_amount" class="form-control" ng-pattern="^([0-9]+)$"   data-validation-length="2-6" id="loan_amount" name="loan_amount" placeholder="Enter your loan account number" value="<%= student_info[0].loan_amount %>" required>
-                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.required"  class="help-block has-error ng-hide">Loan amount no is required.</p>
-                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.pattern"  class="help-block has-error ng-hide">Not valid loan amount.</p>
+                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.required"  class="help-block has-error ng-hide ng-cloak">Loan amount no is required.</p>
+                                    <p ng-show="submitted && loan_eduction_form.loan_amount.$error.pattern"  class="help-block has-error ng-hide ng-cloak">Not valid loan amount.</p>
                                 </div>
 
                             </div>
@@ -230,7 +230,7 @@
 
                                             <input ng-model="student.document_name0" class="form-control fileip" type="text" name="document_name0"  placeholder="Enter the name of the file" value="" required>
                                             <% } %>
-                                            <p ng-show="submitted && loan_eduction_form.document_name0.$error.required"  class="help-block has-error ng-hide">Document name is required.</p>
+                                            <p ng-show="submitted && loan_eduction_form.document_name0.$error.required"  class="help-block has-error ng-hide ng-cloak">Document name is required.</p>
                                         </div> 
                                         <div class=" col-md-6">
 
@@ -255,12 +255,12 @@
                             <div class="form-group col-md-12">
                                 <label for="student_about_me">* About yourself:  <a href="#" data-toggle="tooltip" title="Describe yourself in a way that would appeal to others who will want to fund you. Honesty is a virtue! If you’re in the work force now, talk about your work and it’s relation to your education."> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
                                 <textarea rows="6" ng-model="student.student_about_me" class="form-control" id="student_about_me" name="student_about_me" placeholder="Enter something about you" required></textarea>
-                                <p ng-show="submitted && loan_eduction_form.student_about_me.$error.required"  class="help-block has-error ng-hide">About you field is required.</p>
+                                <p ng-show="submitted && loan_eduction_form.student_about_me.$error.required"  class="help-block has-error ng-hide ng-cloak">About you field is required.</p>
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="student_ambition">* Your ambition in life: <a href="#" data-toggle="tooltip" title="What can you do for society with the education that you receive?"> <i  class="glyphicon glyphicon-question-sign"></i></a></label>
                                 <textarea rows="6" ng-model="student.student_ambition" class="form-control" id="student_ambition" name="student_ambition" placeholder="Enter your ambition" required></textarea>
-                                <p ng-show="submitted && loan_eduction_form.student_ambition.$error.required"  class="help-block has-error ng-hide">Ambition field is required.</p>
+                                <p ng-show="submitted && loan_eduction_form.student_ambition.$error.required"  class="help-block has-error ng-hide ng-cloak">Ambition field is required.</p>
                             </div>
                     </div>
                 </div>
