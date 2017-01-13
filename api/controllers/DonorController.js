@@ -83,6 +83,7 @@ module.exports = {
             var stripe = require('stripe')(stripe_secret_key);
             var stripeToken = req.param('stripeToken'),
                     amount = req.param('amount'),
+//                    amount = 0.50,
                     email = req.param('email'),
                     loan_id = req.param('loan_id'),
                     donor_name = req.param('donor_name'),
@@ -102,6 +103,7 @@ module.exports = {
                 last_insert_id = results.insertId;
             })
             amount = amount * 100;
+     
             var charge = stripe.charges.create({
                 amount: amount, // amount in cents, again
                 currency: "usd",
@@ -118,8 +120,48 @@ module.exports = {
                     if (charge.status == 'succeeded') {
                         var update_query = "UPDATE `donors_funding_details` SET `status` = '1', transaction_id='" + charge.id + "' WHERE `donors_funding_details`.`donors_id` =" + last_insert_id;
                         Donors_funding_details.query(update_query, function (err, results) {
+                            var send_grid_token = "select token from send_grid_token where id =1";
+                            Send_grid_token.query(send_grid_token, function (err, token) {
+                                var fetch_mail_template = "SELECT *, DATE_FORMAT(NOW(),'%d %b %y') as today_date  FROM mail_template where id=2";
+                                Mail_template.query(fetch_mail_template, function (err, mail_template) {
+                                    mail_template = mail_template[0];
 
-                            res.redirect('thankyoupage');
+                                    var helper = require('sendgrid').mail;
+                                    var from_email = new helper.Email('support@stumuch.com');
+                                    var to_email = new helper.Email(email);
+
+                                    var html = mail_template.content;
+                                    var html = html.replace(/\n/gi, '<br/>');
+                                    var funding_date = mail_template.today_date;
+
+                                    var html = html.replace('<~:funding_date:~>', funding_date);
+                                    var html = html.replace('<~:funder_name:~>', donor_name);
+                                    var html = html.replace('<~:funded_amount:~>', req.param('amount'));
+  
+                                    var subject = mail_template.subject;
+                                    var content = new helper.Content('text/html', html);
+                                    var mail = new helper.Mail(from_email, subject, to_email, content);
+
+                                    var sg = require('sendgrid')(token[0].token);
+                                    var request = sg.emptyRequest({
+                                        method: 'POST',
+                                        path: '/v3/mail/send',
+                                        body: mail.toJSON(),
+                                    });
+
+                                    sg.API(request, function (error, response) {
+//                                        console.log(error);
+//                                        console.log('response.statusCode');
+//                                        console.log(response.statusCode);
+//                                        console.log(response.body);
+//                                        console.log(response.headers);
+                                    });
+
+//                                    return res.ok();
+                                    res.redirect('thankyoupage');
+                                });
+                            });
+
                         });
 
                     }
