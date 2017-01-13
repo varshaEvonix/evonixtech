@@ -150,7 +150,8 @@ module.exports = {
 
             Loan_details.query(insert_query, function (err, record)
             {
-
+console.log('insert_query')
+console.log(insert_query)
                 var loan_id = record.insertId;
                 for (var i = 0; i <= 5; i++) {
 
