@@ -82,8 +82,8 @@ module.exports = {
             var stripe_secret_key = web_hooks[0].test_mode == 1 ? web_hooks[0].test_secret_key : web_hooks[0].live_secret_key;
             var stripe = require('stripe')(stripe_secret_key);
             var stripeToken = req.param('stripeToken'),
-                    amount = req.param('amount'),
-//                    amount = 0.50,
+//                    amount = req.param('amount'),
+                    amount = 0.50,
                     email = req.param('email'),
                     loan_id = req.param('loan_id'),
                     donor_name = req.param('donor_name'),
