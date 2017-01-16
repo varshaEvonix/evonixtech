@@ -190,6 +190,12 @@
     var protocol = req.connection.encrypted?'https':'http';
     var baseUrl = protocol + '://' + req.headers.host + '/';
     %>
+    <% 
+function RoundNum( num, precision ) {
+var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+return temp;
+}
+%>
     <div id="wrapper" class="clearfix">
         <!-- preloader -->
         <div style="display: none;" id="preloader">
@@ -249,7 +255,8 @@
                                 <br>
                                 <div class="col-md-3 col-xs-3 col-sm-3">
                                     <p>Collected</p>
-                                    <h1 style="margin:none !important">$<%= student_info.total_funded %></h1>
+                                    
+                                    <h1 style="margin:none !important">$<%= RoundNum(student_info.total_funded,2) %></h1>
                                 </div>
                                 <div class="col-md-6 col-xs-5 col-sm-5 donate_circle">
                                     <canvas id="serverstatus01" height="230" width="230"></canvas>
@@ -259,7 +266,7 @@
                                     <% } else {%>
                                     <% var percentage= (student_info.total_funded/student_info.loan_amount)*100 %>
                                     <% if(percentage > 0){ %>
-                                    <p class="text-center indicate"><%= percentage.toFixed(2) %>%</p>
+                                    <p class="text-center indicate"><%= RoundNum(percentage,2) %>%</p>
                                     <% }else if(percentage > 100){ %>
                                     <p class="text-center indicate"><%= 100 %>%</p>
                                     <% }else{ %>

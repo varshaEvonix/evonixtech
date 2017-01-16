@@ -1,5 +1,11 @@
 <%- include ../admin/admin_head.ejs %>
 <%- include ../admin/sidebar.ejs %>
+<% 
+function RoundNum( num, precision ) {
+var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+return temp;
+}
+%>
 <style>
     .image_pro{
         width:100%; 
@@ -44,7 +50,8 @@
                     <div class="row money_info">
                         <div class="col-sm-3">
 
-                            <h4>Raised</h4><h3>$<%= student_info.total_funded %></h3>
+                            
+                            <h4>Raised</h4><h3>$<%= RoundNum(student_info.total_funded,2) %></h3>
 
                         </div>
                         <div class="col-sm-6" style="text-align:center;">
@@ -59,8 +66,8 @@
                             <input type="hidden" id="loan_percent" value="0">
                             <% } else {%>
                             <% var percentage= (student_info.total_funded/student_info.loan_amount)*100 %>
-                            <p class="text-center indicate" style="margin-top:-75px;"><%= percentage.toFixed(2) %> %</p>
-                            <input type="hidden" id="loan_percent" value="<%= percentage.toFixed(2) %>">
+                            <p class="text-center indicate" style="margin-top:-75px;"><%= RoundNum(percentage,2) %> %</p>
+                            <input type="hidden" id="loan_percent" value="<%= RoundNum(percentage,2) %>">
                             <% } %>
 
                         </div>
