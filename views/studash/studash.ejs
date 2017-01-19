@@ -1,7 +1,12 @@
 <%- include ../stuhead.ejs %>
 
 <%- include ../stud_left.ejs %>
-
+<% 
+function RoundNum( num, precision ) {
+var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(precision);
+return temp;
+}
+%>
 <section id="main-content">
     <section class="wrapper">
 
@@ -23,7 +28,7 @@
                         <div class="box1">
                             <span><i class="fa fa-money" aria-hidden="true"></i></span>
                             <h4 style="font-size:16px">AMOUNT RAISED</h4>
-                            <h3>$ <%= student_info[0].total_funded %></h3>
+                            <h3>$ <%= RoundNum(student_info[0].total_funded,2) %></h3>
                         </div>
                         <p>You have collected $ <%= student_info[0].total_funded %> till now</p>
                     </div>
