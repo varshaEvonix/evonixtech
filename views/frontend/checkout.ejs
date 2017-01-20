@@ -280,6 +280,7 @@ var temp=(+(Math.round(+(num + 'e' + precision)) + 'e' + -precision)).toFixed(pr
 return temp;
 }
 %>
+
 <body ng-app="postApp" ng-controller="postController">
 
     <div style="padding-top:30px">
@@ -397,6 +398,7 @@ return temp;
                                 <input type="hidden" name="student_id" value="<%= student_details.student_id %>">
                                 <input type="hidden" name="student_firstname" value="<%= postdata.student_firstname %>">
                                 <input type="hidden" name="student_lastname" value="<%= postdata.student_lastname %>">
+                                <input type="hidden" name="hide_name" value="<%= postdata.hide_name!=undefined ? '1' :'0' %>">
 
                             </form>
                         </div>

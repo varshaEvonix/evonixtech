@@ -50,7 +50,7 @@ return temp;
                     <div class="row money_info">
                         <div class="col-sm-3">
 
-                            
+
                             <h4>Raised</h4><h3>$<%= RoundNum(student_info.total_funded,2) %></h3>
 
                         </div>
@@ -260,7 +260,7 @@ return temp;
 
                                         <% var video_link = student_info.video_link %>
                                         <% var video_link = video_link.split('?v=') %>
-                                  
+
                                         <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= video_link[1] %>" frameborder="0" allowfullscreen> 
                                         </iframe>
 
@@ -274,7 +274,7 @@ return temp;
                                 </div>
                             </div>
                             <div class="row">
-                               
+
                                 <% _.each(pics, function (pics) { %>
                                 <div class="col-md-4" >
                                     <img class="img-responsive" src="<% sails.getBaseurl() %>/index_files/uploads/<%= student_info.student_id %>/<%= pics.photo_path %>"><br><br>
@@ -423,9 +423,8 @@ return temp;
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Upload Attachment</label>
                         <div class="col-sm-10">
-                            <!--<input type="file" file-model="myFile" id="attachment"  name="attachment"/>-->
-                            <!--<input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>-->
-                            <input type="file" name="file" />
+                            <input id="uploadFile" type="file" file-model = "myFile" class="default" ng-model="attached_file" name="attached_file" ng-files="getTheFiles($files)" />
+                            <!--<input type="file" name="file" />-->
                             <!--<span ng-show="submitted && NotesForm.attachment.$error.required"  class="help-block has-error ng-hide">Attachment is required.</span>-->
                         </div>
                     </div>
@@ -433,7 +432,8 @@ return temp;
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <input type="hidden"  name="loan_id" id="loan_id"  value="<%= student_info.loan_id %>"/>
-                            <input type="hidden"   name="student_id"  value="<%=student_info.student_id %>"/>
+                            <input type="hidden"  name="student_id"  value="<%=student_info.student_id %>"/>
+                            <input type="hidden"  name="filename" id="filename" value=""/>
                             <button type="submit" ng-click="submitted = true" id="submit-notes" class="btn btn-default">Submit</button>
                             <p class="loading" style="display:none;">Loading....</p>
                         </div>
@@ -450,16 +450,6 @@ return temp;
 <%- include ../admin/stufoot.ejs %>
 <script src="../../index_files/lightbox.js"></script>
 
-<!--<script type="text/javascript">
-                                $(function () {
-                                    $("#bluecircle").percircle();
-                                });
-                                $(document).ready(function () {
-                                    $(".progress-bar").loading();
-
-                                });
-
-</script>-->
 <script>
                                 function htmlEncode(value) {
                                     return $('<div/>').text(value).html();
@@ -493,12 +483,53 @@ return temp;
             color: "#fdfdfd"
         }
     ];
-    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
+//    var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
 </script>
 <script>
     var myApp = angular.module('postApp', []);
+    myApp.directive('ngFiles', ['$parse', function ($parse) {
+
+            function fn_link(scope, element, attrs) {
+                var onChange = $parse(attrs.ngFiles);
+                element.on('change', function (event) {
+                    onChange(scope, {$files: event.target.files});
+                });
+            }
+            ;
+
+            return {
+                link: fn_link
+            }
+        }]);
     myApp.controller('postController', function ($scope, $http) {
+
         $scope.admin = {};
+        var formdata = new FormData();
+        $scope.getTheFiles = function ($files) {
+            $('#submit-notes').hide();
+            $('.loading').show();
+            angular.forEach($files, function (value, key) {
+                formdata.append('file', value);
+            });
+            var student_id = '<%=student_info.student_id %>';
+            var request = {
+                method: 'POST',
+                url: '/upload_file/' + student_id,
+                data: formdata,
+                enctype: 'multipart/form-data',
+                headers: {
+                    'Content-Type': undefined
+                }
+            };
+            $http(request)
+                    .success(function (data) {
+                        $('#submit-notes').show();
+                        $('.loading').hide();
+                        $("#filename").val(data);
+                    })
+                    .error(function () {
+                    });
+        };
 
         $('#addNoteForm').submit(function () {
             if ($scope.NotesForm.$valid) {
@@ -511,19 +542,6 @@ return temp;
     });
 </script>
 
-<!-- <script>
-  var doughnutData = [
-  {
-    value: 70,
-    color:"#68dff0"
-  },
-  {
-    value : 30,
-    color : "#fdfdfd"
-  }
-  ];
-  var myDoughnut = new Chart(document.getElementById("serverstatus14").getContext("2d")).Doughnut(doughnutData);
-</script> -->
 <script>
     lightbox.option({
         'resizeDuration': 200,

@@ -285,47 +285,36 @@ module.exports = {
     upload_file: function (req, res) {
 
         if (req.method === 'POST') {
+            var fs = require("fs");
+            var file = req.file('file');
+            var student_id = req.param('student_id');
+            var dir_name = student_id;
+            var dir = '.tmp/public/index_files/uploads/' + dir_name;
+            var newfilename = '';
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
             var file = req.file('file');
             var filename = req.file('file')._files[0].stream.filename;
             var newfilename = Date.now() + filename;
-            req.file('formdata').upload({dirname: '../public/index_files/uploads/', saveAs: newfilename}, function onUploadComplete(err, files) {
+            req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/', saveAs: newfilename}, function onUploadComplete(err, files) {
+                if (err) {
 
+                }
                 return res.ok(newfilename);
             });
+//
         }
     },
     add_notes: function (req, res) {
 
-        var fs = require("fs");
-        var file = req.file('file');
-        var student_id = req.param('student_id');
-//        var filename = req.file('file')._files[0].stream.filename;
-        var dir_name = student_id;
-        var dir = '.tmp/public/index_files/uploads/' + dir_name;
-        var newfilename = '';
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir);
-        }
+        var filename = req.param('filename') != '' ? req.param('filename') : '';
+        var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', " + mysql.escape(req.param('note')) + ", '" + req.param('note_type') + "', '" + filename + "', '1')";
 
-//            var newfilename = Date.now() + filename;
-        req.file('file').upload({dirname: '../public/index_files/uploads/' + dir_name + '/'}, function onUploadComplete(err, files) {
-            if (err) {
-         
-            }
-            if (files.length > 0) {
-
-                newfilename = files[0].fd.split('/').slice(-1);
-            }
-
-            var insert_query = "INSERT INTO `admin_loan_comments` (`loan_id`, `note`, `note_type`, `note_attachment`, `admin_id`) VALUES ('" + req.param('loan_id') + "', " + mysql.escape(req.param('note')) + ", '" + req.param('note_type') + "', '" + newfilename + "', '1')";
-
-            Admin_loan_comments.query(insert_query, function (err, record)
-            {
-                console.log(insert_query)
-
-            });
-            return res.redirect('admin/viewdetails/' + req.param('student_id'));
+        Admin_loan_comments.query(insert_query, function (err, record)
+        {
         });
+        return res.redirect('admin/viewdetails/' + req.param('student_id'));
 
     },
     studlockedprofile: function (req, res) {

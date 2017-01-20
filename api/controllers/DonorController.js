@@ -32,11 +32,7 @@ module.exports = {
     },
     paymentpage: function (req, res) {
         if (req.method == "POST") {
-//            try {
-//                req.validate({
-//                    funding_amount: {required: true},
-//                    email_id: {required: true, email: true}
-//                });
+
             var stripe_details = "select *from stripe_web_hooks";
 
             Stripe_web_hooks.query(stripe_details, function (err, web_hooks) {
@@ -53,15 +49,12 @@ module.exports = {
                     comment = req.param('comment');
                     var postdata = req.allParams();
 
+
                     return res.view('./frontend/checkout', {layout: false, stripePubKey: stripePubKey, loan_id: req.param('loan_id'), student_details: student_details, postdata: postdata});
 //                return res.view('./frontend/checkout', {layout: false, funding_amount: req.param('funding_amount'), email_id: req.param('email_id'), stripePubKey: stripePubKey, donor_name: donor_name, loan_id: req.param('loan_id'), comment: comment, student_details: student_details, student_firstname: student_firstname, student_lastname: student_lastname});
                 });
             });
-//            } catch (err) {
-//                console.log('err')
-//                console.log(err)
-////                return res.send(400, err);
-//            }
+
         } else {
             res.redirect('/');
         }
@@ -76,21 +69,29 @@ module.exports = {
         return res.view('./frontend/thankyoupage', {layout: false});
     },
     subscribe: function (req, res) {
+        var student_id = req.param('student_id');
+        var student_query = "select student_email from student_details where student_details.student_id=" + student_id;
+        var student_email = '';
+        Student_details.query(student_query, function (err, student_results) {
+            student_email = student_results[0].student_email;
+        });
+
         var stripe_details = "select *from stripe_web_hooks";
 
         Stripe_web_hooks.query(stripe_details, function (err, web_hooks) {
             var stripe_secret_key = web_hooks[0].test_mode == 1 ? web_hooks[0].test_secret_key : web_hooks[0].live_secret_key;
             var stripe = require('stripe')(stripe_secret_key);
             var stripeToken = req.param('stripeToken'),
-//                    amount = req.param('amount'),
-                    amount = 0.50,
+                    amount = req.param('amount'),
+//                    amount = 0.50,
                     email = req.param('email'),
                     loan_id = req.param('loan_id'),
                     donor_name = req.param('donor_name'),
                     student_id = req.param('student_id'),
                     comment = req.param('comment'),
                     student_firstname = req.param('student_firstname'),
-                    student_lastname = req.param('student_lastname');
+                    student_lastname = req.param('student_lastname'),
+                    hide_name = req.param('hide_name');
             var transaction_charge = 0.30;
             var percentage_charge = (7.9 / 100) * amount;
             percentage_charge = percentage_charge.toFixed(2);
@@ -98,12 +99,13 @@ module.exports = {
             balance_to_transfer = balance_to_transfer.toFixed(2);
             var last_insert_id = '';
 
-            var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "', '" + comment + "', '" + amount + "', '" + transaction_charge + "', '" + percentage_charge + "', '" + balance_to_transfer + "')";
+            var q = "INSERT INTO `donors_funding_details` (`loan_id`, `donors_profileimage`, `donors_name`, `donor_email`,`hide_name`, `donors_comment`, `funded_amount`, `transaction_charge`, `percentage_charge`, `balance_to_transfer`) VALUES ( '" + loan_id + "', NULL, '" + donor_name + "', '" + email + "','" + hide_name + "', '" + comment + "', '" + amount + "', '" + transaction_charge + "', '" + percentage_charge + "', '" + balance_to_transfer + "')";
+
             Donors_funding_details.query(q, function (err, results) {
                 last_insert_id = results.insertId;
             })
             amount = amount * 100;
-     
+
             var charge = stripe.charges.create({
                 amount: amount, // amount in cents, again
                 currency: "usd",
@@ -124,41 +126,60 @@ module.exports = {
                             Send_grid_token.query(send_grid_token, function (err, token) {
                                 var fetch_mail_template = "SELECT *, DATE_FORMAT(NOW(),'%d %b %y') as today_date  FROM mail_template where id=2";
                                 Mail_template.query(fetch_mail_template, function (err, mail_template) {
-                                    mail_template = mail_template[0];
+                                    var fetch_student_mail_template = "SELECT * FROM mail_template where id=3";
+                                    Mail_template.query(fetch_student_mail_template, function (err, student_mail_template) {
+                                        mail_template = mail_template[0];
+                                        student_mail_template = student_mail_template[0];
+                                        var helper = require('sendgrid').mail;
+                                        var from_email = new helper.Email('support@stumuch.com');
+                                        var to_email = new helper.Email(email);
+                                        var student_to_email = new helper.Email(student_email);
 
-                                    var helper = require('sendgrid').mail;
-                                    var from_email = new helper.Email('support@stumuch.com');
-                                    var to_email = new helper.Email(email);
+                                        var html = mail_template.content;
+                                        var html = html.replace(/\n/gi, '<br/>');
+                                        var funding_date = mail_template.today_date;
 
-                                    var html = mail_template.content;
-                                    var html = html.replace(/\n/gi, '<br/>');
-                                    var funding_date = mail_template.today_date;
+                                        var html = html.replace('<~:funding_date:~>', funding_date);
+                                        var html = html.replace('<~:funder_name:~>', donor_name);
+                                        var html = html.replace('<~:funded_amount:~>', req.param('amount'));
 
-                                    var html = html.replace('<~:funding_date:~>', funding_date);
-                                    var html = html.replace('<~:funder_name:~>', donor_name);
-                                    var html = html.replace('<~:funded_amount:~>', req.param('amount'));
-  
-                                    var subject = mail_template.subject;
-                                    var content = new helper.Content('text/html', html);
-                                    var mail = new helper.Mail(from_email, subject, to_email, content);
+                                        var subject = mail_template.subject;
+                                        var student_subject = student_mail_template.subject;
+                                        var student_html = student_mail_template.content;
+                                        var student_html = student_html.replace(/\n/gi, '<br/>');
+                                        var student_html = student_html.replace('<~:firstname:~>', student_firstname);
+                                        var student_html = student_html.replace('<~:funder_name:~>', donor_name);
+                                        var student_html = student_html.replace('<~:funded_amount:~>', req.param('amount'));
 
-                                    var sg = require('sendgrid')(token[0].token);
-                                    var request = sg.emptyRequest({
-                                        method: 'POST',
-                                        path: '/v3/mail/send',
-                                        body: mail.toJSON(),
+                                        var student_subject = student_mail_template.subject;
+                                        var student_content = new helper.Content('text/html', student_html);
+                                        var content = new helper.Content('text/html', html);
+                                        var mail = new helper.Mail(from_email, subject, to_email, content);
+                                        var student_mail = new helper.Mail(from_email, student_subject, student_to_email, student_content);
+
+                                        var sg = require('sendgrid')(token[0].token);
+                                        var request = sg.emptyRequest({
+                                            method: 'POST',
+                                            path: '/v3/mail/send',
+                                            body: mail.toJSON(),
+                                        });
+
+                                        sg.API(request, function (error, response) {
+
+                                        });
+                                        var student_sg = require('sendgrid')(token[0].token);
+                                        var student_request = student_sg.emptyRequest({
+                                            method: 'POST',
+                                            path: '/v3/mail/send',
+                                            body: student_mail.toJSON(),
+                                        });
+
+                                        sg.API(student_request, function (error, student_response) {
+
+                                        });
+
+                                        res.redirect('thankyoupage');
                                     });
-
-                                    sg.API(request, function (error, response) {
-//                                        console.log(error);
-//                                        console.log('response.statusCode');
-//                                        console.log(response.statusCode);
-//                                        console.log(response.body);
-//                                        console.log(response.headers);
-                                    });
-
-//                                    return res.ok();
-                                    res.redirect('thankyoupage');
                                 });
                             });
 
