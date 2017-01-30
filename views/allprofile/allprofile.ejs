@@ -119,7 +119,7 @@ return temp;
                 <li class="current-fund"><strong>$<%= humans.loan_amount %></strong>total</li>
                 <li class="target-fund"><strong>$<%= RoundNum(humans.total_funded,2) %></strong>collected</li>
                  <% if (humans.loan_amount != "0") { %>
-                <li ><a href="/donorpage/<%= humans.student_id %>" class="btn btn-success"><strong class="white">Donate</strong></a></li>
+                <li ><a href="/donorpage/<%= humans.student_id %>" class="btn btn-success donate-page"><strong class="white">Donate</strong></a></li>
                   <% } %>
               </ul>
             </div>
