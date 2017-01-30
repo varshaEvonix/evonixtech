@@ -105,9 +105,9 @@ module.exports = {
 
                     Loan_details.query('SELECT loan_id, student_id, loan_amount, IFNULL(mst_fafsa.fafsa_values,"-") fafsa_values, IFNULL(loan_fafsa_id, "-") loan_fafsa_id, IFNULL(loan_bankname, "-") loan_bankname, IFNULL(loan_accountno, "-") loan_accountno from loan_details left join mst_fafsa on mst_fafsa.id=loan_details.loan_fafsa_id where loan_details.student_id= ' + req.param('id') + ' AND loan_details.isActive = 0', function (err, loan_l) {
 
-                        Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.donor_email, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id'), function (err, donor_l) {
+                        Student_details.query('SELECT dfd.donors_name, dfd.donors_comment, dfd.donor_email, dfd.funded_amount, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d") as funding_date, DATE_FORMAT(dfd.funding_date,"%Y-%m-%d %H:%i:%s") as fundingdate FROM  loan_details ld  inner join donors_funding_details dfd on ld.loan_id = dfd.loan_id and ld.isActive = 1 where ld.student_id=' + req.param('id') + ' order by fundingdate desc', function (err, donor_l) {
 
-                            Admin_loan_comments.query('SELECT *, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where student_id=' + req.param("id") + ' order by last_updated desc', function (err, loan_comments) {
+                            Admin_loan_comments.query('SELECT *, DATE_FORMAT(alc.last_updated,"%Y-%m-%d") as last_updated, DATE_FORMAT(alc.last_updated,"%Y-%m-%d %H:%i:%s") as lastupdated from admin_loan_comments alc inner join loan_details ld on ld.loan_id = alc.loan_id where student_id=' + req.param("id") + ' order by lastupdated desc', function (err, loan_comments) {
 
                                 return res.view('./admin/studprofile', {
                                     student_info: recordset[0],
