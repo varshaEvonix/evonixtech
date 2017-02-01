@@ -245,7 +245,7 @@ console.log(isMac)
                                            <% if(isMac==true){ %>
                                             <li><a target="_blank" href="/donorpage/<%= birthday.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
                                           <% }else{ %>
-                                            <li><a  href="/donorpage/<%= birthday.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
+                                            <li><a target="_blank"  href="/donorpage/<%= birthday.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
                                           <% } %>
                                             <% } %>
                                         </ul>
@@ -338,7 +338,7 @@ console.log(isMac)
                                     <% if(isMac==true){ %>
                                             <li><a target="_blank" href="/donorpage/<%= student_details.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
                                           <% }else{ %>
-                                            <li><a  href="/donorpage/<%= student_details.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
+                                            <li><a target="_blank" href="/donorpage/<%= student_details.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
                                           <% } %>
                                         
                                         <% } %>
