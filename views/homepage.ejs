@@ -73,7 +73,7 @@ return temp;
 //            + 'navigator.userAgent = ' + navigator.userAgent + '<br>'
 //            )
 
-            if (navigator.appVersion.indexOf("Win") != - 1)
+    if (navigator.appVersion.indexOf("Win") != - 1)
             OSName = "Windows";
             if (navigator.appVersion.indexOf("Mac") != - 1)
             OSName = "MacOS";
@@ -81,13 +81,21 @@ return temp;
             OSName = "UNIX";
             if (navigator.appVersion.indexOf("Linux") != - 1)
             OSName = "Linux";
-
+            < %
+            var protocol = req.connection.encrypted?'https':'http';
+            var baseUrl = protocol + '://' + req.headers.host + '/';
+            console.log('baseUrl')
+            console.log(baseUrl)
+            % >
+            function change_browser(id){
+            var link = "<%= baseUrl %>donorpage/" + id;
+                    if (OSName == "MacOS"){
+            window.open(link);
+            } else{
+            window.location.href = link;
+            }
+            }
 </script>
-<% 
-var isMac = /^darwin/.test(process.platform);
-console.log('isMac')
-console.log(isMac)
-%>
 
 </div>
 <!-- end .rev_slider_wrapper -->
@@ -242,11 +250,7 @@ console.log(isMac)
                                             <li class="current-fund"><strong>$<%= birthday.loan_amount %></strong>total</li>
                                             <li class="target-fund"><strong>$<%= RoundNum(birthday.total_funded,2) %></strong>collected</li>
                                             <% if (birthday.loan_amount != "0") { %>
-                                           <% if(isMac==true){ %>
-                                            <li><a target="_blank" href="/donorpage/<%= birthday.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
-                                          <% }else{ %>
-                                            <li><a target="_blank"  href="/donorpage/<%= birthday.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
-                                          <% } %>
+                                            <li><a onclick="change_browser( <%= birthday.student_id %> )" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
                                             <% } %>
                                         </ul>
 
@@ -335,12 +339,10 @@ console.log(isMac)
                                         <li class="current-fund"><strong>$<%= student_details.loan_amount %></strong>total</li>
                                         <li class="target-fund"><strong>$<%= RoundNum(student_details.total_funded,2) %></strong>collected</li>
                                         <% if (student_details.loan_amount != "0") { %>
-                                    <% if(isMac==true){ %>
-                                            <li><a target="_blank" href="/donorpage/<%= student_details.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
-                                          <% }else{ %>
-                                            <li><a target="_blank" href="/donorpage/<%= student_details.student_id %>" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
-                                          <% } %>
-                                        
+                         
+                                        <li><a onclick="change_browser(<%= student_details.student_id %>)" > <button class="btn btn-success donate-page"><strong class="white">Donate</strong></button></a></li>
+                    
+
                                         <% } %>
                                     </ul>
                                 </div>
