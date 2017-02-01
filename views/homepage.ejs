@@ -81,12 +81,12 @@ return temp;
             OSName = "UNIX";
             if (navigator.appVersion.indexOf("Linux") != - 1)
             OSName = "Linux";
-            < %
+            <%
             var protocol = req.connection.encrypted?'https':'http';
             var baseUrl = protocol + '://' + req.headers.host + '/';
             console.log('baseUrl')
             console.log(baseUrl)
-            % >
+            %>
             function change_browser(id){
             var link = "<%= baseUrl %>donorpage/" + id;
                     if (OSName == "MacOS"){
