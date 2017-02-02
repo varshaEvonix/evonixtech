@@ -575,7 +575,7 @@ module.exports = {
         if (req.session.admin_id || req.session.admin_id != undefined) {
             var student_id = req.param('id');
 
-            var q = "SELECT donors_funding_details.*, loan_details.loan_amount,student_details.student_firstname, student_details.student_lastname, student_details.student_email,  student_details.student_id AS student_id FROM student_details LEFT JOIN student_login_credentials ON student_login_credentials.student_id = student_details.student_id LEFT JOIN loan_details ON loan_details.student_id = student_details.student_id LEFT JOIN donors_funding_details ON donors_funding_details.loan_id = loan_details.loan_id WHERE donors_funding_details.status=1 AND donors_funding_details.payout = '0' AND student_details.student_id=" + student_id;
+            var q = "SELECT DATE_FORMAT(donors_funding_details.funding_date,'%Y-%m-%d %H:%i:%s') as fundingdate, donors_funding_details.*, loan_details.loan_amount,student_details.student_firstname, student_details.student_lastname, student_details.student_email,  student_details.student_id AS student_id FROM student_details LEFT JOIN student_login_credentials ON student_login_credentials.student_id = student_details.student_id LEFT JOIN loan_details ON loan_details.student_id = student_details.student_id LEFT JOIN donors_funding_details ON donors_funding_details.loan_id = loan_details.loan_id WHERE donors_funding_details.status=1 AND donors_funding_details.payout = '0' AND student_details.student_id=" + student_id + " order by fundingdate desc";
 
             Student_details.query(q, function (err, results) {
 
