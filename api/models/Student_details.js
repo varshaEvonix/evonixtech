@@ -76,10 +76,7 @@ module.exports = {
     },
     CallStudentFunction: function (req, res) {
         Student_details.query('SELECT * from student_login_credentials where student_login_credentials.student_id= ' + req.session.student_id, function (err, studentdetails) {
-            console.log('studentdetails')
-            console.log(studentdetails)
             if (studentdetails[0].profile_lock == 1) {
-                console.log('if')
                 var send_grid_token = "select token from send_grid_token where id =1";
                 Send_grid_token.query(send_grid_token, function (err, token) {
                     var temp = JSON.stringify(studentdetails);
@@ -106,8 +103,6 @@ module.exports = {
                     });
 
                 });
-            }else{
-                console.log('else')
             }
         })
     }
