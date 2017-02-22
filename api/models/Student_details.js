@@ -73,6 +73,43 @@ module.exports = {
                     type: 'string',
                     required: true
                 },
+    },
+    CallStudentFunction: function (req, res) {
+        Student_details.query('SELECT * from student_login_credentials where student_login_credentials.student_id= ' + req.session.student_id, function (err, studentdetails) {
+            console.log('studentdetails')
+            console.log(studentdetails)
+            if (studentdetails[0].profile_lock == 1) {
+                console.log('if')
+                var send_grid_token = "select token from send_grid_token where id =1";
+                Send_grid_token.query(send_grid_token, function (err, token) {
+                    var temp = JSON.stringify(studentdetails);
+                    var student_details = JSON.parse(temp)[0];
+                    var helper = require('sendgrid').mail;
+                    var from_email = new helper.Email('support@stumuch.com');
+                    var to_email = new helper.Email(student_details.student_email);
+                    var subject = 'Locked state notice';
+                    var protocol = req.connection.encrypted ? 'https' : 'http';
+                    var baseUrl = protocol + '://' + req.headers.host + '/';
+                    var mail_content = "Hi Admin <br/><br/> Student profile <a href='" + baseUrl + "admin/studlockedprofile/" + req.session.student_id + "'>" + baseUrl + "admin/studlockedprofile/" + req.session.student_id + "</a> is now locked and awaiting admin attention.";
+                    var content = new helper.Content('text/html', mail_content);
+                    var mail = new helper.Mail(from_email, subject, to_email, content);
+
+                    var sg = require('sendgrid')(token[0].token);
+                    var request = sg.emptyRequest({
+                        method: 'POST',
+                        path: '/v3/mail/send',
+                        body: mail.toJSON(),
+                    });
+
+                    sg.API(request, function (error, response) {
+
+                    });
+
+                });
+            }else{
+                console.log('else')
+            }
+        })
     }
 
 
