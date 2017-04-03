@@ -30,24 +30,33 @@ middleware: {
  *                                                                          *
  ***************************************************************************/
 
-// order: [
-//   'startRequestTimer',
-//   'cookieParser',
-//   'session',
-//   'myRequestLogger',
-//   'bodyParser',
-//   'handleBodyParserError',
-//   'compress',
-//   'methodOverride',
-//   'poweredBy',
-//   '$custom',
-//   'router',
-//   'www',
-//   'favicon',
-//   '404',
-//   '500'
-// ],
-
+order: [
+        'startRequestTimer',
+        'cookieParser',
+        'session',
+        'myRequestLogger',
+        'bodyParser',
+        'handleBodyParserError',
+        'compress',
+        'methodOverride',
+        'poweredBy',
+        '$custom',
+        'router',
+        'www',
+        'favicon',
+        '404',
+        '500'
+],
+        redirectToWWW: function(req, res, next) {
+        var host = req.header("host");
+        console.log('host')
+        console.log(host)
+                if (host.match(/^www\..*/i)) {
+        next();
+        } else {
+        res.redirect(301, "http://www." + host);
+        }
+        },
         /****************************************************************************
          *                                                                           *
          * Example custom middleware; logs each request to the console.              *
@@ -77,7 +86,7 @@ middleware: {
 
         // bodyParser: require('skipper')({strict: true})
 
-        },
+},
         /***************************************************************************
          *                                                                          *
          * The number of seconds to cache flat files on disk being served by        *
@@ -89,4 +98,4 @@ middleware: {
          ***************************************************************************/
 
         // cache: 31557600000
-};
+        };
