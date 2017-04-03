@@ -32,7 +32,6 @@ middleware: {
 
 order: [
         'startRequestTimer',
-//        'redirectToWWW',
         'cookieParser',
         'session',
         'myRequestLogger',
