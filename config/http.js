@@ -47,16 +47,6 @@ order: [
         '404',
         '500'
 ],
-        redirectToWWW: function(req, res, next) {
-        var host = req.header("host");
-        console.log('host')
-        console.log(host)
-                if (host.match(/^www\..*/i)) {
-        next();
-        } else {
-        res.redirect(301, "http://www." + host);
-        }
-        },
         /****************************************************************************
          *                                                                           *
          * Example custom middleware; logs each request to the console.              *
