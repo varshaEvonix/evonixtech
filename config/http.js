@@ -31,7 +31,8 @@ middleware: {
  ***************************************************************************/
 
 order: [
-        'redirectToWWW',
+        'startRequestTimer',
+//        'redirectToWWW',
         'cookieParser',
         'session',
         'myRequestLogger',
