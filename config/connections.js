@@ -43,28 +43,28 @@ module.exports.connections = {
  // server datatbase
  
 
-//  mysqlServer: {
-//    adapter: 'sails-mysql',
-//     host: 'localhost',
-//     user: 'stumuch_user', //optional
-//     password: 'stumuch@287', //optional
-//     database: 'stumuch_db' //optional
-////     database: 'sailsmysql' //optional
-//   },
+  mysqlServer: {
+    adapter: 'sails-mysql',
+     host: 'localhost',
+     user: 'stumuch_user', //optional
+     password: 'stumuch@287', //optional
+     database: 'stumuch_db' //optional
+//     database: 'sailsmysql' //optional
+   },
    
   
 
 //  local datatbase
 
 
-   mysqlServer: {
-    adapter: 'sails-mysql',
-     host: 'localhost',
-     user: 'root', //optional
-     password: '', //optional
-     database: 'stumuch_db' //optional
-//     database: 'sailsmysql' //optional
-   },
+//   mysqlServer: {
+//    adapter: 'sails-mysql',
+//     host: 'localhost',
+//     user: 'root', //optional
+//     password: '', //optional
+//     database: 'stumuch_db' //optional
+////     database: 'sailsmysql' //optional
+//   },
 
   /***************************************************************************
   *                                                                          *
