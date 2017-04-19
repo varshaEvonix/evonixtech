@@ -29,32 +29,7 @@ middleware: {
  * router is invoked by the "router" middleware below.)                     *
  *                                                                          *
  ***************************************************************************/
-order: [
-        'redirectToWWW',
-        'startRequestTimer',
-        'cookieParser',
-        'session',
-        'myRequestLogger',
-        'bodyParser',
-        'handleBodyParserError',
-        'compress',
-        'methodOverride',
-        'poweredBy',
-        '$custom',
-        'router',
-        'www',
-        'favicon',
-        '404',
-        '500'
-],
-        redirectToWWW: function(req, res, next) {
-        var host = req.header("host");
-                if (host.match(/^www\..*/i)) {
-        next();
-        } else {
-        res.redirect(301, "https://www." + host);
-        }
-        }
+
 /****************************************************************************
  *                                                                           *
  * Example custom middleware; logs each request to the console.              *
