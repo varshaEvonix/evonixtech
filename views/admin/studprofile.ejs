@@ -449,7 +449,12 @@ return temp;
 </div>
 <%- include ../admin/stufoot.ejs %>
 <script src="../../index_files/lightbox.js"></script>
-
+<% 
+console.log('about me')
+console.log(student_info.student_about_me)
+console.log('student_info.student_ambition')
+console.log(student_info.student_ambition)
+%>
 <script>
                                 function htmlEncode(value) {
                                     return $('<div/>').text(value).html();
