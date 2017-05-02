@@ -449,12 +449,7 @@ return temp;
 </div>
 <%- include ../admin/stufoot.ejs %>
 <script src="../../index_files/lightbox.js"></script>
-<% 
-console.log('about me')
-console.log(student_info.student_about_me)
-console.log('student_info.student_ambition')
-console.log(student_info.student_ambition)
-%>
+
 <script>
                                 function htmlEncode(value) {
                                     return $('<div/>').text(value).html();
@@ -463,8 +458,10 @@ console.log(student_info.student_ambition)
                                 function htmlDecode(value) {
                                     return $('<div/>').html(value).text();
                                 }
-                                var about_me = htmlDecode("<%= student_info.student_about_me.replace(/\n/gi,'<br/>')%>");
-                                var ambition = htmlDecode("<%= student_info.student_ambition.replace(/\n/gi,'<br/>')%>");
+                                var about_me = "<%= student_info.student_about_me.replace(/\r\n/gi,'<br/>')%>";
+                                about_me = htmlDecode(about_me.replace(/\n/gi, '<br/>'));
+                                var ambition = "<%= student_info.student_ambition.replace(/\r\n/gi,'<br/>')%>";
+                                ambition = htmlDecode(ambition.replace(/\n/gi, '<br/>'));
 
 
                                 $(document).ready(function () {
